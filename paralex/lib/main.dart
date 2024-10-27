@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:paralax/routes/navs.dart';
+import 'package:paralax/screens/splash/splash.dart';
+import 'package:paralax/screens/welcomeslides/welcome.dart';
+
+void main() {
+  runApp(GetMaterialApp(
+    initialRoute: Nav.splash,
+    getPages: [
+      GetPage(name: Nav.splash, page: () => const SplashScreen()),
+      GetPage(name: Nav.welcomeShow, page: () => const WelcomeSliders())
+    ],
+    debugShowCheckedModeBanner: false,
+  ));
+}

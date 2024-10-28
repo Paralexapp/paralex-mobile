@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
+import 'package:paralax/screens/welcomeslides/last_welcome_screen.dart';
 import 'package:paralax/screens/welcomeslides/welcome.dart';
 
 void main() {
@@ -9,7 +10,8 @@ void main() {
     initialRoute: Nav.splash,
     getPages: [
       GetPage(name: Nav.splash, page: () => const SplashScreen()),
-      GetPage(name: Nav.welcomeShow, page: () => const WelcomeSliders())
+      GetPage(name: Nav.welcomeShow, page: () => const WelcomeSliders()),
+      GetPage(name: Nav.lastWelcomeScreen, page: () => const LastWelcomeScreen())
     ],
     debugShowCheckedModeBanner: false,
   ));

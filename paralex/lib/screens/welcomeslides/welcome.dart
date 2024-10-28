@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+//import 'package:get/get_core/src/get_main.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:paralax/routes/navs.dart';
 
 class WelcomeSliders extends StatefulWidget {
   const WelcomeSliders({super.key});
@@ -80,15 +83,18 @@ class _WelcomeSlidersState extends State<WelcomeSliders> {
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
-                          child: Center(
-                              child: Text(
-                            "GET  STARTED",
-                            style: FontStyles.smallCapsIntro.copyWith(
-                                color: Colors.black,
-                                letterSpacing: 0,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          )),
+                          child: InkWell(
+                            onTap: ()=> Get.toNamed(Nav.lastWelcomeScreen),
+                            child: Center(
+                                child: Text(
+                              "GET  STARTED",
+                              style: FontStyles.smallCapsIntro.copyWith(
+                                  color: Colors.black,
+                                  letterSpacing: 0,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          ),
                         ),
                       ),
                     )

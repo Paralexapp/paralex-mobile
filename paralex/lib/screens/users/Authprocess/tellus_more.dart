@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
+import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 
 class MoreAboutYou extends StatefulWidget {
   const MoreAboutYou({super.key});
@@ -13,6 +15,8 @@ class MoreAboutYou extends StatefulWidget {
 class _MoreAboutYouState extends State<MoreAboutYou> {
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
+  final _dateController = TextEditingController();
+  DateTime? _selectedDate;
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -97,6 +101,100 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                     // print(phone.completeNumber);
                   },
                 ),
+                TextFormField(
+                  controller: _dateController,
+                  readOnly: true, // Make it readonly
+                  decoration: const InputDecoration(
+                    labelText: 'Date',
+                    border: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.calendar_today),
+                  ),
+                  onTap: () async {
+                    final DateTime? picked =
+                        await DatePicker.showSimpleDatePicker(
+                      context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2030),
+                      dateFormat: "dd-MMMM-yyyy",
+                      locale: DateTimePickerLocale.en_us,
+                      looping: true,
+                    );
+                    if (picked != null) {
+                      setState(() {
+                        _selectedDate = picked;
+                        _dateController.text =
+                            DateFormat("dd-MMM-yyyy").format(picked);
+                      });
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                GestureDetector(
+                  // onTap: () => Get.toNamed(Nav.verificationScreen),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    height: 50,
+                    width: size.width * 0.85,
+                    decoration: const BoxDecoration(
+                        color: PaintColors.paralaxpurple,
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    child: Center(
+                        child: Text(
+                      "CONTINUE",
+                      style: FontStyles.smallCapsIntro.copyWith(
+                          color: Colors.white,
+                          letterSpacing: 0,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w800),
+                    )),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "By clicking continue you agree to our ",
+                            style: FontStyles.smallCapsIntro.copyWith(
+                                letterSpacing: 0,
+                                color: PaintColors.generalTextsm,
+                                fontSize: 14),
+                          ),
+                          Text(
+                            "Terms of ",
+                            style: FontStyles.smallCapsIntro.copyWith(
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.bold,
+                                color: PaintColors.paralaxpurple,
+                                fontSize: 14),
+                          ),
+                        ],
+                      ),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Service"),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text("and"),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text("Privacy policy "),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ))
           ],

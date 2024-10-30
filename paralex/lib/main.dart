@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
@@ -7,10 +8,12 @@ import 'package:paralax/screens/users/Authprocess/otp.dart';
 import 'package:paralax/screens/users/Authprocess/verification_message.dart';
 import 'package:paralax/screens/welcomeslides/last_welcome_screen.dart';
 import 'package:paralax/screens/welcomeslides/welcome.dart';
+import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
 import 'package:paralax/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralax/service_provider/view/signup_screens/signup_welcome_screen.dart';
 
 void main() {
+  Get.put(UserChoiceController());
   runApp(GetMaterialApp(
     initialRoute: Nav.splash,
     getPages: [
@@ -19,7 +22,7 @@ void main() {
 
       GetPage(name: Nav.lastWelcomeScreen, page: () => const LastWelcomeScreen()),
       GetPage(name: Nav.serviceProviderSignupWelcomeScreen, page: () =>  SignupWelcomeScreen()),
-      GetPage(name: Nav.selectServiceScreen, page: () =>  const SelectServiceScreen())
+      GetPage(name: Nav.selectServiceScreen, page: () =>  const SelectServiceScreen()),
 
     
       GetPage(name: Nav.userSignupScreen, page: () => const UserRegistration()),

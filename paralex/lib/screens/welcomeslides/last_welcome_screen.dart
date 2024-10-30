@@ -10,12 +10,15 @@ import 'package:paralax/reusables/fonts.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paralax/routes/navs.dart';
 
+import '../../service_provider/controllers/user_choice_controller.dart';
+
 
 class LastWelcomeScreen extends StatelessWidget {
   const LastWelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userChoiceController = Get.find<UserChoiceController>();
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
@@ -71,7 +74,10 @@ class LastWelcomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
-                    onTap: () => Get.toNamed(Nav.userSignupScreen),
+                    onTap: (){
+                      userChoiceController.selectUser();
+                      Get.toNamed(Nav.userSignupScreen);
+                    },
                     child: const ParticipantWidget(
                       imgPath: "assets/images/2user.svg",
                       firstText: "User",
@@ -82,8 +88,10 @@ class LastWelcomeScreen extends StatelessWidget {
                   const SizedBox(width: 35),
                   InkWell(
 
-                    onTap: ()=> Get.toNamed(Nav.serviceProviderSignupWelcomeScreen),
-
+                    onTap: () {
+                      userChoiceController.selectServiceProvider();
+                      Get.toNamed(Nav.serviceProviderSignupWelcomeScreen);
+                    },
                     child: const ParticipantWidget(
                       imgPath: "assets/images/medal-star.svg",
                       firstText: "Service Provider",

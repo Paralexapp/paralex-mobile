@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:get/get_core/src/get_main.dart';
+import 'package:paralax/reusables/fonts.dart';
+import 'package:flutter_svg/svg.dart';
+import '../../routes/navs.dart';
+
 import 'package:paralax/reusables/fonts.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paralax/routes/navs.dart';
+
 
 class LastWelcomeScreen extends StatelessWidget {
   const LastWelcomeScreen({super.key});
@@ -74,7 +81,9 @@ class LastWelcomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 35),
                   InkWell(
-                    onTap: () {},
+
+                    onTap: ()=> Get.toNamed(Nav.serviceProviderSignupWelcomeScreen),
+
                     child: const ParticipantWidget(
                       imgPath: "assets/images/medal-star.svg",
                       firstText: "Service Provider",

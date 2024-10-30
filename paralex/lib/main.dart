@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
+import 'package:paralax/screens/users/Authprocess/registration.dart';
+import 'package:paralax/screens/users/Authprocess/otp.dart';
+import 'package:paralax/screens/users/Authprocess/verification_message.dart';
 import 'package:paralax/screens/welcomeslides/last_welcome_screen.dart';
 import 'package:paralax/screens/welcomeslides/welcome.dart';
 import 'package:paralax/service_provider/view/signup_screens/select_service_screen.dart';
@@ -13,9 +16,17 @@ void main() {
     getPages: [
       GetPage(name: Nav.splash, page: () => const SplashScreen()),
       GetPage(name: Nav.welcomeShow, page: () => const WelcomeSliders()),
+
       GetPage(name: Nav.lastWelcomeScreen, page: () => const LastWelcomeScreen()),
       GetPage(name: Nav.serviceProviderSignupWelcomeScreen, page: () =>  SignupWelcomeScreen()),
       GetPage(name: Nav.selectServiceScreen, page: () =>  const SelectServiceScreen())
+
+    
+      GetPage(name: Nav.userSignupScreen, page: () => const UserRegistration()),
+      GetPage(name: Nav.otpScreen, page: () => const OtpVerification()),
+      GetPage(
+          name: Nav.verificationScreen, page: () => const VerificationMessage())
+
     ],
     debugShowCheckedModeBanner: false,
   ));

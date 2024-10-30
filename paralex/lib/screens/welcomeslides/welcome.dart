@@ -84,7 +84,7 @@ class _WelcomeSlidersState extends State<WelcomeSliders> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
                           child: InkWell(
-                            onTap: ()=> Get.toNamed(Nav.lastWelcomeScreen),
+                            onTap: () => Get.toNamed(Nav.lastWelcomeScreen),
                             child: Center(
                                 child: Text(
                               "GET  STARTED",
@@ -99,6 +99,29 @@ class _WelcomeSlidersState extends State<WelcomeSliders> {
                       ),
                     )
                   : Container(),
+              Positioned(
+                  top: size.height * 0.94,
+                  left: size.width * 0.25,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account? ",
+                        style: FontStyles.smallCapsIntro
+                            .copyWith(letterSpacing: 0, fontSize: 14),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "Sign in",
+                          style: FontStyles.smallCapsIntro.copyWith(
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 14),
+                        ),
+                      )
+                    ],
+                  ))
             ],
           ),
         ));

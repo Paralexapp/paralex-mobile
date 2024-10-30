@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:get/get_core/src/get_main.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../routes/navs.dart';
+
+import 'package:paralax/reusables/fonts.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:paralax/routes/navs.dart';
+
 
 class LastWelcomeScreen extends StatelessWidget {
   const LastWelcomeScreen({super.key});
@@ -65,7 +71,7 @@ class LastWelcomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
-                    onTap: (){},
+                    onTap: () => Get.toNamed(Nav.userSignupScreen),
                     child: const ParticipantWidget(
                       imgPath: "assets/images/2user.svg",
                       firstText: "User",
@@ -75,7 +81,9 @@ class LastWelcomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 35),
                   InkWell(
+
                     onTap: ()=> Get.toNamed(Nav.serviceProviderSignupWelcomeScreen),
+
                     child: const ParticipantWidget(
                       imgPath: "assets/images/medal-star.svg",
                       firstText: "Service Provider",
@@ -99,11 +107,13 @@ class LastWelcomeScreen extends StatelessWidget {
                         .copyWith(letterSpacing: 0, fontSize: 14),
                   ),
                   InkWell(
-                    onTap: (){},
+                    onTap: () {},
                     child: Text(
                       "Sign in",
                       style: FontStyles.smallCapsIntro.copyWith(
-                          letterSpacing: 0, fontWeight: FontWeight.w900,fontSize: 14),
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 14),
                     ),
                   )
                 ],
@@ -151,7 +161,7 @@ class ParticipantWidget extends StatelessWidget {
             ),
           ),
           Transform.translate(
-            offset: const Offset(0,-5),
+            offset: const Offset(0, -5),
             child: Text(
               thirdText,
               style: FontStyles.smallCapsIntro.copyWith(

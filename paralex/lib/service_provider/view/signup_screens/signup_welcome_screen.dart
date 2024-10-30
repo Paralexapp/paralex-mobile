@@ -59,17 +59,15 @@ class SignupWelcomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Welcome to \n Paralex",
+                  "Welcome to \nParalex",
                   style: FontStyles.headingText.copyWith(
                       color: PaintColors.paralaxpurple,
-                      fontSize: 40,
-                      height: 1),
+                      fontWeight: FontWeight.w900),
                 ),
-                const SizedBox(height: 8),
                 Text(
-                  "Committed to providing prompt,\n responsive services",
+                  "Committed to providing prompt,\nresponsive services ",
                   style: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0, color: const Color(0xFF4A4A68), fontSize: 14),
+                      color: PaintColors.generalTextsm, letterSpacing: 0),
                 ),
                 const SizedBox(height: 15),
                 Obx(() => Column(
@@ -229,7 +227,7 @@ class SignupWelcomeScreen extends StatelessWidget {
                         } else if (controller.isMinLengthValid.value &&
                             controller.isUpperCaseValid.value &&
                             controller.isSpecialCharacterValid.value) {
-                          Get.toNamed(Nav.selectServiceScreen);
+                          Get.toNamed(Nav.otpScreen);
                         } else {
                           Get.snackbar("Error",
                               "Password does not meet all requirements");

@@ -22,14 +22,15 @@ class SelectServiceScreen extends StatelessWidget {
             onPressed: () => Get.back(), icon: PinkButton.backButton),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20.0,right: 20,top: 20,bottom: 45),
+        padding: const EdgeInsets.only(left: 20.0,right: 20,top: 25,bottom: 45),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Choose your \n preferred",
               style: FontStyles.headingText.copyWith(
-                  color: PaintColors.paralaxpurple, fontSize: 40, height: 1),
+                  color: PaintColors.paralaxpurple,
+                  fontWeight: FontWeight.w900),
             ),
             const SizedBox(height: 35),
             Row(

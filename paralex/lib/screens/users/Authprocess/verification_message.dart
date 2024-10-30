@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
+
+import '../../../routes/navs.dart';
 
 class VerificationMessage extends StatefulWidget {
   const VerificationMessage({super.key});
@@ -48,7 +51,7 @@ class _VerificationMessageState extends State<VerificationMessage> {
                 height: size.height * 0.40,
               ),
               GestureDetector(
-                // onTap: () => Get.toNamed(Nav.verificationScreen),
+                onTap: () => Get.toNamed(Nav.tellusMoreforUsers),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   height: 50,

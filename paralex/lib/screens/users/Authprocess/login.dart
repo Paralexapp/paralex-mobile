@@ -5,14 +5,14 @@ import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
 
-class UserRegistration extends StatefulWidget {
-  const UserRegistration({super.key});
+class LoginWithPassword extends StatefulWidget {
+  const LoginWithPassword({super.key});
 
   @override
-  State<UserRegistration> createState() => _MyWidgetState();
+  State<LoginWithPassword> createState() => _LoginWithPasswordState();
 }
 
-class _MyWidgetState extends State<UserRegistration> {
+class _LoginWithPasswordState extends State<LoginWithPassword> {
   final GlobalKey<FormState> _key = GlobalKey();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -84,6 +84,9 @@ class _MyWidgetState extends State<UserRegistration> {
                                   return "Please enter a vaild email";
                                 }
                               },
+                              onChanged: (value) {
+                                updateFormValidity();
+                              },
 
                               // style: Fonts.smallText,
                               keyboardType: TextInputType.emailAddress,
@@ -146,34 +149,6 @@ class _MyWidgetState extends State<UserRegistration> {
                                     borderSide: BorderSide(
                                         color: PaintColors.paralaxpurple))),
                           )),
-                          Container(
-                              // padding: const EdgeInsets.all(0),
-                              margin: const EdgeInsets.symmetric(vertical: 20),
-                              child: TextFormField(
-                                obscureText: _isObscure,
-                                onChanged: (value) => (updateFormValidity()),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter a value";
-                                  } else if (value !=
-                                      _passwordController.text) {
-                                    return "Password do not match";
-                                  }
-                                },
-                                //fix
-                                // style: Fonts.smallText,
-                                controller: _confirmPasswordController,
-                                decoration: InputDecoration(
-                                    // icon: Icon(Icons.person),
-                                    suffixIcon: IconButton(
-                                        onPressed: () {},
-                                        icon: _isObscure
-                                            ? const Icon(Icons.visibility)
-                                            : const Icon(Icons.visibility_off)),
-                                    hintText: 'confirm password',
-                                    labelText: 'confirm password *',
-                                    border: const OutlineInputBorder()),
-                              )),
 
                           const SizedBox(height: 20),
                           Column(
@@ -187,7 +162,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                   'One Unique Character (e.g: !@#%^&*?)'),
                             ],
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 50),
 
                           Center(
                               child: ElevatedButton.icon(
@@ -195,7 +170,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                     if (!_key.currentState!.validate()) {
                                       return;
                                     }
-                                    Get.toNamed(Nav.otpScreen);
+                                    // Get.toNamed(Nav.otpScreen);
                                   },
                                   style: ElevatedButton.styleFrom(
                                       elevation: 0,
@@ -225,7 +200,31 @@ class _MyWidgetState extends State<UserRegistration> {
                                         )
                                       : Container()))
                         ],
-                      ))
+                      )),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "New user?",
+                        style: FontStyles.smallCapsIntro.copyWith(
+                            letterSpacing: 0,
+                            color: PaintColors.generalTextsm,
+                            fontSize: 14),
+                      ),
+                      InkWell(
+                        onTap: () => Get.toNamed(Nav.userSignupScreen),
+                        child: Text("Signup",
+                            style: FontStyles.smallCapsIntro.copyWith(
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.bold,
+                                color: PaintColors.paralaxpurple,
+                                fontSize: 14)),
+                      )
+                    ],
+                  )
                   //end of 01
                 ],
               )),
@@ -237,9 +236,8 @@ class _MyWidgetState extends State<UserRegistration> {
       _isFormValid = _hasEightChars &&
           _hasCapitalLetters &&
           _hasSpecialChar &&
-          _passwordController.text == _confirmPasswordController.text &&
           _passwordController.text.isNotEmpty &&
-          _confirmPasswordController.text.isNotEmpty;
+          _emailController.text.isNotEmpty;
     });
   }
 

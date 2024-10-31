@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
+import 'package:paralax/routes/navs.dart';
 
 class MoreAboutYou extends StatefulWidget {
   const MoreAboutYou({super.key});
@@ -133,7 +135,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                   height: 15,
                 ),
                 GestureDetector(
-                  // onTap: () => Get.toNamed(Nav.verificationScreen),
+                  onTap: () => Get.toNamed(Nav.login),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     height: 50,
@@ -169,7 +171,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                                 fontSize: 14),
                           ),
                           Text(
-                            "Terms of ",
+                            "Terms of",
                             style: FontStyles.smallCapsIntro.copyWith(
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.bold,
@@ -178,18 +180,30 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                           ),
                         ],
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Service"),
-                          SizedBox(
+                          Text("Service",
+                              style: FontStyles.smallCapsIntro.copyWith(
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.bold,
+                                  color: PaintColors.paralaxpurple,
+                                  fontSize: 14)),
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text("and"),
-                          SizedBox(
+                          const Text("and"),
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text("Privacy policy "),
+                          Text(
+                            "Privacy policy ",
+                            style: FontStyles.smallCapsIntro.copyWith(
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.bold,
+                                color: PaintColors.paralaxpurple,
+                                fontSize: 14),
+                          ),
                         ],
                       ),
                     ],

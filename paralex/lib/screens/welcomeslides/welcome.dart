@@ -111,7 +111,7 @@ class _WelcomeSlidersState extends State<WelcomeSliders> {
                             .copyWith(letterSpacing: 0, fontSize: 14),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () => Get.toNamed(Nav.login),
                         child: Text(
                           "Sign in",
                           style: FontStyles.smallCapsIntro.copyWith(

@@ -10,4 +10,6 @@ class Nav {
   static const verificationScreen = "/verification";
   static const tellusMoreforUsers = "/tellUsMore";
   static const login = "/login";
+  static const forgotPassword = '/resetPassword';
+  static const resetPassOtp = '/resetPasswordOtp';
 }

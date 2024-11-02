@@ -108,7 +108,7 @@ class LastWelcomeScreen extends StatelessWidget {
                         .copyWith(letterSpacing: 0, fontSize: 14),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () => Get.toNamed(Nav.login),
                     child: Text(
                       "Sign in",
                       style: FontStyles.smallCapsIntro.copyWith(

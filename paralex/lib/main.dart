@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
-import 'package:paralax/screens/users/Authprocess/login.dart';
-import 'package:paralax/screens/users/Authprocess/registration.dart';
-import 'package:paralax/screens/users/Authprocess/otp.dart';
-import 'package:paralax/screens/users/Authprocess/tellus_more.dart';
-import 'package:paralax/screens/users/Authprocess/verification_message.dart';
+import 'package:paralax/screens/users/auth_process/login.dart';
+import 'package:paralax/screens/users/auth_process/registration.dart';
+import 'package:paralax/screens/users/auth_process/otp.dart';
+import 'package:paralax/screens/users/auth_process/rest_process/step_one.dart';
+import 'package:paralax/screens/users/auth_process/rest_process/step_two.dart';
+import 'package:paralax/screens/users/auth_process/tellus_more.dart';
+import 'package:paralax/screens/users/auth_process/verification_message.dart';
 import 'package:paralax/screens/welcomeslides/last_welcome_screen.dart';
 import 'package:paralax/screens/welcomeslides/welcome.dart';
 import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
@@ -44,6 +46,8 @@ void main() {
           page: () => const VerificationMessage()),
       GetPage(name: Nav.tellusMoreforUsers, page: () => const MoreAboutYou()),
       GetPage(name: Nav.login, page: () => const LoginWithPassword()),
+      GetPage(name: Nav.forgotPassword, page: () => const StepOne()),
+      GetPage(name: Nav.resetPassOtp, page: () => const StepTwo())
     ],
     debugShowCheckedModeBanner: false,
   ));

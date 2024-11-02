@@ -41,7 +41,10 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(),
+        backgroundColor: PaintColors.bgColor,
+        appBar: AppBar(
+          backgroundColor: PaintColors.bgColor,
+        ),
         body: SingleChildScrollView(
           child: Container(
               padding: const EdgeInsets.all(25),
@@ -224,7 +227,18 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                 fontSize: 14)),
                       )
                     ],
-                  )
+                  ),
+                  Center(
+                      child: InkWell(
+                    onTap: () => Get.toNamed(Nav.forgotPassword),
+                    child: Text("Forgot password",
+                        style: FontStyles.smallCapsIntro.copyWith(
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.bold,
+                          color: PaintColors.paralaxpurple,
+                          fontSize: 13,
+                        )),
+                  ))
                   //end of 01
                 ],
               )),

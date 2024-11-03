@@ -17,11 +17,14 @@ class _StepTwoState extends State<StepTwo> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: PaintColors.bgColor,
+      ),
       backgroundColor: PaintColors.bgColor,
       body: Container(
-        margin: EdgeInsets.only(top: size.height * 0.10),
-        padding: EdgeInsets.symmetric(horizontal: size.height * 0.040),
-        color: Colors.amber,
+        margin: EdgeInsets.only(top: size.height * 0.03),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        // color: Colors.amber,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -29,22 +32,18 @@ class _StepTwoState extends State<StepTwo> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Verification",
-                  style: FontStyles.headingText
-                      .copyWith(color: PaintColors.paralaxpurple, fontSize: 25),
+                  "Confirm your\n email address",
+                  style: FontStyles.headingText.copyWith(
+                      color: PaintColors.paralaxpurple,
+                      fontWeight: FontWeight.w900),
                 ),
-                Text("Enter the code we just sent",
+                const SizedBox(height: 20),
+                Text("Enter the login pin sent to your email",
                     style: FontStyles.smallCapsIntro.copyWith(
                         color: PaintColors.generalTextsm,
                         letterSpacing: 0,
-                        fontSize: 18,
+                        // fontSize: 18,
                         fontWeight: FontWeight.bold)),
-                Text("you on your email",
-                    style: FontStyles.smallCapsIntro.copyWith(
-                        color: PaintColors.generalTextsm,
-                        letterSpacing: 0,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold))
               ],
             ),
             const SizedBox(
@@ -58,11 +57,11 @@ class _StepTwoState extends State<StepTwo> {
 
                 // const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
                       height: 68,
-                      width: 68,
+                      width: 60,
                       child: TextField(
                         onChanged: (value) {
                           if (value.length == 1) {
@@ -78,6 +77,9 @@ class _StepTwoState extends State<StepTwo> {
                         decoration:
                             const InputDecoration(border: OutlineInputBorder()),
                       ),
+                    ),
+                    const SizedBox(
+                      width: 20,
                     ),
                     SizedBox(
                       height: 68,
@@ -98,6 +100,9 @@ class _StepTwoState extends State<StepTwo> {
                             const InputDecoration(border: OutlineInputBorder()),
                       ),
                     ),
+                    const SizedBox(
+                      width: 20,
+                    ),
                     SizedBox(
                       height: 68,
                       width: 68,
@@ -116,6 +121,9 @@ class _StepTwoState extends State<StepTwo> {
                         decoration:
                             const InputDecoration(border: OutlineInputBorder()),
                       ),
+                    ),
+                    const SizedBox(
+                      width: 20,
                     ),
                     SizedBox(
                       height: 68,

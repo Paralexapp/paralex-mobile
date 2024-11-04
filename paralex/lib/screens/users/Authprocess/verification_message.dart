@@ -58,11 +58,11 @@ class _VerificationMessageState extends State<VerificationMessage> {
               ),
               GestureDetector(
 
-                onTap: () => Get.toNamed(Nav.tellusMoreforUsers),
+                //onTap: () => Get.toNamed(Nav.tellusMoreforUsers),
 
                 onTap: () {
                   if (userChoiceController.isUser.value) {
-                    //Get.toNamed(Nav.userHomeScreen); // Navigate to UserHomeScreen
+                    Get.toNamed(Nav.tellusMoreforUsers); // Navigate to UserHomeScreen
                   } else {
                     Get.toNamed(Nav.selectServiceScreen); // Navigate to ServiceProviderHomeScreen
                   }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/view/signup_screens/widgets/signupWidget.dart';
 import '../../../reusables/fonts.dart';
 import '../../../reusables/back_button.dart';
 import '../../controllers/signup_controller.dart';
+import '../widgets/signupWidget.dart';
 
 class SignupWelcomeScreen extends StatelessWidget {
 

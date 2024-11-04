@@ -9,4 +9,6 @@ class Nav {
   static const otpScreen = "/otp";
   static const verificationScreen = "/verification";
   static const tellusMoreforUsers = "/tellUsMore";
+  static const aboutServiceProvider = "/aboutYou";
+  static const aboutServiceProviderPage2 = "/aboutYouContd";
 }

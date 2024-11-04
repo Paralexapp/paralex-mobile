@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
+
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
+import 'package:paralax/screens/users/auth_process/final_step.dart';
 import 'package:paralax/screens/users/auth_process/login.dart';
 import 'package:paralax/screens/users/auth_process/registration.dart';
 import 'package:paralax/screens/users/auth_process/otp.dart';
 import 'package:paralax/screens/users/auth_process/rest_process/step_one.dart';
+import 'package:paralax/screens/users/auth_process/rest_process/step_three.dart';
 import 'package:paralax/screens/users/auth_process/rest_process/step_two.dart';
 import 'package:paralax/screens/users/auth_process/tellus_more.dart';
 import 'package:paralax/screens/users/auth_process/verification_message.dart';
@@ -47,7 +49,9 @@ void main() {
       GetPage(name: Nav.tellusMoreforUsers, page: () => const MoreAboutYou()),
       GetPage(name: Nav.login, page: () => const LoginWithPassword()),
       GetPage(name: Nav.forgotPassword, page: () => const StepOne()),
-      GetPage(name: Nav.resetPassOtp, page: () => const StepTwo())
+      GetPage(name: Nav.resetPassOtp, page: () => const StepTwo()),
+      GetPage(name: Nav.setNewPass, page: () => const StepThree()),
+      GetPage(name: Nav.finalStep, page: () => const FinalStep())
     ],
     debugShowCheckedModeBanner: false,
   ));

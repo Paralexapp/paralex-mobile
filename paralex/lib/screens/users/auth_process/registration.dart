@@ -41,7 +41,10 @@ class _MyWidgetState extends State<UserRegistration> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(),
+        backgroundColor: PaintColors.bgColor,
+        appBar: AppBar(
+          backgroundColor: PaintColors.bgColor,
+        ),
         body: SingleChildScrollView(
           child: Container(
               padding: const EdgeInsets.all(25),

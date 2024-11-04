@@ -12,4 +12,6 @@ class Nav {
   static const login = "/login";
   static const forgotPassword = '/resetPassword';
   static const resetPassOtp = '/resetPasswordOtp';
+  static const setNewPass = '/setNewPass';
+  static const finalStep = '/finalStep';
 }

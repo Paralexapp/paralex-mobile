@@ -173,7 +173,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                     if (!_key.currentState!.validate()) {
                                       return;
                                     }
-                                    // Get.toNamed(Nav.otpScreen);
+                                    Get.toNamed(Nav.home);
                                   },
                                   style: ElevatedButton.styleFrom(
                                       elevation: 0,

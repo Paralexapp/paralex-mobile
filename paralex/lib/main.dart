@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
+import 'package:paralax/screens/users/account/home.dart';
+import 'package:paralax/screens/users/account/pages/Logistics/home.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/paralegal_home.dart';
 import 'package:paralax/screens/users/auth_process/final_step.dart';
 import 'package:paralax/screens/users/auth_process/login.dart';
 import 'package:paralax/screens/users/auth_process/registration.dart';
@@ -51,7 +54,9 @@ void main() {
       GetPage(name: Nav.forgotPassword, page: () => const StepOne()),
       GetPage(name: Nav.resetPassOtp, page: () => const StepTwo()),
       GetPage(name: Nav.setNewPass, page: () => const StepThree()),
-      GetPage(name: Nav.finalStep, page: () => const FinalStep())
+      GetPage(name: Nav.finalStep, page: () => const FinalStep()),
+      GetPage(name: Nav.home, page: () => const Home()),
+      GetPage(name: Nav.paralegalHome, page: () => const ParalegalDashboard())
     ],
     debugShowCheckedModeBanner: false,
   ));

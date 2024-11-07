@@ -6,11 +6,11 @@ import '../../../../reusables/fonts.dart';
 class SelectServiceWidget extends StatelessWidget {
   const SelectServiceWidget(
       {super.key,
-        required this.imgPath,
-        required this.firstText,
-        required this.secondText,
-        required this.thirdText,
-        required this.bckgColor});
+      required this.imgPath,
+      required this.firstText,
+      required this.secondText,
+      required this.thirdText,
+      required this.bckgColor});
 
   final String imgPath;
   final String firstText;
@@ -23,7 +23,7 @@ class SelectServiceWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
-        color: bckgColor,
+          color: bckgColor,
           border: Border.all(
             color: const Color(0xFFD1D1D1),
           ),
@@ -34,16 +34,15 @@ class SelectServiceWidget extends StatelessWidget {
           SvgPicture.asset(imgPath),
           Text(
             firstText,
-            style: FontStyles.contentText
-                .copyWith(fontWeight: FontWeight.bold),
+            style: FontStyles.contentText.copyWith(fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
           Text(
             secondText,
             style: FontStyles.contentText,
           ),
           Transform.translate(
-            offset: const Offset(0,-5),
+            offset: const Offset(0, -5),
             child: Text(
               thirdText,
               style: FontStyles.contentText,

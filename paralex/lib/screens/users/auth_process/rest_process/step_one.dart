@@ -66,6 +66,7 @@ class _StepOneState extends State<StepOne> {
                             if (!isEmailValid(value)) {
                               return "Please enter a vaild email";
                             }
+                            return null;
                           },
                           onChanged: (value) {
                             updateFormValidity();

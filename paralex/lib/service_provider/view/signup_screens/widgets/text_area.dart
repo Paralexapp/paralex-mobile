@@ -11,7 +11,7 @@ class ReusableTextArea extends StatelessWidget {
   final TextEditingController? controller;
 
   const ReusableTextArea({
-    Key? key,
+    super.key,
     required this.labelText,
     this.hintText,
     this.maxLength,
@@ -20,7 +20,7 @@ class ReusableTextArea extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.validator,
     this.controller,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class ReusableTextArea extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
       validator: validator,
     );

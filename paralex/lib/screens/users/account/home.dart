@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
       body: PageView(
         controller: controller.pageController,
         physics: const BouncingScrollPhysics(),
-        children: [Dashboard(), ParalegalHome()],
+        children: const [Dashboard(), ParalegalHome()],
       ),
       bottomNavigationBar: BottomAppBar(
         color: PaintColors.white,

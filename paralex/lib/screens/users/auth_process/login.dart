@@ -86,6 +86,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                 if (!isEmailValid(value)) {
                                   return "Please enter a vaild email";
                                 }
+                                return null;
                               },
                               onChanged: (value) {
                                 updateFormValidity();
@@ -131,6 +132,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                   .hasMatch(value)) {
                                 return 'Password must have at least one special character';
                               }
+                              return null;
                             },
                             // style: Font.smallText,
                             controller: _passwordController,

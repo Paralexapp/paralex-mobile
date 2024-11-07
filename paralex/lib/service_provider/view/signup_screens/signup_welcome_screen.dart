@@ -8,11 +8,9 @@ import '../../../reusables/back_button.dart';
 import '../../controllers/signup_controller.dart';
 
 class SignupWelcomeScreen extends StatelessWidget {
-
   final SignupController controller = Get.put(SignupController());
 
   SignupWelcomeScreen({super.key});
-
 
   InputDecoration kInputDecoration(
       RxBool passwordVisible, VoidCallback toggleVisibility, String hintText) {
@@ -28,7 +26,8 @@ class SignupWelcomeScreen extends StatelessWidget {
         onPressed: toggleVisibility,
       ),
       suffixIconColor: const Color(0xFF4C1044),
-      contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+      contentPadding:
+          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       enabledBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         borderSide: BorderSide(color: Colors.transparent),
@@ -176,7 +175,7 @@ class SignupWelcomeScreen extends StatelessWidget {
                         Text("One UPPERCASE Character",
                             style: FontStyles.smallCapsIntro.copyWith(
                                 letterSpacing: 0,
-                                color: Color(0xFF4A4A68),
+                                color: const Color(0xFF4A4A68),
                                 fontSize: 12)),
                       ],
                     )),
@@ -297,7 +296,8 @@ class SignupWelcomeScreen extends StatelessWidget {
                     SignupWidget(imgpath: "assets/images/apple.svg"),
                     SizedBox(width: 15),
                     SignupWidget(imgpath: "assets/images/fb.svg"),
-                ],)
+                  ],
+                )
               ],
             ),
           ),
@@ -306,5 +306,3 @@ class SignupWelcomeScreen extends StatelessWidget {
     );
   }
 }
-
-

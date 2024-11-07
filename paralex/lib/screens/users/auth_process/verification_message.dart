@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
-import 'package:get/get.dart';
 import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
 
 import '../../../routes/navs.dart';

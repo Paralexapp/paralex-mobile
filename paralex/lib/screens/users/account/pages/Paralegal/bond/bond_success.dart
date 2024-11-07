@@ -6,6 +6,7 @@ import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
 import '../../../../../../service_provider/view/widgets/custom_button.dart';
 
+
 class BondSuccess extends StatelessWidget {
   const BondSuccess({super.key});
 
@@ -33,17 +34,17 @@ class BondSuccess extends StatelessWidget {
                 fit: BoxFit.cover,
               )),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Text(
               "Congratulations!",
               style: FontStyles.headingText.copyWith(color: Colors.black),
             ),
             Text(
-              "your submission was successful ",
+              "your! submission was successful ",
               style: FontStyles.smallCapsIntro.copyWith(
                   color: Colors.black, letterSpacing: 0, fontSize: 14),
             ),
-            const SizedBox(height: 40),
+            SizedBox(height: 40),
             CustomButton(
                 desiredWidth: 70,
                 buttonText: "Go back to home ",

@@ -19,6 +19,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
   final TextEditingController _lastName = TextEditingController();
   final _dateController = TextEditingController();
   DateTime? _selectedDate;
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -53,6 +54,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                     if (value!.isEmpty) {
                       return "Enter a value";
                     }
+                    return null;
                   },
 
                   // style: Fonts.smallText,
@@ -76,6 +78,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                     if (value!.isEmpty) {
                       return "Enter a value";
                     }
+                    return null;
                   },
 
                   // style: Fonts.smallText,

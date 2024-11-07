@@ -7,12 +7,11 @@ class ReusableRadioButtons extends StatefulWidget {
   final String label;
 
   const ReusableRadioButtons(
-      {Key? key,
+      {super.key,
       required this.options,
       this.initialValue,
       required this.onChanged,
-      required this.label})
-      : super(key: key);
+      required this.label});
 
   @override
   _ReusableRadioButtonsState createState() => _ReusableRadioButtonsState();
@@ -34,9 +33,9 @@ class _ReusableRadioButtonsState extends State<ReusableRadioButtons> {
       children: [
         Text(
           widget.label, // Display label
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: widget.options.map((option) {
@@ -48,7 +47,7 @@ class _ReusableRadioButtonsState extends State<ReusableRadioButtons> {
                   value: option,
                   groupValue: _selectedValue,
                   onChanged: (value) {
-                    widget.onChanged!(value as String?);
+                    widget.onChanged!(value);
                     setState(() => _selectedValue = value);
                   },
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
 class SignupWidget extends StatelessWidget {
   const SignupWidget({super.key, required this.imgpath});
 
@@ -10,11 +11,11 @@ class SignupWidget extends StatelessWidget {
       width: 58,
       height: 44,
       decoration: BoxDecoration(
-        color: Color(0xFFFFE4F2),
+        color: const Color(0xFFFFE4F2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
-        child:  SvgPicture.asset(imgpath),
+        child: SvgPicture.asset(imgpath),
       ),
     );
   }

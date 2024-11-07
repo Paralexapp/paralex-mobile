@@ -86,6 +86,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                 if (!isEmailValid(value)) {
                                   return "Please enter a vaild email";
                                 }
+                                return null;
                               },
 
                               // style: Fonts.smallText,
@@ -128,6 +129,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                   .hasMatch(value)) {
                                 return 'Password must have at least one special character';
                               }
+                              return null;
                             },
                             // style: Font.smallText,
                             controller: _passwordController,
@@ -162,6 +164,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                       _passwordController.text) {
                                     return "Password do not match";
                                   }
+                                  return null;
                                 },
                                 //fix
                                 // style: Fonts.smallText,

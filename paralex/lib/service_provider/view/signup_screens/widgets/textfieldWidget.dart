@@ -9,32 +9,31 @@ class TextfieldWidget extends StatelessWidget {
   final Function(String)? onChanged;
   final FormFieldValidator<String>? validator;
 
-  TextfieldWidget(
-      {Key? key,
+  const TextfieldWidget(
+      {super.key,
       this.hintText = '',
       this.textStyle,
       this.decoration,
       this.keyboardType = TextInputType.text,
       this.obscureText = false,
       this.onChanged,
-      this.validator})
-      : super(key: key);
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 80,
       child: TextField(
-        style: textStyle ?? TextStyle(color: Colors.black),
+        style: textStyle ?? const TextStyle(color: Colors.black),
         keyboardType: keyboardType,
         obscureText: obscureText,
         onChanged: onChanged,
         decoration: decoration ??
             InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.grey),
+              hintStyle: const TextStyle(color: Colors.grey),
               filled: true,
-              fillColor: Color(0xFFECF1F4),
+              fillColor: const Color(0xFFECF1F4),
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
               enabledBorder: const OutlineInputBorder(

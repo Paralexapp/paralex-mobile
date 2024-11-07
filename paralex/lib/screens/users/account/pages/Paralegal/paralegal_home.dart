@@ -16,11 +16,11 @@ class ParalegalDashboard extends StatelessWidget {
       appBar: _appBar(context),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(25),
+          padding: const EdgeInsets.all(25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Services"),
+              const Text("Services"),
               const SizedBox(
                 height: 20,
               ),
@@ -50,7 +50,7 @@ class ParalegalDashboard extends StatelessWidget {
 
   PreferredSize _appBar(BuildContext context) {
     return PreferredSize(
-        preferredSize: Size.fromHeight(220),
+        preferredSize: const Size.fromHeight(220),
         child: Container(
             decoration: _boxDecoration(),
             child: Column(
@@ -114,12 +114,12 @@ class ParalegalDashboard extends StatelessWidget {
   Widget _searchBox() {
     return Container(
         height: 60,
-        padding: EdgeInsets.symmetric(horizontal: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         child: TextField(
           decoration: InputDecoration(
             filled: true,
-            fillColor: Color(0xFFF2F2F2),
-            prefixIcon: Icon(Icons.search), // Search icon
+            fillColor: const Color(0xFFF2F2F2),
+            prefixIcon: const Icon(Icons.search), // Search icon
             labelText: 'Search',
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
           ),

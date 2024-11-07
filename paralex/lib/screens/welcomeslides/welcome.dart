@@ -16,13 +16,13 @@ class _WelcomeSlidersState extends State<WelcomeSliders> {
   static final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
   final List<Widget> showSliders = [
-    const Slide(
-      sub: "Leveraging on wealth of experience",
-      image: "assets/images/rider.jpeg",
-      title: "Expertise and \n experience",
-      // color: Colors.black12,
-      text: "",
-    ),
+    // const Slide(
+    //   sub: "Leveraging on wealth of experience",
+    //   image: "assets/images/rider.jpeg",
+    //   title: "Expertise and \n experience",
+    //   // color: Colors.black12,
+    //   text: "",
+    // ),
     const SlideB(
       sub: "Strategies specific to your nich",
       image: "assets/images/manwithsmile.jpeg",

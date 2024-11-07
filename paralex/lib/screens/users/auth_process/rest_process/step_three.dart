@@ -85,6 +85,7 @@ class _StepThreeState extends State<StepThree> {
                               .hasMatch(value)) {
                             return 'Password must have at least one special character';
                           }
+                          return null;
                         },
                         // style: Font.smallText,
                         controller: _passwordController,
@@ -118,6 +119,7 @@ class _StepThreeState extends State<StepThree> {
                               } else if (value != _passwordController.text) {
                                 return "Password do not match";
                               }
+                              return null;
                             },
                             //fix
                             // style: Fonts.smallText,

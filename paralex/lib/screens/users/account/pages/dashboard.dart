@@ -23,7 +23,7 @@ class _DashboardState extends State<Dashboard> {
         Padding(
           padding: const EdgeInsets.all(25),
           child: Container(
-            margin: EdgeInsets.only(top: 40),
+            margin: const EdgeInsets.only(top: 40),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -176,12 +176,12 @@ class _DashboardState extends State<Dashboard> {
                     Container(
                       height: 45,
                       width: 45,
+                      decoration: const BoxDecoration(
+                          color: PaintColors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Center(
                         child: Icon(Iconsax.arrow_right_2),
                       ),
-                      decoration: BoxDecoration(
-                          color: PaintColors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
                     )
                   ],
                 )

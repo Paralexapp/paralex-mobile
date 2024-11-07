@@ -22,7 +22,7 @@ class BondFirstStep extends StatelessWidget {
           backgroundColor: PaintColors.bgColor,
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(25),
+          padding: const EdgeInsets.all(25),
           child: Container(
             child: Column(
               children: [

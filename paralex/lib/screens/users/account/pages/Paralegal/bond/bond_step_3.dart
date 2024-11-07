@@ -23,7 +23,7 @@ class BondThirdStep extends StatelessWidget {
           backgroundColor: PaintColors.bgColor,
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(25),
+          padding: const EdgeInsets.all(25),
           child: Container(
             child: Column(
               children: [
@@ -91,9 +91,9 @@ class BondThirdStep extends StatelessWidget {
                       ),
                       CustomButton(
                           desiredWidth: 90,
-                          buttonText: "Next",
+                          buttonText: "Submit",
                           buttonColor: PaintColors.paralaxpurple,
-                          ontap: () => Get.toNamed(Nav.bondStepB))
+                          ontap: () => Get.toNamed(Nav.bondSubmitted))
                     ],
                   ),
                 )
@@ -101,6 +101,5 @@ class BondThirdStep extends StatelessWidget {
             ),
           ),
         ));
-    ;
   }
 }

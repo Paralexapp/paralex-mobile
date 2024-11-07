@@ -4,6 +4,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_1.dart';
 
 class ParalegalDashboard extends StatelessWidget {
   const ParalegalDashboard({super.key});
@@ -24,16 +25,17 @@ class ParalegalDashboard extends StatelessWidget {
                 height: 20,
               ),
               Container(
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MenuWithImages(
+                    const MenuWithImages(
                         image: "assets/images/book.png",
                         text: "Legal Assistance\n Service"),
-                    MenuWithImages(
+                    const MenuWithImages(
                         image: "assets/images/litigation.png",
                         text: "Litigation\n Support"),
                     MenuWithImages(
+                        navTo: () => Get.toNamed(Nav.bondStepA),
                         image: "assets/images/bond.png",
                         text: "Bail Bond\n Service"),
                   ],
@@ -126,25 +128,30 @@ class ParalegalDashboard extends StatelessWidget {
 }
 
 class MenuWithImages extends StatelessWidget {
-  const MenuWithImages({super.key, required this.text, required this.image});
+  const MenuWithImages(
+      {super.key, this.navTo, required this.text, required this.image});
   final String text;
   final String image;
+  final VoidCallback? navTo;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
-          Container(
-            height: 90,
-            width: 90,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(17),
-                color: PaintColors.paralaxpurple),
-            child: Center(
-              child: Image.asset(
-                image,
-                fit: BoxFit.contain,
+          InkWell(
+            onTap: navTo,
+            child: Container(
+              height: 90,
+              width: 90,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(17),
+                  color: PaintColors.paralaxpurple),
+              child: Center(
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),

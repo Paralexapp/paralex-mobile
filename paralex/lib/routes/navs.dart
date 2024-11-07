@@ -16,4 +16,6 @@ class Nav {
   static const finalStep = '/finalStep';
   static const home = '/home';
   static const paralegalHome = '/paralegalHome';
+  static const bondStepA = '/bondA';
+  static const bondStepB = '/bondB';
 }

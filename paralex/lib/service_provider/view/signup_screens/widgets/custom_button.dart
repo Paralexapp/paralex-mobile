@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../reusables/fonts.dart';
+
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
@@ -22,12 +23,12 @@ class CustomButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       height: 50,
       width: size.width * desiredWidth,
-      decoration:  BoxDecoration(
-        color:  buttonColor,
+      decoration: BoxDecoration(
+        color: buttonColor,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: ontap,
         child: Center(
           child: Text(
             buttonText,

@@ -78,7 +78,7 @@ class BondThirdStep extends StatelessWidget {
                         initialValue: 'Yes',
                         onChanged: (value) {},
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'Member of any group',
                       ),
                       // TextfieldWidget(

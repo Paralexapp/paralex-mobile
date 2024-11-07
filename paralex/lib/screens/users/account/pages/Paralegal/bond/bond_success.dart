@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:paralax/reusables/fonts.dart';
+
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
 import '../../../../../../service_provider/view/widgets/custom_button.dart';
@@ -16,29 +17,40 @@ class BondSuccess extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: PaintColors.bgColor,
       ),
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(25),
-          child: Column(
-            children: [
-              const Icon(
-                Iconsax.copy_success,
-                size: 100,
-                color: Colors.green,
+      body: Container(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          children: [
+            Container(
+              height: 150,
+              width: 150,
+              decoration: const BoxDecoration(
+                color: PaintColors.paralaxpurple,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
-              const Text(
-                "Bond Submitted successfully",
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomButton(
-                  desiredWidth: 70,
-                  buttonText: "Go back to home",
-                  buttonColor: PaintColors.paralaxpurple,
-                  ontap: () => Get.toNamed(Nav.paralegalHome))
-            ],
-          ),
+              child: Center(
+                  child: Image.asset(
+                "assets/images/high-five.png",
+                fit: BoxFit.cover,
+              )),
+            ),
+            SizedBox(height: 10),
+            Text(
+              "Congratulations!",
+              style: FontStyles.headingText.copyWith(color: Colors.black),
+            ),
+            Text(
+              "your! submission was successful ",
+              style: FontStyles.smallCapsIntro.copyWith(
+                  color: Colors.black, letterSpacing: 0, fontSize: 14),
+            ),
+            SizedBox(height: 40),
+            CustomButton(
+                desiredWidth: 70,
+                buttonText: "Go back to home ",
+                buttonColor: PaintColors.paralaxpurple,
+                ontap: () => Get.toNamed(Nav.paralegalHome))
+          ],
         ),
       ),
     );

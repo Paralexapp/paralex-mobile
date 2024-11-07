@@ -87,9 +87,9 @@ class LastWelcomeScreen extends StatelessWidget {
                     },
                     child: const ParticipantWidget(
                       imgPath: "assets/images/medal-star.svg",
-                      firstText: "Service Provider",
-                      secondText: "I'm a delivery agent",
-                      thirdText: "or a lawyer",
+                      firstText: "Offer Service",
+                      secondText: "Rider",
+                      thirdText: "or Lawyer",
                     ),
                   ),
                 ],

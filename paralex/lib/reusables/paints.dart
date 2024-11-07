@@ -8,5 +8,5 @@ class PaintColors {
 
   static const generalTextsm = Color(0xFF4A4A68);
   static const fadedPinkBg = Color(0xFFFFE4F2);
-
+  static const white = Colors.white;
 }

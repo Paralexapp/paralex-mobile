@@ -28,7 +28,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                   style: FontStyles.headingText
                       .copyWith(color: PaintColors.paralaxpurple, fontSize: 25),
                 ),
-                Text("Enter the code you just sent",
+                Text("Enter the code we just sent",
                     style: FontStyles.smallCapsIntro.copyWith(
                         color: PaintColors.generalTextsm,
                         letterSpacing: 0,

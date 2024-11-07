@@ -82,7 +82,7 @@ class BondSecondStep extends StatelessWidget {
                           desiredWidth: 90,
                           buttonText: "Next",
                           buttonColor: PaintColors.paralaxpurple,
-                          ontap: () => Get.toNamed(Nav.bondStepB))
+                          ontap: () => Get.toNamed(Nav.bondStepC))
                     ],
                   ),
                 )

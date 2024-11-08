@@ -4,7 +4,6 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final String labelText;
   final TextStyle? textStyle;
-  final InputDecoration? decoration;
   final TextInputType keyboardType;
   final bool obscureText;
   final Function(String)? onChanged;
@@ -18,10 +17,9 @@ class CustomTextFormField extends StatelessWidget {
 
   CustomTextFormField({
     Key? key,
-    this.hintText = '',
+    required this.hintText,
     this.labelText = '',
     this.textStyle,
-    this.decoration,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
     this.onChanged,
@@ -36,34 +34,32 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      style: textStyle ?? TextStyle(color: Colors.black),
-      keyboardType: keyboardType,
-      obscureText: obscureText,
-      onChanged: onChanged,
-      readOnly: readonly,
-      validator: validator,
-      onTap: ontap,
-      enabled: enabled,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: decoration ??
-          InputDecoration(
-            hintText: hintText,
-            hintStyle: TextStyle(color: Colors.grey),
+    return Stack(
+      children: [
+        TextFormField(
+          controller: controller,
+          style: textStyle ?? TextStyle(color: Colors.black),
+          keyboardType: keyboardType,
+          obscureText: obscureText,
+          onChanged: onChanged,
+          readOnly: readonly,
+          validator: validator,
+          onTap: ontap,
+          enabled: enabled,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          decoration: InputDecoration(
             labelText: labelText,
             labelStyle: TextStyle(color: Colors.grey),
             filled: true,
-            fillColor: (enabled ?? true) ? Color(0xFFECF1F4):Color(0x70ECF1F4),
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            fillColor: (enabled ?? true) ? Color(0xFFECF1F4) : Color(0x70ECF1F4),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
             enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               borderSide: BorderSide(color: Color(0xFFECF1F4)),
             ),
             disabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: Color(0x10ECF1F4),),
+              borderSide: BorderSide(color: Color(0x10ECF1F4)),
             ),
             focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Color(0xFF4C1044), width: 2.0),
@@ -76,6 +72,18 @@ class CustomTextFormField extends StatelessWidget {
             )
                 : null,
           ),
+        ),
+        // Placeholder text overlay
+        // if ((controller?.text.isEmpty ?? true))
+        //   Positioned(
+        //     left: 20,
+        //     top: 12,
+        //     child: Text(
+        //       hintText,
+        //       style: TextStyle(color: Color(0x608C8CA1), fontSize: 16),
+        //     ),
+        //   ),
+      ],
     );
   }
 }

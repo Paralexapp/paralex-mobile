@@ -12,6 +12,7 @@ import 'package:paralax/screens/welcomeslides/welcome.dart';
 import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
 import 'package:paralax/service_provider/view/about_you/about_you.dart';
 import 'package:paralax/service_provider/view/about_you/about_you_contd.dart';
+import 'package:paralax/service_provider/view/guarantor_detail.dart';
 import 'package:paralax/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralax/service_provider/view/signup_screens/signup_welcome_screen.dart';
 
@@ -34,6 +35,7 @@ void main() {
       GetPage(name: Nav.tellusMoreforUsers, page: () => const MoreAboutYou()),
       GetPage(name: Nav.aboutServiceProvider, page: () => AboutYou()),
       GetPage(name: Nav.aboutServiceProviderPage2, page: () => AboutYouContd()),
+      GetPage(name: Nav.guarantorDetail, page: () =>  GuarantorDetail()),
 
     ],
     debugShowCheckedModeBanner: false,

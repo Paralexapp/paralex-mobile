@@ -5,6 +5,7 @@ import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/service_provider/view/widgets/custom_button.dart';
 import 'package:paralax/service_provider/view/widgets/custom_text_form_field.dart';
 import '../../../reusables/fonts.dart';
+import '../../../routes/navs.dart';
 import '../../controllers/about_you_contd_controller.dart';
 
 class AboutYouContd extends StatelessWidget {
@@ -14,7 +15,9 @@ class AboutYouContd extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: PaintColors.bgColor,
       appBar: AppBar(
+        backgroundColor: PaintColors.bgColor,
         leading: IconButton(onPressed: Get.back, icon: PinkButton.backButton),
       ),
       body: SingleChildScrollView(
@@ -54,10 +57,10 @@ class AboutYouContd extends StatelessWidget {
                 )),
                 SizedBox(height: 15),
                 buildCustomFormField(
-                    "Number of bike?", controller.bikeNumber, controller),
-                buildCustomFormField("Bike type", controller.bikeType, controller),
-                buildCustomFormField("Bike Capacity", controller.bikeCapacity, controller),
-                buildCustomFormField("Chasis number", controller.chasisNumber, controller),
+                    "Number of bike?", "12",controller.bikeNumber, controller,),
+                buildCustomFormField("Bike type", "Qlink",controller.bikeType, controller),
+                buildCustomFormField("Bike Capacity","Bike capacity", controller.bikeCapacity, controller),
+                buildCustomFormField("Chasis number","Chasis number", controller.chasisNumber, controller),
                 SizedBox(height: size.height * 0.16),
                 CustomButton(
                   desiredWidth: 0.85,
@@ -65,7 +68,9 @@ class AboutYouContd extends StatelessWidget {
                   buttonColor: PaintColors.paralaxpurple,
                   ontap: () {
                     if (controller.hasBike.isTrue && controller.validateForm()) {
-                      // Navigate or perform the intended action
+                      Get.toNamed(Nav.guarantorDetail);
+                    }else if(controller.hasBike.isFalse){
+                      Get.toNamed(Nav.guarantorDetail);
                     }
                   },
                 ),
@@ -114,22 +119,22 @@ class AboutYouContd extends StatelessWidget {
     );
   }
 
-  Widget buildCustomFormField(String label, TextEditingController controller, AboutYouContdController aboutYouController) {
+  Widget buildCustomFormField(String label, String hint, TextEditingController controller, AboutYouContdController ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        Obx(() => Text(
           label,
           style: FontStyles.smallCapsIntro.copyWith(
               letterSpacing: 0,
-              color: aboutYouController.hasBike.value
+              color: AboutYouContdController.hasBike.value
                   ? Color(0xFF868686)
                   : Color(0x70868686),
               fontSize: 15),
-        ),
+        ),),
         Obx(() => CustomTextFormField(
-          hintText: label,
-          enabled: aboutYouController.hasBike.value,
+          hintText: hint,
+          enabled: AboutYouContdController.hasBike.value,
           controller: controller,
           validator: (value) {
             if (value == null || value.isEmpty) {

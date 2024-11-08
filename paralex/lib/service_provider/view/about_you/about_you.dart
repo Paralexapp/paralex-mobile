@@ -20,6 +20,7 @@ class AboutYou extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: PaintColors.bgColor,
       appBar: AppBar(
         backgroundColor: PaintColors.bgColor,
         leading: IconButton(
@@ -95,6 +96,7 @@ class AboutYou extends StatelessWidget {
                       controller: controller.dateController,
                       readonly: true,
                       labelText: 'Date Of birth',
+                      hintText: 'Date Of birth',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please select your date of birth";

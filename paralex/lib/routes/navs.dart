@@ -11,4 +11,5 @@ class Nav {
   static const tellusMoreforUsers = "/tellUsMore";
   static const aboutServiceProvider = "/aboutYou";
   static const aboutServiceProviderPage2 = "/aboutYouContd";
+  static const guarantorDetail = "/guarantorDetail";
 }

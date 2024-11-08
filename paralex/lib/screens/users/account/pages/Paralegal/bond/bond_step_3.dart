@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/view/signup_screens/widgets/custom_button.dart';
-import 'package:paralax/service_provider/view/signup_screens/widgets/radion_btns.dart';
 import 'package:paralax/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
+
+import '../../../../../../service_provider/view/widgets/custom_button.dart';
+import '../../../../../../service_provider/view/widgets/radion_btns.dart';
 
 class BondThirdStep extends StatelessWidget {
   const BondThirdStep({super.key});

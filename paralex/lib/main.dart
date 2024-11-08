@@ -34,11 +34,9 @@ void main() {
     getPages: [
       GetPage(name: Nav.splash, page: () => const SplashScreen()),
       GetPage(name: Nav.welcomeShow, page: () => const WelcomeSliders()),
-<<<<<<< HEAD
       GetPage(name: Nav.lastWelcomeScreen, page: () => const LastWelcomeScreen()),
       GetPage(name: Nav.serviceProviderSignupWelcomeScreen, page: () => SignupWelcomeScreen()),
       GetPage(name: Nav.selectServiceScreen, page: () => const SelectServiceScreen()),
-      GetPage(name: Nav.lastWelcomeScreen, page: () => const LastWelcomeScreen()),
       GetPage(name: Nav.serviceProviderSignupWelcomeScreen, page: () =>  SignupWelcomeScreen()),
       GetPage(name: Nav.selectServiceScreen, page: () =>  const SelectServiceScreen()),
       GetPage(name: Nav.userSignupScreen, page: () => const UserRegistration()),
@@ -48,30 +46,6 @@ void main() {
       GetPage(name: Nav.aboutServiceProvider, page: () => AboutYou()),
       GetPage(name: Nav.aboutServiceProviderPage2, page: () => AboutYouContd()),
       GetPage(name: Nav.guarantorDetail, page: () =>  GuarantorDetail()),
-
-=======
-      GetPage(
-          name: Nav.lastWelcomeScreen, page: () => const LastWelcomeScreen()),
-      GetPage(
-          name: Nav.serviceProviderSignupWelcomeScreen,
-          page: () => SignupWelcomeScreen()),
-      GetPage(
-          name: Nav.selectServiceScreen,
-          page: () => const SelectServiceScreen()),
-      GetPage(
-          name: Nav.lastWelcomeScreen, page: () => const LastWelcomeScreen()),
-      GetPage(
-          name: Nav.serviceProviderSignupWelcomeScreen,
-          page: () => SignupWelcomeScreen()),
-      GetPage(
-          name: Nav.selectServiceScreen,
-          page: () => const SelectServiceScreen()),
-      GetPage(name: Nav.userSignupScreen, page: () => const UserRegistration()),
-      GetPage(name: Nav.otpScreen, page: () => const OtpVerification()),
-      GetPage(
-          name: Nav.verificationScreen,
-          page: () => const VerificationMessage()),
-      GetPage(name: Nav.tellusMoreforUsers, page: () => const MoreAboutYou()),
       GetPage(name: Nav.login, page: () => const LoginWithPassword()),
       GetPage(name: Nav.forgotPassword, page: () => const StepOne()),
       GetPage(name: Nav.resetPassOtp, page: () => const StepTwo()),
@@ -83,7 +57,6 @@ void main() {
       GetPage(name: Nav.bondStepB, page: () => const BondSecondStep()),
       GetPage(name: Nav.bondStepC, page: () => const BondThirdStep()),
       GetPage(name: Nav.bondSubmitted, page: () => const BondSuccess()),
->>>>>>> master
     ],
     debugShowCheckedModeBanner: false,
   ));

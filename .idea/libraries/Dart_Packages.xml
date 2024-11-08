@@ -82,14 +82,7 @@
         <entry key="flutter">
           <value>
             <list>
-              <option value="$USER_HOME$/Downloads/flutter_windows_3.24.4-stable/flutter/packages/flutter/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="flutter_holo_date_picker">
-          <value>
-            <list>
-              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_holo_date_picker-2.0.0/lib" />
+              <option value="$PROJECT_DIR$/../../../../Flutter/flutter/packages/flutter/lib" />
             </list>
           </value>
         </entry>
@@ -117,7 +110,7 @@
         <entry key="flutter_test">
           <value>
             <list>
-              <option value="$USER_HOME$/Downloads/flutter_windows_3.24.4-stable/flutter/packages/flutter_test/lib" />
+              <option value="$PROJECT_DIR$/../../../../Flutter/flutter/packages/flutter_test/lib" />
             </list>
           </value>
         </entry>
@@ -149,8 +142,6 @@
             </list>
           </value>
         </entry>
-<<<<<<< HEAD
-=======
         <entry key="iconsax_flutter">
           <value>
             <list>
@@ -158,7 +149,6 @@
             </list>
           </value>
         </entry>
->>>>>>> master
         <entry key="intl">
           <value>
             <list>
@@ -302,7 +292,7 @@
         <entry key="sky_engine">
           <value>
             <list>
-              <option value="$USER_HOME$/Downloads/flutter_windows_3.24.4-stable/flutter/bin/cache/pkg/sky_engine/lib" />
+              <option value="$PROJECT_DIR$/../../../../Flutter/flutter/bin/cache/pkg/sky_engine/lib" />
             </list>
           </value>
         </entry>
@@ -421,6 +411,9 @@
       </option>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../Flutter/flutter/bin/cache/pkg/sky_engine/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../Flutter/flutter/packages/flutter/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../Flutter/flutter/packages/flutter_test/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/args-2.6.0/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/auto_size_text-3.0.0/lib" />
@@ -439,10 +432,7 @@
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/google_fonts-6.2.1/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.2.2/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2/lib" />
-<<<<<<< HEAD
-=======
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/iconsax_flutter-1.0.0/lib" />
->>>>>>> master
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.19.0/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/intl_phone_field-3.2.0/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/leak_tracker-10.0.5/lib" />
@@ -479,9 +469,6 @@
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/web-1.1.0/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/xdg_directories-1.1.0/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/xml-6.5.0/lib" />
-      <root url="file://$USER_HOME$/Downloads/flutter_windows_3.24.4-stable/flutter/bin/cache/pkg/sky_engine/lib" />
-      <root url="file://$USER_HOME$/Downloads/flutter_windows_3.24.4-stable/flutter/packages/flutter/lib" />
-      <root url="file://$USER_HOME$/Downloads/flutter_windows_3.24.4-stable/flutter/packages/flutter_test/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

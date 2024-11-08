@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/view/signup_screens/widgets/custom_button.dart';
+import '../../../../../../service_provider/view/widgets/custom_button.dart';
+
 
 class BondSuccess extends StatelessWidget {
   const BondSuccess({super.key});

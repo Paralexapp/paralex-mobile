@@ -9,7 +9,21 @@ class Nav {
   static const otpScreen = "/otp";
   static const verificationScreen = "/verification";
   static const tellusMoreforUsers = "/tellUsMore";
+<<<<<<< HEAD
   static const aboutServiceProvider = "/aboutYou";
   static const aboutServiceProviderPage2 = "/aboutYouContd";
   static const guarantorDetail = "/guarantorDetail";
+=======
+  static const login = "/login";
+  static const forgotPassword = '/resetPassword';
+  static const resetPassOtp = '/resetPasswordOtp';
+  static const setNewPass = '/setNewPass';
+  static const finalStep = '/finalStep';
+  static const home = '/home';
+  static const paralegalHome = '/paralegalHome';
+  static const bondStepA = '/bondA';
+  static const bondStepB = '/bondB';
+  static const bondStepC = '/bondC';
+  static const bondSubmitted = '/bondSuccess';
+>>>>>>> master
 }

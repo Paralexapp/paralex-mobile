@@ -1,0 +1,51 @@
+import 'package:flutter/material.dart';
+
+class TextfieldWidget extends StatelessWidget {
+  final String hintText;
+  final TextStyle? textStyle;
+  final InputDecoration? decoration;
+  final TextInputType keyboardType;
+  final bool obscureText;
+  final Function(String)? onChanged;
+  final FormFieldValidator<String>? validator;
+
+  const TextfieldWidget(
+      {super.key,
+      this.hintText = '',
+      this.textStyle,
+      this.decoration,
+      this.keyboardType = TextInputType.text,
+      this.obscureText = false,
+      this.onChanged,
+      this.validator});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 80,
+      child: TextField(
+        style: textStyle ?? const TextStyle(color: Colors.black),
+        keyboardType: keyboardType,
+        obscureText: obscureText,
+        onChanged: onChanged,
+        decoration: decoration ??
+            InputDecoration(
+              hintText: hintText,
+              hintStyle: const TextStyle(color: Colors.grey),
+              filled: true,
+              fillColor: const Color(0xFFECF1F4),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+              enabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                borderSide: BorderSide(color: Colors.transparent),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF4C1044), width: 2.0),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+            ),
+      ),
+    );
+  }
+}

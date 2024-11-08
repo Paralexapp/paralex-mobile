@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:get/get_core/src/get_main.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../routes/navs.dart';
 
-import 'package:paralax/reusables/fonts.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:paralax/routes/navs.dart';
-
 import '../../service_provider/controllers/user_choice_controller.dart';
-
 
 class LastWelcomeScreen extends StatelessWidget {
   const LastWelcomeScreen({super.key});
@@ -74,7 +68,7 @@ class LastWelcomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       userChoiceController.selectUser();
                       Get.toNamed(Nav.userSignupScreen);
                     },
@@ -87,16 +81,15 @@ class LastWelcomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 35),
                   InkWell(
-
                     onTap: () {
                       userChoiceController.selectServiceProvider();
                       Get.toNamed(Nav.serviceProviderSignupWelcomeScreen);
                     },
                     child: const ParticipantWidget(
                       imgPath: "assets/images/medal-star.svg",
-                      firstText: "Service Provider",
-                      secondText: "I'm a delivery agent",
-                      thirdText: "or a lawyer",
+                      firstText: "Offer Service",
+                      secondText: "Rider",
+                      thirdText: "or Lawyer",
                     ),
                   ),
                 ],
@@ -115,7 +108,7 @@ class LastWelcomeScreen extends StatelessWidget {
                         .copyWith(letterSpacing: 0, fontSize: 14),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () => Get.toNamed(Nav.login),
                     child: Text(
                       "Sign in",
                       style: FontStyles.smallCapsIntro.copyWith(

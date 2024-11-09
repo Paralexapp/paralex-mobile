@@ -4,6 +4,7 @@ import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/service_provider/view/signup_screens/widgets/custom_button.dart';
+import 'package:paralax/service_provider/view/signup_screens/widgets/date_picker.dart';
 import 'package:paralax/service_provider/view/signup_screens/widgets/radion_btns.dart';
 import 'package:paralax/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
 
@@ -33,42 +34,50 @@ class BondThirdStep extends StatelessWidget {
                 Form(
                   child: Column(
                     children: [
-                      TextfieldWidget(
-                        // labelText: 'Full Name',
-                        hintText: 'Date of birth',
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Required';
-                          }
-                          return null;
+                      ReusableDatePicker(
+                        onDateChanged: (date) {
+                          print('Selected date: $date');
                         },
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2025),
                       ),
+                      // TextfieldWidget(
+                      //   // labelText: 'Full Name',
+                      //   hintText: 'Date of birth',
+                      //   validator: (value) {
+                      //     if (value!.isEmpty) {
+                      //       return 'Required';
+                      //     }
+                      //     return null;
+                      //   },
+                      // ),
                       ReusableRadioButtons(
                         label: "   Gender",
                         options: const ['M', 'F'],
                         initialValue: 'M',
                         onChanged: (value) {},
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'Place of Birth(City & State)',
                         keyboardType: TextInputType.number,
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'Nationality',
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'NIN',
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'International Passport Number',
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'Height',
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'Weight',
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'Eye color',
                       ),
                       ReusableRadioButtons(
@@ -91,7 +100,7 @@ class BondThirdStep extends StatelessWidget {
                       ),
                       CustomButton(
                           desiredWidth: 90,
-                          buttonText: "Submit",
+                          buttonText: "Next",
                           buttonColor: PaintColors.paralaxpurple,
                           ontap: () => Get.toNamed(Nav.bondSubmitted))
                     ],

@@ -39,7 +39,7 @@ class BondSuccess extends StatelessWidget {
               style: FontStyles.headingText.copyWith(color: Colors.black),
             ),
             Text(
-              "your! submission was successful ",
+              "your submission was successful ",
               style: FontStyles.smallCapsIntro.copyWith(
                   color: Colors.black, letterSpacing: 0, fontSize: 14),
             ),

@@ -102,7 +102,7 @@ class ParalegalDashboard extends StatelessWidget {
           SizedBox(width: size.width * 0.19),
           Center(
             child: Text(
-              "Paralagal",
+              "Paralegal",
               style: FontStyles.headingText.copyWith(fontSize: 20),
             ),
           )

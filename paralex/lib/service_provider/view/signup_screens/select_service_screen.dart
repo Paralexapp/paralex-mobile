@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paralax/reusables/back_button.dart';
-import 'package:paralax/service_provider/view/signup_screens/widgets/select_service_widget.dart';
-
 import '../../../reusables/fonts.dart';
 import '../../../reusables/paints.dart';
+import '../../../routes/navs.dart';
 import '../../controllers/select_service_controller.dart';
+import '../widgets/select_service_widget.dart';
 
 class SelectServiceScreen extends StatelessWidget {
   const SelectServiceScreen({super.key});
@@ -22,7 +22,7 @@ class SelectServiceScreen extends StatelessWidget {
             onPressed: () => Get.back(), icon: PinkButton.backButton),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20.0,right: 20,top: 25,bottom: 45),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -61,7 +61,7 @@ class SelectServiceScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
+            SizedBox(height: size.height * 0.4),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               height: 50,
@@ -71,7 +71,7 @@ class SelectServiceScreen extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: InkWell(
-                onTap: () {},
+                onTap: () => Get.toNamed(Nav.aboutServiceProvider),
                 child: Center(
                   child: Text(
                     "CONTINUE",

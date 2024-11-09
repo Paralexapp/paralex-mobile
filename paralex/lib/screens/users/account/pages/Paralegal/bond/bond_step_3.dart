@@ -3,19 +3,16 @@ import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
-
+import 'package:paralax/service_provider/view/signup_screens/widgets/custom_button.dart';
+import 'package:paralax/service_provider/view/signup_screens/widgets/date_picker.dart';
+import 'package:paralax/service_provider/view/signup_screens/widgets/radion_btns.dart';
 import 'package:paralax/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
-
-import '../../../../../../service_provider/view/widgets/custom_button.dart';
-import '../../../../../../service_provider/view/widgets/date_picker.dart';
-import '../../../../../../service_provider/view/widgets/radion_btns.dart';
 
 class BondThirdStep extends StatelessWidget {
   const BondThirdStep({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _dateController = TextEditingController();
     return Scaffold(
         backgroundColor: PaintColors.bgColor,
         appBar: AppBar(
@@ -38,18 +35,23 @@ class BondThirdStep extends StatelessWidget {
                   child: Column(
                     children: [
                       ReusableDatePicker(
-                        controller: _dateController,
-                        labelText: "Date of birth",
                         onDateChanged: (date) {
-                          // print('Selected date: $date');
+                          print('Selected date: $date');
                         },
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2020),
                         lastDate: DateTime(2025),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      // TextfieldWidget(
+                      //   // labelText: 'Full Name',
+                      //   hintText: 'Date of birth',
+                      //   validator: (value) {
+                      //     if (value!.isEmpty) {
+                      //       return 'Required';
+                      //     }
+                      //     return null;
+                      //   },
+                      // ),
                       ReusableRadioButtons(
                         label: "   Gender",
                         options: const ['M', 'F'],
@@ -100,7 +102,7 @@ class BondThirdStep extends StatelessWidget {
                           desiredWidth: 90,
                           buttonText: "Next",
                           buttonColor: PaintColors.paralaxpurple,
-                          ontap: () => Get.toNamed(Nav.bondStepD))
+                          ontap: () => Get.toNamed(Nav.bondSubmitted))
                     ],
                   ),
                 )

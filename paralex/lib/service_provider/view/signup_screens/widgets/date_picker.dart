@@ -7,12 +7,12 @@ class ReusableDatePicker extends StatefulWidget {
   final DateTime? lastDate;
 
   const ReusableDatePicker({
-    super.key,
+    Key? key,
     required this.onDateChanged,
     this.initialDate,
     this.firstDate,
     this.lastDate,
-  });
+  }) : super(key: key);
 
   @override
   _ReusableDatePickerState createState() => _ReusableDatePickerState();

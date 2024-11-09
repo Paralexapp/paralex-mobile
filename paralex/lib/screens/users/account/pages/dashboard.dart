@@ -5,7 +5,6 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/view/widgets/activity_card.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -39,7 +38,7 @@ class _DashboardState extends State<Dashboard> {
                           letterSpacing: 0),
                     ),
                     Text(
-                      "Hello, Emmanuel John",
+                      "Hello, Lagbaja a",
                       style: FontStyles.headingText.copyWith(
                           color: PaintColors.paralaxpurple,
                           fontWeight: FontWeight.w900,
@@ -65,10 +64,29 @@ class _DashboardState extends State<Dashboard> {
             width: size.width * 0.9,
             height: 100,
             decoration: BoxDecoration(
-              image: const DecorationImage(
-                  image: AssetImage('assets/images/paralegal.png')),
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xff27ffa8),
+                  Color(0xff225fa6),
+                  Color(0xff4c1044)
+                ],
+                // stops: [0, 0.5, 0.4],
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+              ),
               borderRadius:
                   BorderRadius.circular(16), // Optional: Rounded corners
+            ),
+            child: const Padding(
+              padding: EdgeInsets.all(25),
+              child: Text(
+                'LOGISTICS',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
         ),
@@ -77,14 +95,31 @@ class _DashboardState extends State<Dashboard> {
           child: GestureDetector(
             onTap: () => Get.toNamed(Nav.paralegalHome),
             child: Container(
-              margin: EdgeInsets.only(top: size.height * 0.22),
-              width: size.width,
-              height: 150,
+              margin: EdgeInsets.only(top: size.height * 0.25),
+              width: size.width * 0.9,
+              height: 100,
               decoration: BoxDecoration(
-                image: const DecorationImage(
-                    image: AssetImage('assets/images/log2.png')),
+                gradient: const LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    PaintColors.paralaxpurple,
+                    Colors.greenAccent,
+                  ],
+                ),
                 borderRadius:
                     BorderRadius.circular(16), // Optional: Rounded corners
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(25),
+                child: Text(
+                  'PARALEGAL',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ),
@@ -115,115 +150,46 @@ class _DashboardState extends State<Dashboard> {
         Container(
             margin: EdgeInsets.only(top: size.height * 0.40),
             child: Image.asset("assets/images/law.png")),
-
         Positioned(
           right: 70,
-          child: GestureDetector(
-            onTap: () => Get.toNamed(Nav.findAlawyer),
-            child: Container(
-              margin: EdgeInsets.only(top: size.height * 0.50),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Need Legal Service?",
-                    style: FontStyles.smallCapsIntro.copyWith(
-                        color: PaintColors.white,
-                        letterSpacing: 0,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Hire a Lawyer",
-                        style: FontStyles.headingText.copyWith(fontSize: 22),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        height: 45,
-                        width: 45,
-                        decoration: const BoxDecoration(
-                            color: PaintColors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10))),
-                        child: const Center(
-                          child: Icon(Iconsax.arrow_right_2),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          // top: size.height * 0.40,
           child: Container(
-            margin: EdgeInsets.only(top: size.height * 0.58),
-            width: size.width,
-            height: 50,
-            decoration: const BoxDecoration(
-              color: PaintColors.bgColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(20)), // Optional: Rounded corners
-            ),
-          ),
-        ),
-        // const Text("Activities"),
-        Positioned(
-          // top: size.height * 0.65,
-          child: Padding(
-            padding: const EdgeInsets.all(25),
-            child: Container(
-              margin: EdgeInsets.only(top: size.height * 0.60),
-              // padding: EdgeInsets.all(),
-              width: size.width * 0.9,
-              height: 100,
-              decoration: BoxDecoration(
-                  color: PaintColors.white,
-                  borderRadius: BorderRadius.circular(20)
-                  // Optional: Rounded corners
-                  ),
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/law.png",
-                          height: 40,
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Delivery to Ikoyi Supreme court"),
-                            Text("SEPTEMBER 16 . 8:00AM"),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: 200,
-                                ),
-                                Text("Submitted")
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
+            margin: EdgeInsets.only(top: size.height * 0.50),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Need Lagal service?",
+                  style: FontStyles.smallCapsIntro.copyWith(
+                      color: PaintColors.white,
+                      letterSpacing: 0,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Hire a lawyer",
+                      style: FontStyles.headingText.copyWith(fontSize: 22),
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Container(
+                      height: 45,
+                      width: 45,
+                      decoration: const BoxDecoration(
+                          color: PaintColors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Center(
+                        child: Icon(Iconsax.arrow_right_2),
+                      ),
+                    )
+                  ],
+                )
+              ],
             ),
           ),
-        ),
+        )
       ],
     ));
   }

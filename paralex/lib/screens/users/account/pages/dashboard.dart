@@ -65,13 +65,14 @@ class _DashboardState extends State<Dashboard> {
             height: 100,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
                 colors: [
-                  Colors.greenAccent,
-                  PaintColors.paralaxpurple,
-                  PaintColors.paralaxpurple,
+                  Color(0xff27ffa8),
+                  Color(0xff225fa6),
+                  Color(0xff4c1044)
                 ],
+                // stops: [0, 0.5, 0.4],
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
               ),
               borderRadius:
                   BorderRadius.circular(16), // Optional: Rounded corners

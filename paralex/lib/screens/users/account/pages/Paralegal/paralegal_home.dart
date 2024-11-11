@@ -4,7 +4,6 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
-import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_1.dart';
 
 class ParalegalDashboard extends StatelessWidget {
   const ParalegalDashboard({super.key});
@@ -102,7 +101,7 @@ class ParalegalDashboard extends StatelessWidget {
           SizedBox(width: size.width * 0.19),
           Center(
             child: Text(
-              "Paralagal",
+              "Paralegal",
               style: FontStyles.headingText.copyWith(fontSize: 20),
             ),
           )

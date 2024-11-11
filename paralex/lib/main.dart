@@ -23,7 +23,10 @@ import 'package:paralax/screens/welcomeslides/welcome.dart';
 import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
 import 'package:paralax/service_provider/view/about_you/about_you.dart';
 import 'package:paralax/service_provider/view/about_you/about_you_contd.dart';
+import 'package:paralax/service_provider/view/bank_info.dart';
+import 'package:paralax/service_provider/view/delivery_info.dart';
 import 'package:paralax/service_provider/view/guarantor_detail.dart';
+import 'package:paralax/service_provider/view/delivery_notification.dart';
 import 'package:paralax/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralax/service_provider/view/signup_screens/signup_welcome_screen.dart';
 
@@ -57,6 +60,9 @@ void main() {
       GetPage(name: Nav.bondStepB, page: () => const BondSecondStep()),
       GetPage(name: Nav.bondStepC, page: () => const BondThirdStep()),
       GetPage(name: Nav.bondSubmitted, page: () => const BondSuccess()),
+      GetPage(name: Nav.bankInfo, page: () => BankInfo()),
+      GetPage(name: Nav.notification, page: () => DeliveryNotification()),
+      GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),
     ],
     debugShowCheckedModeBanner: false,
   ));

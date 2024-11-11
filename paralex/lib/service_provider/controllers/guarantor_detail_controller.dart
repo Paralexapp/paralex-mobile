@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../routes/navs.dart';
+
 class GuarantorDetailController extends GetxController {
   // Define controllers for each form field
   final formKey = GlobalKey<FormState>();
@@ -26,7 +28,7 @@ class GuarantorDetailController extends GetxController {
   // Function to handle validation and submission
   void validateAndSubmit() {
     if (formKey.currentState!.validate() && phoneNumber.value.isNotEmpty) {
-      Get.snackbar("Success", "All fields are valid.");
+      Get.toNamed(Nav.bankInfo);
     } else {
       if (phoneNumber.value.isEmpty) {
         Get.snackbar("Error", "Please enter a valid phone number.");
@@ -46,32 +48,37 @@ class GuarantorDetailController extends GetxController {
             title: Text("Parent"),
             value: "Parent",
             groupValue: selectedOption.value,
-            onChanged: (value) => selectedOption.value = value!,
+            onChanged: (value) {
+              selectedOption.value = value!;
+              guarantorController.text = selectedOption.value;
+              Get.back(); // Close the dialog immediately
+            },
           ),
           RadioListTile<String>(
             title: Text("Friend"),
             value: "Friend",
             groupValue: selectedOption.value,
-            onChanged: (value) => selectedOption.value = value!,
+            onChanged: (value) {
+              selectedOption.value = value!;
+              guarantorController.text = selectedOption.value;
+              Get.back(); // Close the dialog immediately
+            },
           ),
           RadioListTile<String>(
             title: Text("Sibling"),
             value: "Sibling",
             groupValue: selectedOption.value,
-            onChanged: (value) => selectedOption.value = value!,
+            onChanged: (value) {
+              selectedOption.value = value!;
+              guarantorController.text = selectedOption.value;
+              Get.back();
+            },
           ),
         ],
-      ),
-      ),
-      textConfirm: "OK",
-      onConfirm: () {
-        if (selectedOption.value.isNotEmpty) {
-          guarantorController.text = selectedOption.value;
-        }
-        Get.back();
-      },
+      )),
     );
   }
+
 
   // Helper function to select state
   Future<void> showNgStatesDialog() async {
@@ -93,17 +100,16 @@ class GuarantorDetailController extends GetxController {
               title: Text(state),
               value: state,
               groupValue: stateChoice.value,
-              onChanged: (value) => stateChoice.value = value!,
+              onChanged: (value) {
+                stateChoice.value = value!;
+                stateController.text = stateChoice.value;
+                Get.back();
+              }
             );
           }).toList(),
         ),
       ),
       ),
-      textConfirm: "OK",
-      onConfirm: () {
-        stateController.text = stateChoice.value;
-        Get.back();
-      },
     );
   }
 }

@@ -22,4 +22,8 @@ class Nav {
   static const bondStepB = '/bondB';
   static const bondStepC = '/bondC';
   static const bondSubmitted = '/bondSuccess';
+  static const bankInfo = '/bankInfo';
+  static const notification = '/notification';
+  static const deliveryInfo = '/deliveryInfo';
+
 }

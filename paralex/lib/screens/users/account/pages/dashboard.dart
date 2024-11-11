@@ -38,7 +38,7 @@ class _DashboardState extends State<Dashboard> {
                           letterSpacing: 0),
                     ),
                     Text(
-                      "Hello, Lagbaja a",
+                      "Hello, Emmanuel John",
                       style: FontStyles.headingText.copyWith(
                           color: PaintColors.paralaxpurple,
                           fontWeight: FontWeight.w900,

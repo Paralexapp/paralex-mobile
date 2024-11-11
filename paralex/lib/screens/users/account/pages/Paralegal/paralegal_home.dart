@@ -58,7 +58,7 @@ class ParalegalDashboard extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: Row(
                         children: [
                           Image.asset(
@@ -97,7 +97,7 @@ class ParalegalDashboard extends StatelessWidget {
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

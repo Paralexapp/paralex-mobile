@@ -26,4 +26,5 @@ class Nav {
   static const bondStepE = '/bondE';
   static const legalServiceHome = '/legalService';
   static const bondSubmitted = '/bondSuccess';
+  static const nafdacReg = '/nafdac';
 }

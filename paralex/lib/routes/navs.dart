@@ -2,8 +2,7 @@ class Nav {
   static const splash = "/";
   static const welcomeShow = "/welcome";
   static const lastWelcomeScreen = "/lastWelcomeScreen";
-  static const serviceProviderSignupWelcomeScreen =
-      "/serviceProviderSignupWelcomeScreen";
+  static const serviceProviderSignupWelcomeScreen = "/serviceProviderSignupWelcomeScreen";
   static const selectServiceScreen = "/selectServiceScreen";
   static const userSignupScreen = "/userSignup";
   static const otpScreen = "/otp";
@@ -22,11 +21,9 @@ class Nav {
   static const bondStepA = '/bondA';
   static const bondStepB = '/bondB';
   static const bondStepC = '/bondC';
-  static const bondStepD = '/bondD';
-  static const bondStepE = '/bondE';
-  static const legalServiceHome = '/legalService';
   static const bondSubmitted = '/bondSuccess';
-  static const nafdacReg = '/nafdac';
-  static const nafdacStepOne = '/nafdacA';
-  static const nafdacStepTwo = '/nafdacB';
+  static const bankInfo = '/bankInfo';
+  static const notification = '/notification';
+  static const deliveryInfo = '/deliveryInfo';
+
 }

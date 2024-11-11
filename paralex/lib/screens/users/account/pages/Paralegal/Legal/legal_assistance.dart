@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
+import 'package:paralax/routes/navs.dart';
 
 class LegalAssistance extends StatelessWidget {
   const LegalAssistance({super.key});
@@ -21,11 +25,16 @@ class LegalAssistance extends StatelessWidget {
         padding: EdgeInsets.all(25),
         child: Column(
           children: [
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                LegalServices(image: "assets/images/stamp.png", text: "NAFDAC"),
                 LegalServices(
+                  image: "assets/images/stamp.png",
+                  text: "NAFDAC",
+                  ontap: () => Get.toNamed(Nav.nafdacReg),
+                ),
+                LegalServices(
+                  ontap: () => Get.toNamed(Nav.nafdacReg),
                   image: "assets/images/stamp.png",
                   text: "CAC",
                 )
@@ -34,12 +43,15 @@ class LegalAssistance extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 LegalServices(
-                    image: "assets/images/stamp.png", text: "TRADEMARK"),
+                    ontap: () => Get.toNamed(Nav.nafdacReg),
+                    image: "assets/images/stamp.png",
+                    text: "TRADEMARK"),
                 LegalServices(
+                  ontap: () => Get.toNamed(Nav.nafdacReg),
                   image: "assets/images/stamp.png",
                   text: "IMMIGRATION",
                 )
@@ -113,23 +125,31 @@ class LegalAssistance extends StatelessWidget {
 }
 
 class LegalServices extends StatelessWidget {
-  const LegalServices({super.key, required this.image, required this.text});
+  const LegalServices(
+      {super.key,
+      required this.ontap,
+      required this.image,
+      required this.text});
   final String text;
   final String image;
+  final VoidCallback ontap;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width * 0.40,
-      height: 150,
-      decoration: BoxDecoration(
-          color: PaintColors.fadedPinkBg,
-          borderRadius: BorderRadius.circular(20)),
-      child: Padding(
-        padding: const EdgeInsets.all(25),
-        child: Column(
-          children: [Image.asset(image), Text(text)],
+    return InkWell(
+      onTap: ontap,
+      child: Container(
+        width: size.width * 0.40,
+        height: 150,
+        decoration: BoxDecoration(
+            color: PaintColors.fadedPinkBg,
+            borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: const EdgeInsets.all(25),
+          child: Column(
+            children: [Image.asset(image), Text(text)],
+          ),
         ),
       ),
     );

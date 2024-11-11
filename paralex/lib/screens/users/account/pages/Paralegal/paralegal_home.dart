@@ -40,7 +40,67 @@ class ParalegalDashboard extends StatelessWidget {
                         text: "Bail Bond\n Service"),
                   ],
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Text("Activity"),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                height: 100,
+                decoration: BoxDecoration(
+                    color: PaintColors.white,
+                    borderRadius: BorderRadius.circular(20)
+                    // Optional: Rounded corners
+                    ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "assets/images/law.png",
+                            height: 40,
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Delivery to Ikoyi Supreme court",
+                                style: FontStyles.headingText.copyWith(
+                                    fontSize: 15,
+                                    color: PaintColors.generalTextsm),
+                              ),
+                              Text(
+                                "SEPTEMBER 16 . 8:00AM",
+                                style: FontStyles.headingText.copyWith(
+                                    fontSize: 15,
+                                    color: PaintColors.generalTextsm),
+                              ),
+                              const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: 200,
+                                  ),
+                                  Text("Submitted")
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ],
           ),
         ),

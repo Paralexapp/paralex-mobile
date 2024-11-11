@@ -17,11 +17,11 @@ class LegalAssistance extends StatelessWidget {
               .copyWith(color: PaintColors.paralaxpurple, fontSize: 14),
         ),
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(25),
         child: Column(
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 LegalServices(image: "assets/images/stamp.png", text: "NAFDAC"),
@@ -31,10 +31,10 @@ class LegalAssistance extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 LegalServices(
@@ -44,6 +44,66 @@ class LegalAssistance extends StatelessWidget {
                   text: "IMMIGRATION",
                 )
               ],
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                  color: PaintColors.white,
+                  borderRadius: BorderRadius.circular(20)
+                  // Optional: Rounded corners
+                  ),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/images/law.png",
+                          height: 40,
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Delivery to Ikoyi Supreme court",
+                              style: FontStyles.headingText.copyWith(
+                                  fontSize: 15,
+                                  color: PaintColors.generalTextsm),
+                            ),
+                            Text(
+                              "SEPTEMBER 16 . 8:00AM",
+                              style: FontStyles.headingText.copyWith(
+                                  fontSize: 12,
+                                  color: PaintColors.generalTextsm),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const SizedBox(
+                                  width: 200,
+                                ),
+                                Text(
+                                  "Submitted",
+                                  style: FontStyles.headingText.copyWith(
+                                      fontSize: 12,
+                                      color: PaintColors.generalTextsm),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

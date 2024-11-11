@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
 import 'package:paralax/service_provider/view/widgets/custom_button.dart';
 
 class NafdacRegistration extends StatelessWidget {
@@ -15,7 +13,7 @@ class NafdacRegistration extends StatelessWidget {
       appBar: AppBar(
         title: Center(
           child: Text(
-            "NAFDAC",
+            "Nafdac",
             style: FontStyles.headingText
                 .copyWith(color: PaintColors.paralaxpurple, fontSize: 14),
           ),
@@ -107,8 +105,7 @@ class NafdacRegistration extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  CustomButton(
-                      ontap: () => Get.toNamed(Nav.nafdacStepOne),
+                  const CustomButton(
                       desiredWidth: 90,
                       buttonText: "Next",
                       buttonColor: PaintColors.paralaxpurple)

@@ -1,0 +1,97 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:paralax/reusables/fonts.dart';
+import 'package:paralax/reusables/paints.dart';
+import 'package:paralax/routes/navs.dart';
+import 'package:paralax/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
+import 'package:paralax/service_provider/view/widgets/custom_button.dart';
+import 'package:paralax/service_provider/view/widgets/date_picker.dart';
+
+class NafdacStepTwo extends StatelessWidget {
+  const NafdacStepTwo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController _dateController = TextEditingController();
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            "NAFDAC",
+            style: FontStyles.headingText
+                .copyWith(color: PaintColors.paralaxpurple, fontSize: 14),
+          ),
+        ),
+        backgroundColor: PaintColors.bgColor,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          children: [
+            ReusableDatePicker(
+              controller: _dateController,
+              labelText: "Date of incoperation",
+              onDateChanged: (date) {
+                // print('Selected date: $date');
+              },
+              initialDate: DateTime.now(),
+              firstDate: DateTime(2020),
+              lastDate: DateTime(2025),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextfieldWidget(
+              // labelText: 'Full Name',
+              hintText: 'Name of company',
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Required';
+                }
+                return null;
+              },
+            ),
+            TextfieldWidget(
+              // labelText: 'Full Name',
+              hintText: 'Description of business activities',
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Required';
+                }
+                return null;
+              },
+            ),
+            TextfieldWidget(
+              // labelText: 'Full Name',
+              hintText: 'Office address',
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Required';
+                }
+                return null;
+              },
+            ),
+            TextfieldWidget(
+              // labelText: 'Full Name',
+              hintText: 'Email',
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Required';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+                ontap: () => Get.toNamed(Nav.bondSubmitted),
+                desiredWidth: 90,
+                buttonText: "Proceed to payment",
+                buttonColor: PaintColors.paralaxpurple)
+          ],
+        ),
+      ),
+    );
+  }
+}

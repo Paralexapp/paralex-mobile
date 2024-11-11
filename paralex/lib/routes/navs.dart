@@ -27,4 +27,6 @@ class Nav {
   static const legalServiceHome = '/legalService';
   static const bondSubmitted = '/bondSuccess';
   static const nafdacReg = '/nafdac';
+  static const nafdacStepOne = '/nafdacA';
+  static const nafdacStepTwo = '/nafdacB';
 }

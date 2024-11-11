@@ -115,45 +115,45 @@ class _DashboardState extends State<Dashboard> {
         Container(
             margin: EdgeInsets.only(top: size.height * 0.40),
             child: Image.asset("assets/images/law.png")),
+
         Positioned(
           right: 70,
-          child: Container(
-            margin: EdgeInsets.only(top: size.height * 0.50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Need Lagal service?",
-                  style: FontStyles.smallCapsIntro.copyWith(
-                      color: PaintColors.white,
-                      letterSpacing: 0,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Hire a lawyer",
-                      style: FontStyles.headingText.copyWith(fontSize: 22),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Container(
-                      height: 45,
-                      width: 45,
-                      decoration: const BoxDecoration(
-                          color: PaintColors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Center(
-                        child: InkWell(
-                            onTap: () => Get.toNamed(Nav.findAlawyer),
-                            child: Icon(Iconsax.arrow_right_2)),
+          child: GestureDetector(
+            // onTap: () => Get.toNamed(Nav.legalServiceHome), // Replace with your route
+            child: Container(
+              margin: EdgeInsets.only(top: size.height * 0.50),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Need Legal Service?",
+                    style: FontStyles.smallCapsIntro.copyWith(
+                        color: PaintColors.white,
+                        letterSpacing: 0,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Hire a Lawyer",
+                        style: FontStyles.headingText.copyWith(fontSize: 22),
                       ),
-                    )
-                  ],
-                )
-              ],
+                      const SizedBox(width: 8),
+                      Container(
+                        height: 45,
+                        width: 45,
+                        decoration: const BoxDecoration(
+                            color: PaintColors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                        child: const Center(
+                          child: Icon(Iconsax.arrow_right_2),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -184,14 +184,6 @@ class _DashboardState extends State<Dashboard> {
               height: 100,
               decoration: BoxDecoration(
                   color: PaintColors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 1,
-                      blurRadius: 2,
-                      // Offset of the shadow
-                    ),
-                  ],
                   borderRadius: BorderRadius.circular(20)
                   // Optional: Rounded corners
                   ),

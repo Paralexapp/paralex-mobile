@@ -4,10 +4,16 @@ import 'package:get/get.dart';
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
 import 'package:paralax/screens/users/account/home.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/Legal/legal_assistance.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/Legal/nafdac.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_1.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_2.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_3.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_4.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_5.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_success.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_one.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_two.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/paralegal_home.dart';
 import 'package:paralax/screens/users/auth_process/final_step.dart';
 import 'package:paralax/screens/users/auth_process/login.dart';
@@ -59,7 +65,13 @@ void main() {
       GetPage(name: Nav.bondStepA, page: () => const BondFirstStep()),
       GetPage(name: Nav.bondStepB, page: () => const BondSecondStep()),
       GetPage(name: Nav.bondStepC, page: () => const BondThirdStep()),
+      GetPage(name: Nav.bondStepD, page: () => const BondFourthStep()),
+      GetPage(name: Nav.bondStepE, page: () => const BondStepFive()),
       GetPage(name: Nav.bondSubmitted, page: () => const BondSuccess()),
+      GetPage(name: Nav.legalServiceHome, page: () => const LegalAssistance()),
+      GetPage(name: Nav.nafdacReg, page: () => const NafdacRegistration()),
+      GetPage(name: Nav.nafdacStepOne, page: () => const NafdacStepOne()),
+      GetPage(name: Nav.nafdacStepTwo, page: () => const NafdacStepTwo()),
       GetPage(name: Nav.bankInfo, page: () => BankInfo()),
       GetPage(name: Nav.notification, page: () => DeliveryNotification()),
       GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),

@@ -64,29 +64,10 @@ class _DashboardState extends State<Dashboard> {
             width: size.width * 0.9,
             height: 100,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xff27ffa8),
-                  Color(0xff225fa6),
-                  Color(0xff4c1044)
-                ],
-                // stops: [0, 0.5, 0.4],
-                begin: Alignment.bottomLeft,
-                end: Alignment.topRight,
-              ),
+              image: const DecorationImage(
+                  image: AssetImage('assets/images/paralegal.png')),
               borderRadius:
                   BorderRadius.circular(16), // Optional: Rounded corners
-            ),
-            child: const Padding(
-              padding: EdgeInsets.all(25),
-              child: Text(
-                'LOGISTICS',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
             ),
           ),
         ),
@@ -95,31 +76,14 @@ class _DashboardState extends State<Dashboard> {
           child: GestureDetector(
             onTap: () => Get.toNamed(Nav.paralegalHome),
             child: Container(
-              margin: EdgeInsets.only(top: size.height * 0.25),
-              width: size.width * 0.9,
-              height: 100,
+              margin: EdgeInsets.only(top: size.height * 0.22),
+              width: size.width,
+              height: 150,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    PaintColors.paralaxpurple,
-                    Colors.greenAccent,
-                  ],
-                ),
+                image: const DecorationImage(
+                    image: AssetImage('assets/images/log2.png')),
                 borderRadius:
                     BorderRadius.circular(16), // Optional: Rounded corners
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(25),
-                child: Text(
-                  'PARALEGAL',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
               ),
             ),
           ),
@@ -180,7 +144,7 @@ class _DashboardState extends State<Dashboard> {
                       decoration: const BoxDecoration(
                           color: PaintColors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Center(
+                      child: const Center(
                         child: Icon(Iconsax.arrow_right_2),
                       ),
                     )
@@ -189,7 +153,38 @@ class _DashboardState extends State<Dashboard> {
               ],
             ),
           ),
-        )
+        ),
+        Positioned(
+          // top: size.height * 0.40,
+          child: Container(
+            margin: EdgeInsets.only(top: size.height * 0.58),
+            width: size.width,
+            height: 50,
+            decoration: const BoxDecoration(
+              color: PaintColors.bgColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20)), // Optional: Rounded corners
+            ),
+          ),
+        ),
+        // Positioned(
+        //   // top: size.height * 0.65,
+        //   child: Container(
+        //     margin: EdgeInsets.only(top: size.height * 0.60),
+        //     // padding: EdgeInsets.all(),
+        //     width: size.width * 0.9,
+        //     height: 100,
+        //     decoration: const BoxDecoration(
+        //       color: PaintColors.paralaxBlue,
+        //       borderRadius: BorderRadius.only(
+        //           topLeft: Radius.circular(20),
+        //           topRight: Radius.circular(20),
+        //           bottomLeft: Radius.circular(20)), // Optional: Rounded corners
+        //     ),
+        //   ),
+        // ),
       ],
     ));
   }

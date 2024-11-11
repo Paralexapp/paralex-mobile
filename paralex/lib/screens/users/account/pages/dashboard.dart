@@ -5,6 +5,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
+import 'package:paralax/service_provider/view/widgets/activity_card.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -169,22 +170,58 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ),
-        // Positioned(
-        //   // top: size.height * 0.65,
-        //   child: Container(
-        //     margin: EdgeInsets.only(top: size.height * 0.60),
-        //     // padding: EdgeInsets.all(),
-        //     width: size.width * 0.9,
-        //     height: 100,
-        //     decoration: const BoxDecoration(
-        //       color: PaintColors.paralaxBlue,
-        //       borderRadius: BorderRadius.only(
-        //           topLeft: Radius.circular(20),
-        //           topRight: Radius.circular(20),
-        //           bottomLeft: Radius.circular(20)), // Optional: Rounded corners
-        //     ),
-        //   ),
-        // ),
+        // const Text("Activities"),
+        Positioned(
+          // top: size.height * 0.65,
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Container(
+              margin: EdgeInsets.only(top: size.height * 0.60),
+              // padding: EdgeInsets.all(),
+              width: size.width * 0.9,
+              height: 100,
+              decoration: BoxDecoration(
+                  color: PaintColors.white,
+                  borderRadius: BorderRadius.circular(20)
+                  // Optional: Rounded corners
+                  ),
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/images/law.png",
+                          height: 40,
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Delivery to Ikoyi Supreme court"),
+                            Text("SEPTEMBER 16 . 8:00AM"),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 200,
+                                ),
+                                Text("Sbmitted")
+                              ],
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
       ],
     ));
   }

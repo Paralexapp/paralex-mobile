@@ -31,8 +31,7 @@ class ParalegalDashboard extends StatelessWidget {
                         navTo: () => Get.toNamed(Nav.legalServiceHome),
                         image: "assets/images/book.png",
                         text: "Legal Assistance\n Service"),
-                    MenuWithImages(
-                        navTo: () => Get.toNamed(Nav.requestLawyer),
+                    const MenuWithImages(
                         image: "assets/images/litigation.png",
                         text: "Litigation\n Support"),
                     MenuWithImages(
@@ -59,7 +58,7 @@ class ParalegalDashboard extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: EdgeInsets.all(10),
                       child: Row(
                         children: [
                           Image.asset(
@@ -98,7 +97,7 @@ class ParalegalDashboard extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

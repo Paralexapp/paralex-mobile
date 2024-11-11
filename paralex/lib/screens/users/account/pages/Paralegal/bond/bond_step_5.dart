@@ -4,11 +4,10 @@ import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
+import 'package:paralax/service_provider/view/widgets/custom_button.dart';
 
-import '../../../../../../service_provider/view/widgets/custom_button.dart';
-
-class BondSecondStep extends StatelessWidget {
-  const BondSecondStep({super.key});
+class BondStepFive extends StatelessWidget {
+  const BondStepFive({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,58 +31,59 @@ class BondSecondStep extends StatelessWidget {
                 ),
                 Form(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextfieldWidget(
-                        // labelText: 'Full Name',
-                        hintText: 'Full Name',
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Required';
-                          }
-                          return null;
-                        },
+                      const Text("EMPLOYMENT"),
+                      const SizedBox(
+                        height: 10,
                       ),
                       const TextfieldWidget(
-                        hintText: 'Nick Name/Alias',
-                        keyboardType: TextInputType.emailAddress,
+                        hintText: 'Occupation 1',
+                        keyboardType: TextInputType.text,
                       ),
                       const TextfieldWidget(
-                        hintText: 'Mobile Number',
-                        keyboardType: TextInputType.number,
+                        hintText: 'Occupation 2',
+                        keyboardType: TextInputType.text,
                       ),
                       const TextfieldWidget(
-                        hintText: 'Work phone No',
+                        hintText: 'Occupation 3',
+                        keyboardType: TextInputType.text,
                       ),
                       const TextfieldWidget(
-                        hintText: 'Current home',
+                        hintText: 'Occupation 4',
+                        keyboardType: TextInputType.text,
                       ),
                       const TextfieldWidget(
-                        hintText: 'Email Address',
-                        keyboardType: TextInputType.emailAddress,
+                        hintText: 'Occupation 5',
+                        keyboardType: TextInputType.text,
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       const TextfieldWidget(
-                        hintText: 'Duration of stay e.g 2 years',
+                        hintText: 'Current employers name',
                       ),
                       const TextfieldWidget(
-                        hintText: 'Name of Landlord',
+                        hintText: 'How long',
                       ),
                       const TextfieldWidget(
-                        hintText: 'How long in current state',
+                        hintText: 'Postiton',
                       ),
                       const TextfieldWidget(
-                        hintText: 'How long resided in current city',
+                        hintText: 'Supervisors name',
                       ),
                       const TextfieldWidget(
-                        hintText: 'Former residence address',
+                        hintText: 'Work phone',
+                        keyboardType: TextInputType.text,
                       ),
                       const SizedBox(
                         height: 40,
                       ),
                       CustomButton(
                           desiredWidth: 90,
-                          buttonText: "Next",
+                          buttonText: "SUBMIT",
                           buttonColor: PaintColors.paralaxpurple,
-                          ontap: () => Get.toNamed(Nav.bondStepC))
+                          ontap: () => Get.toNamed(Nav.bondSubmitted))
                     ],
                   ),
                 )
@@ -91,5 +91,6 @@ class BondSecondStep extends StatelessWidget {
             ),
           ),
         ));
+    ;
   }
 }

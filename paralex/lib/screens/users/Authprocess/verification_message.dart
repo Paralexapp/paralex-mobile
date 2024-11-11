@@ -3,13 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
-import 'package:get/get.dart';
 
 import '../../../routes/navs.dart';
 import '../../../service_provider/controllers/user_choice_controller.dart';
-
-
-import '../../../routes/navs.dart';
 
 class VerificationMessage extends StatefulWidget {
   const VerificationMessage({super.key});
@@ -57,14 +53,15 @@ class _VerificationMessageState extends State<VerificationMessage> {
                 height: size.height * 0.40,
               ),
               GestureDetector(
-
                 //onTap: () => Get.toNamed(Nav.tellusMoreforUsers),
 
                 onTap: () {
                   if (userChoiceController.isUser.value) {
-                    Get.toNamed(Nav.tellusMoreforUsers); // Navigate to UserHomeScreen
+                    Get.toNamed(
+                        Nav.tellusMoreforUsers); // Navigate to UserHomeScreen
                   } else {
-                    Get.toNamed(Nav.selectServiceScreen); // Navigate to ServiceProviderHomeScreen
+                    Get.toNamed(Nav
+                        .selectServiceScreen); // Navigate to ServiceProviderHomeScreen
                   }
                 },
 

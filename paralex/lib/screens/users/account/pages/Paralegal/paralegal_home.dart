@@ -27,7 +27,8 @@ class ParalegalDashboard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const MenuWithImages(
+                    MenuWithImages(
+                        navTo: () => Get.toNamed(Nav.legalServiceHome),
                         image: "assets/images/book.png",
                         text: "Legal Assistance\n Service"),
                     const MenuWithImages(

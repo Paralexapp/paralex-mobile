@@ -79,8 +79,8 @@ class AboutYou extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 20),
-                     IntlPhoneField(
-                      decoration: InputDecoration(
+                    IntlPhoneField(
+                      decoration: const InputDecoration(
                         hintText: 'Phone Number',
                         hintStyle: TextStyle(color: Colors.grey),
                         filled: true,
@@ -111,7 +111,7 @@ class AboutYou extends StatelessWidget {
                       "Do you have a rider card?",
                       style: FontStyles.smallCapsIntro.copyWith(
                           letterSpacing: 0,
-                          color: Color(0xFF868686),
+                          color: const Color(0xFF868686),
                           fontSize: 15),
                     ),
                     CheckboxOptions(
@@ -120,11 +120,10 @@ class AboutYou extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.12),
                     CustomButton(
-                          desiredWidth: 0.85,
-                          buttonText: "CONTINUE",
-                          buttonColor: PaintColors.paralaxpurple,
-                          ontap: controller.onContinueButtonPressed
-                          ),
+                        desiredWidth: 0.85,
+                        buttonText: "CONTINUE",
+                        buttonColor: PaintColors.paralaxpurple,
+                        ontap: controller.onContinueButtonPressed),
                     const SizedBox(height: 20),
                     Center(
                       child: Column(
@@ -181,7 +180,8 @@ class CheckboxOptions extends StatelessWidget {
   final Function(bool) onOptionSelected;
   final AboutYouController controller;
 
-  CheckboxOptions({required this.onOptionSelected, required this.controller});
+  const CheckboxOptions(
+      {super.key, required this.onOptionSelected, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -209,8 +209,8 @@ class CheckboxOptions extends StatelessWidget {
                   onOptionSelected(true);
                 }
               },
-              activeColor: Color(0xFF35124E),
-              checkColor: Color(0xFF35124E),
+              activeColor: const Color(0xFF35124E),
+              checkColor: const Color(0xFF35124E),
             )),
         Text(label,
             style: const TextStyle(color: Color(0xFFB0BEC5), fontSize: 16)),

@@ -11,6 +11,8 @@ import '../../controllers/about_you_contd_controller.dart';
 class AboutYouContd extends StatelessWidget {
   final AboutYouContdController controller = Get.put(AboutYouContdController());
 
+  AboutYouContd({super.key});
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -22,7 +24,7 @@ class AboutYouContd extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(25.0),
+          padding: const EdgeInsets.all(25.0),
           child: Form(
             key: controller.formKey,
             child: Column(
@@ -32,44 +34,52 @@ class AboutYouContd extends StatelessWidget {
                   "Do you have a bike?",
                   style: FontStyles.smallCapsIntro.copyWith(
                       letterSpacing: 0,
-                      color: Color(0xFF868686),
+                      color: const Color(0xFF868686),
                       fontSize: 15),
                 ),
                 Obx(() => Transform.translate(
-                  offset: Offset(-12, 0),
-                  child: Row(
-                    children: [
-                      BikeCheckbox(
-                        label: "Yes",
-                        value: true,
-                        groupValue: controller.hasBike.value,
-                        onChanged: (value) => controller.hasBike(value),
+                      offset: const Offset(-12, 0),
+                      child: Row(
+                        children: [
+                          BikeCheckbox(
+                            label: "Yes",
+                            value: true,
+                            groupValue: controller.hasBike.value,
+                            onChanged: (value) => controller.hasBike(value),
+                          ),
+                          const SizedBox(width: 10),
+                          BikeCheckbox(
+                            label: "No",
+                            value: false,
+                            groupValue: controller.hasBike.value,
+                            onChanged: (value) => controller.hasBike(value),
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 10),
-                      BikeCheckbox(
-                        label: "No",
-                        value: false,
-                        groupValue: controller.hasBike.value,
-                        onChanged: (value) => controller.hasBike(value),
-                      ),
-                    ],
-                  ),
-                )),
-                SizedBox(height: 15),
+                    )),
+                const SizedBox(height: 15),
                 buildCustomFormField(
-                    "Number of bike?", "12",controller.bikeNumber, controller,),
-                buildCustomFormField("Bike type", "Qlink",controller.bikeType, controller),
-                buildCustomFormField("Bike Capacity","Bike capacity", controller.bikeCapacity, controller),
-                buildCustomFormField("Chasis number","Chasis number", controller.chasisNumber, controller),
+                  "Number of bike?",
+                  "12",
+                  controller.bikeNumber,
+                  controller,
+                ),
+                buildCustomFormField(
+                    "Bike type", "Qlink", controller.bikeType, controller),
+                buildCustomFormField("Bike Capacity", "Bike capacity",
+                    controller.bikeCapacity, controller),
+                buildCustomFormField("Chasis number", "Chasis number",
+                    controller.chasisNumber, controller),
                 SizedBox(height: size.height * 0.16),
                 CustomButton(
                   desiredWidth: 0.85,
                   buttonText: "CONTINUE",
                   buttonColor: PaintColors.paralaxpurple,
                   ontap: () {
-                    if (controller.hasBike.isTrue && controller.validateForm()) {
+                    if (controller.hasBike.isTrue &&
+                        controller.validateForm()) {
                       Get.toNamed(Nav.guarantorDetail);
-                    }else if(controller.hasBike.isFalse){
+                    } else if (controller.hasBike.isFalse) {
                       Get.toNamed(Nav.guarantorDetail);
                     }
                   },
@@ -119,31 +129,34 @@ class AboutYouContd extends StatelessWidget {
     );
   }
 
-  Widget buildCustomFormField(String label, String hint, TextEditingController controller, AboutYouContdController ) {
+  Widget buildCustomFormField(String label, String hint,
+      TextEditingController controller, AboutYouContdController) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Obx(() => Text(
-          label,
-          style: FontStyles.smallCapsIntro.copyWith(
-              letterSpacing: 0,
-              color: AboutYouContdController.hasBike.value
-                  ? Color(0xFF868686)
-                  : Color(0x70868686),
-              fontSize: 15),
-        ),),
+        Obx(
+          () => Text(
+            label,
+            style: FontStyles.smallCapsIntro.copyWith(
+                letterSpacing: 0,
+                color: AboutYouContdController.hasBike.value
+                    ? const Color(0xFF868686)
+                    : const Color(0x70868686),
+                fontSize: 15),
+          ),
+        ),
         Obx(() => CustomTextFormField(
-          hintText: hint,
-          enabled: AboutYouContdController.hasBike.value,
-          controller: controller,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return "Please enter $label";
-            }
-            return null;
-          },
-        )),
-        SizedBox(height: 15),
+              hintText: hint,
+              enabled: AboutYouContdController.hasBike.value,
+              controller: controller,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please enter $label";
+                }
+                return null;
+              },
+            )),
+        const SizedBox(height: 15),
       ],
     );
   }
@@ -156,12 +169,12 @@ class BikeCheckbox extends StatelessWidget {
   final ValueChanged<bool> onChanged;
 
   const BikeCheckbox({
-    Key? key,
+    super.key,
     required this.label,
     required this.value,
     required this.groupValue,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -171,8 +184,8 @@ class BikeCheckbox extends StatelessWidget {
         Checkbox(
           value: groupValue == value,
           onChanged: (bool? newValue) => onChanged(value),
-          activeColor: Color(0xFF35124E),
-          checkColor: Color(0xFF35124E),
+          activeColor: const Color(0xFF35124E),
+          checkColor: const Color(0xFF35124E),
         ),
         Text(label),
       ],

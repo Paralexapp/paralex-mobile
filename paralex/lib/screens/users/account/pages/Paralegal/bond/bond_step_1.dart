@@ -52,14 +52,14 @@ class BondFirstStep extends StatelessWidget {
                           return null;
                         },
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: '10% Bail-bond fee',
                         keyboardType: TextInputType.emailAddress,
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'Court',
                       ),
-                      TextfieldWidget(
+                      const TextfieldWidget(
                         hintText: 'Investigating agency',
                       ),
                       const SizedBox(

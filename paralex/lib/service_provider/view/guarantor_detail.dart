@@ -9,7 +9,10 @@ import '../../reusables/paints.dart';
 import '../controllers/guarantor_detail_controller.dart';
 
 class GuarantorDetail extends StatelessWidget {
-  final GuarantorDetailController controller = Get.put(GuarantorDetailController());
+  final GuarantorDetailController controller =
+      Get.put(GuarantorDetailController());
+
+  GuarantorDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,45 +38,53 @@ class GuarantorDetail extends StatelessWidget {
                     fontSize: 22,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   "Choose a guarantor",
                   style: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0, color: Color(0xFF868686), fontSize: 15),
+                      letterSpacing: 0,
+                      color: const Color(0xFF868686),
+                      fontSize: 15),
                 ),
                 CustomTextFormField(
                   hintText: "Parent",
                   ontap: controller.showGuarantorDialog,
-                  suffixIcon: Icon(Icons.keyboard_arrow_down_outlined),
+                  suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
                   readonly: true,
                   controller: controller.guarantorController,
-                  validator: (value) =>
-                  value == null || value.isEmpty ? 'Please select a guarantor' : null,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Please select a guarantor'
+                      : null,
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Text(
                   "Guarantor Phone number",
                   style: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0, color: Color(0xFF868686), fontSize: 15),
+                      letterSpacing: 0,
+                      color: const Color(0xFF868686),
+                      fontSize: 15),
                 ),
                 IntlPhoneField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Phone Number',
                     hintStyle: TextStyle(color: Colors.grey),
                     filled: true,
                     fillColor: Color(0xFFECF1F4),
-                    contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
                   ),
                   initialCountryCode: 'NG',
                   onChanged: (phone) {
                     controller.phoneNumber.value = phone.completeNumber;
                   },
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Text(
                   "Guarantor email",
                   style: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0, color: Color(0xFF868686), fontSize: 15),
+                      letterSpacing: 0,
+                      color: const Color(0xFF868686),
+                      fontSize: 15),
                 ),
                 CustomTextFormField(
                   keyboardType: TextInputType.emailAddress,
@@ -88,20 +99,23 @@ class GuarantorDetail extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Text(
                   "Guarantor state of residence",
                   style: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0, color: Color(0xFF868686), fontSize: 15),
+                      letterSpacing: 0,
+                      color: const Color(0xFF868686),
+                      fontSize: 15),
                 ),
                 CustomTextFormField(
                   hintText: "Lagos",
                   readonly: true,
-                  suffixIcon: Icon(Icons.keyboard_arrow_down_outlined),
+                  suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
                   ontap: controller.showNgStatesDialog,
                   controller: controller.stateController,
-                  validator: (value) =>
-                  value == null || value.isEmpty ? 'Please select a state' : null,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Please select a state'
+                      : null,
                 ),
                 SizedBox(height: size.height * 0.185),
                 CustomButton(

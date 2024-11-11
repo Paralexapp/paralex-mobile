@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../routes/navs.dart';
-
 class GuarantorDetailController extends GetxController {
   // Define controllers for each form field
   final formKey = GlobalKey<FormState>();
@@ -28,7 +26,7 @@ class GuarantorDetailController extends GetxController {
   // Function to handle validation and submission
   void validateAndSubmit() {
     if (formKey.currentState!.validate() && phoneNumber.value.isNotEmpty) {
-      Get.toNamed(Nav.bankInfo);
+      Get.snackbar("Success", "All fields are valid.");
     } else {
       if (phoneNumber.value.isEmpty) {
         Get.snackbar("Error", "Please enter a valid phone number.");
@@ -42,51 +40,80 @@ class GuarantorDetailController extends GetxController {
   Future<void> showGuarantorDialog() async {
     await Get.defaultDialog<String>(
       title: "Choose an Option",
-      content: Obx(() => Column(
-        children: [
-          RadioListTile<String>(
-            title: Text("Parent"),
-            value: "Parent",
-            groupValue: selectedOption.value,
-            onChanged: (value) {
-              selectedOption.value = value!;
-              guarantorController.text = selectedOption.value;
-              Get.back(); // Close the dialog immediately
-            },
-          ),
-          RadioListTile<String>(
-            title: Text("Friend"),
-            value: "Friend",
-            groupValue: selectedOption.value,
-            onChanged: (value) {
-              selectedOption.value = value!;
-              guarantorController.text = selectedOption.value;
-              Get.back(); // Close the dialog immediately
-            },
-          ),
-          RadioListTile<String>(
-            title: Text("Sibling"),
-            value: "Sibling",
-            groupValue: selectedOption.value,
-            onChanged: (value) {
-              selectedOption.value = value!;
-              guarantorController.text = selectedOption.value;
-              Get.back();
-            },
-          ),
-        ],
-      )),
+      content: Obx(
+        () => Column(
+          children: [
+            RadioListTile<String>(
+              title: const Text("Parent"),
+              value: "Parent",
+              groupValue: selectedOption.value,
+              onChanged: (value) => selectedOption.value = value!,
+            ),
+            RadioListTile<String>(
+              title: const Text("Friend"),
+              value: "Friend",
+              groupValue: selectedOption.value,
+              onChanged: (value) => selectedOption.value = value!,
+            ),
+            RadioListTile<String>(
+              title: const Text("Sibling"),
+              value: "Sibling",
+              groupValue: selectedOption.value,
+              onChanged: (value) => selectedOption.value = value!,
+            ),
+          ],
+        ),
+      ),
+      textConfirm: "OK",
+      onConfirm: () {
+        if (selectedOption.value.isNotEmpty) {
+          guarantorController.text = selectedOption.value;
+        }
+        Get.back();
+      },
     );
   }
-
 
   // Helper function to select state
   Future<void> showNgStatesDialog() async {
     List<String> nigeriaStates = [
-      'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno', 'Cross River',
-      'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano',
-      'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo',
-      'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara', 'Federal Capital Territory'
+      'Abia',
+      'Adamawa',
+      'Akwa Ibom',
+      'Anambra',
+      'Bauchi',
+      'Bayelsa',
+      'Benue',
+      'Borno',
+      'Cross River',
+      'Delta',
+      'Ebonyi',
+      'Edo',
+      'Ekiti',
+      'Enugu',
+      'Gombe',
+      'Imo',
+      'Jigawa',
+      'Kaduna',
+      'Kano',
+      'Katsina',
+      'Kebbi',
+      'Kogi',
+      'Kwara',
+      'Lagos',
+      'Nasarawa',
+      'Niger',
+      'Ogun',
+      'Ondo',
+      'Osun',
+      'Oyo',
+      'Plateau',
+      'Rivers',
+      'Sokoto',
+      'Taraba',
+      'Yobe',
+      'Zamfara',
+      'Federal Capital Territory'
     ];
     nigeriaStates.sort();
 
@@ -94,22 +121,24 @@ class GuarantorDetailController extends GetxController {
       title: "Choose a State in Nigeria",
       content: SizedBox(
         height: 300,
-        child: Obx(() => ListView(
-          children: nigeriaStates.map((state) {
-            return RadioListTile<String>(
-              title: Text(state),
-              value: state,
-              groupValue: stateChoice.value,
-              onChanged: (value) {
-                stateChoice.value = value!;
-                stateController.text = stateChoice.value;
-                Get.back();
-              }
-            );
-          }).toList(),
+        child: Obx(
+          () => ListView(
+            children: nigeriaStates.map((state) {
+              return RadioListTile<String>(
+                title: Text(state),
+                value: state,
+                groupValue: stateChoice.value,
+                onChanged: (value) => stateChoice.value = value!,
+              );
+            }).toList(),
+          ),
         ),
       ),
-      ),
+      textConfirm: "OK",
+      onConfirm: () {
+        stateController.text = stateChoice.value;
+        Get.back();
+      },
     );
   }
 }

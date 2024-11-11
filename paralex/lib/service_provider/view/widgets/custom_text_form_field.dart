@@ -15,8 +15,8 @@ class CustomTextFormField extends StatelessWidget {
   final VoidCallback? ontap;
   final bool? enabled;
 
-  CustomTextFormField({
-    Key? key,
+  const CustomTextFormField({
+    super.key,
     required this.hintText,
     this.labelText = '',
     this.textStyle,
@@ -30,7 +30,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.ontap,
     this.enabled,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class CustomTextFormField extends StatelessWidget {
       children: [
         TextFormField(
           controller: controller,
-          style: textStyle ?? TextStyle(color: Colors.black),
+          style: textStyle ?? const TextStyle(color: Colors.black),
           keyboardType: keyboardType,
           obscureText: obscureText,
           onChanged: onChanged,
@@ -51,10 +51,13 @@ class CustomTextFormField extends StatelessWidget {
             hintText: hintText,
             hintStyle: TextStyle(color: Colors.grey),
             labelText: labelText,
-            labelStyle: TextStyle(color: Colors.grey),
+            labelStyle: const TextStyle(color: Colors.grey),
             filled: true,
-            fillColor: (enabled ?? true) ? Color(0xFFECF1F4) : Color(0x70ECF1F4),
-            contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            fillColor: (enabled ?? true)
+                ? const Color(0xFFECF1F4)
+                : const Color(0x70ECF1F4),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
             enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               borderSide: BorderSide(color: Color(0xFFECF1F4)),
@@ -69,9 +72,9 @@ class CustomTextFormField extends StatelessWidget {
             ),
             suffixIcon: suffixIcon != null
                 ? InkWell(
-              onTap: onSuffixTap,
-              child: suffixIcon,
-            )
+                    onTap: onSuffixTap,
+                    child: suffixIcon,
+                  )
                 : null,
           ),
         ),

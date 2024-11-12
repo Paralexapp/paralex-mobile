@@ -2,8 +2,7 @@ class Nav {
   static const splash = "/";
   static const welcomeShow = "/welcome";
   static const lastWelcomeScreen = "/lastWelcomeScreen";
-  static const serviceProviderSignupWelcomeScreen =
-      "/serviceProviderSignupWelcomeScreen";
+  static const serviceProviderSignupWelcomeScreen = "/serviceProviderSignupWelcomeScreen";
   static const selectServiceScreen = "/selectServiceScreen";
   static const userSignupScreen = "/userSignup";
   static const otpScreen = "/otp";
@@ -29,5 +28,8 @@ class Nav {
   static const nafdacReg = '/nafdac';
   static const nafdacStepOne = '/nafdacA';
   static const nafdacStepTwo = '/nafdacB';
-  static const findAlawyer = '/lawHome';
+  static const bankInfo = '/bankInfo';
+  static const notification = '/notification';
+  static const deliveryInfo = '/deliveryInfo';
+
 }

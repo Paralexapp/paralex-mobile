@@ -48,6 +48,8 @@ class CustomTextFormField extends StatelessWidget {
           enabled: enabled,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(color: Colors.grey),
             labelText: labelText,
             labelStyle: const TextStyle(color: Colors.grey),
             filled: true,

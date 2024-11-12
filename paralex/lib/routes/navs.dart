@@ -29,4 +29,5 @@ class Nav {
   static const nafdacReg = '/nafdac';
   static const nafdacStepOne = '/nafdacA';
   static const nafdacStepTwo = '/nafdacB';
+  static const findAlawyer = '/lawHome';
 }

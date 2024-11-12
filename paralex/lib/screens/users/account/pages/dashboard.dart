@@ -145,8 +145,10 @@ class _DashboardState extends State<Dashboard> {
                       decoration: const BoxDecoration(
                           color: PaintColors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: const Center(
-                        child: Icon(Iconsax.arrow_right_2),
+                      child: Center(
+                        child: InkWell(
+                            onTap: () => Get.toNamed(Nav.findAlawyer),
+                            child: Icon(Iconsax.arrow_right_2)),
                       ),
                     )
                   ],
@@ -182,6 +184,14 @@ class _DashboardState extends State<Dashboard> {
               height: 100,
               decoration: BoxDecoration(
                   color: PaintColors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 2,
+                      // Offset of the shadow
+                    ),
+                  ],
                   borderRadius: BorderRadius.circular(20)
                   // Optional: Rounded corners
                   ),
@@ -209,7 +219,7 @@ class _DashboardState extends State<Dashboard> {
                                 SizedBox(
                                   width: 200,
                                 ),
-                                Text("Sbmitted")
+                                Text("Submitted")
                               ],
                             )
                           ],

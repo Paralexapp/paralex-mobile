@@ -4,17 +4,18 @@ import 'package:get/get.dart';
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
 import 'package:paralax/screens/users/account/home.dart';
-import 'package:paralax/screens/users/account/pages/Paralegal/Legal/nafdac.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/legal/nafdac.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_1.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_2.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_3.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_4.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_step_5.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_success.dart';
-import 'package:paralax/screens/users/account/pages/Paralegal/Legal/legal_assistance.dart';
+import 'package:paralax/screens/users/account/pages/Paralegal/legal/legal_assistance.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_one.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_two.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/paralegal_home.dart';
+import 'package:paralax/screens/users/account/pages/lawyer/lawyer_home.dart';
 import 'package:paralax/screens/users/auth_process/final_step.dart';
 import 'package:paralax/screens/users/auth_process/login.dart';
 import 'package:paralax/screens/users/auth_process/registration.dart';
@@ -79,7 +80,8 @@ void main() {
       GetPage(name: Nav.legalServiceHome, page: () => const LegalAssistance()),
       GetPage(name: Nav.nafdacReg, page: () => const NafdacRegistration()),
       GetPage(name: Nav.nafdacStepOne, page: () => const NafdacStepOne()),
-      GetPage(name: Nav.nafdacStepTwo, page: () => const NafdacStepTwo())
+      GetPage(name: Nav.nafdacStepTwo, page: () => const NafdacStepTwo()),
+      GetPage(name: Nav.findAlawyer, page: () => const LawyerHome())
     ],
     debugShowCheckedModeBanner: false,
   ));

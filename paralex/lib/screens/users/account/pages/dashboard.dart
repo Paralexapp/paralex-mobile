@@ -119,7 +119,7 @@ class _DashboardState extends State<Dashboard> {
         Positioned(
           right: 70,
           child: GestureDetector(
-            // onTap: () => Get.toNamed(Nav.legalServiceHome), // Replace with your route
+            onTap: () => Get.toNamed(Nav.findAlawyer),
             child: Container(
               margin: EdgeInsets.only(top: size.height * 0.50),
               child: Column(

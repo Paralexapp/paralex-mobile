@@ -15,6 +15,7 @@ import 'package:paralax/screens/users/account/pages/Paralegal/bond/bond_success.
 import 'package:paralax/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_one.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_two.dart';
 import 'package:paralax/screens/users/account/pages/Paralegal/paralegal_home.dart';
+import 'package:paralax/screens/users/account/pages/lawyer/lawyer_home.dart';
 import 'package:paralax/screens/users/auth_process/final_step.dart';
 import 'package:paralax/screens/users/auth_process/login.dart';
 import 'package:paralax/screens/users/auth_process/registration.dart';
@@ -74,6 +75,7 @@ void main() {
       GetPage(name: Nav.nafdacStepTwo, page: () => const NafdacStepTwo()),
       GetPage(name: Nav.bankInfo, page: () => BankInfo()),
       GetPage(name: Nav.notification, page: () => DeliveryNotification()),
+      GetPage(name: Nav.findAlawyer, page: () => const LawyerHome()),
       GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),
     ],
     debugShowCheckedModeBanner: false,

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
-import 'package:paralax/routes/navs.dart';
+import 'package:paralex/routes/navs.dart';
 
 class MoreAboutYou extends StatefulWidget {
   const MoreAboutYou({super.key});
@@ -35,7 +35,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
             Text(
               "Tell us more about you",
               style: FontStyles.headingText
-                  .copyWith(color: PaintColors.paralaxpurple, fontSize: 22),
+                  .copyWith(color: PaintColors.paralexpurple, fontSize: 22),
             ),
             Text("Please use your name as it \nappears on your ID",
                 style: FontStyles.smallCapsIntro.copyWith(
@@ -68,7 +68,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: PaintColors.paralaxpurple))),
+                              BorderSide(color: PaintColors.paralexpurple))),
                 ),
                 const SizedBox(
                   height: 20,
@@ -92,7 +92,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: PaintColors.paralaxpurple))),
+                              BorderSide(color: PaintColors.paralexpurple))),
                 ),
                 const SizedBox(
                   height: 20,
@@ -147,7 +147,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                     height: 50,
                     width: size.width * 0.85,
                     decoration: const BoxDecoration(
-                        color: PaintColors.paralaxpurple,
+                        color: PaintColors.paralexpurple,
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                     child: Center(
                         child: Text(
@@ -181,7 +181,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                             style: FontStyles.smallCapsIntro.copyWith(
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.bold,
-                                color: PaintColors.paralaxpurple,
+                                color: PaintColors.paralexpurple,
                                 fontSize: 14),
                           ),
                         ],
@@ -193,7 +193,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                               style: FontStyles.smallCapsIntro.copyWith(
                                   letterSpacing: 0,
                                   fontWeight: FontWeight.bold,
-                                  color: PaintColors.paralaxpurple,
+                                  color: PaintColors.paralexpurple,
                                   fontSize: 14)),
                           const SizedBox(
                             width: 5,
@@ -207,7 +207,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                             style: FontStyles.smallCapsIntro.copyWith(
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.bold,
-                                color: PaintColors.paralaxpurple,
+                                color: PaintColors.paralexpurple,
                                 fontSize: 14),
                           ),
                         ],

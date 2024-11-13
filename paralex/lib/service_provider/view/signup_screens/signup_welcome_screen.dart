@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
 import '../../../reusables/fonts.dart';
 import '../../../reusables/back_button.dart';
 import '../../controllers/signup_controller.dart';
@@ -60,7 +60,7 @@ class SignupWelcomeScreen extends StatelessWidget {
                 Text(
                   "Welcome to \nParalex",
                   style: FontStyles.headingText.copyWith(
-                      color: PaintColors.paralaxpurple,
+                      color: PaintColors.paralexpurple,
                       fontWeight: FontWeight.w900),
                 ),
                 Text(
@@ -212,7 +212,7 @@ class SignupWelcomeScreen extends StatelessWidget {
                               controller.isSpecialCharacterValid.value &&
                               controller.passwordText.value ==
                                   controller.confirmPasswordText.value
-                          ? PaintColors.paralaxpurple
+                          ? PaintColors.paralexpurple
                           : const Color(0xFFFFEAF5),
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),

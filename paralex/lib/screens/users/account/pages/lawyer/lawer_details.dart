@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paralax/reusables/paints.dart';
+import 'package:paralex/reusables/paints.dart';
 
 class LawyerDetails extends StatelessWidget {
   const LawyerDetails({super.key});

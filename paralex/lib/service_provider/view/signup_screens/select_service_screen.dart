@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/back_button.dart';
+import 'package:paralex/reusables/back_button.dart';
 import '../../../reusables/fonts.dart';
 import '../../../reusables/paints.dart';
 import '../../../routes/navs.dart';
@@ -29,7 +29,7 @@ class SelectServiceScreen extends StatelessWidget {
             Text(
               "Choose your \n preferred",
               style: FontStyles.headingText.copyWith(
-                  color: PaintColors.paralaxpurple,
+                  color: PaintColors.paralexpurple,
                   fontWeight: FontWeight.w900),
             ),
             const SizedBox(height: 35),
@@ -67,7 +67,7 @@ class SelectServiceScreen extends StatelessWidget {
               height: 50,
               width: size.width * 0.9,
               decoration: const BoxDecoration(
-                color:  PaintColors.paralaxpurple,
+                color:  PaintColors.paralexpurple,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: InkWell(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:paralax/service_provider/view/widgets/custom_button.dart';
-import 'package:paralax/service_provider/view/widgets/custom_text_form_field.dart';
+import 'package:paralex/service_provider/view/widgets/custom_button.dart';
+import 'package:paralex/service_provider/view/widgets/custom_text_form_field.dart';
 import '../../reusables/back_button.dart';
 import '../../reusables/fonts.dart';
 import '../../reusables/paints.dart';
@@ -34,7 +34,7 @@ class GuarantorDetail extends StatelessWidget {
                 Text(
                   "Guarantor's Detail",
                   style: FontStyles.headingText.copyWith(
-                    color: PaintColors.paralaxpurple,
+                    color: PaintColors.paralexpurple,
                     fontSize: 22,
                   ),
                 ),
@@ -121,7 +121,7 @@ class GuarantorDetail extends StatelessWidget {
                 CustomButton(
                   desiredWidth: 0.85,
                   buttonText: "CONTINUE",
-                  buttonColor: PaintColors.paralaxpurple,
+                  buttonColor: PaintColors.paralexpurple,
                   ontap: controller.validateAndSubmit,
                 ),
                 const SizedBox(height: 20),
@@ -143,7 +143,7 @@ class GuarantorDetail extends StatelessWidget {
                             style: FontStyles.smallCapsIntro.copyWith(
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.bold,
-                                color: PaintColors.paralaxpurple,
+                                color: PaintColors.paralexpurple,
                                 fontSize: 14),
                           ),
                         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
 
 class FinalStep extends StatefulWidget {
   const FinalStep({super.key});
@@ -25,7 +25,7 @@ class _FinalStepState extends State<FinalStep> {
                 Text(
                   "Congratulations",
                   style: FontStyles.headingText
-                      .copyWith(color: PaintColors.paralaxpurple, fontSize: 25),
+                      .copyWith(color: PaintColors.paralexpurple, fontSize: 25),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +66,7 @@ class _FinalStepState extends State<FinalStep> {
                     height: 50,
                     width: size.width * 0.85,
                     decoration: const BoxDecoration(
-                        color: PaintColors.paralaxpurple,
+                        color: PaintColors.paralexpurple,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Center(
                         child: Text(

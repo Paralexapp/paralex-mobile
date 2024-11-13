@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/view/widgets/activity_card.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/view/widgets/activity_card.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -34,14 +34,14 @@ class _DashboardState extends State<Dashboard> {
                     Text(
                       "monday, Nov8, 2025 ",
                       style: FontStyles.smallCapsIntro.copyWith(
-                          color: PaintColors.paralaxpurple,
+                          color: PaintColors.paralexpurple,
                           fontSize: 14,
                           letterSpacing: 0),
                     ),
                     Text(
                       "Hello, Emmanuel John",
                       style: FontStyles.headingText.copyWith(
-                          color: PaintColors.paralaxpurple,
+                          color: PaintColors.paralexpurple,
                           fontWeight: FontWeight.w900,
                           fontSize: 20),
                     )
@@ -49,7 +49,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 const Icon(
                   Iconsax.sms,
-                  color: PaintColors.paralaxpurple,
+                  color: PaintColors.paralexpurple,
                   size: 30,
                 )
               ],
@@ -102,7 +102,7 @@ class _DashboardState extends State<Dashboard> {
                 end: Alignment.centerRight,
                 colors: [
                   Colors.purple,
-                  PaintColors.paralaxpurple,
+                  PaintColors.paralexpurple,
                 ],
               ),
               borderRadius: BorderRadius.only(

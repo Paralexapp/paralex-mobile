@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:paralax/reusables/fonts.dart';
+import 'package:paralex/reusables/fonts.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../routes/navs.dart';
 

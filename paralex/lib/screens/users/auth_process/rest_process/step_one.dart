@@ -1,8 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
 
 import '../../../../routes/navs.dart';
 
@@ -40,7 +40,7 @@ class _StepOneState extends State<StepOne> {
               Text(
                 "Trouble with \nlogging in",
                 style: FontStyles.headingText.copyWith(
-                    color: PaintColors.paralaxpurple,
+                    color: PaintColors.paralexpurple,
                     fontWeight: FontWeight.w900),
               ),
               const SizedBox(
@@ -83,7 +83,7 @@ class _StepOneState extends State<StepOne> {
                               border: OutlineInputBorder(),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: PaintColors.paralaxpurple))),
+                                      color: PaintColors.paralexpurple))),
                         ),
                       ),
                       const SizedBox(
@@ -100,7 +100,7 @@ class _StepOneState extends State<StepOne> {
                               style: ElevatedButton.styleFrom(
                                   elevation: 0,
                                   backgroundColor: _isFormValid
-                                      ? PaintColors.paralaxpurple
+                                      ? PaintColors.paralexpurple
                                       : PaintColors.fadedPinkBg,
                                   foregroundColor: Colors.white,
                                   minimumSize: Size(size.width * 0.90, 48),

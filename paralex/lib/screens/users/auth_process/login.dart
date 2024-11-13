@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/services/firebase_service.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
 
 class LoginWithPassword extends StatefulWidget {
   const LoginWithPassword({super.key});
@@ -31,7 +28,6 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
   bool isEmailValid(String email) {
     return EmailValidator.validate(email);
   }
-  FirebaseService auth = FirebaseService();
 
   @override
   void initState() {
@@ -62,7 +58,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                       Text(
                         "Welcome to \nParalex",
                         style: FontStyles.headingText.copyWith(
-                            color: PaintColors.paralaxpurple,
+                            color: PaintColors.paralexpurple,
                             fontWeight: FontWeight.w900),
                       ),
                       Text(
@@ -107,7 +103,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                   border: OutlineInputBorder(),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: PaintColors.paralaxpurple))),
+                                          color: PaintColors.paralexpurple))),
                             ),
                           ),
                           Container(
@@ -156,7 +152,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                 border: const OutlineInputBorder(),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: PaintColors.paralaxpurple))),
+                                        color: PaintColors.paralexpurple))),
                           )),
 
                           const SizedBox(height: 20),
@@ -175,39 +171,16 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
 
                           Center(
                               child: ElevatedButton.icon(
-                                  onPressed: () async {
+                                  onPressed: () {
                                     if (!_key.currentState!.validate()) {
                                       return;
                                     }
-                                    if(_isFormValid == true){
-
-                                      try{
-                                        setState(() {
-                                          loading = true;
-                                        });
-                                        var userUID = await auth.signInWithEmailAndPassword(
-                                            email: _emailController.text,
-                                            password: _passwordController.text);
-                                        log('$userUID');
-                                        setState(() {
-                                          loading = false;
-                                        });
-                                        Get.toNamed(Nav.home);
-                                      }
-                                      catch(e){
-                                        log('login failed');
-                                        setState(() {
-                                          loading = false;
-                                        });
-                                      }
-                                    }
-                                    // Get.toNamed(Nav.home);
-
+                                    Get.toNamed(Nav.home);
                                   },
                                   style: ElevatedButton.styleFrom(
                                       elevation: 0,
                                       backgroundColor: _isFormValid
-                                          ? PaintColors.paralaxpurple
+                                          ? PaintColors.paralexpurple
                                           : PaintColors.fadedPinkBg,
                                       foregroundColor: Colors.white,
                                       minimumSize: Size(size.width * 0.90, 48),
@@ -252,7 +225,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                             style: FontStyles.smallCapsIntro.copyWith(
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.bold,
-                                color: PaintColors.paralaxpurple,
+                                color: PaintColors.paralexpurple,
                                 fontSize: 14)),
                       )
                     ],
@@ -264,7 +237,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                         style: FontStyles.smallCapsIntro.copyWith(
                           letterSpacing: 0,
                           fontWeight: FontWeight.bold,
-                          color: PaintColors.paralaxpurple,
+                          color: PaintColors.paralexpurple,
                           fontSize: 13,
                         )),
                   ))

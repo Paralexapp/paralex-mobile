@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/screens/users/account/pages/logistics/home.dart';
-import 'package:paralax/screens/users/account/pages/controllers/home_controller.dart';
-import 'package:paralax/screens/users/account/pages/dashboard.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/screens/users/account/pages/logistics/home.dart';
+import 'package:paralex/screens/users/account/pages/controllers/home_controller.dart';
+import 'package:paralex/screens/users/account/pages/dashboard.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 //import 'package:get/get_core/src/get_main.dart';
-import 'package:paralax/reusables/fonts.dart';
+import 'package:paralex/reusables/fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:paralax/routes/navs.dart';
+import 'package:paralex/routes/navs.dart';
 
 class WelcomeSliders extends StatefulWidget {
   const WelcomeSliders({super.key});

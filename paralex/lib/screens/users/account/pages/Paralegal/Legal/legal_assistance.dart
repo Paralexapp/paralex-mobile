@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
 
 class LegalAssistance extends StatelessWidget {
   const LegalAssistance({super.key});
@@ -18,7 +18,7 @@ class LegalAssistance extends StatelessWidget {
         title: Text(
           "Bail Bond Application Form",
           style: FontStyles.headingText
-              .copyWith(color: PaintColors.paralaxpurple, fontSize: 14),
+              .copyWith(color: PaintColors.paralexpurple, fontSize: 14),
         ),
       ),
       body: SingleChildScrollView(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
 
-import '../../../routes/navs.dart';
+import '../../../../routes/navs.dart';
 
 class VerificationMessage extends StatefulWidget {
   const VerificationMessage({super.key});
@@ -30,7 +30,7 @@ class _VerificationMessageState extends State<VerificationMessage> {
                 Text(
                   "Verification Sent!",
                   style: FontStyles.headingText
-                      .copyWith(color: PaintColors.paralaxpurple, fontSize: 25),
+                      .copyWith(color: PaintColors.paralexpurple, fontSize: 25),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +71,7 @@ class _VerificationMessageState extends State<VerificationMessage> {
                     height: 50,
                     width: size.width * 0.85,
                     decoration: const BoxDecoration(
-                        color: PaintColors.paralaxpurple,
+                        color: PaintColors.paralexpurple,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Center(
                         child: Text(

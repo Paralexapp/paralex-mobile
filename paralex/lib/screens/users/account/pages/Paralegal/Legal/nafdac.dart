@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/view/widgets/custom_button.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 
 class NafdacRegistration extends StatelessWidget {
   const NafdacRegistration({super.key});
@@ -17,7 +17,7 @@ class NafdacRegistration extends StatelessWidget {
           child: Text(
             "NAFDAC",
             style: FontStyles.headingText
-                .copyWith(color: PaintColors.paralaxpurple, fontSize: 14),
+                .copyWith(color: PaintColors.paralexpurple, fontSize: 14),
           ),
         ),
         backgroundColor: PaintColors.bgColor,
@@ -111,7 +111,7 @@ class NafdacRegistration extends StatelessWidget {
                       ontap: () => Get.toNamed(Nav.nafdacStepOne),
                       desiredWidth: 90,
                       buttonText: "Next",
-                      buttonColor: PaintColors.paralaxpurple)
+                      buttonColor: PaintColors.paralexpurple)
                 ],
               ),
             )

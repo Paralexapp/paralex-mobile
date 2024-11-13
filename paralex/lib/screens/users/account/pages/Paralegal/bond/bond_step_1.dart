@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
 
 import '../../../../../../service_provider/view/widgets/custom_button.dart';
 
@@ -18,7 +18,7 @@ class BondFirstStep extends StatelessWidget {
           title: Text(
             "Bail Bond Application Form",
             style: FontStyles.headingText
-                .copyWith(color: PaintColors.paralaxpurple, fontSize: 14),
+                .copyWith(color: PaintColors.paralexpurple, fontSize: 14),
           ),
           backgroundColor: PaintColors.bgColor,
         ),
@@ -68,7 +68,7 @@ class BondFirstStep extends StatelessWidget {
                       CustomButton(
                           desiredWidth: 90,
                           buttonText: "Next",
-                          buttonColor: PaintColors.paralaxpurple,
+                          buttonColor: PaintColors.paralexpurple,
                           ontap: () => Get.toNamed(Nav.bondStepB))
                     ],
                   ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
+import 'package:paralex/reusables/fonts.dart';
 
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
 import '../../../../../../service_provider/view/widgets/custom_button.dart';
 
 class BondSuccess extends StatelessWidget {
@@ -24,7 +24,7 @@ class BondSuccess extends StatelessWidget {
               height: 150,
               width: 150,
               decoration: const BoxDecoration(
-                color: PaintColors.paralaxpurple,
+                color: PaintColors.paralexpurple,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
               child: Center(
@@ -47,7 +47,7 @@ class BondSuccess extends StatelessWidget {
             CustomButton(
                 desiredWidth: 70,
                 buttonText: "Go back to home ",
-                buttonColor: PaintColors.paralaxpurple,
+                buttonColor: PaintColors.paralexpurple,
                 ontap: () => Get.toNamed(Nav.paralegalHome))
           ],
         ),

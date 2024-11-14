@@ -31,7 +31,8 @@ class ParalegalDashboard extends StatelessWidget {
                         navTo: () => Get.toNamed(Nav.legalServiceHome),
                         image: "assets/images/book.png",
                         text: "Legal Assistance\n Service"),
-                    const MenuWithImages(
+                    MenuWithImages(
+                        navTo: () => Get.toNamed(Nav.requestLawyer),
                         image: "assets/images/litigation.png",
                         text: "Litigation\n Support"),
                     MenuWithImages(

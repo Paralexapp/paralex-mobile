@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'package:paralax/paralegal/request_lawyer_form.dart';
+
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
 import 'package:paralax/screens/users/account/home.dart';
@@ -38,17 +38,8 @@ import 'package:paralax/service_provider/view/delivery_notification.dart';
 import 'package:paralax/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralax/service_provider/view/signup_screens/signup_welcome_screen.dart';
 
-import 'service_provider/services/hive_service.dart';
-
-Future<void> main() async{
+void main() {
   Get.put(UserChoiceController());
-
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await HiveService.registerHive();
-
   runApp(GetMaterialApp(
     initialRoute: Nav.splash,
     getPages: [
@@ -87,6 +78,7 @@ Future<void> main() async{
       GetPage(name: Nav.notification, page: () => DeliveryNotification()),
       GetPage(name: Nav.findAlawyer, page: () => const LawyerHome()),
       GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),
+      GetPage(name: Nav.requestLawyer, page: () => RequestLawyerForm()),
     ],
     debugShowCheckedModeBanner: false,
   ));

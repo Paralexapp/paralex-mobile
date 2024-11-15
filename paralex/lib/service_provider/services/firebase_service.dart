@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:paralax/service_provider/services/exception_handler.dart';
+import 'package:paralex/service_provider/services/exception_handler.dart';
 
 class FirebaseService {
   final FirebaseAuth _authInstance = FirebaseAuth.instance;

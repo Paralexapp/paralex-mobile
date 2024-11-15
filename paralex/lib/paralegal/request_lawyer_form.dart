@@ -2,9 +2,9 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:paralax/service_provider/view/widgets/custom_button.dart';
 import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
+import '../service_provider/view/widgets/custom_button.dart';
 import '../service_provider/view/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -696,7 +696,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                           Text('Upload File',
                               style: FontStyles.smallCapsIntro.copyWith(
                                   letterSpacing: 0,
-                                  color: PaintColors.paralaxpurple,
+                                  color: PaintColors.paralexpurple,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold)),
                           Text(

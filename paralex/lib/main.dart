@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/paralegal/request_lawyer_form.dart';
+import 'package:paralex/paralegal/request_lawyer_form.dart';
 
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/splash/splash.dart';

@@ -39,7 +39,7 @@ class AboutYou extends StatelessWidget {
                 Text(
                   "Tell us more about you",
                   style: FontStyles.headingText.copyWith(
-                    color: PaintColors.paralaxpurple,
+                    color: PaintColors.paralexpurple,
                     fontSize: 22,
                   ),
                 ),
@@ -122,7 +122,7 @@ class AboutYou extends StatelessWidget {
                     CustomButton(
                         desiredWidth: 0.85,
                         buttonText: "CONTINUE",
-                        buttonColor: PaintColors.paralaxpurple,
+                        buttonColor: PaintColors.paralexpurple,
                         ontap: controller.onContinueButtonPressed),
                     const SizedBox(height: 20),
                     Center(
@@ -143,7 +143,7 @@ class AboutYou extends StatelessWidget {
                                 style: FontStyles.smallCapsIntro.copyWith(
                                     letterSpacing: 0,
                                     fontWeight: FontWeight.bold,
-                                    color: PaintColors.paralaxpurple,
+                                    color: PaintColors.paralexpurple,
                                     fontSize: 14),
                               ),
                             ],

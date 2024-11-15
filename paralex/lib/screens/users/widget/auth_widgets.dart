@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
 
 class TextWidget extends StatelessWidget {
   final String text;
@@ -13,7 +13,7 @@ class TextWidget extends StatelessWidget {
       child: Text(
         text,
         style: FontStyles.headingText.copyWith(
-            color: PaintColors.paralaxpurple, fontWeight: FontWeight.w900),
+            color: PaintColors.paralexpurple, fontWeight: FontWeight.w900),
         // style: style,
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paralax/reusables/paints.dart';
+import 'package:paralex/reusables/paints.dart';
 
 class PinkButton {
   static final backButton = Container(
@@ -11,7 +11,7 @@ class PinkButton {
     child: const Icon(
       Icons.arrow_back_ios_new_sharp,
       size: 12,
-      color: PaintColors.paralaxpurple,
+      color: PaintColors.paralexpurple,
     ),
   );
 }

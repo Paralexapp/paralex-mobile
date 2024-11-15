@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
 
 import '../../../../routes/navs.dart';
 
@@ -48,7 +48,7 @@ class _StepThreeState extends State<StepThree> {
               Text(
                 "Create New \nPassword",
                 style: FontStyles.headingText.copyWith(
-                    color: PaintColors.paralaxpurple,
+                    color: PaintColors.paralexpurple,
                     fontWeight: FontWeight.w900),
               ),
               Form(
@@ -105,7 +105,7 @@ class _StepThreeState extends State<StepThree> {
                             border: const OutlineInputBorder(),
                             focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: PaintColors.paralaxpurple))),
+                                    color: PaintColors.paralexpurple))),
                       )),
                       Container(
                           // padding: const EdgeInsets.all(0),
@@ -160,7 +160,7 @@ class _StepThreeState extends State<StepThree> {
                               style: ElevatedButton.styleFrom(
                                   elevation: 0,
                                   backgroundColor: _isFormValid
-                                      ? PaintColors.paralaxpurple
+                                      ? PaintColors.paralexpurple
                                       : PaintColors.fadedPinkBg,
                                   foregroundColor: Colors.white,
                                   minimumSize: Size(size.width * 0.90, 48),

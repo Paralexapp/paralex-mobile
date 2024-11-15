@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:paralax/reusables/paints.dart';
+import 'package:paralex/reusables/paints.dart';
 import '../../reusables/fonts.dart';
 import '../../routes/navs.dart';
 import '../controllers/notification_controller.dart';
@@ -81,7 +81,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: PaintColors.paralaxpurple,
+      backgroundColor: PaintColors.paralexpurple,
       elevation: 0,
       leading: IconButton(
         icon: Icon(Icons.arrow_back_ios_new_sharp, color: Colors.white),

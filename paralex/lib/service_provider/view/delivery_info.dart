@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/service_provider/view/widgets/custom_button.dart';
-import 'package:paralax/service_provider/view/widgets/custom_text_field.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/service_provider/view/widgets/custom_button.dart';
+import 'package:paralex/service_provider/view/widgets/custom_text_field.dart';
 
 import '../../reusables/fonts.dart';
 
@@ -159,7 +159,7 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
                                 CustomButton(
                                     desiredWidth: 0.9,
                                     buttonText: "Set Up",
-                                    buttonColor: PaintColors.paralaxpurple),
+                                    buttonColor: PaintColors.paralexpurple),
                                 SizedBox(height: 15),
                                 Text(
                                   "My schedule",
@@ -296,7 +296,7 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
                                             .copyWith(
                                                 fontSize: 12,
                                                 color:
-                                                    PaintColors.paralaxpurple,
+                                                    PaintColors.paralexpurple,
                                                 letterSpacing: 0),
                                       )),
                                 )
@@ -339,7 +339,7 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
                 CustomButton(
                   desiredWidth: 0.5,
                   buttonText: isOnline ? "Go Online" : "Go Offline",
-                  buttonColor: PaintColors.paralaxpurple,
+                  buttonColor: PaintColors.paralexpurple,
                   ontap: () {
                     setState(() {
                       isOnline = !isOnline;

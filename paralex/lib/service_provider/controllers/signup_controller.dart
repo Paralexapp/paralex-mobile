@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/services/firebase_service.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/services/firebase_service.dart';
 
 class SignupController extends GetxController {
   var emailText = "".obs;

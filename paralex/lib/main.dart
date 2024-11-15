@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paralex/paralegal/request_lawyer_form.dart';
 
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/splash/splash.dart';
@@ -77,6 +78,7 @@ void main() {
       GetPage(name: Nav.notification, page: () => DeliveryNotification()),
       GetPage(name: Nav.findAlawyer, page: () => const LawyerHome()),
       GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),
+      GetPage(name: Nav.requestLawyer, page: () => RequestLawyerForm()),
     ],
     debugShowCheckedModeBanner: false,
   ));

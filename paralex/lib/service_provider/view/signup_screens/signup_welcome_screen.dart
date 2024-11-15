@@ -226,14 +226,24 @@ class SignupWelcomeScreen extends StatelessWidget {
                         } else if (controller.isMinLengthValid.value &&
                             controller.isUpperCaseValid.value &&
                             controller.isSpecialCharacterValid.value) {
-                          Get.toNamed(Nav.otpScreen);
+                          controller.signUp();
+                          // Get.toNamed(Nav.otpScreen);
                         } else {
                           Get.snackbar("Error",
                               "Password does not meet all requirements");
                         }
                       },
                       child: Center(
-                        child: Text(
+                        child: controller.loading.value == true ? Container(
+                          width: 30,
+                          height: 30,
+                          padding: const EdgeInsets.all(2.0),
+                          child:
+                          const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 3,
+                          ),
+                        ) : Text(
                           "CONTINUE",
                           style: FontStyles.smallCapsIntro.copyWith(
                             color: Colors.white,

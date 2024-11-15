@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
+import 'package:paralax/service_provider/services/firebase_service.dart';
 
 class UserRegistration extends StatefulWidget {
   const UserRegistration({super.key});
@@ -28,6 +31,7 @@ class _MyWidgetState extends State<UserRegistration> {
   bool isEmailValid(String email) {
     return EmailValidator.validate(email);
   }
+   FirebaseService auth = FirebaseService();
 
   @override
   void initState() {
@@ -197,11 +201,32 @@ class _MyWidgetState extends State<UserRegistration> {
 
                           Center(
                               child: ElevatedButton.icon(
-                                  onPressed: () {
+                                  onPressed: () async{
                                     if (!_key.currentState!.validate()) {
                                       return;
                                     }
-                                    Get.toNamed(Nav.otpScreen);
+                                    if(_isFormValid == true){
+                                      try{
+                                        setState(() {
+                                          loading = true;
+                                        });
+                                        var userUID = await auth.signup(
+                                            email: _emailController.text,
+                                            password: _passwordController.text);
+                                        log('$userUID');
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                        Get.toNamed(Nav.otpScreen);
+                                      }
+                                      catch(e){
+                                        log('sign up failed');
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                      }
+                                    }
+                                    // Get.toNamed(Nav.otpScreen);
                                   },
                                   style: ElevatedButton.styleFrom(
                                       elevation: 0,

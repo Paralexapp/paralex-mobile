@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
+import 'package:paralax/service_provider/services/firebase_service.dart';
 
 class LoginWithPassword extends StatefulWidget {
   const LoginWithPassword({super.key});
@@ -28,6 +31,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
   bool isEmailValid(String email) {
     return EmailValidator.validate(email);
   }
+  FirebaseService auth = FirebaseService();
 
   @override
   void initState() {
@@ -171,11 +175,34 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
 
                           Center(
                               child: ElevatedButton.icon(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (!_key.currentState!.validate()) {
                                       return;
                                     }
-                                    Get.toNamed(Nav.home);
+                                    if(_isFormValid == true){
+
+                                      try{
+                                        setState(() {
+                                          loading = true;
+                                        });
+                                        var userUID = await auth.signInWithEmailAndPassword(
+                                            email: _emailController.text,
+                                            password: _passwordController.text);
+                                        log('$userUID');
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                        Get.toNamed(Nav.home);
+                                      }
+                                      catch(e){
+                                        log('login failed');
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                      }
+                                    }
+                                    // Get.toNamed(Nav.home);
+
                                   },
                                   style: ElevatedButton.styleFrom(
                                       elevation: 0,

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "361762167299",
+    "project_id": "paralex-staging",
+    "storage_bucket": "paralex-staging.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361762167299:android:37de52ffaec2a72abb8c36",
+        "android_client_info": {
+          "package_name": "com.example.paralax"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361762167299-78hffjblhu5jlbgb61klolsrdb03siai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC11ZXQ1zK1_i7-gpf3VhkVnmN-lKO9EAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361762167299-78hffjblhu5jlbgb61klolsrdb03siai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

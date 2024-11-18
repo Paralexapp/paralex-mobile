@@ -33,6 +33,7 @@ class Nav {
   static const notification = '/notification';
   static const deliveryInfo = '/deliveryInfo';
   static const requestLawyer = '/requestLawyer';
+  static const lawyerProfile = '/lawyerProfile';
 
 
 }

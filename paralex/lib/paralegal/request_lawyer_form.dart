@@ -2,8 +2,11 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:paralex/reusables/back_button.dart';
+import 'package:paralex/screens/users/account/pages/lawyer/lawyer_home.dart';
 import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
+import '../routes/navs.dart';
 import '../service_provider/view/widgets/custom_button.dart';
 import '../service_provider/view/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
@@ -19,9 +22,9 @@ import 'dart:math' as Math;
 class DateTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue,
-      TextEditingValue newValue,
-      ) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     // Remove any non-digit characters
     String text = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
 
@@ -125,9 +128,23 @@ class DateTextInputFormatter extends TextInputFormatter {
   }
 }
 
-
 class RequestLawyerForm extends StatefulWidget {
-  const RequestLawyerForm({super.key});
+  final String? imgPath;
+  final String? lawyerName;
+  final String? specialization;
+  final double? rating;
+  final int? reviewCount;
+  final double? hourlyRates;
+
+  const RequestLawyerForm({
+    super.key,
+    this.imgPath,
+    this.lawyerName,
+    this.specialization,
+    this.rating,
+    this.reviewCount,
+    this.hourlyRates,
+  });
 
   @override
   State<RequestLawyerForm> createState() => _RequestLawyerFormState();
@@ -145,14 +162,23 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
   bool isPaused = false;
   String? _selectedPracticeArea;
   String? _selectedNgStates;
+  bool _isButtonEnabled = false;
 
-
-  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _deadlineController = TextEditingController();
   final TextEditingController _practiceAreaController = TextEditingController();
   final TextEditingController _ngStatesController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _matterTitleController = TextEditingController();
+  final TextEditingController _matterDescController = TextEditingController();
 
+  bool _areAllFieldsValid() {
+    return _nameController.text.isNotEmpty &&
+        _matterTitleController.text.isNotEmpty &&
+        _matterDescController.text.isNotEmpty &&
+        _ngStatesController.text.isNotEmpty &&
+        _deadlineController.text.length == 10;
+  }
 
   final List<String> _practiceAreas = [
     "Tax",
@@ -166,13 +192,45 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
     "Immigration Law",
   ];
 
-  List<String> _nigeriaStates = [
-    'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno', 'Cross River',
-    'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano',
-    'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo',
-    'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara', 'Federal Capital Territory'
+  final List<String> _nigeriaStates = [
+    'Abia',
+    'Adamawa',
+    'Akwa Ibom',
+    'Anambra',
+    'Bauchi',
+    'Bayelsa',
+    'Benue',
+    'Borno',
+    'Cross River',
+    'Delta',
+    'Ebonyi',
+    'Edo',
+    'Ekiti',
+    'Enugu',
+    'Gombe',
+    'Imo',
+    'Jigawa',
+    'Kaduna',
+    'Kano',
+    'Katsina',
+    'Kebbi',
+    'Kogi',
+    'Kwara',
+    'Lagos',
+    'Nasarawa',
+    'Niger',
+    'Ogun',
+    'Ondo',
+    'Osun',
+    'Oyo',
+    'Plateau',
+    'Rivers',
+    'Sokoto',
+    'Taraba',
+    'Yobe',
+    'Zamfara',
+    'Federal Capital Territory'
   ];
-
 
   @override
   void initState() {
@@ -200,19 +258,31 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
       });
     });
 
-    _nameController.text = "John Nwokoye";
     _countryController.text = "Nigeria";
+
+    void _updateButtonState() {
+      setState(() {
+        _isButtonEnabled = _areAllFieldsValid();
+      });
+    }
+
+    _nameController.addListener(_updateButtonState);
+    _matterDescController.addListener(_updateButtonState);
+    _matterTitleController.addListener(_updateButtonState);
+    _ngStatesController.addListener(_updateButtonState);
+    _deadlineController.addListener(_updateButtonState);
   }
 
   @override
   void dispose() {
     _recorder?.closeRecorder();
     _audioPlayer?.dispose();
-    _nameController.dispose();
     _countryController.dispose();
     _deadlineController.dispose();
     _practiceAreaController.dispose();
     _ngStatesController.dispose();
+    _matterTitleController.dispose();
+    _matterDescController.dispose();
     super.dispose();
   }
 
@@ -222,12 +292,16 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
       await _recorder?.setSubscriptionDuration(Duration(milliseconds: 500));
     } else {
       // Handle the case where permission was denied
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Microphone permission is required to record audio.')),
-      );
+      Get.snackbar(
+          "ERROR", 'Microphone permission is required to record audio.',
+          snackPosition: SnackPosition.TOP);
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //       content:
+      //           Text('Microphone permission is required to record audio.')),
+      // );
     }
   }
-
 
   Future<bool> _requestMicrophonePermission() async {
     PermissionStatus status = await Permission.microphone.status;
@@ -286,10 +360,12 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
       setState(() {
         isPaused = true;
         isPlaying = false;
-        currentPlaybackPosition = currentPlaybackPosition;  // Capture the pause position
+        currentPlaybackPosition =
+            currentPlaybackPosition; // Capture the pause position
       });
     } else if (isPaused) {
-      await _audioPlayer?.play(DeviceFileSource(filePath!), position: currentPlaybackPosition);
+      await _audioPlayer?.play(DeviceFileSource(filePath!),
+          position: currentPlaybackPosition);
       setState(() {
         isPaused = false;
         isPlaying = true;
@@ -303,7 +379,6 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
       });
     }
   }
-
 
   void _stopPlayback() async {
     await _audioPlayer?.stop();
@@ -408,11 +483,18 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFF8F8F8),
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Color(0xFFF8F8F8),
-          leading:
-              IconButton(onPressed: Get.back, icon: Icon(Icons.arrow_back)),
+          backgroundColor: Colors.white,
+          leading: IconButton(onPressed: Get.back, icon: PinkButton.backButton),
+          title: Text(
+            'Get a Lawyer',
+            style: FontStyles.smallCapsIntro.copyWith(
+                fontSize: 18,
+                letterSpacing: 0,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF511F4A)),
+          ),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -420,12 +502,106 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Get a Lawyer",
-                    style: FontStyles.smallCapsIntro.copyWith(
-                        letterSpacing: 0,
-                        color: Color(0xFF1D1D1D),
-                        fontSize: 23)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.lawyerName!,
+                          style: FontStyles.headingText.copyWith(
+                              color: Color(0xFF35124E),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "Lawyer based in Lagos",
+                          style: FontStyles.smallCapsIntro.copyWith(
+                              color: Color(0xFF4A4A68),
+                              fontSize: 12,
+                              letterSpacing: 0),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            widget.specialization!,
+                            style: FontStyles.smallCapsIntro.copyWith(
+                                color: Color(0xFF4A4A68),
+                                fontSize: 15,
+                                letterSpacing: 0),
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.star,
+                                color: Color(0xFFFFC403),
+                                size: 12,
+                              ),
+                              Text(
+                                widget.rating.toString(),
+                                style: FontStyles.smallCapsIntro.copyWith(
+                                    color: Color(0xFF4A4A68),
+                                    fontSize: 11,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                "(${widget.reviewCount} Reviews)",
+                                style: FontStyles.smallCapsIntro.copyWith(
+                                    color: Color(0xFF4A4A68),
+                                    fontSize: 11,
+                                    letterSpacing: 0),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
                 SizedBox(height: 25),
+                InkWell(
+                  onTap: () => Get.offNamedUntil(
+                      Nav.findAlawyer, ModalRoute.withName(Nav.home)),
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    color: PaintColors.fadedPinkBg,
+                    child: Row(
+                      children: [
+                        Container(
+                            padding: EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                                color: Color(0xFF35124E),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Icon(
+                              Icons.menu,
+                              color: PaintColors.fadedPinkBg,
+                            )),
+                        SizedBox(width: 8),
+                        Text(
+                          'Change Lawyer',
+                          style: FontStyles.smallCapsIntro.copyWith(
+                              fontSize: 13,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF35124E)),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.navigate_next,
+                          color: PaintColors.paralexpurple,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 StyledTextWidget(
                   firstText: "Client's full name",
                   secondText: "*",
@@ -438,9 +614,8 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                 SizedBox(height: 8),
                 CustomTextField(
                   controller: _nameController,
-                  hintText: "Client's name",
-                  suffixIcon: IconButton(onPressed: (){_nameController.clear();}, icon: Icon(Icons.cancel_outlined)),
-                  fillColor: Colors.white,
+                  hintText: "Ade Balogun",
+                  onChanged: (value) {},
                 ),
                 Text(
                   "Change if hiring a lawyer or law firm for a third party",
@@ -468,7 +643,6 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                 CustomTextField(
                   hintText: "E.g Tax",
                   suffixIcon: const Icon(Icons.keyboard_arrow_down_outlined),
-                  fillColor: Colors.white,
                   ontap: _showPracticeAreaDialog,
                   readonly: true,
                   controller: _practiceAreaController,
@@ -485,8 +659,8 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                 ),
                 SizedBox(height: 8),
                 CustomTextField(
+                  controller: _matterTitleController,
                   hintText: "E.g Debt Recovery",
-                  fillColor: Colors.white,
                 ),
                 SizedBox(height: 15),
                 StyledTextWidget(
@@ -500,9 +674,9 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                 ),
                 SizedBox(height: 8),
                 CustomTextField(
+                  controller: _matterDescController,
                   hintText: "Tell us a bit about your matter",
                   maxline: 6,
-                  fillColor: Colors.white,
                 ),
                 SizedBox(height: 15),
                 StyledTextWidget(
@@ -522,7 +696,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                 Container(
                   height: 181,
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color(0x70ECF1F4),
                       border: Border.all(color: Color(0xFFE4E4E4))),
                   child: Center(
                     child: Column(
@@ -541,7 +715,9 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                             width: 60,
                             height: 60,
                             decoration: BoxDecoration(
-                              color: isRecording ? Colors.red : Color(0xFF1A2C56),
+                              color: isRecording
+                                  ? Colors.red
+                                  : PaintColors.paralexpurple,
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Icon(
@@ -626,7 +802,6 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                         controller: _countryController,
                         hintText: "Country",
                         readonly: true,
-                        fillColor: Colors.white,
                       ),
                     ),
                     SizedBox(width: 15),
@@ -634,7 +809,6 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                       child: CustomTextField(
                         hintText: "Enugu",
                         suffixIcon: Icon(Icons.keyboard_arrow_down_outlined),
-                        fillColor: Colors.white,
                         controller: _ngStatesController,
                         ontap: _showNgStatesDialog,
                         readonly: true,
@@ -657,7 +831,6 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                   controller: _deadlineController,
                   keyboardType: TextInputType.number,
                   hintText: "09-11-2020",
-                  fillColor: Colors.white,
                   inputFormatter: [DateTextInputFormatter()],
                 ),
                 SizedBox(height: 15),
@@ -675,47 +848,76 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                       fontStyle: FontStyle.italic),
                 ),
                 SizedBox(height: 8),
-                Container(
-                  height: 113,
-                  child: DottedBorder(
-                    color: Colors.grey,
-                    strokeWidth: 1,
-                    dashPattern: [6, 4],
-                    borderType: BorderType.RRect,
-                    radius: Radius.circular(8),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.insert_drive_file,
-                            color: Colors.grey[400],
-                            size: 50,
-                          ),
-                          const SizedBox(height: 10),
-                          Text('Upload File',
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 113,
+                    color: Color(0x70ECF1F4),
+                    child: DottedBorder(
+                      color: Colors.grey,
+                      strokeWidth: 1,
+                      dashPattern: [6, 4],
+                      borderType: BorderType.RRect,
+                      radius: Radius.circular(8),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.insert_drive_file,
+                              color: Colors.grey[400],
+                              size: 50,
+                            ),
+                            const SizedBox(height: 10),
+                            Text('Upload File',
+                                style: FontStyles.smallCapsIntro.copyWith(
+                                    letterSpacing: 0,
+                                    color: PaintColors.paralexpurple,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold)),
+                            Text(
+                              'Supports Jpg,Pdf,Docs & Video',
                               style: FontStyles.smallCapsIntro.copyWith(
                                   letterSpacing: 0,
-                                  color: PaintColors.paralexpurple,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold)),
-                          Text(
-                            'Supports Jpg,Pdf,Docs & Video',
-                            style: FontStyles.smallCapsIntro.copyWith(
-                                letterSpacing: 0,
-                                color: Color(0xFF999999),
-                                fontSize: 10),
-                          ),
-                        ],
+                                  color: Color(0xFF999999),
+                                  fontSize: 10),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(height: 35),
                 CustomButton(
-                    desiredWidth: 0.9,
-                    buttonText: "Get a Lawyer",
-                    buttonColor: Color(0xFF1A2C56))
+                  desiredWidth: 0.9,
+                  buttonText: "Get a Lawyer",
+                  buttonColor: _isButtonEnabled
+                      ? PaintColors.paralexpurple
+                      : PaintColors.fadedPinkBg,
+                  ontap: () {
+                    _isButtonEnabled
+                        ? Get.snackbar(
+                      "",
+                      "Required fields have been filled",
+                      snackPosition: SnackPosition.TOP,
+                      titleText: Text(
+                        "Success",
+                        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                        : Get.snackbar(
+                      "",
+                      "Fill all required fields",
+                      snackPosition: SnackPosition.TOP,
+                      titleText: Text(
+                        "Error",
+                        style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  },
+
+                ),
               ],
             ),
           ),

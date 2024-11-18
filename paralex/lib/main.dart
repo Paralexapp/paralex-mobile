@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paralex/paralegal/lawyer_profile.dart';
 import 'package:paralex/paralegal/request_lawyer_form.dart';
 
 import 'package:paralex/routes/navs.dart';
@@ -16,6 +17,7 @@ import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_success.
 import 'package:paralex/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_one.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_two.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/paralegal_home.dart';
+import 'package:paralex/screens/users/account/pages/lawyer/lawer_details.dart';
 import 'package:paralex/screens/users/account/pages/lawyer/lawyer_home.dart';
 import 'package:paralex/screens/users/auth_process/final_step.dart';
 import 'package:paralex/screens/users/auth_process/login.dart';
@@ -79,6 +81,7 @@ void main() {
       GetPage(name: Nav.findAlawyer, page: () => const LawyerHome()),
       GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),
       GetPage(name: Nav.requestLawyer, page: () => RequestLawyerForm()),
+      GetPage(name: Nav.lawyerProfile, page: () => LawyerProfile()),
     ],
     debugShowCheckedModeBanner: false,
   ));

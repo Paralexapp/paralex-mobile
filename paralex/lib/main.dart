@@ -39,8 +39,11 @@ import 'package:paralex/service_provider/view/guarantor_detail.dart';
 import 'package:paralex/service_provider/view/delivery_notification.dart';
 import 'package:paralex/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralex/service_provider/view/signup_screens/signup_welcome_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await Firebase.initializeApp();
   Get.put(UserChoiceController());
   runApp(GetMaterialApp(
     initialRoute: Nav.splash,

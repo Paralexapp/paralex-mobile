@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -13,6 +14,10 @@ class CustomTextField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final VoidCallback? ontap;
   final bool? enabled;
+  final EdgeInsetsGeometry? contentPadding;
+  final int? maxline;
+  final Color? fillColor;
+  final List <TextInputFormatter>? inputFormatter;
 
   CustomTextField({
     Key? key,
@@ -28,6 +33,10 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.ontap,
     this.enabled,
+    this.contentPadding,
+    this.maxline,
+    this.fillColor,
+    this.inputFormatter,
   }) : super(key: key);
 
   @override
@@ -40,13 +49,15 @@ class CustomTextField extends StatelessWidget {
       onChanged: onChanged,
       readOnly: readonly,
       onTap: ontap,
+      inputFormatters: inputFormatter,
       enabled: enabled,
+      maxLines: maxline ?? 1,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(color: Colors.grey),
         filled: true,
-        fillColor: (enabled ?? true) ? Color(0xFFECF1F4) : Color(0x70ECF1F4),
-        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        fillColor: fillColor ?? Color(0x70ECF1F4) ,
+        contentPadding: contentPadding ?? const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           borderSide: BorderSide(color: Color(0xFFECF1F4)),
@@ -60,7 +71,7 @@ class CustomTextField extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         suffixIcon: suffixIcon,
-        )
+      ),
     );
   }
 }

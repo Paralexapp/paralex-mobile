@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
 
 class ParalegalDashboard extends StatelessWidget {
   const ParalegalDashboard({super.key});
@@ -31,7 +31,8 @@ class ParalegalDashboard extends StatelessWidget {
                         navTo: () => Get.toNamed(Nav.legalServiceHome),
                         image: "assets/images/book.png",
                         text: "Legal Assistance\n Service"),
-                    const MenuWithImages(
+                    MenuWithImages(
+                        navTo: () => Get.toNamed(Nav.requestLawyer),
                         image: "assets/images/litigation.png",
                         text: "Litigation\n Support"),
                     MenuWithImages(
@@ -206,7 +207,7 @@ class MenuWithImages extends StatelessWidget {
               width: 90,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(17),
-                  color: PaintColors.paralaxpurple),
+                  color: PaintColors.paralexpurple),
               child: Center(
                 child: Image.asset(
                   image,

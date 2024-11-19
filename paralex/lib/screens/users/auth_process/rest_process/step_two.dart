@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
 
 class StepTwo extends StatefulWidget {
   const StepTwo({super.key});
@@ -34,7 +34,7 @@ class _StepTwoState extends State<StepTwo> {
                 Text(
                   "Confirm your\nemail address",
                   style: FontStyles.headingText.copyWith(
-                      color: PaintColors.paralaxpurple,
+                      color: PaintColors.paralexpurple,
                       fontWeight: FontWeight.w900),
                 ),
                 const SizedBox(height: 10),

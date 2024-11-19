@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/view/widgets/text_area.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/view/widgets/text_area.dart';
 import '../../../../../../service_provider/view/widgets/date_picker.dart';
-import 'package:paralax/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
-import 'package:paralax/service_provider/view/widgets/custom_button.dart';
-import 'package:paralax/service_provider/view/widgets/radion_btns.dart';
+import 'package:paralex/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
+import 'package:paralex/service_provider/view/widgets/custom_button.dart';
+import 'package:paralex/service_provider/view/widgets/radion_btns.dart';
 
 class BondFourthStep extends StatelessWidget {
   const BondFourthStep({super.key});
@@ -22,7 +22,7 @@ class BondFourthStep extends StatelessWidget {
           title: Text(
             "Bail Bond Application Form",
             style: FontStyles.headingText
-                .copyWith(color: PaintColors.paralaxpurple, fontSize: 14),
+                .copyWith(color: PaintColors.paralexpurple, fontSize: 14),
           ),
           backgroundColor: PaintColors.bgColor,
         ),
@@ -82,7 +82,7 @@ class BondFourthStep extends StatelessWidget {
                       CustomButton(
                           desiredWidth: 90,
                           buttonText: "Next",
-                          buttonColor: PaintColors.paralaxpurple,
+                          buttonColor: PaintColors.paralexpurple,
                           ontap: () => Get.toNamed(Nav.bondStepE))
                     ],
                   ),

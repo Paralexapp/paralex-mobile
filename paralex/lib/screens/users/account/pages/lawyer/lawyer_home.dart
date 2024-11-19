@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
 
 class LawyerHome extends StatelessWidget {
   const LawyerHome({super.key});
@@ -16,7 +16,7 @@ class LawyerHome extends StatelessWidget {
           child: Text(
             "Get a Lawyer",
             style: FontStyles.headingText
-                .copyWith(color: PaintColors.paralaxpurple, fontSize: 14),
+                .copyWith(color: PaintColors.paralexpurple, fontSize: 14),
           ),
         ),
       ),
@@ -28,7 +28,7 @@ class LawyerHome extends StatelessWidget {
             Text(
               "Find a lawyer",
               style: FontStyles.headingText
-                  .copyWith(color: PaintColors.paralaxpurple, fontSize: 24),
+                  .copyWith(color: PaintColors.paralexpurple, fontSize: 24),
             ),
             const SizedBox(
               height: 20,
@@ -146,7 +146,7 @@ class Lawyers extends StatelessWidget {
               Text(
                 "Jubril Onikoyi",
                 style: FontStyles.headingText
-                    .copyWith(color: PaintColors.paralaxpurple, fontSize: 20),
+                    .copyWith(color: PaintColors.paralexpurple, fontSize: 20),
               ),
               Text(
                 "Land Law",

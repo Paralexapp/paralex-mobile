@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:paralax/service_provider/view/widgets/custom_button.dart';
-import 'package:paralax/service_provider/view/widgets/custom_text_form_field.dart';
+import 'package:paralex/service_provider/view/widgets/custom_button.dart';
+import 'package:paralex/service_provider/view/widgets/custom_text_form_field.dart';
 import '../../reusables/back_button.dart';
 import '../../reusables/fonts.dart';
 import '../../reusables/paints.dart';
@@ -33,7 +33,7 @@ class BankInfo extends StatelessWidget {
                 Text(
                   "Bank Info",
                   style: FontStyles.headingText.copyWith(
-                    color: PaintColors.paralaxpurple,
+                    color: PaintColors.paralexpurple,
                     fontSize: 22,
                   ),
                 ),
@@ -190,7 +190,7 @@ class BankInfo extends StatelessWidget {
                 CustomButton(
                   desiredWidth: 0.85,
                   buttonText: "SUBMIT",
-                  buttonColor: PaintColors.paralaxpurple,
+                  buttonColor: PaintColors.paralexpurple,
                   ontap: controller.submitForm,
                 ),
                 const SizedBox(height: 20),
@@ -208,7 +208,7 @@ class BankInfo extends StatelessWidget {
 
   TextStyle _fileUploadStyle() => FontStyles.smallCapsIntro.copyWith(
       letterSpacing: 0,
-      color: PaintColors.paralaxpurple,
+      color: PaintColors.paralexpurple,
       fontSize: 12,
       fontWeight: FontWeight.bold);
 
@@ -245,7 +245,7 @@ class BankInfo extends StatelessWidget {
                   style: FontStyles.smallCapsIntro.copyWith(
                       letterSpacing: 0,
                       fontWeight: FontWeight.bold,
-                      color: PaintColors.paralaxpurple,
+                      color: PaintColors.paralexpurple,
                       fontSize: 14),
                 ),
               ],

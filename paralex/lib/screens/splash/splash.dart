@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:paralax/routes/navs.dart';
+import 'package:paralex/routes/navs.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -23,7 +23,7 @@ class SplashScreen extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.light,
       ),
       child: Container(
-        color: PaintColors.paralaxpurple,
+        color: PaintColors.paralexpurple,
         width: double.infinity,
         height: double.infinity,
         child: Center(

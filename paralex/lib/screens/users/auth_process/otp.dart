@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/services/firebase_service.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/services/firebase_service.dart';
 
 class OtpVerification extends StatefulWidget {
   const OtpVerification({super.key});
@@ -31,7 +31,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                 Text(
                   "Verification",
                   style: FontStyles.headingText
-                      .copyWith(color: PaintColors.paralaxpurple, fontSize: 25),
+                      .copyWith(color: PaintColors.paralexpurple, fontSize: 25),
                 ),
                 Text("Enter the code we just sent",
                     style: FontStyles.smallCapsIntro.copyWith(
@@ -155,7 +155,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                         fontWeight: FontWeight.bold)),
                 Text(" Resend",
                     style: FontStyles.smallCapsIntro.copyWith(
-                        color: PaintColors.paralaxpurple,
+                        color: PaintColors.paralexpurple,
                         letterSpacing: 0,
                         fontSize: 16,
                         fontWeight: FontWeight.bold))
@@ -168,13 +168,13 @@ class _OtpVerificationState extends State<OtpVerification> {
               children: [
                 Text("Verification codes are only sent",
                     style: FontStyles.smallCapsIntro.copyWith(
-                        color: PaintColors.paralaxpurple,
+                        color: PaintColors.paralexpurple,
                         letterSpacing: 0,
                         fontSize: 16,
                         fontWeight: FontWeight.bold)),
                 Text("to the registered phone number",
                     style: FontStyles.smallCapsIntro.copyWith(
-                        color: PaintColors.paralaxpurple,
+                        color: PaintColors.paralexpurple,
                         letterSpacing: 0,
                         fontSize: 16,
                         fontWeight: FontWeight.bold)),
@@ -206,7 +206,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                     height: 50,
                     width: size.width * 0.85,
                     decoration: const BoxDecoration(
-                        color: PaintColors.paralaxpurple,
+                        color: PaintColors.paralexpurple,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Center(
                         child: loading == true ? Container(

@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralax/reusables/fonts.dart';
-import 'package:paralax/reusables/paints.dart';
-import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
-import 'package:paralax/service_provider/services/firebase_service.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
+import 'package:paralex/service_provider/services/firebase_service.dart';
 
 class UserRegistration extends StatefulWidget {
   const UserRegistration({super.key});
@@ -64,7 +64,7 @@ class _MyWidgetState extends State<UserRegistration> {
                       Text(
                         "Welcome to \nParalex",
                         style: FontStyles.headingText.copyWith(
-                            color: PaintColors.paralaxpurple,
+                            color: PaintColors.paralexpurple,
                             fontWeight: FontWeight.w900),
                       ),
                       Text(
@@ -106,7 +106,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                   border: OutlineInputBorder(),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: PaintColors.paralaxpurple))),
+                                          color: PaintColors.paralexpurple))),
                             ),
                           ),
                           Container(
@@ -155,7 +155,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                 border: const OutlineInputBorder(),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: PaintColors.paralaxpurple))),
+                                        color: PaintColors.paralexpurple))),
                           )),
                           Container(
                               // padding: const EdgeInsets.all(0),
@@ -234,7 +234,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                   style: ElevatedButton.styleFrom(
                                       elevation: 0,
                                       backgroundColor: _isFormValid
-                                          ? PaintColors.paralaxpurple
+                                          ? PaintColors.paralexpurple
                                           : PaintColors.fadedPinkBg,
                                       foregroundColor: Colors.white,
                                       minimumSize: Size(size.width * 0.90, 48),

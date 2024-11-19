@@ -2,12 +2,12 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:paralax/routes/navs.dart';
-import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
-import 'package:paralax/service_provider/repo/local/local_storage.dart';
-import 'package:paralax/service_provider/services/exception_handler.dart';
-import 'package:paralax/service_provider/services/hive_service.dart';
-import 'package:paralax/service_provider/services/http_service.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
+import 'package:paralex/service_provider/repo/local/local_storage.dart';
+import 'package:paralex/service_provider/services/exception_handler.dart';
+import 'package:paralex/service_provider/services/hive_service.dart';
+import 'package:paralex/service_provider/services/http_service.dart';
 
 class FirebaseService {
   final FirebaseAuth _authInstance = FirebaseAuth.instance;

@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:paralax/service_provider/repo/local/local_storage.dart';
+import 'package:paralex/service_provider/repo/local/local_storage.dart';
 
 class HiveService {
   static Box<bool?> loggedInBox = Hive.box<bool?>('loggedIn');

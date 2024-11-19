@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:paralax/service_provider/services/exception_handler.dart';
+import 'package:paralex/service_provider/services/exception_handler.dart';
 
 class HttpService {
 

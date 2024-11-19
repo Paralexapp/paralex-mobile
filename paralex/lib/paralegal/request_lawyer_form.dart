@@ -897,15 +897,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                       : PaintColors.fadedPinkBg,
                   ontap: () {
                     _isButtonEnabled
-                        ? Get.snackbar(
-                      "",
-                      "Required fields have been filled",
-                      snackPosition: SnackPosition.TOP,
-                      titleText: Text(
-                        "Success",
-                        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-                      ),
-                    )
+                        ?  Get.toNamed(Nav.bondSubmitted)
                         : Get.snackbar(
                       "",
                       "Fill all required fields",

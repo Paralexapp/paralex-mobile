@@ -227,7 +227,7 @@ class SignupWelcomeScreen extends StatelessWidget {
                             controller.isUpperCaseValid.value &&
                             controller.isSpecialCharacterValid.value) {
                           controller.signUp();
-                          // Get.toNamed(Nav.otpScreen);
+                           //Get.toNamed(Nav.otpScreen);
                         } else {
                           Get.snackbar("Error",
                               "Password does not meet all requirements");
@@ -243,8 +243,8 @@ class SignupWelcomeScreen extends StatelessWidget {
                             color: Colors.white,
                             strokeWidth: 3,
                           ),
-                        ) : Text(
-                          "CONTINUE",
+                        ) :
+                        Text("CONTINUE",
                           style: FontStyles.smallCapsIntro.copyWith(
                             color: Colors.white,
                             letterSpacing: 0,

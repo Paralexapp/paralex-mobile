@@ -1,57 +1,70 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:paralax/service_provider/services/exception_handler.dart';
 
 class HttpService {
 
   static const String endpoint = 'https://staging.api.paralexapp.com';
   static String createAccount = '$endpoint/user';
+  static String verifyUser = '$endpoint/user/verify';
   static String sendEmailVerification = '$endpoint/user/send/email-verification';
-  Map<String, dynamic> requestBodyCreateUser = {
-    "idToken": "string",
-    "stateOfResidence": "string",
-    "phoneNumber": "string"
-  };
-  Map<String, dynamic> requestBodyEmailVerification ={
-    "idToken": "string"
-  };
 
-
-  Future<dynamic> fetchData(String url) async {
-    http.Response response = await http.get(Uri.parse(url),
-      headers: {
-        // 'X-CMC_PRO_API_KEY': '7f6e4145-4b4d-4221-86c2-6f3c76c4b63d',
-        "Accept": "application/json",
-      },);
-    log('${response.statusCode}');
-
-    if (response.statusCode == 200) {
-      log(response.body);
-      String fetchedData = response.body;
-      return fetchedData;
-    }
-    else {
+  Future<dynamic> fetchData(String url, String bearerToken) async {
+    try{
+      http.Response response = await http.get(Uri.parse(url),
+        headers: {
+          "Authorization": "Bearer $bearerToken",
+          "Content-Type": "application/json",
+        },
+      );
       log('${response.statusCode}');
+      ExceptionHandler.checkApiStatusCode(response.statusCode);
+      if (response.statusCode == 200 || response.statusCode == 204 || response.statusCode == 201 || response.statusCode == 202 || response.statusCode == 203) {
+        log(response.body);
+        String fetchedData = response.body;
+        return fetchedData;
+      }
+      else {
+        log('${response.statusCode}');
+        log('failed to get/fetch result from the endpoint');
+        return null;
+      }
+    }
+    catch(e){
+      log('$e');
     }
   }
 
-  Future<dynamic> postData(String url, Map<String, dynamic> requestBody) async {
-    http.Response response = await http.post(Uri.parse(url),
-      headers: {
-        // 'X-CMC_PRO_API_KEY': '7f6e4145-4b4d-4221-86c2-6f3c76c4b63d',
-        "Accept": "application/json",
-      },
-    body: requestBody,
-    );
-    log('${response.statusCode}');
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      log(response.body);
-      String postedData = response.body;
-      return postedData;
-    }
-    else {
+  Future<dynamic> postData(String url, String bearerToken, Map<String, dynamic> requestBody) async {
+    try{
+      http.Response response = await http.post(Uri.parse(url),
+        headers: {
+          "Authorization": "Bearer $bearerToken",
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode(requestBody),
+      );
       log('${response.statusCode}');
+      ExceptionHandler.checkApiStatusCode(response.statusCode);
+      if (response.statusCode == 200 || response.statusCode == 204 || response.statusCode == 201 || response.statusCode == 202 || response.statusCode == 203) {
+        log(response.body);
+        String postedData = response.body;
+        return postedData;
+      }
+      else {
+        log('${response.statusCode}');
+        log('Error, not successful--API');
+        log(response.body);
+        return null;
+      }
+    }
+    catch (e){
+      log('$e');
     }
   }
 
 }
+
+///flutter build apk --split-per-abi

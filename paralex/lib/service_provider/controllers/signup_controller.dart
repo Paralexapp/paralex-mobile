@@ -51,8 +51,8 @@ class SignupController extends GetxController {
   Future<void> signUp() async{
     try{
       loading.value = true;
-      var userUid = await auth.signup(email: emailText.value, password: passwordText.value);
-      log('$userUid');
+      var userIdToken = await auth.signup(email: emailText.value, password: passwordText.value);
+      log('$userIdToken');
       loading.value = false;
       Get.toNamed(Nav.otpScreen);
     }

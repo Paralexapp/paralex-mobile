@@ -10,4 +10,8 @@ class UserChoiceController extends GetxController {
   void selectServiceProvider() {
     isUser.value = false;
   }
+
+ var userIdToken = ''.obs;
+  var userEmail = ''.obs;
+
 }

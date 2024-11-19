@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
+import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
 import 'package:paralax/service_provider/services/firebase_service.dart';
 
 class UserRegistration extends StatefulWidget {
@@ -21,6 +22,7 @@ class _MyWidgetState extends State<UserRegistration> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final UserChoiceController controller = Get.put(UserChoiceController());
   var _isObscure;
   bool _hasEightChars = false;
   bool _hasCapitalLetters = false;
@@ -210,10 +212,11 @@ class _MyWidgetState extends State<UserRegistration> {
                                         setState(() {
                                           loading = true;
                                         });
-                                        var userUID = await auth.signup(
+                                        controller.userEmail.value = _emailController.text;
+                                        var userIdToken = await auth.signup(
                                             email: _emailController.text,
                                             password: _passwordController.text);
-                                        log('$userUID');
+                                        log('$userIdToken');
                                         setState(() {
                                           loading = false;
                                         });

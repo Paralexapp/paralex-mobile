@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
+import 'package:paralax/service_provider/services/firebase_service.dart';
 
 class OtpVerification extends StatefulWidget {
   const OtpVerification({super.key});
@@ -13,6 +16,8 @@ class OtpVerification extends StatefulWidget {
 }
 
 class _OtpVerificationState extends State<OtpVerification> {
+  final FirebaseService auth = FirebaseService();
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -177,7 +182,25 @@ class _OtpVerificationState extends State<OtpVerification> {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () => Get.toNamed(Nav.verificationScreen),
+                  onTap: () async{
+                    try{
+                      setState(() {
+                        loading = true;
+                      });
+                      await auth.checkEmailVerified();
+                      setState(() {
+                        loading = false;
+                      });
+                      Get.toNamed(Nav.verificationScreen);
+                    }
+                   catch(e){
+                     setState(() {
+                       loading = false;
+                     });
+                      log('$e');
+                      Get.snackbar("Error", "$e");
+                   }
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     height: 50,
@@ -186,7 +209,16 @@ class _OtpVerificationState extends State<OtpVerification> {
                         color: PaintColors.paralaxpurple,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Center(
-                        child: Text(
+                        child: loading == true ? Container(
+                          width: 30,
+                          height: 30,
+                          padding: const EdgeInsets.all(2.0),
+                          child:
+                          const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 3,
+                          ),
+                        ) : Text(
                       "CONTINUE",
                       style: FontStyles.smallCapsIntro.copyWith(
                           color: Colors.white,

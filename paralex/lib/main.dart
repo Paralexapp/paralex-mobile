@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'firebase_options.dart';
 import 'package:paralax/routes/navs.dart';
 import 'package:paralax/screens/splash/splash.dart';
@@ -38,6 +39,7 @@ import 'package:paralax/service_provider/view/delivery_notification.dart';
 import 'package:paralax/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralax/service_provider/view/signup_screens/signup_welcome_screen.dart';
 
+import 'service_provider/repo/local/local_storage.dart';
 import 'service_provider/services/hive_service.dart';
 
 Future<void> main() async{
@@ -47,7 +49,11 @@ Future<void> main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await HiveService.registerHive();
+  await Hive.initFlutter();
+  Hive.registerAdapter(LocalStorageAdapter());
+  await Hive.openBox<bool?>('loggedIn');
+  await Hive.openBox<LocalStorage?>('localStorage');
+  // await HiveService.registerHive();
 
   runApp(GetMaterialApp(
     initialRoute: Nav.splash,

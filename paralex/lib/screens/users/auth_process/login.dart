@@ -6,7 +6,10 @@ import 'package:get/get.dart';
 import 'package:paralax/reusables/fonts.dart';
 import 'package:paralax/reusables/paints.dart';
 import 'package:paralax/routes/navs.dart';
+import 'package:paralax/service_provider/controllers/user_choice_controller.dart';
 import 'package:paralax/service_provider/services/firebase_service.dart';
+import 'package:paralax/service_provider/services/hive_service.dart';
+import 'package:paralax/service_provider/services/http_service.dart';
 
 class LoginWithPassword extends StatefulWidget {
   const LoginWithPassword({super.key});
@@ -17,6 +20,9 @@ class LoginWithPassword extends StatefulWidget {
 
 class _LoginWithPasswordState extends State<LoginWithPassword> {
   final GlobalKey<FormState> _key = GlobalKey();
+  final UserChoiceController controller = Get.put(UserChoiceController());
+  final HiveService _hiveService = HiveService();
+  final HttpService api = HttpService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -185,17 +191,35 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                         setState(() {
                                           loading = true;
                                         });
-                                        var userUID = await auth.signInWithEmailAndPassword(
+                                        var userIdToken = await auth.signInWithEmailAndPassword(
                                             email: _emailController.text,
                                             password: _passwordController.text);
-                                        log('$userUID');
-                                        setState(() {
-                                          loading = false;
-                                        });
-                                        Get.toNamed(Nav.home);
+                                        log('$userIdToken');
+                                        log('Done with Firebase sign in, going to verify user account from the database');
+                                        Map<String, dynamic> requestBody ={
+                                          "idToken": userIdToken
+                                        };
+                                        var res = await api.postData(HttpService.verifyUser,userIdToken.toString(), requestBody);
+                                        log('$res');
+                                        if(res != null){
+                                          log('User successfully verified from the database');
+                                          setState(() {
+                                            loading = false;
+                                          });
+                                          Get.toNamed(Nav.home);
+                                        }
+                                        else{
+                                          log('User not verified from the database');
+                                          Get.snackbar("Failure", 'User account is not verified on database');
+                                          setState(() {
+                                            loading = false;
+                                          });
+                                          Get.toNamed(Nav.home);
+                                        }
                                       }
                                       catch(e){
                                         log('login failed');
+                                        Get.snackbar('Error', 'login failed, try again!');
                                         setState(() {
                                           loading = false;
                                         });

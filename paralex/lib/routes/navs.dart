@@ -33,6 +33,9 @@ class Nav {
   static const notification = '/notification';
   static const deliveryInfo = '/deliveryInfo';
   static const requestLawyer = '/requestLawyer';
+  static const logisticsDeliveryInfo = '/logisticsDeliveryInfo';
+  static const logisticsHome = '/logisticsHome';
+  static const logisticsFindDelivery = '/logisticsFindDelivery';
 
 
 }

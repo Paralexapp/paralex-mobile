@@ -60,15 +60,20 @@ class _DashboardState extends State<Dashboard> {
 
         Padding(
           padding: const EdgeInsets.all(25),
-          child: Container(
-            margin: EdgeInsets.only(top: size.height * 0.12),
-            width: size.width * 0.9,
-            height: 100,
-            decoration: BoxDecoration(
-              image: const DecorationImage(
-                  image: AssetImage('assets/images/paralegal.png')),
-              borderRadius:
-                  BorderRadius.circular(16), // Optional: Rounded corners
+          child: InkWell(
+            onTap: (){
+              Get.toNamed(Nav.logisticsDeliveryInfo);
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: size.height * 0.12),
+              width: size.width * 0.9,
+              height: 100,
+              decoration: BoxDecoration(
+                image: const DecorationImage(
+                    image: AssetImage('assets/images/paralegal.png')),
+                borderRadius:
+                    BorderRadius.circular(16), // Optional: Rounded corners
+              ),
             ),
           ),
         ),

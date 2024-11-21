@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/logistics_delivery_info.dart';
 import 'firebase_options.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/splash/splash.dart';
@@ -39,6 +40,8 @@ import 'package:paralex/service_provider/view/delivery_notification.dart';
 import 'package:paralex/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralex/service_provider/view/signup_screens/signup_welcome_screen.dart';
 
+import 'screens/users/account/pages/Logistics/logistics_find_delivery.dart';
+import 'screens/users/account/pages/Logistics/logistics_home.dart';
 import 'service_provider/repo/local/local_storage.dart';
 import 'service_provider/services/hive_service.dart';
 
@@ -93,6 +96,9 @@ Future<void> main() async{
       GetPage(name: Nav.notification, page: () => DeliveryNotification()),
       GetPage(name: Nav.findAlawyer, page: () => const LawyerHome()),
       GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),
+      GetPage(name: Nav.logisticsDeliveryInfo, page: () => LogisticsDeliveryInfo()),
+      GetPage(name: Nav.logisticsHome, page: () => LogisticsHome()),
+      GetPage(name: Nav.logisticsFindDelivery, page: () => LogisticsFindDelivery()),
     ],
     debugShowCheckedModeBanner: false,
   ));

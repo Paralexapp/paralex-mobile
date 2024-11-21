@@ -3,7 +3,7 @@ import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 
 class LogisticsTextfield extends StatelessWidget {
-  const LogisticsTextfield({super.key, this.hintText, this.icon, this.controller, this.borderColor, this.suffixIcon,this.showPrefixIcon = false, this.showSuffixIcon = false, this.maxLines});
+  const LogisticsTextfield({super.key, this.hintText, this.icon, this.controller, this.borderColor, this.suffixIcon,this.showPrefixIcon = false, this.showSuffixIcon = false, this.maxLines, this.prefix, this.suffix});
   final String? hintText;
   final IconData? icon;
   final IconData? suffixIcon;
@@ -12,6 +12,8 @@ class LogisticsTextfield extends StatelessWidget {
   final bool showPrefixIcon;
   final bool showSuffixIcon;
   final int? maxLines;
+  final Widget? prefix;
+  final Widget? suffix;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -19,8 +21,8 @@ class LogisticsTextfield extends StatelessWidget {
     keyboardType: TextInputType.text,
       maxLines: maxLines ?? 1,
       decoration: InputDecoration(
-        prefixIcon: showPrefixIcon == true ? Icon(icon, color: PaintColors.paralexpurple,) : null,
-        suffixIcon: showSuffixIcon == true ? Icon(suffixIcon, color: PaintColors.paralexpurple,) : null,
+        prefixIcon: prefix ?? (showPrefixIcon == true ? Icon(icon, color: PaintColors.paralexpurple,) : null),
+        suffixIcon: suffix ?? (showSuffixIcon == true ? Icon(suffixIcon, color: PaintColors.paralexpurple,) : null),
         filled: true,
         fillColor: PaintColors.paralexVeryLightGrey,
         enabledBorder: OutlineInputBorder(

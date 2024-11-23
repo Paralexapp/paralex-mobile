@@ -5,7 +5,6 @@ import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
 import 'package:paralex/routes/navs.dart';
-
 import 'widgets/logistics_button.dart';
 import 'widgets/logistics_textfield.dart';
 
@@ -75,7 +74,7 @@ class LogisticsHome extends StatelessWidget {
                               Spacer(),
                               // SizedBox(width: 8),
                               SizedBox(
-                                width: deviceWidth(context) * 0.24,
+                                width: deviceWidth(context) * 0.25,
                                 child: LogisticsTextfield(
                                   hintText: 'Entran...',
                                 ),),
@@ -86,11 +85,23 @@ class LogisticsHome extends StatelessWidget {
                         LogisticsTextfield(
                           hintText: 'Floor, apartment, entryphone',
                         ),
+                        // SizedBox(height: 8,),
+                        // LogisticsTextfield(
+                        //   hintText: 'Sender phone number',
+                        //   // suffixIcon: Iconsax.call,
+                        //   suffix: InkWell(
+                        //     onTap: (){},
+                        //     child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
+                        //   ),
+                        //   // showSuffixIcon: true,
+                        // ),
                         SizedBox(height: 8,),
-                        LogisticsTextfield(
+                        LogisticsPhoneField(
                           hintText: 'Sender phone number',
-                          suffixIcon: Iconsax.call,
-                          showSuffixIcon: true,
+                          suffixWidget: InkWell(
+                            onTap: (){},
+                              child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
+                          ),
                         ),
                         SizedBox(height: 20,),
                         Row(
@@ -112,7 +123,7 @@ class LogisticsHome extends StatelessWidget {
                               // SizedBox(width: 8),
                               Spacer(),
                               SizedBox(
-                                width: deviceWidth(context) * 0.24,
+                                width: deviceWidth(context) * 0.25,
                                 child: LogisticsTextfield(
                                   hintText: 'Entran...',
                                 ),),
@@ -124,10 +135,22 @@ class LogisticsHome extends StatelessWidget {
                           hintText: 'Floor, apartment, entryphone',
                         ),
                         SizedBox(height: 8,),
-                        LogisticsTextfield(
+                        // LogisticsTextfield(
+                        //   hintText: 'Recipient phone number',
+                        //   suffix: InkWell(
+                        //     onTap: (){},
+                        //     child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
+                        //   ),
+                        //   // suffixIcon: Iconsax.call,
+                        //   // showSuffixIcon: true,
+                        // ),
+                        // SizedBox(height: 8,),
+                        LogisticsPhoneField(
                           hintText: 'Recipient phone number',
-                          suffixIcon: Iconsax.call,
-                          showSuffixIcon: true,
+                          suffixWidget: InkWell(
+                            onTap: (){},
+                            child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
+                          ),
                         ),
                         SizedBox(height: 20,),
                         Row(
@@ -140,6 +163,7 @@ class LogisticsHome extends StatelessWidget {
                         LogisticsTextfield(
                           hintText: 'Example: Medium-sized box with legal documents that weight 5kg',
                           maxLines: 4,
+                          minLines: 4,
                         ),
                         SizedBox(height: 18,),
                         LogisticsButton(text: 'SAVE',

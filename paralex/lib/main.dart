@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/logistics_chat.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/logistics_delivery_info.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/logistics_parcel_delivered.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/logistics_parcel_tracking.dart';
 import 'firebase_options.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/splash/splash.dart';
@@ -40,8 +43,12 @@ import 'package:paralex/service_provider/view/delivery_notification.dart';
 import 'package:paralex/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralex/service_provider/view/signup_screens/signup_welcome_screen.dart';
 
+import 'screens/users/account/pages/Logistics/logistics_call.dart';
 import 'screens/users/account/pages/Logistics/logistics_find_delivery.dart';
 import 'screens/users/account/pages/Logistics/logistics_home.dart';
+import 'screens/users/account/pages/Logistics/logistics_payment_method.dart';
+import 'screens/users/account/pages/Logistics/logistics_payment_method2.dart';
+import 'screens/users/account/pages/Logistics/logistics_payment_method3.dart';
 import 'service_provider/repo/local/local_storage.dart';
 import 'service_provider/services/hive_service.dart';
 
@@ -99,6 +106,13 @@ Future<void> main() async{
       GetPage(name: Nav.logisticsDeliveryInfo, page: () => LogisticsDeliveryInfo()),
       GetPage(name: Nav.logisticsHome, page: () => LogisticsHome()),
       GetPage(name: Nav.logisticsFindDelivery, page: () => LogisticsFindDelivery()),
+      GetPage(name: Nav.logisticsPaymentMethod, page: () => LogisticsPaymentMethod()),
+      GetPage(name: Nav.logisticsPaymentMethod2, page: () => LogisticsPaymentMethod2()),
+      GetPage(name: Nav.logisticsPaymentMethod3, page: () => LogisticsPaymentMethod3()),
+      GetPage(name: Nav.logisticsParcelDelivered, page: () => LogisticsParcelDelivered()),
+      GetPage(name: Nav.logisticsParcelTracking, page: () => LogisticsParcelTracking()),
+      GetPage(name: Nav.logisticsCall, page: () => LogisticsCall()),
+      GetPage(name: Nav.logisticsChat, page: () => LogisticsChat()),
     ],
     debugShowCheckedModeBanner: false,
   ));

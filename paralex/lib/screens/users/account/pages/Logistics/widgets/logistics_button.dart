@@ -5,9 +5,10 @@ import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
 
 class LogisticsButton extends StatelessWidget {
-  LogisticsButton({super.key, required this.text, this.check = false, this.onTap});
+  LogisticsButton({super.key, required this.text, this.check = false, this.onTap, this.textColor});
   final String? text;
   bool check;
+  final Color? textColor;
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class LogisticsButton extends StatelessWidget {
           color: check ? PaintColors.fadedPink : PaintColors.paralexpurple,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Center(child: Text(text.toString(), style: FontStyles.cancelTextStyle.copyWith(fontWeight: FontWeight.w700, color: PaintColors.white),)),
+        child: Center(child: Text(text.toString(), style: FontStyles.cancelTextStyle.copyWith(fontWeight: FontWeight.w700, color: textColor ?? PaintColors.white),)),
       ),
     );
   }
@@ -44,6 +45,45 @@ class LogisticsCancelButton extends StatelessWidget {
           ),
         ),
       ],);
+  }
+}
+
+
+class LogisticsCloseButton extends StatelessWidget {
+  const LogisticsCloseButton({super.key, this.text, this.icon});
+  final String? text;
+  final Widget? icon;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        InkWell(
+          onTap: () {
+            Get.back();
+          },
+          child: Container(
+            height: 45,
+            width: 45,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: PaintColors.paralexGreyShade2,
+            ),
+            child: icon,
+          ),
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        Text(
+          text.toString(),
+          style: FontStyles.cancelTextStyle.copyWith(
+            fontWeight: FontWeight.w400,
+            fontSize: 17,
+            color: PaintColors.paralexTextColor1,
+          ),
+        )
+      ],
+    );
   }
 }
 

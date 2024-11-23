@@ -94,7 +94,7 @@ class LogisticsFindDelivery extends StatelessWidget {
                         LogisticsButton(text: 'PROCEED TO PAYMENT',
                           check: false,
                           onTap: (){
-                          // Get.toNamed(Nav.logisticsFindDelivery);
+                          Get.toNamed(Nav.logisticsPaymentMethod);
                           },),
                       ],
                     ),

@@ -36,6 +36,13 @@ class Nav {
   static const logisticsDeliveryInfo = '/logisticsDeliveryInfo';
   static const logisticsHome = '/logisticsHome';
   static const logisticsFindDelivery = '/logisticsFindDelivery';
+  static const logisticsPaymentMethod = '/logisticsPaymentMethod';
+  static const logisticsPaymentMethod2 = '/logisticsPaymentMethod2';
+  static const logisticsPaymentMethod3 = '/logisticsPaymentMethod3';
+  static const logisticsParcelDelivered = '/logisticsParcelDelivered';
+  static const logisticsParcelTracking = '/logisticsParcelTracking';
+  static const logisticsCall = '/logisticsCall';
+  static const logisticsChat = '/logisticsChat';
 
 
 }

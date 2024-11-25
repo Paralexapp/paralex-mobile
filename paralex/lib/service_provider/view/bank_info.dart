@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import 'package:paralex/service_provider/view/widgets/custom_text_form_field.dart';
 import '../../reusables/back_button.dart';
@@ -129,7 +128,7 @@ class BankInfo extends StatelessWidget {
                     onTap: controller.passportImage.value == null
                         ? controller.pickImage
                         : null,
-                    child: Container(
+                    child: SizedBox(
                       height: 113,
                       child: DottedBorder(
                         color: Colors.grey,

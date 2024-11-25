@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
-import 'package:paralex/service_provider/view/widgets/activity_card.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});

@@ -19,8 +19,8 @@ class CustomTextField extends StatelessWidget {
   final Color? fillColor;
   final List <TextInputFormatter>? inputFormatter;
 
-  CustomTextField({
-    Key? key,
+  const CustomTextField({
+    super.key,
     required this.hintText,
     this.textStyle,
     this.keyboardType = TextInputType.text,
@@ -37,7 +37,7 @@ class CustomTextField extends StatelessWidget {
     this.maxline,
     this.fillColor,
     this.inputFormatter,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

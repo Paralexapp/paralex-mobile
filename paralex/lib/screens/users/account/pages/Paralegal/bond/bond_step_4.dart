@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
-import 'package:paralex/service_provider/view/widgets/text_area.dart';
 import '../../../../../../service_provider/view/widgets/date_picker.dart';
 import 'package:paralex/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
@@ -15,7 +13,7 @@ class BondFourthStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _dateController = TextEditingController();
+    final TextEditingController dateController = TextEditingController();
     return Scaffold(
         backgroundColor: PaintColors.bgColor,
         appBar: AppBar(
@@ -38,7 +36,7 @@ class BondFourthStep extends StatelessWidget {
                   child: Column(
                     children: [
                       ReusableDatePicker(
-                        controller: _dateController,
+                        controller: dateController,
                         labelText: "Date of current arrest",
                         onDateChanged: (date) {
                           // print('Selected date: $date');
@@ -91,6 +89,5 @@ class BondFourthStep extends StatelessWidget {
             ),
           ),
         ));
-    ;
   }
 }

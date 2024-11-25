@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import 'package:paralex/service_provider/view/widgets/custom_text_field.dart';
@@ -363,9 +362,11 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
 
 // Custom dashed line widget
 class DottedLine extends StatelessWidget {
+  const DottedLine({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 40,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

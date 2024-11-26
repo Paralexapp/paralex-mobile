@@ -34,6 +34,15 @@ class Nav {
   static const deliveryInfo = '/deliveryInfo';
   static const requestLawyer = '/requestLawyer';
   static const lawyerProfile = '/lawyerProfile';
+  static const destinationDetail = '/destinationDetail';
+  static const departureDetail = '/departureDetail';
+  static const schedule = '/setup_schedule';
+  static const deliveryInfo1 = '/deliveryInfo1';
+  static const scheduleList = '/scheduleList';
+  static const deliveryInfo2 = '/deliveryInfo2';
+  static const pickUp = '/pickUp';
+  static const pickUpDetail = '/pickUpDetail';
+
 
 
 }

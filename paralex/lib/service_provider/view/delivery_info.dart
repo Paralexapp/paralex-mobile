@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import 'package:paralex/service_provider/view/widgets/custom_text_field.dart';
-
 import '../../reusables/fonts.dart';
+import '../../routes/navs.dart';
 
 class DeliveryInfo extends StatefulWidget {
   const DeliveryInfo({super.key});
@@ -74,7 +74,6 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
               ),
             ),
           ),
-
           DraggableScrollableSheet(
             initialChildSize: 0.1,
             minChildSize: 0.1,
@@ -159,7 +158,10 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
                                 CustomButton(
                                     desiredWidth: 0.9,
                                     buttonText: "Set Up",
-                                    buttonColor: PaintColors.paralexpurple),
+                                    buttonColor: PaintColors.paralexpurple,
+                                    ontap:(){
+                                      Get.toNamed(Nav.destinationDetail);
+                                    }),
                                 SizedBox(height: 15),
                                 Text(
                                   "My schedule",
@@ -289,7 +291,9 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
                                 ),
                                 Center(
                                   child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Get.toNamed(Nav.scheduleList);
+                                      },
                                       child: Text(
                                         "See all schedule",
                                         style: FontStyles.smallCapsIntro

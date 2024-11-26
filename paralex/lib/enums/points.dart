@@ -1,0 +1,1 @@
+enum Points { pickUpPoint, dropOffPoint }

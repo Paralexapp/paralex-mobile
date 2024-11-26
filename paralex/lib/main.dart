@@ -35,8 +35,16 @@ import 'package:paralex/service_provider/view/about_you/about_you.dart';
 import 'package:paralex/service_provider/view/about_you/about_you_contd.dart';
 import 'package:paralex/service_provider/view/bank_info.dart';
 import 'package:paralex/service_provider/view/delivery_info.dart';
+import 'package:paralex/service_provider/view/delivery_info1.dart';
+import 'package:paralex/service_provider/view/delivery_info2.dart';
+import 'package:paralex/service_provider/view/departure_detail.dart';
+import 'package:paralex/service_provider/view/destination_detail.dart';
 import 'package:paralex/service_provider/view/guarantor_detail.dart';
 import 'package:paralex/service_provider/view/delivery_notification.dart';
+import 'package:paralex/service_provider/view/pick_up_drop_off.dart';
+import 'package:paralex/service_provider/view/pick_up_drop_off_details.dart';
+import 'package:paralex/service_provider/view/schedule_list.dart';
+import 'package:paralex/service_provider/view/setup_schedule.dart';
 import 'package:paralex/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralex/service_provider/view/signup_screens/signup_welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -85,6 +93,14 @@ void main() async {
       GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),
       GetPage(name: Nav.requestLawyer, page: () => RequestLawyerForm()),
       GetPage(name: Nav.lawyerProfile, page: () => LawyerProfile()),
+      GetPage(name: Nav.destinationDetail, page: () => DestinationDetail()),
+      GetPage(name: Nav.departureDetail, page: () => DepartureDetail()),
+      GetPage(name: Nav.schedule, page: () => SetupSchedule()),
+      GetPage(name: Nav.deliveryInfo1, page: () => DeliveryInfo1()),
+      GetPage(name: Nav.scheduleList, page: () => ScheduleList()),
+      GetPage(name: Nav.deliveryInfo2, page: () => DeliveryInfo2()),
+      GetPage(name: Nav.pickUp, page: () => PickUpDropOff()),
+      GetPage(name: Nav.pickUpDetail, page: () => PickUpDropOffDetails()),
     ],
     debugShowCheckedModeBanner: false,
   ));

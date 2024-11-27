@@ -15,7 +15,7 @@ class BondThirdStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _dateController = TextEditingController();
+    final TextEditingController dateController = TextEditingController();
     return Scaffold(
         backgroundColor: PaintColors.bgColor,
         appBar: AppBar(
@@ -38,7 +38,7 @@ class BondThirdStep extends StatelessWidget {
                   child: Column(
                     children: [
                       ReusableDatePicker(
-                        controller: _dateController,
+                        controller: dateController,
                         labelText: "Date of birth",
                         onDateChanged: (date) {
                           // print('Selected date: $date');

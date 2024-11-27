@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -10,8 +9,12 @@ import '../controllers/notification_controller.dart';
 import '../models/notification_model.dart';
 
 class DeliveryNotification extends StatelessWidget {
+  DeliveryNotification({super.key});
+
   final NotificationsController notificationsController =
       Get.put(NotificationsController());
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +81,8 @@ class DeliveryNotification extends StatelessWidget {
 }
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppBar(

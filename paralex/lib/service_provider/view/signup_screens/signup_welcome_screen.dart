@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paralex/reusables/paints.dart';
-import 'package:paralex/routes/navs.dart';
 import '../../../reusables/fonts.dart';
 import '../../../reusables/back_button.dart';
 import '../../controllers/signup_controller.dart';

@@ -1,12 +1,10 @@
 // about_you.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_holo_date_picker/date_picker.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../../reusables/back_button.dart';
 import '../../../reusables/fonts.dart';
 import '../../../reusables/paints.dart';
-import '../../../routes/navs.dart';
 import '../../controllers/about_you_controller.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_form_field.dart';

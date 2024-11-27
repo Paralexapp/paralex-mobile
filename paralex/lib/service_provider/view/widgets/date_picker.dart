@@ -14,15 +14,14 @@ class ReusableDatePicker extends StatefulWidget {
   final Text? label;
 
   const ReusableDatePicker(
-      {Key? key,
+      {super.key,
       required this.onDateChanged,
       this.initialDate,
       this.firstDate,
       this.lastDate,
       this.controller,
       required this.labelText,
-      this.label})
-      : super(key: key);
+      this.label});
 
   @override
   _ReusableDatePickerState createState() => _ReusableDatePickerState();

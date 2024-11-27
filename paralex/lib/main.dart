@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralex/paralegal/lawyer_profile.dart';
-import 'package:paralex/paralegal/request_lawyer_form.dart';
-
+import 'package:paralex/screens/users/account/pages/Logistics/logistics_chat.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/logistics_delivery_info.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/logistics_parcel_delivered.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/logistics_parcel_tracking.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/splash/splash.dart';
 import 'package:paralex/screens/users/account/home.dart';
@@ -17,7 +18,6 @@ import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_success.
 import 'package:paralex/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_one.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_two.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/paralegal_home.dart';
-import 'package:paralex/screens/users/account/pages/lawyer/lawer_details.dart';
 import 'package:paralex/screens/users/account/pages/lawyer/lawyer_home.dart';
 import 'package:paralex/screens/users/auth_process/final_step.dart';
 import 'package:paralex/screens/users/auth_process/login.dart';
@@ -35,21 +35,21 @@ import 'package:paralex/service_provider/view/about_you/about_you.dart';
 import 'package:paralex/service_provider/view/about_you/about_you_contd.dart';
 import 'package:paralex/service_provider/view/bank_info.dart';
 import 'package:paralex/service_provider/view/delivery_info.dart';
-import 'package:paralex/service_provider/view/delivery_info1.dart';
-import 'package:paralex/service_provider/view/delivery_info2.dart';
-import 'package:paralex/service_provider/view/departure_detail.dart';
-import 'package:paralex/service_provider/view/destination_detail.dart';
 import 'package:paralex/service_provider/view/guarantor_detail.dart';
 import 'package:paralex/service_provider/view/delivery_notification.dart';
-import 'package:paralex/service_provider/view/pick_up_drop_off.dart';
-import 'package:paralex/service_provider/view/pick_up_drop_off_details.dart';
-import 'package:paralex/service_provider/view/schedule_list.dart';
-import 'package:paralex/service_provider/view/setup_schedule.dart';
 import 'package:paralex/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralex/service_provider/view/signup_screens/signup_welcome_screen.dart';
+import 'screens/users/account/pages/Logistics/logistics_call.dart';
+import 'screens/users/account/pages/Logistics/logistics_find_delivery.dart';
+import 'screens/users/account/pages/Logistics/logistics_home.dart';
+import 'screens/users/account/pages/Logistics/logistics_payment_method.dart';
+import 'screens/users/account/pages/Logistics/logistics_payment_method2.dart';
+import 'screens/users/account/pages/Logistics/logistics_payment_method3.dart';
+import 'service_provider/repo/local/local_storage.dart';
 
-void main() async {
+Future<void> main() async{
   Get.put(UserChoiceController());
+
   runApp(GetMaterialApp(
     initialRoute: Nav.splash,
     getPages: [
@@ -88,16 +88,16 @@ void main() async {
       GetPage(name: Nav.notification, page: () => DeliveryNotification()),
       GetPage(name: Nav.findAlawyer, page: () => const LawyerHome()),
       GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),
-      GetPage(name: Nav.requestLawyer, page: () => RequestLawyerForm()),
-      GetPage(name: Nav.lawyerProfile, page: () => LawyerProfile()),
-      GetPage(name: Nav.destinationDetail, page: () => DestinationDetail()),
-      GetPage(name: Nav.departureDetail, page: () => DepartureDetail()),
-      GetPage(name: Nav.schedule, page: () => SetupSchedule()),
-      GetPage(name: Nav.deliveryInfo1, page: () => DeliveryInfo1()),
-      GetPage(name: Nav.scheduleList, page: () => ScheduleList()),
-      GetPage(name: Nav.deliveryInfo2, page: () => DeliveryInfo2()),
-      GetPage(name: Nav.pickUp, page: () => PickUpDropOff()),
-      GetPage(name: Nav.pickUpDetail, page: () => PickUpDropOffDetails()),
+      GetPage(name: Nav.logisticsDeliveryInfo, page: () => LogisticsDeliveryInfo()),
+      GetPage(name: Nav.logisticsHome, page: () => LogisticsHome()),
+      GetPage(name: Nav.logisticsFindDelivery, page: () => LogisticsFindDelivery()),
+      GetPage(name: Nav.logisticsPaymentMethod, page: () => LogisticsPaymentMethod()),
+      GetPage(name: Nav.logisticsPaymentMethod2, page: () => LogisticsPaymentMethod2()),
+      GetPage(name: Nav.logisticsPaymentMethod3, page: () => LogisticsPaymentMethod3()),
+      GetPage(name: Nav.logisticsParcelDelivered, page: () => LogisticsParcelDelivered()),
+      GetPage(name: Nav.logisticsParcelTracking, page: () => LogisticsParcelTracking()),
+      GetPage(name: Nav.logisticsCall, page: () => LogisticsCall()),
+      GetPage(name: Nav.logisticsChat, page: () => LogisticsChat()),
     ],
     debugShowCheckedModeBanner: false,
   ));

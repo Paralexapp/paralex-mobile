@@ -1,0 +1,103 @@
+import 'dart:developer';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:paralex/reusables/fonts.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/reusables/ui_helpers.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/widgets/logistics_button.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/widgets/logistics_textfield.dart';
+
+class LogisticsDeliveryInfo extends StatelessWidget {
+  const LogisticsDeliveryInfo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    log('height: ${deviceHeight(context)} -- width: ${deviceWidth(context)}');
+    return Scaffold(
+      body: SafeArea(child: SizedBox(
+        height: deviceHeight(context),
+        width: deviceWidth(context),
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 7.0,),
+               LogisticsCancelButton(),
+                SizedBox(
+                  height: deviceHeight(context) * 0.45,
+                  width: deviceWidth(context),
+                  child: Image.asset('assets/images/map.jpg', fit: BoxFit.cover,),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: deviceHeight(context) * 0.55,
+                width: deviceWidth(context),
+                decoration: BoxDecoration(
+                  color: PaintColors.white,
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(40), topLeft: Radius.circular(40)),
+                ),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 25, right: 25, bottom: 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: deviceWidth(context) * 0.2,
+                          height: 5,
+                          decoration: BoxDecoration(
+                            color: PaintColors.paralexLightGrey,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        SizedBox(height: 15,),
+                        Row(
+                          children: [
+                            Icon(Iconsax.lamp_charge,color: PaintColors.paralexpurple,),
+                            SizedBox(width: 5,),
+                            Text('Courier delivery', style: FontStyles.bodyText1,),
+                          ],
+                        ),
+                        SizedBox(height: 15,),
+                        LogisticsTextfield(
+                          showPrefixIcon: true,
+                          hintText: 'From',
+                          icon: Iconsax.location,
+                        ),
+                        SizedBox(height: 15,),
+                        LogisticsTextfield(
+                          showPrefixIcon: true,
+                          hintText: 'To',
+                          icon: Iconsax.gps,
+                        ),
+                        SizedBox(height: 20,),
+                        LogisticsTextfield(
+                          showPrefixIcon: true,
+                          hintText: 'Order details',
+                          icon: Iconsax.d_rotate,
+                        ),
+                        SizedBox(height: 15,),
+                        LogisticsTextfield(
+                          showPrefixIcon: true,
+                          hintText: 'Fare',
+                          icon: Iconsax.moneys,
+                        ),
+                        SizedBox(height: 18,),
+                       LogisticsButton(text: 'CONTINUE', check: true, onTap: (){Get.toNamed(Nav.logisticsHome);},),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      )),
+    );
+  }
+}

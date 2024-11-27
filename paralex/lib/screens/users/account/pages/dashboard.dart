@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/service_provider/view/widgets/activity_card.dart';
 
+import '../../../../service_provider/controllers/user_choice_controller.dart';
+
+final userController = Get.find<UserChoiceController>();
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 
@@ -17,7 +21,10 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
+    final DateTime now = DateTime.now(); // Get current date and time
+    final String formattedDate = DateFormat('EEEE, MMM d, y').format(now);
     final size = MediaQuery.of(context).size;
+
     return SingleChildScrollView(
         child: Stack(
       children: [
@@ -32,14 +39,14 @@ class _DashboardState extends State<Dashboard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "monday, Nov8, 2025 ",
+                      formattedDate,
                       style: FontStyles.smallCapsIntro.copyWith(
                           color: PaintColors.paralexpurple,
                           fontSize: 14,
                           letterSpacing: 0),
                     ),
                     Text(
-                      "Hello, Emmanuel John",
+                      "Hello, ${userController.lastName.value} ${userController.firstName.value}",
                       style: FontStyles.headingText.copyWith(
                           color: PaintColors.paralexpurple,
                           fontWeight: FontWeight.w900,

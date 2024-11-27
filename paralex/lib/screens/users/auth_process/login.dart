@@ -4,6 +4,11 @@ import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
+import '../../../service_provider/controllers/user_choice_controller.dart';
+import '../../../service_provider/services/api_service.dart';
+
+
+final userController = Get.find<UserChoiceController>();
 
 class LoginWithPassword extends StatefulWidget {
   const LoginWithPassword({super.key});
@@ -16,9 +21,8 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
   final GlobalKey<FormState> _key = GlobalKey();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  var _isObscure;
+  final ApiService _apiService = ApiService(); // Instance of ApiService
+  bool _isObscure = true;
   bool _hasEightChars = false;
   bool _hasCapitalLetters = false;
   bool _hasSpecialChar = false;
@@ -30,15 +34,8 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
   }
 
   @override
-  void initState() {
-    _isObscure = true;
-
-    // plugin.initialize(publicKey: pstack_key);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    userController.email.value = _emailController.text;
     var size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: PaintColors.bgColor,
@@ -51,7 +48,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //01s
+                  // Header Section
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -69,35 +66,32 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                     ],
                   ),
 
+                  // Form Section
                   Form(
                       key: _key,
                       child: Column(
                         children: [
-                          //Email....
+                          // Email Field
                           const SizedBox(height: 20),
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 20),
-                            // padding: const EdgeInsets.symmetric(vertical: 10),
                             child: TextFormField(
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Enter a value";
                                 }
                                 if (!isEmailValid(value)) {
-                                  return "Please enter a vaild email";
+                                  return "Please enter a valid email";
                                 }
                                 return null;
                               },
                               onChanged: (value) {
                                 updateFormValidity();
                               },
-
-                              // style: Fonts.smallText,
                               keyboardType: TextInputType.emailAddress,
                               controller: _emailController,
                               decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.email_outlined),
-                                  // icon: Icon(Icons.person),
                                   hintText: 'you@email.com',
                                   labelText: 'Email *',
                                   border: OutlineInputBorder(),
@@ -106,62 +100,61 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                           color: PaintColors.paralexpurple))),
                             ),
                           ),
+                          // Password Field
                           Container(
-                              // margin: const EdgeInsets.symmetric(vertical: 20),
                               child: TextFormField(
-                            obscureText: _isObscure,
-                            onChanged: (value) {
-                              setState(() {
-                                _hasEightChars = value.length >= 8;
-                                _hasCapitalLetters =
-                                    RegExp(r'[A-Z]').hasMatch(value);
-                                _hasSpecialChar =
-                                    RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                                        .hasMatch(value);
-                                updateFormValidity();
-                              });
-                            },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Enter a value";
-                              } else if (value.length < 8) {
-                                return 'Password must be at least 8 characters';
-                              } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                                return 'Password must have at least one capital letter';
-                              } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                                  .hasMatch(value)) {
-                                return 'Password must have at least one special character';
-                              }
-                              return null;
-                            },
-                            // style: Font.smallText,
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                                // icon: Icon(Icons.person),
-                                suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _isObscure = !_isObscure;
-                                      });
-                                    },
-                                    icon: _isObscure
-                                        ? const Icon(Icons.visibility)
-                                        : const Icon(Icons.visibility_off)),
-                                hintText: 'password',
-                                labelText: 'password *',
-                                border: const OutlineInputBorder(),
-                                focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: PaintColors.paralexpurple))),
-                          )),
+                                obscureText: _isObscure,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _hasEightChars = value.length >= 8;
+                                    _hasCapitalLetters =
+                                        RegExp(r'[A-Z]').hasMatch(value);
+                                    _hasSpecialChar =
+                                        RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                            .hasMatch(value);
+                                    updateFormValidity();
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Enter a value";
+                                  } else if (value.length < 8) {
+                                    return 'Password must be at least 8 characters';
+                                  } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                                    return 'Password must have at least one capital letter';
+                                  } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                      .hasMatch(value)) {
+                                    return 'Password must have at least one special character';
+                                  }
+                                  return null;
+                                },
+                                controller: _passwordController,
+                                decoration: InputDecoration(
+                                    suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _isObscure = !_isObscure;
+                                          });
+                                        },
+                                        icon: _isObscure
+                                            ? const Icon(Icons.visibility)
+                                            : const Icon(Icons.visibility_off)),
+                                    hintText: 'password',
+                                    labelText: 'password *',
+                                    border: const OutlineInputBorder(),
+                                    focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: PaintColors.paralexpurple))),
+                              )),
 
+                          // Password Validation Indicators
                           const SizedBox(height: 20),
                           Column(
                             children: [
                               indicator(_hasEightChars, 'Minimum 8 Characters'),
                               const SizedBox(width: 10),
                               indicator(
-                                  _hasCapitalLetters, 'one UPPERCASE Letter'),
+                                  _hasCapitalLetters, 'One UPPERCASE Letter'),
                               const SizedBox(width: 10),
                               indicator(_hasSpecialChar,
                                   'One Unique Character (e.g: !@#%^&*?)'),
@@ -169,14 +162,10 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                           ),
                           const SizedBox(height: 50),
 
+                          // Submit Button
                           Center(
                               child: ElevatedButton.icon(
-                                  onPressed: () {
-                                    if (!_key.currentState!.validate()) {
-                                      return;
-                                    }
-                                    Get.toNamed(Nav.home);
-                                  },
+                                  onPressed: loading ? null : loginUser,
                                   style: ElevatedButton.styleFrom(
                                       elevation: 0,
                                       backgroundColor: _isFormValid
@@ -186,62 +175,26 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                       minimumSize: Size(size.width * 0.90, 48),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(8))),
+                                          BorderRadius.circular(8))),
                                   label: Text(
-                                    "CONTINUE",
+                                    loading ? "LOADING..." : "CONTINUE",
                                     style: FontStyles.headingText
                                         .copyWith(fontSize: 20),
                                   ),
-                                  icon: loading == true
+                                  icon: loading
                                       ? Container(
-                                          width: 30,
-                                          height: 30,
-                                          padding: const EdgeInsets.all(2.0),
-                                          child:
-                                              const CircularProgressIndicator(
-                                            color: Colors.white,
-                                            strokeWidth: 3,
-                                          ),
-                                        )
+                                    width: 30,
+                                    height: 30,
+                                    padding: const EdgeInsets.all(2.0),
+                                    child:
+                                    const CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 3,
+                                    ),
+                                  )
                                       : Container()))
                         ],
                       )),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "New user?",
-                        style: FontStyles.smallCapsIntro.copyWith(
-                            letterSpacing: 0,
-                            color: PaintColors.generalTextsm,
-                            fontSize: 14),
-                      ),
-                      InkWell(
-                        onTap: () => Get.toNamed(Nav.userSignupScreen),
-                        child: Text("Signup",
-                            style: FontStyles.smallCapsIntro.copyWith(
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.bold,
-                                color: PaintColors.paralexpurple,
-                                fontSize: 14)),
-                      )
-                    ],
-                  ),
-                  Center(
-                      child: InkWell(
-                    onTap: () => Get.toNamed(Nav.forgotPassword),
-                    child: Text("Forgot password",
-                        style: FontStyles.smallCapsIntro.copyWith(
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.bold,
-                          color: PaintColors.paralexpurple,
-                          fontSize: 13,
-                        )),
-                  ))
-                  //end of 01
                 ],
               )),
         ));
@@ -280,4 +233,72 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       ],
     );
   }
+
+  Future<void> loginUser() async {
+    if (!_key.currentState!.validate()) {
+      return;
+    }
+
+    setState(() {
+      loading = true;
+    });
+
+    final loginData = {
+      'email': _emailController.text,
+      'password': _passwordController.text,
+    };
+
+    try {
+      final response = await _apiService.postRequest('login', {
+        "email":_emailController.text,
+        "password":_passwordController.text});
+      Get.snackbar(
+        'Success',
+        'Login successful!',
+        snackPosition: SnackPosition.TOP,
+      );
+      if (userController.isUser.value) {
+        Get.toNamed(
+            Nav.tellusMoreforUsers);
+      } else {
+        Get.toNamed(Nav
+            .selectServiceScreen);
+      }
+    } catch (e) {
+      if (e is Exception) {
+        String errorMessage = e.toString();
+        if (errorMessage.contains("Account is yet to be verified")) {
+          Get.snackbar(
+            'Error',
+            '$e.',
+            snackPosition: SnackPosition.TOP,
+          );
+          await sendOtp();
+          Get.toNamed(Nav.otpScreen, arguments: {
+            'email': _emailController.text,
+          });
+        }
+      }
+    } finally {
+      setState(() {
+        loading = false;
+      });
+    }
+  }
+
+  Future<void> sendOtp() async {
+    try {
+      final response = await _apiService.postRequest('send-otp', {
+        "email": _emailController.text, // Include the email to send the OTP
+      });
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to send OTP. Please try again.',
+        snackPosition: SnackPosition.TOP,
+      );
+      throw Exception('Failed to send OTP: $e');
+    }
+  }
+
 }

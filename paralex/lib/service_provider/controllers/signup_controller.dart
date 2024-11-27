@@ -1,9 +1,13 @@
 import 'dart:developer';
-
+import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
+import 'package:paralex/service_provider/services/api_service.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:paralex/routes/navs.dart';
 //import 'package:paralex/service_provider/services/firebase_service.dart';
+
+final ApiService apiService = ApiService();
+final userChoiceController = Get.find<UserChoiceController>();
 
 class SignupController extends GetxController {
   var emailText = "".obs;
@@ -48,20 +52,35 @@ class SignupController extends GetxController {
     confirmPasswordVisibility.value = !confirmPasswordVisibility.value;
   }
 
-  Future<void> signUp() async{
-    try{
+  Future<void> signUp() async {
+    try {
       loading.value = true;
-      //var userUid = await auth.signup(email: emailText.value, password: passwordText.value);
-      var userUid = 'simulated_user_uid';
-      log('$userUid');
-      loading.value = false;
+      final response = await apiService.postRequest('register', {
+        'password': passwordText.value,
+        'confirmPassword':confirmPasswordText.value,
+        'userType':userChoiceController.userType,
+        'email': emailText.value,
+      });
+
+      log('Signup successful: ${response['user_id']}');
       Get.toNamed(Nav.otpScreen);
-    }
-    catch(e){
-      log('sign up failed');
+    } catch (e) {
+      log('Error during signup: $e');
+      if (e is Exception) {
+        String errorMessage = e.toString();
+        if (errorMessage.contains("Customer Already Exist")) {
+          Get.snackbar(
+            'Error',
+            '$e.',
+            snackPosition: SnackPosition.TOP,
+          );
+          Get.toNamed(Nav.login);
+        }
+      }
+    } finally {
       loading.value = false;
     }
-}
+  }
   @override
   void onClose() {
     passwordController.dispose();

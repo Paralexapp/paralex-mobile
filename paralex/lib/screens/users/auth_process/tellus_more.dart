@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +8,11 @@ import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
+import 'package:paralex/service_provider/repo/local/local_storage.dart';
+import 'package:paralex/service_provider/services/firebase_service.dart';
+import 'package:paralex/service_provider/services/hive_service.dart';
+import 'package:paralex/service_provider/services/http_service.dart';
 
 class MoreAboutYou extends StatefulWidget {
   const MoreAboutYou({super.key});
@@ -15,10 +22,16 @@ class MoreAboutYou extends StatefulWidget {
 }
 
 class _MoreAboutYouState extends State<MoreAboutYou> {
+  final FirebaseService auth = FirebaseService();
+  final HttpService api = HttpService();
+  final UserChoiceController controller = Get.put(UserChoiceController());
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
   final _dateController = TextEditingController();
   DateTime? _selectedDate;
+  String phoneNumber = '';
+  String state = '';
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -106,7 +119,17 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                   ),
                   initialCountryCode: 'IN',
                   onChanged: (phone) {
+                    log(phone.completeNumber);
+                    setState(() {
+                      phoneNumber = phone.completeNumber;
+                    });
                     // print(phone.completeNumber);
+                  },
+                  onCountryChanged: (country){
+                    log(country.name);
+                    setState(() {
+                      state = country.name;
+                    });
                   },
                 ),
                 TextFormField(
@@ -141,7 +164,46 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                   height: 15,
                 ),
                 GestureDetector(
-                  onTap: () => Get.toNamed(Nav.login),
+                  onTap: () async{
+                    log('continue button tapped');
+                    try{
+                      setState(() {
+                        loading = true;
+                      });
+                      // await auth.saveUserData(username: '${_firstName.text} ${_lastName.text}', email: controller.userEmail.value, phoneNumber: phoneNumber);
+                      // log('firestore check');
+                      Map<String, dynamic> requestBodyCreateUser = {
+                        "idToken": controller.userIdToken.value,
+                        "stateOfResidence": state,
+                        "phoneNumber": phoneNumber
+                      };
+                      var res = await api.postData(HttpService.createAccount, controller.userIdToken.value, requestBodyCreateUser);
+                      log('api check');
+                      if(res != null){
+                        log('$res');
+                        setState(() {
+                          loading = false;
+                        });
+                        Get.snackbar('Success', 'Account successfully created');
+                        Get.toNamed(Nav.login);
+                      }
+                      else{
+                        setState(() {
+                          loading = false;
+                        });
+                        log('api response is null');
+                        Get.snackbar('Error', 'Account creation failed');
+                        Get.toNamed(Nav.login);
+                      }
+                    }
+                    catch(e){
+                      setState(() {
+                        loading = false;
+                      });
+                      log('$e');
+                      Get.snackbar('Error', "$e");
+                    }
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     height: 50,
@@ -150,7 +212,16 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                         color: PaintColors.paralexpurple,
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                     child: Center(
-                        child: Text(
+                        child: loading == true ? Container(
+                          width: 30,
+                          height: 30,
+                          padding: const EdgeInsets.all(1.0),
+                          child:
+                          const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 3,
+                          ),
+                        ) : Text(
                       "CONTINUE",
                       style: FontStyles.smallCapsIntro.copyWith(
                           color: Colors.white,

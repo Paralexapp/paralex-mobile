@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:paralex/routes/navs.dart';
-//import 'package:paralex/service_provider/services/firebase_service.dart';
+import 'package:paralex/service_provider/services/firebase_service.dart';
 
 class SignupController extends GetxController {
   var emailText = "".obs;
@@ -20,7 +20,7 @@ class SignupController extends GetxController {
   var confirmPasswordVisibility = true.obs;
 
   final passwordController = TextEditingController();
-  //FirebaseService auth = FirebaseService();
+  FirebaseService auth = FirebaseService();
   bool validateEmail(String email) {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(email);
@@ -51,9 +51,8 @@ class SignupController extends GetxController {
   Future<void> signUp() async{
     try{
       loading.value = true;
-      //var userUid = await auth.signup(email: emailText.value, password: passwordText.value);
-      var userUid = 'simulated_user_uid';
-      log('$userUid');
+      var userIdToken = await auth.signup(email: emailText.value, password: passwordText.value);
+      log('$userIdToken');
       loading.value = false;
       Get.toNamed(Nav.otpScreen);
     }

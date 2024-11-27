@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
+import 'package:paralex/service_provider/services/firebase_service.dart';
 
 class UserRegistration extends StatefulWidget {
   const UserRegistration({super.key});
@@ -18,6 +22,7 @@ class _MyWidgetState extends State<UserRegistration> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final UserChoiceController controller = Get.put(UserChoiceController());
   var _isObscure;
   bool _hasEightChars = false;
   bool _hasCapitalLetters = false;
@@ -28,6 +33,7 @@ class _MyWidgetState extends State<UserRegistration> {
   bool isEmailValid(String email) {
     return EmailValidator.validate(email);
   }
+   FirebaseService auth = FirebaseService();
 
   @override
   void initState() {
@@ -197,11 +203,33 @@ class _MyWidgetState extends State<UserRegistration> {
 
                           Center(
                               child: ElevatedButton.icon(
-                                  onPressed: () {
+                                  onPressed: () async{
                                     if (!_key.currentState!.validate()) {
                                       return;
                                     }
-                                    Get.toNamed(Nav.otpScreen);
+                                    if(_isFormValid == true){
+                                      try{
+                                        setState(() {
+                                          loading = true;
+                                        });
+                                        controller.userEmail.value = _emailController.text;
+                                        var userIdToken = await auth.signup(
+                                            email: _emailController.text,
+                                            password: _passwordController.text);
+                                        log('$userIdToken');
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                        Get.toNamed(Nav.otpScreen);
+                                      }
+                                      catch(e){
+                                        log('sign up failed');
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                      }
+                                    }
+                                    // Get.toNamed(Nav.otpScreen);
                                   },
                                   style: ElevatedButton.styleFrom(
                                       elevation: 0,

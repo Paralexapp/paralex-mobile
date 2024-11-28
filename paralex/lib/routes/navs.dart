@@ -51,6 +51,7 @@ class Nav {
   static const logisticsParcelTracking = '/logisticsParcelTracking';
   static const logisticsCall = '/logisticsCall';
   static const logisticsChat = '/logisticsChat';
+  static const lawyerProfile = '/lawyerProfile';
 
 
 }

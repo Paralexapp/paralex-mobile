@@ -111,9 +111,9 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                     ),
                     TextFormField(
                       controller: _dateController,
-                      readOnly: true, // Make it readonly
+                      readOnly: true,
                       decoration: const InputDecoration(
-                        labelText: 'Date',
+                        labelText: 'Date of birth',
                         border: OutlineInputBorder(),
                         suffixIcon: Icon(Icons.calendar_today),
                       ),
@@ -122,8 +122,8 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
                         await DatePicker.showSimpleDatePicker(
                           context,
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(2020),
-                          lastDate: DateTime(2030),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
                           dateFormat: "dd-MMMM-yyyy",
                           locale: DateTimePickerLocale.en_us,
                           looping: true,
@@ -193,6 +193,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
         'phoneNumber': _phoneNumber,
         'firstName': _firstName.text,
         'lastName': _lastName.text,
+        'DOB' :_dateController.text,
       });
 
       final firstName = response['firstName'];

@@ -70,7 +70,7 @@ class LastWelcomeScreen extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       userChoiceController.selectUser();
-                      Get.toNamed(Nav.userSignupScreen);
+                      Get.toNamed(Nav.serviceProviderSignupWelcomeScreen);
                     },
                     child: const ParticipantWidget(
                       imgPath: "assets/images/2user.svg",

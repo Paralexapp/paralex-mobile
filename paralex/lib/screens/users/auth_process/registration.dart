@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
-import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
-import 'package:paralex/service_provider/services/firebase_service.dart';
 
 class UserRegistration extends StatefulWidget {
   const UserRegistration({super.key});
@@ -21,8 +18,7 @@ class _MyWidgetState extends State<UserRegistration> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final UserChoiceController controller = Get.put(UserChoiceController());
+  TextEditingController();
   var _isObscure;
   bool _hasEightChars = false;
   bool _hasCapitalLetters = false;
@@ -33,7 +29,6 @@ class _MyWidgetState extends State<UserRegistration> {
   bool isEmailValid(String email) {
     return EmailValidator.validate(email);
   }
-   FirebaseService auth = FirebaseService();
 
   @override
   void initState() {
@@ -110,55 +105,55 @@ class _MyWidgetState extends State<UserRegistration> {
                             ),
                           ),
                           Container(
-                              // margin: const EdgeInsets.symmetric(vertical: 20),
+                            // margin: const EdgeInsets.symmetric(vertical: 20),
                               child: TextFormField(
-                            obscureText: _isObscure,
-                            onChanged: (value) {
-                              setState(() {
-                                _hasEightChars = value.length >= 8;
-                                _hasCapitalLetters =
-                                    RegExp(r'[A-Z]').hasMatch(value);
-                                _hasSpecialChar =
-                                    RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                                        .hasMatch(value);
-                                updateFormValidity();
-                              });
-                            },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Enter a value";
-                              } else if (value.length < 8) {
-                                return 'Password must be at least 8 characters';
-                              } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                                return 'Password must have at least one capital letter';
-                              } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                                  .hasMatch(value)) {
-                                return 'Password must have at least one special character';
-                              }
-                              return null;
-                            },
-                            // style: Font.smallText,
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                                // icon: Icon(Icons.person),
-                                suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _isObscure = !_isObscure;
-                                      });
-                                    },
-                                    icon: _isObscure
-                                        ? const Icon(Icons.visibility)
-                                        : const Icon(Icons.visibility_off)),
-                                hintText: 'password',
-                                labelText: 'password *',
-                                border: const OutlineInputBorder(),
-                                focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: PaintColors.paralexpurple))),
-                          )),
+                                obscureText: _isObscure,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _hasEightChars = value.length >= 8;
+                                    _hasCapitalLetters =
+                                        RegExp(r'[A-Z]').hasMatch(value);
+                                    _hasSpecialChar =
+                                        RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                            .hasMatch(value);
+                                    updateFormValidity();
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Enter a value";
+                                  } else if (value.length < 8) {
+                                    return 'Password must be at least 8 characters';
+                                  } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                                    return 'Password must have at least one capital letter';
+                                  } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                      .hasMatch(value)) {
+                                    return 'Password must have at least one special character';
+                                  }
+                                  return null;
+                                },
+                                // style: Font.smallText,
+                                controller: _passwordController,
+                                decoration: InputDecoration(
+                                  // icon: Icon(Icons.person),
+                                    suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _isObscure = !_isObscure;
+                                          });
+                                        },
+                                        icon: _isObscure
+                                            ? const Icon(Icons.visibility)
+                                            : const Icon(Icons.visibility_off)),
+                                    hintText: 'password',
+                                    labelText: 'password *',
+                                    border: const OutlineInputBorder(),
+                                    focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: PaintColors.paralexpurple))),
+                              )),
                           Container(
-                              // padding: const EdgeInsets.all(0),
+                            // padding: const EdgeInsets.all(0),
                               margin: const EdgeInsets.symmetric(vertical: 20),
                               child: TextFormField(
                                 obscureText: _isObscure,
@@ -176,7 +171,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                 // style: Fonts.smallText,
                                 controller: _confirmPasswordController,
                                 decoration: InputDecoration(
-                                    // icon: Icon(Icons.person),
+                                  // icon: Icon(Icons.person),
                                     suffixIcon: IconButton(
                                         onPressed: () {},
                                         icon: _isObscure
@@ -203,33 +198,11 @@ class _MyWidgetState extends State<UserRegistration> {
 
                           Center(
                               child: ElevatedButton.icon(
-                                  onPressed: () async{
+                                  onPressed: () {
                                     if (!_key.currentState!.validate()) {
                                       return;
                                     }
-                                    if(_isFormValid == true){
-                                      try{
-                                        setState(() {
-                                          loading = true;
-                                        });
-                                        controller.userEmail.value = _emailController.text;
-                                        var userIdToken = await auth.signup(
-                                            email: _emailController.text,
-                                            password: _passwordController.text);
-                                        log('$userIdToken');
-                                        setState(() {
-                                          loading = false;
-                                        });
-                                        Get.toNamed(Nav.otpScreen);
-                                      }
-                                      catch(e){
-                                        log('sign up failed');
-                                        setState(() {
-                                          loading = false;
-                                        });
-                                      }
-                                    }
-                                    // Get.toNamed(Nav.otpScreen);
+                                    Get.toNamed(Nav.otpScreen);
                                   },
                                   style: ElevatedButton.styleFrom(
                                       elevation: 0,
@@ -240,7 +213,7 @@ class _MyWidgetState extends State<UserRegistration> {
                                       minimumSize: Size(size.width * 0.90, 48),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(8))),
+                                          BorderRadius.circular(8))),
                                   label: Text(
                                     "CONTINUE",
                                     style: FontStyles.headingText
@@ -248,15 +221,15 @@ class _MyWidgetState extends State<UserRegistration> {
                                   ),
                                   icon: loading == true
                                       ? Container(
-                                          width: 30,
-                                          height: 30,
-                                          padding: const EdgeInsets.all(2.0),
-                                          child:
-                                              const CircularProgressIndicator(
-                                            color: Colors.white,
-                                            strokeWidth: 3,
-                                          ),
-                                        )
+                                    width: 30,
+                                    height: 30,
+                                    padding: const EdgeInsets.all(2.0),
+                                    child:
+                                    const CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 3,
+                                    ),
+                                  )
                                       : Container()))
                         ],
                       ))

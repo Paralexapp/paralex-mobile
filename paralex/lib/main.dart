@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:paralex/paralegal/lawyer_profile.dart';
+import 'package:paralex/paralegal/request_lawyer_form.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/logistics_chat.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/logistics_delivery_info.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/logistics_parcel_delivered.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/logistics_parcel_tracking.dart';
-import 'firebase_options.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/splash/splash.dart';
 import 'package:paralex/screens/users/account/home.dart';
@@ -38,32 +37,27 @@ import 'package:paralex/service_provider/view/about_you/about_you.dart';
 import 'package:paralex/service_provider/view/about_you/about_you_contd.dart';
 import 'package:paralex/service_provider/view/bank_info.dart';
 import 'package:paralex/service_provider/view/delivery_info.dart';
+import 'package:paralex/service_provider/view/delivery_info1.dart';
+import 'package:paralex/service_provider/view/delivery_info2.dart';
+import 'package:paralex/service_provider/view/departure_detail.dart';
+import 'package:paralex/service_provider/view/destination_detail.dart';
 import 'package:paralex/service_provider/view/guarantor_detail.dart';
 import 'package:paralex/service_provider/view/delivery_notification.dart';
+import 'package:paralex/service_provider/view/pick_up_drop_off.dart';
+import 'package:paralex/service_provider/view/pick_up_drop_off_details.dart';
+import 'package:paralex/service_provider/view/schedule_list.dart';
+import 'package:paralex/service_provider/view/setup_schedule.dart';
 import 'package:paralex/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralex/service_provider/view/signup_screens/signup_welcome_screen.dart';
-
 import 'screens/users/account/pages/Logistics/logistics_call.dart';
 import 'screens/users/account/pages/Logistics/logistics_find_delivery.dart';
 import 'screens/users/account/pages/Logistics/logistics_home.dart';
 import 'screens/users/account/pages/Logistics/logistics_payment_method.dart';
 import 'screens/users/account/pages/Logistics/logistics_payment_method2.dart';
 import 'screens/users/account/pages/Logistics/logistics_payment_method3.dart';
-import 'service_provider/repo/local/local_storage.dart';
-import 'service_provider/services/hive_service.dart';
 
 Future<void> main() async{
   Get.put(UserChoiceController());
-
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await Hive.initFlutter();
-  Hive.registerAdapter(LocalStorageAdapter());
-  await Hive.openBox<bool?>('loggedIn');
-  await Hive.openBox<LocalStorage?>('localStorage');
-  // await HiveService.registerHive();
 
   runApp(GetMaterialApp(
     initialRoute: Nav.splash,
@@ -113,6 +107,16 @@ Future<void> main() async{
       GetPage(name: Nav.logisticsParcelTracking, page: () => LogisticsParcelTracking()),
       GetPage(name: Nav.logisticsCall, page: () => LogisticsCall()),
       GetPage(name: Nav.logisticsChat, page: () => LogisticsChat()),
+      GetPage(name: Nav.requestLawyer, page: () => RequestLawyerForm()),
+      GetPage(name: Nav.lawyerProfile, page: () => LawyerProfile()),
+      GetPage(name: Nav.destinationDetail, page: () => DestinationDetail()),
+      GetPage(name: Nav.departureDetail, page: () => DepartureDetail()),
+      GetPage(name: Nav.schedule, page: () => SetupSchedule()),
+      GetPage(name: Nav.deliveryInfo1, page: () => DeliveryInfo1()),
+      GetPage(name: Nav.scheduleList, page: () => ScheduleList()),
+      GetPage(name: Nav.deliveryInfo2, page: () => DeliveryInfo2()),
+      GetPage(name: Nav.pickUp, page: () => PickUpDropOff()),
+      GetPage(name: Nav.pickUpDetail, page: () => PickUpDropOffDetails()),
     ],
     debugShowCheckedModeBanner: false,
   ));

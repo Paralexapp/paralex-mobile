@@ -1,0 +1,76 @@
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class ApiService {
+  final String baseUrl = 'https://paralex-app-fddb148a81ad.herokuapp.com/api/v1/auth';
+
+  Future<Map<String, dynamic>> postRequest(String endpoint, Map<String, dynamic> data) async {
+    final url = Uri.parse('$baseUrl/$endpoint');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return jsonDecode(response.body); // Return successful response.
+      } else {
+        // Parse the response body to extract debugMessage
+        final responseBody = jsonDecode(response.body);
+        String errorMessage = responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
+
+        // Display the actual error message
+        Get.snackbar(
+          'Error',
+          errorMessage,
+          snackPosition: SnackPosition.TOP,
+        );
+
+        // Throw the actual error message as an exception
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      // Handle unexpected errors and display the actual error details
+      String errorMessage = e.toString();
+      Get.snackbar(
+        'Error',
+        errorMessage,
+        snackPosition: SnackPosition.TOP,
+      );
+
+      // Rethrow the exception with the actual error message
+      throw Exception(errorMessage);
+    }
+  }
+
+  Future<Map<String, dynamic>> putRequest(String endpoint, Map<String, dynamic> data) async {
+    final url = Uri.parse('$baseUrl/$endpoint');
+
+    try {
+      final response = await http.put(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return jsonDecode(response.body);
+      } else {
+        // Handle error response
+        final responseBody = jsonDecode(response.body);
+        String errorMessage = responseBody['debugMessage'] ?? 'An error occurred.';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to connect to the server.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      throw Exception(e.toString());
+    }
+  }
+}

@@ -51,120 +51,114 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
             ),
             Text("Please use your name as it \nappears on your ID",
                 style: FontStyles.smallCapsIntro.copyWith(
-                    letterSpacing: 0,
-                    color: PaintColors.generalTextsm,
-                    fontSize: 20)),
+                    letterSpacing: 0, color: PaintColors.generalTextsm, fontSize: 20)),
             const SizedBox(
               height: 20,
             ),
             Form(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextFormField(
-                      controller: _firstName,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Enter a value";
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                          hintText: 'Legal first name',
-                          labelText: 'First name *',
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: PaintColors.paralexpurple))),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  controller: _firstName,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter a value";
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(
+                      hintText: 'Legal first name',
+                      labelText: 'First name *',
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: PaintColors.paralexpurple))),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: _lastName,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter a value";
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.text,
+                  decoration: const InputDecoration(
+                      hintText: 'Legal last name',
+                      labelText: 'Last name *',
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: PaintColors.paralexpurple))),
+                ),
+                const SizedBox(height: 20),
+                IntlPhoneField(
+                  decoration: const InputDecoration(
+                    labelText: 'Phone Number',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
                     ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      controller: _lastName,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Enter a value";
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                          hintText: 'Legal last name',
-                          labelText: 'Last name *',
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: PaintColors.paralexpurple))),
+                  ),
+                  initialCountryCode: 'NG',
+                  onChanged: (phone) {
+                    _phoneNumber = phone.completeNumber;
+                  },
+                ),
+                TextFormField(
+                  controller: _dateController,
+                  readOnly: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Date of birth',
+                    border: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.calendar_today),
+                  ),
+                  onTap: () async {
+                    final DateTime? picked = await DatePicker.showSimpleDatePicker(
+                      context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(2100),
+                      dateFormat: "dd-MMMM-yyyy",
+                      locale: DateTimePickerLocale.en_us,
+                      looping: true,
+                    );
+                    if (picked != null) {
+                      setState(() {
+                        _selectedDate = picked;
+                        _dateController.text = DateFormat("dd-MMM-yyyy").format(picked);
+                      });
+                    }
+                  },
+                ),
+                const SizedBox(height: 15),
+                GestureDetector(
+                  onTap: _isLoading ? null : updateUserProfile,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    height: 50,
+                    width: size.width * 0.85,
+                    decoration: const BoxDecoration(
+                        color: PaintColors.paralexpurple,
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    child: Center(
+                      child: _isLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              "CONTINUE",
+                              style: FontStyles.smallCapsIntro.copyWith(
+                                  color: Colors.white,
+                                  letterSpacing: 0,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800),
+                            ),
                     ),
-                    const SizedBox(height: 20),
-                    IntlPhoneField(
-                      decoration: const InputDecoration(
-                        labelText: 'Phone Number',
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(),
-                        ),
-                      ),
-                      initialCountryCode: 'NG',
-                      onChanged: (phone) {
-                        _phoneNumber = phone.completeNumber;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _dateController,
-                      readOnly: true,
-                      decoration: const InputDecoration(
-                        labelText: 'Date of birth',
-                        border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.calendar_today),
-                      ),
-                      onTap: () async {
-                        final DateTime? picked =
-                        await DatePicker.showSimpleDatePicker(
-                          context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime(2100),
-                          dateFormat: "dd-MMMM-yyyy",
-                          locale: DateTimePickerLocale.en_us,
-                          looping: true,
-                        );
-                        if (picked != null) {
-                          setState(() {
-                            _selectedDate = picked;
-                            _dateController.text =
-                                DateFormat("dd-MMM-yyyy").format(picked);
-                          });
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 15),
-                    GestureDetector(
-                      onTap: _isLoading ? null : updateUserProfile,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        height: 50,
-                        width: size.width * 0.85,
-                        decoration: const BoxDecoration(
-                            color: PaintColors.paralexpurple,
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: Center(
-                          child: _isLoading
-                              ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                              : Text(
-                            "CONTINUE",
-                            style: FontStyles.smallCapsIntro.copyWith(
-                                color: Colors.white,
-                                letterSpacing: 0,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w800),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ))
+                  ),
+                ),
+              ],
+            ))
           ],
         ),
       ),
@@ -172,9 +166,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
   }
 
   Future<void> updateUserProfile() async {
-    if (_firstName.text.isEmpty ||
-        _lastName.text.isEmpty ||
-        _phoneNumber.isEmpty) {
+    if (_firstName.text.isEmpty || _lastName.text.isEmpty || _phoneNumber.isEmpty) {
       Get.snackbar(
         'Error',
         'Please complete all fields.',
@@ -188,12 +180,12 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
     });
 
     try {
-      final response = await _apiService.putRequest('update-user-profile', {
+      final response = await _apiService.putRequest('api/v1/auth/update-user-profile', {
         'email': userController.email.value,
         'phoneNumber': _phoneNumber,
         'firstName': _firstName.text,
         'lastName': _lastName.text,
-        'DOB' :_dateController.text,
+        'DOB': _dateController.text,
       });
 
       final firstName = response['firstName'];
@@ -219,5 +211,4 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
       });
     }
   }
-
 }

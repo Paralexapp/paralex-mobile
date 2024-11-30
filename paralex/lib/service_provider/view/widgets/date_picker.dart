@@ -30,7 +30,7 @@ class ReusableDatePicker extends StatefulWidget {
 class _ReusableDatePickerState extends State<ReusableDatePicker> {
   DateTime? _selectedDate;
 
-  final DateFormat _dateFormat = DateFormat("dd-MMM-yyyy");
+  final DateFormat _dateFormat = DateFormat("yyyy-MM-dd");
 
   @override
   void initState() {

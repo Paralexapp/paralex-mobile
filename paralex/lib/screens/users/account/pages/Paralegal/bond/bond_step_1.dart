@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
-import 'package:paralex/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
+import 'package:paralex/service_provider/controllers/bail_bond_service_controller.dart';
+import 'package:paralex/utils/validator.dart';
 
+import '../../../../../../service_provider/controllers/about_you_contd_controller.dart';
 import '../../../../../../service_provider/view/widgets/custom_button.dart';
+import '../../../../../../widgets/textfieldWidget.dart';
 
 class BondFirstStep extends StatelessWidget {
-  const BondFirstStep({super.key});
+  final BailBondServiceController controller = Get.put(BailBondServiceController());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  BondFirstStep({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,36 +38,37 @@ class BondFirstStep extends StatelessWidget {
                   "You, the undersigned Defendant (\"defendant\" or \"you\" includes an accused person or a suspect), hereby represent and warrant that the following declarations made and answers given are true, complete and correct, and are made for the purpose of inducing Paralex Logistics Limited (\"surety\") to issue, or cause to be issued, bail bond(s) or undertaking(s) for you (singularly or collectively the \"Bond\"), in the total amount of.",
                   textAlign: TextAlign.justify, // Optional: Text alignment
                   style: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      color: PaintColors.generalTextsm,
-                      fontSize: 12),
+                      letterSpacing: 0, color: PaintColors.generalTextsm, fontSize: 12),
                   maxLines: 10, // Optional: Number of lines
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Form(
+                  key: _formKey,
                   child: Column(
                     children: [
                       TextfieldWidget(
-                        // labelText: 'Full Name',
+                        controller: controller.chargeAmount,
+                        keyboardType: TextInputType.number,
+                        formatters: [FilteringTextInputFormatter.digitsOnly],
                         hintText: 'Enter bond amount',
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Required';
-                          }
-                          return null;
-                        },
+                        validator: (value) => Validators.minLength(value, 3),
                       ),
-                      const TextfieldWidget(
-                        hintText: '10% Bail-bond fee',
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const TextfieldWidget(
-                        hintText: 'Court',
-                      ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                          controller: controller.totalAmount,
+                          hintText: '10% Bail-bond fee',
+                          formatters: [FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.number,
+                          validator: (value) => Validators.minLength(value, 3)),
+                      TextfieldWidget(
+                          controller: controller.legalFirmName,
+                          hintText: 'Court',
+                          validator: (value) => Validators.minLength(value, 3)),
+                      TextfieldWidget(
+                        controller: controller.investigatingAgency,
                         hintText: 'Investigating agency',
+                        validator: (value) => Validators.minLength(value, 3),
                       ),
                       const SizedBox(
                         height: 40,
@@ -69,7 +77,10 @@ class BondFirstStep extends StatelessWidget {
                           desiredWidth: 90,
                           buttonText: "Next",
                           buttonColor: PaintColors.paralexpurple,
-                          ontap: () => Get.toNamed(Nav.bondStepB))
+                          ontap: () {
+                            if (!_formKey.currentState!.validate()) return;
+                            controller.navigateToBondStep2();
+                          })
                     ],
                   ),
                 )

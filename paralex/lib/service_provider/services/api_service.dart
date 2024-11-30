@@ -1,26 +1,36 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../controllers/auth_controller.dart';
+
 class ApiService {
-  final String baseUrl = 'https://paralex-app-fddb148a81ad.herokuapp.com/api/v1/auth';
+  // final String baseUrl = 'https://paralex-app-fddb148a81ad.herokuapp.com/api/v1/auth';
+  final String baseUrl = 'https://paralex-app-fddb148a81ad.herokuapp.com';
+  final AuthController _authController = Get.put(AuthController());
 
-  Future<Map<String, dynamic>> postRequest(String endpoint, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> postRequest(
+      String endpoint, Map<String, dynamic> data) async {
     final url = Uri.parse('$baseUrl/$endpoint');
-
+    debugPrint('url==$url');
     try {
       final response = await http.post(
         url,
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${_authController.token.value}'
+        },
         body: jsonEncode(data),
       );
-
+      debugPrint('response>>>>${jsonDecode(response.body)}');
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return jsonDecode(response.body); // Return successful response.
+        return jsonDecode(response.body);
       } else {
         // Parse the response body to extract debugMessage
         final responseBody = jsonDecode(response.body);
-        String errorMessage = responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
+        String errorMessage =
+            responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
 
         // Display the actual error message
         Get.snackbar(
@@ -46,9 +56,10 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> putRequest(String endpoint, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> putRequest(
+      String endpoint, Map<String, dynamic> data) async {
     final url = Uri.parse('$baseUrl/$endpoint');
-
+    debugPrint('url==$url');
     try {
       final response = await http.put(
         url,
@@ -71,6 +82,53 @@ class ApiService {
         snackPosition: SnackPosition.BOTTOM,
       );
       throw Exception(e.toString());
+    }
+  }
+
+  Future<Map<String, dynamic>> getRequest(String endpoint) async {
+    final url = Uri.parse('$baseUrl/$endpoint');
+    debugPrint('url==$url');
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${_authController.token.value}',
+        },
+      );
+      debugPrint('response${response.statusCode}');
+      debugPrint('Authorization: Bearer ${_authController.token.value}');
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        // Parse the response body to extract debugMessage
+        final responseBody = jsonDecode(response.body);
+        String errorMessage =
+            responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
+
+        // Display the actual error message
+        Get.snackbar(
+          'Error',
+          errorMessage,
+          snackPosition: SnackPosition.TOP,
+        );
+
+        // Throw the actual error message as an exception
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      debugPrint('error====$e');
+      // Handle unexpected errors and display the actual error details
+      String errorMessage = e.toString();
+      Get.snackbar(
+        'Error',
+        errorMessage,
+        snackPosition: SnackPosition.TOP,
+      );
+
+      // Rethrow the exception with the actual error message
+      throw Exception(errorMessage);
     }
   }
 }

@@ -56,7 +56,7 @@ import 'screens/users/account/pages/Logistics/logistics_payment_method.dart';
 import 'screens/users/account/pages/Logistics/logistics_payment_method2.dart';
 import 'screens/users/account/pages/Logistics/logistics_payment_method3.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   Get.put(UserChoiceController());
 
   runApp(GetMaterialApp(
@@ -65,17 +65,21 @@ Future<void> main() async{
       GetPage(name: Nav.splash, page: () => const SplashScreen()),
       GetPage(name: Nav.welcomeShow, page: () => const WelcomeSliders()),
       GetPage(name: Nav.lastWelcomeScreen, page: () => const LastWelcomeScreen()),
-      GetPage(name: Nav.serviceProviderSignupWelcomeScreen, page: () => SignupWelcomeScreen()),
+      GetPage(
+          name: Nav.serviceProviderSignupWelcomeScreen,
+          page: () => SignupWelcomeScreen()),
       GetPage(name: Nav.selectServiceScreen, page: () => const SelectServiceScreen()),
-      GetPage(name: Nav.serviceProviderSignupWelcomeScreen, page: () =>  SignupWelcomeScreen()),
-      GetPage(name: Nav.selectServiceScreen, page: () =>  const SelectServiceScreen()),
+      GetPage(
+          name: Nav.serviceProviderSignupWelcomeScreen,
+          page: () => SignupWelcomeScreen()),
+      GetPage(name: Nav.selectServiceScreen, page: () => const SelectServiceScreen()),
       GetPage(name: Nav.userSignupScreen, page: () => const UserRegistration()),
       GetPage(name: Nav.otpScreen, page: () => const OtpVerification()),
       GetPage(name: Nav.verificationScreen, page: () => const VerificationMessage()),
       GetPage(name: Nav.tellusMoreforUsers, page: () => const MoreAboutYou()),
       GetPage(name: Nav.aboutServiceProvider, page: () => AboutYou()),
       GetPage(name: Nav.aboutServiceProviderPage2, page: () => AboutYouContd()),
-      GetPage(name: Nav.guarantorDetail, page: () =>  GuarantorDetail()),
+      GetPage(name: Nav.guarantorDetail, page: () => GuarantorDetail()),
       GetPage(name: Nav.login, page: () => const LoginWithPassword()),
       GetPage(name: Nav.forgotPassword, page: () => const StepOne()),
       GetPage(name: Nav.resetPassOtp, page: () => const StepTwo()),
@@ -83,11 +87,11 @@ Future<void> main() async{
       GetPage(name: Nav.finalStep, page: () => const FinalStep()),
       GetPage(name: Nav.home, page: () => const Home()),
       GetPage(name: Nav.paralegalHome, page: () => const ParalegalDashboard()),
-      GetPage(name: Nav.bondStepA, page: () => const BondFirstStep()),
-      GetPage(name: Nav.bondStepB, page: () => const BondSecondStep()),
-      GetPage(name: Nav.bondStepC, page: () => const BondThirdStep()),
-      GetPage(name: Nav.bondStepD, page: () => const BondFourthStep()),
-      GetPage(name: Nav.bondStepE, page: () => const BondStepFive()),
+      GetPage(name: Nav.bondStepA, page: () => BondFirstStep()),
+      GetPage(name: Nav.bondStepB, page: () => BondSecondStep()),
+      GetPage(name: Nav.bondStepC, page: () => BondThirdStep()),
+      GetPage(name: Nav.bondStepD, page: () => BondFourthStep()),
+      GetPage(name: Nav.bondStepE, page: () => BondStepFive()),
       GetPage(name: Nav.bondSubmitted, page: () => const BondSuccess()),
       GetPage(name: Nav.legalServiceHome, page: () => const LegalAssistance()),
       GetPage(name: Nav.nafdacReg, page: () => const NafdacRegistration()),

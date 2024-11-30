@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextfieldWidget extends StatelessWidget {
   final String hintText;
@@ -8,6 +9,8 @@ class TextfieldWidget extends StatelessWidget {
   final bool obscureText;
   final Function(String)? onChanged;
   final FormFieldValidator<String>? validator;
+  final TextEditingController? controller;
+  final List<TextInputFormatter>? formatters;
 
   const TextfieldWidget(
       {super.key,
@@ -17,14 +20,20 @@ class TextfieldWidget extends StatelessWidget {
       this.keyboardType = TextInputType.text,
       this.obscureText = false,
       this.onChanged,
-      this.validator});
+      this.validator,
+      this.controller,
+      this.formatters});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 80,
-      child: TextField(
+      child: TextFormField(
+        controller: controller,
+        validator: validator,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         style: textStyle ?? const TextStyle(color: Colors.black),
+        inputFormatters: formatters,
         keyboardType: keyboardType,
         obscureText: obscureText,
         onChanged: onChanged,
@@ -42,6 +51,10 @@ class TextfieldWidget extends StatelessWidget {
               ),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFF4C1044), width: 2.0),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red, width: 2.0),
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
             ),

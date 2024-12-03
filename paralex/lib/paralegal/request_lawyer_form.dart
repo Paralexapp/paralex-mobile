@@ -19,6 +19,10 @@ import 'package:path/path.dart' as p;
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:math' as Math;
 
+import '../service_provider/view/widgets/date_picker.dart';
+import 'lawyer_controller.dart';
+import 'lawyer_model.dart';
+
 class DateTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
@@ -135,6 +139,7 @@ class RequestLawyerForm extends StatefulWidget {
   final double? rating;
   final int? reviewCount;
   final double? hourlyRates;
+  final Lawyer? lawyer;
 
   const RequestLawyerForm({
     super.key,
@@ -144,6 +149,7 @@ class RequestLawyerForm extends StatefulWidget {
     this.rating,
     this.reviewCount,
     this.hourlyRates,
+    this.lawyer,
   });
 
   @override
@@ -151,6 +157,8 @@ class RequestLawyerForm extends StatefulWidget {
 }
 
 class _RequestLawyerFormState extends State<RequestLawyerForm> {
+  final LawyerController _controller = Get.put(LawyerController());
+
   FlutterSoundRecorder? _recorder;
   AudioPlayer? _audioPlayer;
   bool isRecording = false;
@@ -292,8 +300,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
       await _recorder?.setSubscriptionDuration(Duration(milliseconds: 500));
     } else {
       // Handle the case where permission was denied
-      Get.snackbar(
-          "ERROR", 'Microphone permission is required to record audio.',
+      Get.snackbar("ERROR", 'Microphone permission is required to record audio.',
           snackPosition: SnackPosition.TOP);
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(
@@ -301,6 +308,24 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
       //           Text('Microphone permission is required to record audio.')),
       // );
     }
+  }
+
+  Map<String, dynamic> submitForm() {
+    var form = {
+      "matterTitle": _matterTitleController.text,
+      "matterDescription": _matterDescController.text,
+      "matterRecordingUrl": filePath,
+      "deadline": _deadlineController.text,
+      "files": [
+        {"name": "optional file", "url": filePath}
+      ],
+      "lawyerProfileId": widget.lawyer?.id,
+      "lawFirmId": widget.lawyer?.id,
+      "userId": widget.lawyer?.user.id,
+      "amount": 0
+    };
+
+    return form;
   }
 
   Future<bool> _requestMicrophonePermission() async {
@@ -321,8 +346,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
 
   Future<void> _startRecording() async {
     Directory tempDir = await getTemporaryDirectory();
-    filePath =
-        p.join(tempDir.path, '${DateTime.now().millisecondsSinceEpoch}.aac');
+    filePath = p.join(tempDir.path, '${DateTime.now().millisecondsSinceEpoch}.aac');
 
     await _recorder?.startRecorder(
       toFile: filePath,
@@ -360,8 +384,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
       setState(() {
         isPaused = true;
         isPlaying = false;
-        currentPlaybackPosition =
-            currentPlaybackPosition; // Capture the pause position
+        currentPlaybackPosition = currentPlaybackPosition; // Capture the pause position
       });
     } else if (isPaused) {
       await _audioPlayer?.play(DeviceFileSource(filePath!),
@@ -518,9 +541,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                         Text(
                           "Lawyer based in Lagos",
                           style: FontStyles.smallCapsIntro.copyWith(
-                              color: Color(0xFF4A4A68),
-                              fontSize: 12,
-                              letterSpacing: 0),
+                              color: Color(0xFF4A4A68), fontSize: 12, letterSpacing: 0),
                         ),
                       ],
                     ),
@@ -532,9 +553,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                           Text(
                             widget.specialization!,
                             style: FontStyles.smallCapsIntro.copyWith(
-                                color: Color(0xFF4A4A68),
-                                fontSize: 15,
-                                letterSpacing: 0),
+                                color: Color(0xFF4A4A68), fontSize: 15, letterSpacing: 0),
                           ),
                           Row(
                             children: [
@@ -568,8 +587,8 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                 ),
                 SizedBox(height: 25),
                 InkWell(
-                  onTap: () => Get.offNamedUntil(
-                      Nav.findAlawyer, ModalRoute.withName(Nav.home)),
+                  onTap: () =>
+                      Get.offNamedUntil(Nav.findAlawyer, ModalRoute.withName(Nav.home)),
                   child: Container(
                     padding: EdgeInsets.all(10),
                     color: PaintColors.fadedPinkBg,
@@ -606,9 +625,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                   firstText: "Client's full name",
                   secondText: "*",
                   firstTextStyle: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      color: const Color(0xFF868686),
-                      fontSize: 15),
+                      letterSpacing: 0, color: const Color(0xFF868686), fontSize: 15),
                   secondTextStyle: TextStyle(color: Colors.red),
                 ),
                 SizedBox(height: 8),
@@ -630,9 +647,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                   firstText: "Practice Area",
                   secondText: "(optional)",
                   firstTextStyle: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      color: const Color(0xFF868686),
-                      fontSize: 15),
+                      letterSpacing: 0, color: const Color(0xFF868686), fontSize: 15),
                   secondTextStyle: FontStyles.smallCapsIntro.copyWith(
                       letterSpacing: 0,
                       color: const Color(0xFF868686),
@@ -652,9 +667,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                   firstText: "Matter Title",
                   secondText: "*",
                   firstTextStyle: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      color: const Color(0xFF868686),
-                      fontSize: 15),
+                      letterSpacing: 0, color: const Color(0xFF868686), fontSize: 15),
                   secondTextStyle: TextStyle(color: Colors.red),
                 ),
                 SizedBox(height: 8),
@@ -667,9 +680,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                   firstText: "Matter Description",
                   secondText: "*",
                   firstTextStyle: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      color: const Color(0xFF868686),
-                      fontSize: 15),
+                      letterSpacing: 0, color: const Color(0xFF868686), fontSize: 15),
                   secondTextStyle: TextStyle(color: Colors.red),
                 ),
                 SizedBox(height: 8),
@@ -683,9 +694,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                   firstText: "Record Description",
                   secondText: "(Optional)",
                   firstTextStyle: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      color: const Color(0xFF868686),
-                      fontSize: 15),
+                      letterSpacing: 0, color: const Color(0xFF868686), fontSize: 15),
                   secondTextStyle: FontStyles.smallCapsIntro.copyWith(
                       letterSpacing: 0,
                       color: const Color(0xFF868686),
@@ -715,9 +724,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                             width: 60,
                             height: 60,
                             decoration: BoxDecoration(
-                              color: isRecording
-                                  ? Colors.red
-                                  : PaintColors.paralexpurple,
+                              color: isRecording ? Colors.red : PaintColors.paralexpurple,
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Icon(
@@ -729,8 +736,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                         if (isRecording) ...[
                           Text(
                             "Recording... ${_formatDuration(recordingDuration)}",
-                            style: TextStyle(
-                                color: Color(0xFF8B9EB4), fontSize: 14),
+                            style: TextStyle(color: Color(0xFF8B9EB4), fontSize: 14),
                           ),
                         ] else if (hasRecording) ...[
                           Row(
@@ -756,21 +762,18 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                           ),
                           Text(
                             "Recorded: ${_formatDuration(recordingDuration)}",
-                            style: TextStyle(
-                                color: Color(0xFF8B9EB4), fontSize: 14),
+                            style: TextStyle(color: Color(0xFF8B9EB4), fontSize: 14),
                           ),
                           if (isPlaying)
                             Text(
                               "Playing... ${_formatDuration(currentPlaybackPosition)}",
-                              style: TextStyle(
-                                  color: Color(0xFF8B9EB4), fontSize: 14),
+                              style: TextStyle(color: Color(0xFF8B9EB4), fontSize: 14),
                             ),
                         ],
                         if (!isRecording && !hasRecording)
                           Text(
                             "Hold to Record",
-                            style: TextStyle(
-                                color: Color(0xFF8B9EB4), fontSize: 14),
+                            style: TextStyle(color: Color(0xFF8B9EB4), fontSize: 14),
                           ),
                       ],
                     ),
@@ -789,9 +792,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                   firstText: "Lawyer's/law Firm's location",
                   secondText: "*",
                   firstTextStyle: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      color: const Color(0xFF868686),
-                      fontSize: 15),
+                      letterSpacing: 0, color: const Color(0xFF868686), fontSize: 15),
                   secondTextStyle: TextStyle(color: Colors.red),
                 ),
                 SizedBox(height: 8),
@@ -821,26 +822,32 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                   firstText: "Deadline",
                   secondText: "*",
                   firstTextStyle: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      color: const Color(0xFF868686),
-                      fontSize: 15),
+                      letterSpacing: 0, color: const Color(0xFF868686), fontSize: 15),
                   secondTextStyle: TextStyle(color: Colors.red),
                 ),
                 SizedBox(height: 8),
-                CustomTextField(
+                // CustomTextField(
+                //   controller: _deadlineController,
+                //   keyboardType: TextInputType.number,
+                //   hintText: "09-11-2020",
+                //   inputFormatter: [DateTextInputFormatter()],
+                // ),
+                ReusableDatePicker(
                   controller: _deadlineController,
-                  keyboardType: TextInputType.number,
-                  hintText: "09-11-2020",
-                  inputFormatter: [DateTextInputFormatter()],
+                  labelText: "",
+                  onDateChanged: (date) {
+                    // print('Selected date: $date');
+                  },
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2024),
+                  lastDate: DateTime(2025),
                 ),
                 SizedBox(height: 15),
                 StyledTextWidget(
                   firstText: "Add a File",
                   secondText: "(optional)",
                   firstTextStyle: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      color: const Color(0xFF868686),
-                      fontSize: 15),
+                      letterSpacing: 0, color: const Color(0xFF868686), fontSize: 15),
                   secondTextStyle: FontStyles.smallCapsIntro.copyWith(
                       letterSpacing: 0,
                       color: const Color(0xFF868686),
@@ -897,18 +904,18 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                       : PaintColors.fadedPinkBg,
                   ontap: () {
                     _isButtonEnabled
-                        ?  Get.toNamed(Nav.bondSubmitted)
+                        ? _controller.requestLitigationSupport(submitForm())
                         : Get.snackbar(
-                      "",
-                      "Fill all required fields",
-                      snackPosition: SnackPosition.TOP,
-                      titleText: Text(
-                        "Error",
-                        style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-                      ),
-                    );
+                            "",
+                            "Fill all required fields",
+                            snackPosition: SnackPosition.TOP,
+                            titleText: Text(
+                              "Error",
+                              style: TextStyle(
+                                  color: Colors.red, fontWeight: FontWeight.bold),
+                            ),
+                          );
                   },
-
                 ),
               ],
             ),

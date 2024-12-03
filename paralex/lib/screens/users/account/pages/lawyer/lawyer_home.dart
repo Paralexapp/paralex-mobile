@@ -237,8 +237,8 @@ class Lawyers extends StatelessWidget {
   }
 }
 
-List<Lawyer> lawyers = [
-  Lawyer(
+List<Lawyer2> lawyers = [
+  Lawyer2(
     imgPath: 'assets/images/law_catalogue.png',
     lawyerName: 'Jubril Onikoyi',
     specialization: 'LAND LAW',
@@ -246,21 +246,21 @@ List<Lawyer> lawyers = [
     reviewCount: 122,
     hourlyRates: 500.0,
   ),
-  Lawyer(
+  Lawyer2(
     lawyerName: 'Aisha Bello',
     specialization: 'CORPORATE LAW',
     rating: 4.5,
     reviewCount: 98,
     hourlyRates: 750.0,
   ),
-  Lawyer(
+  Lawyer2(
     lawyerName: 'Ahmed Suleiman',
     specialization: 'FAMILY LAW',
     rating: 4.8,
     reviewCount: 76,
     hourlyRates: 450.0,
   ),
-  Lawyer(
+  Lawyer2(
     imgPath: "assets/images/lady.jpeg",
     lawyerName: 'Ifeanyi Okeke',
     specialization: 'CORPORATE LAW',
@@ -268,7 +268,7 @@ List<Lawyer> lawyers = [
     reviewCount: 134,
     hourlyRates: 600.0,
   ),
-  Lawyer(
+  Lawyer2(
     lawyerName: 'Femi Falana (SAN)',
     specialization: 'CRIMINAL LAW',
     rating: 4.9,

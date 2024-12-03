@@ -96,11 +96,13 @@ class ApiService {
           'Authorization': 'Bearer ${_authController.token.value}',
         },
       );
-      debugPrint('response${response.statusCode}');
-      debugPrint('Authorization: Bearer ${_authController.token.value}');
+      debugPrint('response${response.body}');
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        return {"data": response.body};
+        // } else {
+        //   return jsonDecode(response.body);
+        // }
       } else {
         // Parse the response body to extract debugMessage
         final responseBody = jsonDecode(response.body);

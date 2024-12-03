@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
-import 'package:paralex/routes/navs.dart';
 
-import 'package:paralex/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
-
+import '../../../../../../service_provider/controllers/bail_bond_service_controller.dart';
 import '../../../../../../service_provider/view/widgets/custom_button.dart';
 import '../../../../../../service_provider/view/widgets/date_picker.dart';
 import '../../../../../../service_provider/view/widgets/radion_btns.dart';
+import '../../../../../../utils/validator.dart';
+import '../../../../../../widgets/textfieldWidget.dart';
 
 class BondThirdStep extends StatelessWidget {
-  const BondThirdStep({super.key});
+  final BailBondServiceController controller = Get.find();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  BondThirdStep({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController dateController = TextEditingController();
     return Scaffold(
         backgroundColor: PaintColors.bgColor,
         appBar: AppBar(
@@ -35,17 +38,18 @@ class BondThirdStep extends StatelessWidget {
                   height: 20,
                 ),
                 Form(
+                  key: _formKey,
                   child: Column(
                     children: [
                       ReusableDatePicker(
-                        controller: dateController,
+                        controller: controller.dateOfBirth,
                         labelText: "Date of birth",
                         onDateChanged: (date) {
                           // print('Selected date: $date');
                         },
                         initialDate: DateTime.now(),
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime(2025),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2018),
                       ),
                       const SizedBox(
                         height: 10,
@@ -54,37 +58,64 @@ class BondThirdStep extends StatelessWidget {
                         label: "   Gender",
                         options: const ['M', 'F'],
                         initialValue: 'M',
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          if (value == 'M') {
+                            controller.gender.text = 'Male'!;
+                          } else {
+                            controller.gender.text = 'Female'!;
+                          }
+                        },
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.placeOfBirth,
                         hintText: 'Place of Birth(City & State)',
                         keyboardType: TextInputType.number,
+                        validator: (value) => Validators.minLength(value, 3),
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.nationality,
                         hintText: 'Nationality',
+                        validator: (value) => Validators.minLength(value, 3),
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.nin,
                         hintText: 'NIN',
+                        formatters: [LengthLimitingTextInputFormatter(11)],
+                        validator: (value) => Validators.minLength(value, 10),
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.internationalPassportNumber,
                         hintText: 'International Passport Number',
+                        validator: (value) => Validators.minLength(value, 3),
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.height,
                         hintText: 'Height',
+                        formatters: [FilteringTextInputFormatter.digitsOnly],
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.weight,
                         hintText: 'Weight',
+                        formatters: [FilteringTextInputFormatter.digitsOnly],
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.eyeColor,
                         hintText: 'Eye color',
                       ),
                       ReusableRadioButtons(
                         label: "   Physical Challenge",
                         options: const ['Yes', 'No'],
                         initialValue: 'Yes',
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          if (value?.toLowerCase() == "yes") {
+                            controller.physicallyChallenged(true);
+                          } else {
+                            controller.physicallyChallenged(false);
+                          }
+                        },
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.memberOfAnyGroup,
                         hintText: 'Member of any group',
                       ),
                       // TextfieldWidget(
@@ -100,7 +131,10 @@ class BondThirdStep extends StatelessWidget {
                           desiredWidth: 90,
                           buttonText: "Next",
                           buttonColor: PaintColors.paralexpurple,
-                          ontap: () => Get.toNamed(Nav.bondStepD))
+                          ontap: () {
+                            if (!_formKey.currentState!.validate()) return;
+                            controller.navigateToBondStep4();
+                          })
                     ],
                   ),
                 )

@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
-import 'package:paralex/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import 'package:paralex/service_provider/view/widgets/date_picker.dart';
+
+import '../../../../../../widgets/textfieldWidget.dart';
 
 class NafdacStepTwo extends StatelessWidget {
   const NafdacStepTwo({super.key});

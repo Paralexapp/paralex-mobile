@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/controllers/auth_controller.dart';
 import '../../../service_provider/controllers/user_choice_controller.dart';
 import '../../../service_provider/services/api_service.dart';
-
 
 final userController = Get.find<UserChoiceController>();
 
@@ -18,6 +18,7 @@ class LoginWithPassword extends StatefulWidget {
 }
 
 class _LoginWithPasswordState extends State<LoginWithPassword> {
+  final AuthController _authController = Get.put(AuthController());
   final GlobalKey<FormState> _key = GlobalKey();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -60,8 +61,8 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                       ),
                       Text(
                         "Committed to providing prompt,\nresponsive services ",
-                        style: FontStyles.smallCapsIntro.copyWith(
-                            color: PaintColors.generalTextsm, letterSpacing: 0),
+                        style: FontStyles.smallCapsIntro
+                            .copyWith(color: PaintColors.generalTextsm, letterSpacing: 0),
                       )
                     ],
                   ),
@@ -96,56 +97,54 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                   labelText: 'Email *',
                                   border: OutlineInputBorder(),
                                   focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: PaintColors.paralexpurple))),
+                                      borderSide:
+                                          BorderSide(color: PaintColors.paralexpurple))),
                             ),
                           ),
                           // Password Field
                           Container(
                               child: TextFormField(
-                                obscureText: _isObscure,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _hasEightChars = value.length >= 8;
-                                    _hasCapitalLetters =
-                                        RegExp(r'[A-Z]').hasMatch(value);
-                                    _hasSpecialChar =
-                                        RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                                            .hasMatch(value);
-                                    updateFormValidity();
-                                  });
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter a value";
-                                  } else if (value.length < 8) {
-                                    return 'Password must be at least 8 characters';
-                                  } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                                    return 'Password must have at least one capital letter';
-                                  } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                                      .hasMatch(value)) {
-                                    return 'Password must have at least one special character';
-                                  }
-                                  return null;
-                                },
-                                controller: _passwordController,
-                                decoration: InputDecoration(
-                                    suffixIcon: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            _isObscure = !_isObscure;
-                                          });
-                                        },
-                                        icon: _isObscure
-                                            ? const Icon(Icons.visibility)
-                                            : const Icon(Icons.visibility_off)),
-                                    hintText: 'password',
-                                    labelText: 'password *',
-                                    border: const OutlineInputBorder(),
-                                    focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: PaintColors.paralexpurple))),
-                              )),
+                            obscureText: _isObscure,
+                            onChanged: (value) {
+                              setState(() {
+                                _hasEightChars = value.length >= 8;
+                                _hasCapitalLetters = RegExp(r'[A-Z]').hasMatch(value);
+                                _hasSpecialChar =
+                                    RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value);
+                                updateFormValidity();
+                              });
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Enter a value";
+                              } else if (value.length < 8) {
+                                return 'Password must be at least 8 characters';
+                              } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                                return 'Password must have at least one capital letter';
+                              } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                  .hasMatch(value)) {
+                                return 'Password must have at least one special character';
+                              }
+                              return null;
+                            },
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure = !_isObscure;
+                                      });
+                                    },
+                                    icon: _isObscure
+                                        ? const Icon(Icons.visibility)
+                                        : const Icon(Icons.visibility_off)),
+                                hintText: 'password',
+                                labelText: 'password *',
+                                border: const OutlineInputBorder(),
+                                focusedBorder: const OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: PaintColors.paralexpurple))),
+                          )),
 
                           // Password Validation Indicators
                           const SizedBox(height: 20),
@@ -153,8 +152,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                             children: [
                               indicator(_hasEightChars, 'Minimum 8 Characters'),
                               const SizedBox(width: 10),
-                              indicator(
-                                  _hasCapitalLetters, 'One UPPERCASE Letter'),
+                              indicator(_hasCapitalLetters, 'One UPPERCASE Letter'),
                               const SizedBox(width: 10),
                               indicator(_hasSpecialChar,
                                   'One Unique Character (e.g: !@#%^&*?)'),
@@ -174,24 +172,21 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                       foregroundColor: Colors.white,
                                       minimumSize: Size(size.width * 0.90, 48),
                                       shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(8))),
+                                          borderRadius: BorderRadius.circular(8))),
                                   label: Text(
                                     loading ? "LOADING..." : "CONTINUE",
-                                    style: FontStyles.headingText
-                                        .copyWith(fontSize: 20),
+                                    style: FontStyles.headingText.copyWith(fontSize: 20),
                                   ),
                                   icon: loading
                                       ? Container(
-                                    width: 30,
-                                    height: 30,
-                                    padding: const EdgeInsets.all(2.0),
-                                    child:
-                                    const CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 3,
-                                    ),
-                                  )
+                                          width: 30,
+                                          height: 30,
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: const CircularProgressIndicator(
+                                            color: Colors.white,
+                                            strokeWidth: 3,
+                                          ),
+                                        )
                                       : Container()))
                         ],
                       )),
@@ -249,20 +244,19 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
     };
 
     try {
-      final response = await _apiService.postRequest('login', {
-        "email":_emailController.text,
-        "password":_passwordController.text});
+      final response = await _apiService.postRequest('api/v1/auth/login',
+          {"email": _emailController.text, "password": _passwordController.text});
+
+      _authController.token.value = response['data'];
       Get.snackbar(
         'Success',
         'Login successful!',
         snackPosition: SnackPosition.TOP,
       );
       if (userController.isUser.value) {
-        Get.toNamed(
-            Nav.tellusMoreforUsers);
+        Get.toNamed(Nav.tellusMoreforUsers);
       } else {
-        Get.toNamed(Nav
-            .selectServiceScreen);
+        Get.toNamed(Nav.selectServiceScreen);
       }
     } catch (e) {
       if (e is Exception) {
@@ -288,7 +282,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
 
   Future<void> sendOtp() async {
     try {
-      final response = await _apiService.postRequest('send-otp', {
+      final response = await _apiService.postRequest('api/v1/auth/send-otp', {
         "email": _emailController.text, // Include the email to send the OTP
       });
     } catch (e) {
@@ -300,5 +294,4 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       throw Exception('Failed to send OTP: $e');
     }
   }
-
 }

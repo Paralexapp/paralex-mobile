@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paralex/paralegal/lawyer_model.dart';
 import 'package:paralex/paralegal/request_lawyer_form.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import '../reusables/back_button.dart';
 import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../routes/navs.dart';
-import 'lawyer_profile_controller.dart';
+import 'lawyer_controller.dart';
 
 class LawyerProfile extends StatelessWidget {
   final String? imgPath;
@@ -15,6 +16,7 @@ class LawyerProfile extends StatelessWidget {
   final double? rating;
   final int? reviewCount;
   final double? hourlyRates;
+  final Lawyer? lawyer;
 
   const LawyerProfile({
     super.key,
@@ -24,11 +26,12 @@ class LawyerProfile extends StatelessWidget {
     this.rating,
     this.reviewCount,
     this.hourlyRates,
+    this.lawyer,
   });
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LawyerProfileController());
+    final controller = Get.put(LawyerController());
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -37,8 +40,8 @@ class LawyerProfile extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'Get a Lawyer',
-          style: FontStyles.smallCapsIntro.copyWith(
-              fontSize: 16, letterSpacing: 0, fontWeight: FontWeight.bold),
+          style: FontStyles.smallCapsIntro
+              .copyWith(fontSize: 16, letterSpacing: 0, fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
@@ -150,9 +153,7 @@ class LawyerProfile extends StatelessWidget {
                     Text(
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet sem nec erat finibus tempus non a neque. Etiam arcu dolor, iaculis ut bibendum nec, tempor nec dui. Fusce consectetur, quam eu fringilla faucibus, dolor diam tempus nibh, vel eleifend nisl neque dapibus ipsum.",
                       style: FontStyles.smallCapsIntro.copyWith(
-                          color: Color(0xFF4A4A68),
-                          fontSize: 12,
-                          letterSpacing: 0),
+                          color: Color(0xFF4A4A68), fontSize: 12, letterSpacing: 0),
                     ),
                     SizedBox(height: 15),
                     Container(
@@ -162,18 +163,19 @@ class LawyerProfile extends StatelessWidget {
                     SizedBox(height: 15),
                     Center(
                       child: CustomButton(
-                          desiredWidth: 0.90,
-                          buttonText: "CONTACT  LAWYER",
-                          buttonColor: PaintColors.paralexpurple,
-                          ontap: (){
-                            Get.to(() => RequestLawyerForm(
-                              imgPath: imgPath,
-                              lawyerName: lawyerName, specialization:specialization,
-                              rating:rating,
-                              reviewCount:reviewCount,
-                              hourlyRates:hourlyRates,
-                            ));
-                          },
+                        desiredWidth: 0.90,
+                        buttonText: "CONTACT  LAWYER",
+                        buttonColor: PaintColors.paralexpurple,
+                        ontap: () {
+                          Get.to(() => RequestLawyerForm(
+                                imgPath: imgPath,
+                                lawyerName: lawyerName,
+                                specialization: specialization,
+                                rating: rating,
+                                reviewCount: reviewCount,
+                                hourlyRates: hourlyRates,
+                              ));
+                        },
                       ),
                     ),
                     SizedBox(height: 15),
@@ -252,8 +254,7 @@ class ReviewWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 image: DecorationImage(
-                    image: AssetImage(
-                        imgPath ?? "assets/images/law_catalogue.png"),
+                    image: AssetImage(imgPath ?? "assets/images/law_catalogue.png"),
                     fit: BoxFit.cover),
               ),
             ),

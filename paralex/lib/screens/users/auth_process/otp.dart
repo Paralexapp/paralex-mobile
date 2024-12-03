@@ -20,9 +20,8 @@ class OtpVerification extends StatefulWidget {
 class _OtpVerificationState extends State<OtpVerification> {
   final ApiService _apiService = ApiService();
   final List<TextEditingController> _otpControllers =
-  List.generate(4, (_) => TextEditingController());
+      List.generate(4, (_) => TextEditingController());
   bool _isLoading = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -77,29 +76,33 @@ class _OtpVerificationState extends State<OtpVerification> {
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: List.generate(4, (index) => SizedBox(
-                            height: 68,
-                            width: 68,
-                            child: TextField(
-                              controller: _otpControllers[index],
-                              onChanged: (value) {
-                                if (value.length == 1 && index < 3) {
-                                  FocusScope.of(context).nextFocus(); // Move to next field
-                                } else if (value.isEmpty && index > 0) {
-                                  FocusScope.of(context).previousFocus(); // Move to previous field
-                                }
-                              },
-                              textAlign: TextAlign.center,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(1),
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          )),
+                          children: List.generate(
+                              4,
+                              (index) => SizedBox(
+                                    height: 68,
+                                    width: 68,
+                                    child: TextField(
+                                      controller: _otpControllers[index],
+                                      onChanged: (value) {
+                                        if (value.length == 1 && index < 3) {
+                                          FocusScope.of(context)
+                                              .nextFocus(); // Move to next field
+                                        } else if (value.isEmpty && index > 0) {
+                                          FocusScope.of(context)
+                                              .previousFocus(); // Move to previous field
+                                        }
+                                      },
+                                      textAlign: TextAlign.center,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(1),
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      keyboardType: TextInputType.number,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                      ),
+                                    ),
+                                  )),
                         ),
                       ),
                     ],
@@ -152,17 +155,17 @@ class _OtpVerificationState extends State<OtpVerification> {
                         child: Center(
                           child: _isLoading
                               ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
+                                  color: Colors.white,
+                                )
                               : Text(
-                            "CONTINUE",
-                            style: FontStyles.smallCapsIntro.copyWith(
-                              color: Colors.white,
-                              letterSpacing: 0,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
+                                  "CONTINUE",
+                                  style: FontStyles.smallCapsIntro.copyWith(
+                                    color: Colors.white,
+                                    letterSpacing: 0,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
@@ -193,7 +196,7 @@ class _OtpVerificationState extends State<OtpVerification> {
     });
 
     try {
-      final response = await _apiService.postRequest('validate-otp', {
+      final response = await _apiService.postRequest('api/v1/auth/validate-otp', {
         "otp": otp,
       });
 
@@ -203,11 +206,9 @@ class _OtpVerificationState extends State<OtpVerification> {
         snackPosition: SnackPosition.TOP,
       );
       if (userController.isUser.value) {
-        Get.toNamed(
-            Nav.tellusMoreforUsers); // Navigate to UserHomeScreen
+        Get.toNamed(Nav.tellusMoreforUsers); // Navigate to UserHomeScreen
       } else {
-        Get.toNamed(Nav
-            .selectServiceScreen); // Navigate to ServiceProviderHomeScreen
+        Get.toNamed(Nav.selectServiceScreen); // Navigate to ServiceProviderHomeScreen
       }
     } catch (e) {
       Get.snackbar(
@@ -225,7 +226,7 @@ class _OtpVerificationState extends State<OtpVerification> {
   // Function to resend OTP
   Future<void> resendOtp() async {
     try {
-      final response = await _apiService.postRequest('send-otp', {
+      final response = await _apiService.postRequest('api/v1/auth/send-otp', {
         "email": userController.email.value,
       });
 

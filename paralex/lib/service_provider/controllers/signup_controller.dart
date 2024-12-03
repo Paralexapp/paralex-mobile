@@ -32,7 +32,8 @@ class SignupController extends GetxController {
 
   bool hasMinLength(String password) => password.length >= 8;
   bool hasUpperCase(String password) => password.contains(RegExp(r'[A-Z]'));
-  bool hasSpecialCharacter(String password) => password.contains(RegExp(r'[!@#\$%\^&\*\?]'));
+  bool hasSpecialCharacter(String password) =>
+      password.contains(RegExp(r'[!@#\$%\^&\*\?]'));
 
   void validatePassword(String password) {
     isMinLengthValid.value = hasMinLength(password);
@@ -55,10 +56,10 @@ class SignupController extends GetxController {
   Future<void> signUp() async {
     try {
       loading.value = true;
-      final response = await apiService.postRequest('register', {
+      final response = await apiService.postRequest('api/v1/auth/register', {
         'password': passwordText.value,
-        'confirmPassword':confirmPasswordText.value,
-        'userType':userChoiceController.userType,
+        'confirmPassword': confirmPasswordText.value,
+        'userType': userChoiceController.userType,
         'email': emailText.value,
       });
 
@@ -81,6 +82,7 @@ class SignupController extends GetxController {
       loading.value = false;
     }
   }
+
   @override
   void onClose() {
     passwordController.dispose();

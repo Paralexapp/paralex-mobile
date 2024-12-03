@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
-import 'package:paralex/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
 import 'package:get/get.dart';
 import '../../../../../paralegal/lawyer_list.dart';
 import '../../../../../paralegal/lawyer_model.dart';
@@ -14,8 +13,7 @@ class LawyerHome extends StatefulWidget {
   State<LawyerHome> createState() => _LawyerHomeState();
 }
 
-class _LawyerHomeState extends State<LawyerHome>
-    with SingleTickerProviderStateMixin {
+class _LawyerHomeState extends State<LawyerHome> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final List<String> tabs = [
     'CORPORATE LAW',
@@ -66,7 +64,10 @@ class _LawyerHomeState extends State<LawyerHome>
         title: Text(
           "Get a Lawyer",
           style: FontStyles.smallCapsIntro.copyWith(
-              fontSize: 16, letterSpacing: 0, fontWeight: FontWeight.bold,color: Color(0xFF35124E)),
+              fontSize: 16,
+              letterSpacing: 0,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF35124E)),
         ),
       ),
       body: Padding(
@@ -86,7 +87,7 @@ class _LawyerHomeState extends State<LawyerHome>
             CustomTextField(
               hintText: "Search Lawyer",
               controller: _searchController,
-              onChanged: (value){
+              onChanged: (value) {
                 setState(() {
                   searchQuery = value;
                 });
@@ -107,7 +108,8 @@ class _LawyerHomeState extends State<LawyerHome>
                             borderRadius: BorderRadius.circular(10),
                           ),
                           //alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+                          padding:
+                              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
                           child: Text(
                             tab,
                             style: TextStyle(
@@ -131,7 +133,10 @@ class _LawyerHomeState extends State<LawyerHome>
               child: TabBarView(
                 controller: _tabController,
                 children: tabs.map((tab) {
-                  return LawyerList(specialization: tab,searchQuery: searchQuery,);
+                  return LawyerList(
+                    specialization: tab,
+                    searchQuery: searchQuery,
+                  );
                 }).toList(),
               ),
             ),
@@ -163,7 +168,7 @@ class Lawyers extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Column(
       children: [
-      Divider(),
+        Divider(),
         Row(
           children: [
             Container(
@@ -188,9 +193,7 @@ class Lawyers extends StatelessWidget {
                 Text(
                   specialization,
                   style: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0,
-                      fontSize: 12,
-                      color: PaintColors.generalTextsm),
+                      letterSpacing: 0, fontSize: 12, color: PaintColors.generalTextsm),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,14 +231,14 @@ class Lawyers extends StatelessWidget {
             ),
           ],
         ),
-       Divider()
+        Divider()
       ],
     );
   }
 }
 
-List<Lawyer> lawyers = [
-  Lawyer(
+List<Lawyer2> lawyers = [
+  Lawyer2(
     imgPath: 'assets/images/law_catalogue.png',
     lawyerName: 'Jubril Onikoyi',
     specialization: 'LAND LAW',
@@ -243,21 +246,21 @@ List<Lawyer> lawyers = [
     reviewCount: 122,
     hourlyRates: 500.0,
   ),
-  Lawyer(
+  Lawyer2(
     lawyerName: 'Aisha Bello',
     specialization: 'CORPORATE LAW',
     rating: 4.5,
     reviewCount: 98,
     hourlyRates: 750.0,
   ),
-  Lawyer(
+  Lawyer2(
     lawyerName: 'Ahmed Suleiman',
     specialization: 'FAMILY LAW',
     rating: 4.8,
     reviewCount: 76,
     hourlyRates: 450.0,
   ),
-  Lawyer(
+  Lawyer2(
     imgPath: "assets/images/lady.jpeg",
     lawyerName: 'Ifeanyi Okeke',
     specialization: 'CORPORATE LAW',
@@ -265,7 +268,7 @@ List<Lawyer> lawyers = [
     reviewCount: 134,
     hourlyRates: 600.0,
   ),
-  Lawyer(
+  Lawyer2(
     lawyerName: 'Femi Falana (SAN)',
     specialization: 'CRIMINAL LAW',
     rating: 4.9,
@@ -273,5 +276,3 @@ List<Lawyer> lawyers = [
     hourlyRates: 600.0,
   ),
 ];
-
-

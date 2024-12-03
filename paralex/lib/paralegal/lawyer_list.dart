@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paralex/paralegal/lawyer_controller.dart';
 import '../screens/users/account/pages/lawyer/lawyer_home.dart';
 import 'lawyer_model.dart';
 import 'lawyer_profile.dart';
+
 class LawyerList extends StatelessWidget {
+  final LawyerController _controller = Get.put(LawyerController());
   final String specialization;
   final String searchQuery;
 
-  const LawyerList({Key? key, required this.specialization,this.searchQuery = "",}) : super(key: key);
+  LawyerList({
+    super.key,
+    required this.specialization,
+    this.searchQuery = "",
+  });
 
   @override
   Widget build(BuildContext context) {
-
     List<Lawyer> getLawyersBySpecialization(String specialization) {
-      final filtered = lawyers
+      final filtered = _controller.lawyersList
           .where((lawyer) =>
-      lawyer.specialization == specialization &&
-          lawyer.lawyerName.toLowerCase().contains(searchQuery.toLowerCase()))
+              lawyer.practiceAreas
+                  .any((test) => test.toLowerCase() == specialization.toLowerCase()) &&
+              lawyer.lawyerName.toLowerCase().contains(searchQuery.toLowerCase()))
           .toList();
       return filtered;
     }
+
     // Get the filtered list of lawyers based on specialization
     final filteredLawyers = getLawyersBySpecialization(specialization);
 
@@ -38,21 +46,22 @@ class LawyerList extends StatelessWidget {
         return InkWell(
           onTap: () {
             Get.to(() => LawyerProfile(
-              imgPath: lawyer.imgPath,
-              lawyerName: lawyer.lawyerName,
-              specialization: lawyer.specialization,
-              rating: lawyer.rating,
-              reviewCount: lawyer.reviewCount,
-              hourlyRates: lawyer.hourlyRates,
-            ));
+                  imgPath: lawyer.user.photoUrl,
+                  lawyerName: lawyer.lawyerName,
+                  specialization: lawyer.practiceAreas.toString(),
+                  rating: 4.5,
+                  reviewCount: 2,
+                  hourlyRates: 1500,
+                  lawyer: lawyer,
+                ));
           },
           child: Lawyers(
-            imgPath: lawyer.imgPath,
+            imgPath: lawyer.user.photoUrl,
             lawyerName: lawyer.lawyerName,
-            specialization: lawyer.specialization,
-            rating: lawyer.rating,
-            reviewCount: lawyer.reviewCount,
-            hourlyRates: lawyer.hourlyRates,
+            specialization: lawyer.practiceAreas.join(','),
+            rating: 4.5,
+            reviewCount: 2,
+            hourlyRates: 1500,
           ),
         );
       },

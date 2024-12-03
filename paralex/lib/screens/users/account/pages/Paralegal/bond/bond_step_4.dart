@@ -3,13 +3,19 @@ import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
+import '../../../../../../service_provider/controllers/bail_bond_service_controller.dart';
 import '../../../../../../service_provider/view/widgets/date_picker.dart';
-import 'package:paralex/service_provider/view/signup_screens/widgets/textfieldWidget.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import 'package:paralex/service_provider/view/widgets/radion_btns.dart';
 
+import '../../../../../../utils/validator.dart';
+import '../../../../../../widgets/textfieldWidget.dart';
+
 class BondFourthStep extends StatelessWidget {
-  const BondFourthStep({super.key});
+  final BailBondServiceController controller = Get.put(BailBondServiceController());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  BondFourthStep({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +39,11 @@ class BondFourthStep extends StatelessWidget {
                   height: 20,
                 ),
                 Form(
+                  key: _formKey,
                   child: Column(
                     children: [
                       ReusableDatePicker(
-                        controller: dateController,
+                        controller: controller.dateOfCurrentArrest,
                         labelText: "Date of current arrest",
                         onDateChanged: (date) {
                           // print('Selected date: $date');
@@ -48,40 +55,49 @@ class BondFourthStep extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      // ReusableRadioButtons(
-                      //   label: "   Gender",
-                      //   options: const ['M', 'F'],
-                      //   initialValue: 'M',
-                      //   onChanged: (value) {},
-                      // ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.arrestingAgency,
                         hintText: 'Arresting agency',
                         keyboardType: TextInputType.number,
+                        validator: (value) => Validators.minLength(value, 3),
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.detentionFacilityLocation,
                         hintText: 'Dentention facility location',
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.charges,
                         hintText: 'Charges',
+                        validator: (value) => Validators.minLength(value, 3),
                       ),
                       ReusableRadioButtons(
                         label: " Do you have an existing bond",
                         options: const ['Yes', 'No'],
                         initialValue: 'Yes',
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          if (value?.toLowerCase() == "yes") {
+                            controller.existingBailBond(true);
+                          } else {
+                            controller.existingBailBond(false);
+                          }
+                        },
                       ),
-                      const TextfieldWidget(
-                        hintText: 'Pendin charges',
+                      TextfieldWidget(
+                        controller: controller.pendingChargesInJurisdiction,
+                        hintText: 'Pending charges',
                       ),
-                      const TextfieldWidget(
+                      TextfieldWidget(
+                        controller: controller.detailsOfBond,
                         hintText: 'Details of Bond',
                       ),
-
                       CustomButton(
                           desiredWidth: 90,
                           buttonText: "Next",
                           buttonColor: PaintColors.paralexpurple,
-                          ontap: () => Get.toNamed(Nav.bondStepE))
+                          ontap: () {
+                            if (!_formKey.currentState!.validate()) return;
+                            controller.navigateToBondStep5();
+                          })
                     ],
                   ),
                 )

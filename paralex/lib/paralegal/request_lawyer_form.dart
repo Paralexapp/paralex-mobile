@@ -2,8 +2,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:paralex/reusables/back_button.dart';
-import 'package:paralex/screens/users/account/pages/lawyer/lawyer_home.dart';
 import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../routes/navs.dart';
@@ -23,114 +23,114 @@ import '../service_provider/view/widgets/date_picker.dart';
 import 'lawyer_controller.dart';
 import 'lawyer_model.dart';
 
-class DateTextInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    // Remove any non-digit characters
-    String text = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
-
-    // Automatically format the date as "dd-MM-yyyy"
-    StringBuffer formattedText = StringBuffer();
-
-    // Extract day, month, and year parts from input
-    String dayPart = '';
-    String monthPart = '';
-    String yearPart = '';
-
-    if (text.length >= 1) {
-      dayPart = text.substring(0, Math.min(2, text.length));
-
-      // Ensure the day is valid (01-31 at this stage)
-      int day = int.parse(dayPart);
-      if (day > 31) dayPart = '31';
-      formattedText.write(dayPart);
-    }
-
-    if (text.length >= 3) {
-      formattedText.write('-');
-      monthPart = text.substring(2, Math.min(4, text.length));
-
-      // Ensure the month is valid (01-12)
-      int month = int.parse(monthPart);
-      if (month > 12) monthPart = '12';
-      formattedText.write(monthPart);
-    }
-
-    if (text.length >= 5) {
-      formattedText.write('-');
-      yearPart = text.substring(4, Math.min(8, text.length));
-
-      // Optional: Ensure year is within a reasonable range (1900-2100)
-      if (yearPart.length == 4) {
-        int year = int.parse(yearPart);
-        if (year < 1900) yearPart = '1900';
-        if (year > 2100) yearPart = '2100';
-      }
-
-      formattedText.write(yearPart);
-    }
-
-    // Validate day based on month and year
-    if (dayPart.isNotEmpty && monthPart.isNotEmpty && yearPart.length == 4) {
-      int day = int.parse(dayPart);
-      int month = int.parse(monthPart);
-      int year = int.parse(yearPart);
-
-      // Adjust the day based on month and year (accounting for leap years)
-      int maxDays = _getMaxDaysInMonth(month, year);
-      if (day > maxDays) {
-        day = maxDays;
-        dayPart = day.toString().padLeft(2, '0');
-      }
-
-      // Update the formatted text with validated day
-      formattedText = StringBuffer('${dayPart}-${monthPart}-${yearPart}');
-    }
-
-    // Limit to maximum length of "dd-MM-yyyy"
-    if (formattedText.length > 10) {
-      formattedText = StringBuffer(formattedText.toString().substring(0, 10));
-    }
-
-    return TextEditingValue(
-      text: formattedText.toString(),
-      selection: TextSelection.collapsed(offset: formattedText.length),
-    );
-  }
-
-  // Helper method to get the maximum number of days in a month, accounting for leap years
-  int _getMaxDaysInMonth(int month, int year) {
-    switch (month) {
-      case 1: // January
-      case 3: // March
-      case 5: // May
-      case 7: // July
-      case 8: // August
-      case 10: // October
-      case 12: // December
-        return 31;
-      case 4: // April
-      case 6: // June
-      case 9: // September
-      case 11: // November
-        return 30;
-      case 2: // February
-        return _isLeapYear(year) ? 29 : 28;
-      default:
-        return 31;
-    }
-  }
-
-  // Helper method to determine if a year is a leap year
-  bool _isLeapYear(int year) {
-    if (year % 4 != 0) return false;
-    if (year % 100 == 0 && year % 400 != 0) return false;
-    return true;
-  }
-}
+// class DateTextInputFormatter extends TextInputFormatter {
+//   @override
+//   TextEditingValue formatEditUpdate(
+//     TextEditingValue oldValue,
+//     TextEditingValue newValue,
+//   ) {
+//     // Remove any non-digit characters
+//     String text = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+//
+//     // Automatically format the date as "dd-MM-yyyy"
+//     StringBuffer formattedText = StringBuffer();
+//
+//     // Extract day, month, and year parts from input
+//     String dayPart = '';
+//     String monthPart = '';
+//     String yearPart = '';
+//
+//     if (text.length >= 1) {
+//       dayPart = text.substring(0, Math.min(2, text.length));
+//
+//       // Ensure the day is valid (01-31 at this stage)
+//       int day = int.parse(dayPart);
+//       if (day > 31) dayPart = '31';
+//       formattedText.write(dayPart);
+//     }
+//
+//     if (text.length >= 3) {
+//       formattedText.write('-');
+//       monthPart = text.substring(2, Math.min(4, text.length));
+//
+//       // Ensure the month is valid (01-12)
+//       int month = int.parse(monthPart);
+//       if (month > 12) monthPart = '12';
+//       formattedText.write(monthPart);
+//     }
+//
+//     if (text.length >= 5) {
+//       formattedText.write('-');
+//       yearPart = text.substring(4, Math.min(8, text.length));
+//
+//       // Optional: Ensure year is within a reasonable range (1900-2100)
+//       if (yearPart.length == 4) {
+//         int year = int.parse(yearPart);
+//         if (year < 1900) yearPart = '1900';
+//         if (year > 2100) yearPart = '2100';
+//       }
+//
+//       formattedText.write(yearPart);
+//     }
+//
+//     // Validate day based on month and year
+//     if (dayPart.isNotEmpty && monthPart.isNotEmpty && yearPart.length == 4) {
+//       int day = int.parse(dayPart);
+//       int month = int.parse(monthPart);
+//       int year = int.parse(yearPart);
+//
+//       // Adjust the day based on month and year (accounting for leap years)
+//       int maxDays = _getMaxDaysInMonth(month, year);
+//       if (day > maxDays) {
+//         day = maxDays;
+//         dayPart = day.toString().padLeft(2, '0');
+//       }
+//
+//       // Update the formatted text with validated day
+//       formattedText = StringBuffer('${dayPart}-${monthPart}-${yearPart}');
+//     }
+//
+//     // Limit to maximum length of "dd-MM-yyyy"
+//     if (formattedText.length > 10) {
+//       formattedText = StringBuffer(formattedText.toString().substring(0, 10));
+//     }
+//
+//     return TextEditingValue(
+//       text: formattedText.toString(),
+//       selection: TextSelection.collapsed(offset: formattedText.length),
+//     );
+//   }
+//
+//   // Helper method to get the maximum number of days in a month, accounting for leap years
+//   int _getMaxDaysInMonth(int month, int year) {
+//     switch (month) {
+//       case 1: // January
+//       case 3: // March
+//       case 5: // May
+//       case 7: // July
+//       case 8: // August
+//       case 10: // October
+//       case 12: // December
+//         return 31;
+//       case 4: // April
+//       case 6: // June
+//       case 9: // September
+//       case 11: // November
+//         return 30;
+//       case 2: // February
+//         return _isLeapYear(year) ? 29 : 28;
+//       default:
+//         return 31;
+//     }
+//   }
+//
+//   // Helper method to determine if a year is a leap year
+//   bool _isLeapYear(int year) {
+//     if (year % 4 != 0) return false;
+//     if (year % 100 == 0 && year % 400 != 0) return false;
+//     return true;
+//   }
+// }
 
 class RequestLawyerForm extends StatefulWidget {
   final String? imgPath;
@@ -164,6 +164,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
   bool isRecording = false;
   bool hasRecording = false;
   String? filePath;
+  String? recordingUrl;
   Duration recordingDuration = Duration.zero;
   Duration currentPlaybackPosition = Duration.zero;
   bool isPlaying = false;
@@ -171,6 +172,10 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
   String? _selectedPracticeArea;
   String? _selectedNgStates;
   bool _isButtonEnabled = false;
+
+  File? _imageFile;
+  String? _uploadedImageUrl;
+  final ImagePicker _picker = ImagePicker();
 
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _deadlineController = TextEditingController();
@@ -317,7 +322,8 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
       "matterRecordingUrl": filePath,
       "deadline": _deadlineController.text,
       "files": [
-        {"name": "optional file", "url": filePath}
+        {"name": "optional file", "url": _uploadedImageUrl},
+        {"name": "recording ", "url": recordingUrl}
       ],
       "lawyerProfileId": widget.lawyer?.id,
       "lawFirmId": widget.lawyer?.id,
@@ -342,6 +348,18 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
     }
 
     return false;
+  }
+
+  Future<void> _pickImage() async {
+    final XFile? pickedFile = await _picker.pickMedia();
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+
+      _uploadedImageUrl = await _controller.uploadFile(_imageFile!);
+    }
   }
 
   Future<void> _startRecording() async {
@@ -412,6 +430,12 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
     });
   }
 
+  void _uploadRecording() async {
+    if (filePath != null) {
+      recordingUrl = await _controller.uploadFile(File(filePath!));
+    }
+  }
+
   void _deleteRecording() {
     if (isPlaying || isPaused) {
       _stopPlayback();
@@ -420,6 +444,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
     if (filePath != null) {
       File(filePath!).deleteSync();
       filePath = null;
+      recordingUrl = null;
     }
     setState(() {
       hasRecording = false;
@@ -703,7 +728,6 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                 ),
                 SizedBox(height: 8),
                 Container(
-                  height: 181,
                   decoration: BoxDecoration(
                       color: Color(0x70ECF1F4),
                       border: Border.all(color: Color(0xFFE4E4E4))),
@@ -775,6 +799,21 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                             "Hold to Record",
                             style: TextStyle(color: Color(0xFF8B9EB4), fontSize: 14),
                           ),
+                        if (hasRecording && !isRecording)
+                          Column(
+                            children: [
+                              Text("Recording Ready"),
+                              (recordingUrl != null)
+                                  ? Text("Recording Url:  $recordingUrl")
+                                  : ElevatedButton(
+                                      onPressed: _uploadRecording,
+                                      child: Text("Upload Recording"),
+                                    ),
+                            ],
+                          ),
+                        SizedBox(
+                          height: 20.0,
+                        )
                       ],
                     ),
                   ),
@@ -855,45 +894,77 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                       fontStyle: FontStyle.italic),
                 ),
                 SizedBox(height: 8),
+
                 GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: 113,
-                    color: Color(0x70ECF1F4),
-                    child: DottedBorder(
-                      color: Colors.grey,
-                      strokeWidth: 1,
-                      dashPattern: [6, 4],
-                      borderType: BorderType.RRect,
-                      radius: Radius.circular(8),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.insert_drive_file,
-                              color: Colors.grey[400],
-                              size: 50,
+                  onTap: () {
+                    _pickImage();
+                  },
+                  child: _uploadedImageUrl == null
+                      ? Container(
+                          height: 113,
+                          color: Color(0x70ECF1F4),
+                          child: DottedBorder(
+                            color: Colors.grey,
+                            strokeWidth: 1,
+                            dashPattern: [6, 4],
+                            borderType: BorderType.RRect,
+                            radius: Radius.circular(8),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.insert_drive_file,
+                                    color: Colors.grey[400],
+                                    size: 50,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text('Upload File',
+                                      style: FontStyles.smallCapsIntro.copyWith(
+                                          letterSpacing: 0,
+                                          color: PaintColors.paralexpurple,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold)),
+                                  Text(
+                                    'Supports Jpg,Pdf,Docs & Video',
+                                    style: FontStyles.smallCapsIntro.copyWith(
+                                        letterSpacing: 0,
+                                        color: Color(0xFF999999),
+                                        fontSize: 10),
+                                  ),
+                                ],
+                              ),
                             ),
-                            const SizedBox(height: 10),
-                            Text('Upload File',
-                                style: FontStyles.smallCapsIntro.copyWith(
-                                    letterSpacing: 0,
-                                    color: PaintColors.paralexpurple,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold)),
-                            Text(
-                              'Supports Jpg,Pdf,Docs & Video',
-                              style: FontStyles.smallCapsIntro.copyWith(
-                                  letterSpacing: 0,
-                                  color: Color(0xFF999999),
-                                  fontSize: 10),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                          ),
+                        )
+                      : _imageFile != null
+                          ? (_uploadedImageUrl!.endsWith(".jpg") ||
+                                  _uploadedImageUrl!.endsWith(".png") ||
+                                  _uploadedImageUrl!.endsWith(".jpeg"))
+                              ? Image.file(
+                                  _imageFile!,
+                                  fit: BoxFit.cover,
+                                )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.file_present,
+                                      color: Colors.blue,
+                                      size: 50,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      'File Uploaded!$_uploadedImageUrl',
+                                      style: const TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                          : null,
                 ),
                 SizedBox(height: 35),
                 CustomButton(

@@ -11,6 +11,8 @@ class TextfieldWidget extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final TextEditingController? controller;
   final List<TextInputFormatter>? formatters;
+  final Color? fillColor;
+  final bool readOnly;
 
   const TextfieldWidget(
       {super.key,
@@ -22,7 +24,9 @@ class TextfieldWidget extends StatelessWidget {
       this.onChanged,
       this.validator,
       this.controller,
-      this.formatters});
+      this.formatters,
+      this.fillColor,
+      this.readOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,7 @@ class TextfieldWidget extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         validator: validator,
+        readOnly: readOnly,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: textStyle ?? const TextStyle(color: Colors.black),
         inputFormatters: formatters,
@@ -42,7 +47,7 @@ class TextfieldWidget extends StatelessWidget {
               hintText: hintText,
               hintStyle: const TextStyle(color: Colors.grey),
               filled: true,
-              fillColor: const Color(0xFFECF1F4),
+              fillColor: fillColor ?? const Color(0xFFECF1F4),
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
               enabledBorder: const OutlineInputBorder(

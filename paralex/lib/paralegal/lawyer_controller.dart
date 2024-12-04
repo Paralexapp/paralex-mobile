@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:paralex/paralegal/lawyer_model.dart';
@@ -50,7 +52,6 @@ class LawyerController extends GetxController {
       final response = await _apiService.getRequest(
         'service-provider/lawyer/profile/?pageSize=$pageSize',
       );
-      debugPrint('response 222>>>${response['data']}');
 
       lawyersList.assignAll(parseLawyers('''${response['data']}''')); //= ;
     } catch (e) {
@@ -81,5 +82,10 @@ class LawyerController extends GetxController {
       //   _isLoading = false;
       // });
     }
+  }
+
+  Future<String> uploadFile(File file) async {
+    var response = await _apiService.uploadImage(file);
+    return response;
   }
 }

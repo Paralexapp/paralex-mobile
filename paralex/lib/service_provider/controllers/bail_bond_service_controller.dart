@@ -9,6 +9,7 @@ class BailBondServiceController extends GetxController {
 
   // TextEditingControllers for all fields
   var totalAmount = TextEditingController();
+  var discountAmount = TextEditingController();
   var courtId = TextEditingController();
   var investigatingAgency = TextEditingController();
   var fullName = TextEditingController();
@@ -121,6 +122,36 @@ class BailBondServiceController extends GetxController {
   var failedToAppearInCourt = true.obs;
   var enjoyedSuretyBond = true.obs;
   var agreeToTermsAndConditions = true.obs;
+  var changeFilColor = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    chargeAmount.addListener(() {
+      updateDiscountAmount();
+    });
+  }
+
+  void updateDiscountAmount() {
+    try {
+      if (chargeAmount.text.isNotEmpty) {
+        changeFilColor.value = true;
+      } else {
+        changeFilColor.value = false;
+      }
+      // Parse the total amount to double
+      double total = double.tryParse(chargeAmount.text) ?? 0.0;
+
+      // Calculate 10% discount
+      double discount = total * 0.1;
+
+      // Update the discountAmount text
+      totalAmount.text = (total + discount).toInt().toString();
+      discountAmount.text = totalAmount.text;
+    } catch (e) {
+      discountAmount.text = "0.00"; // Default value in case of error
+    }
+  }
 
   void navigateToBondStep2() {
     Get.toNamed(Nav.bondStepB);

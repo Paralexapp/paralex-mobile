@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -98,11 +100,14 @@ class ApiService {
       );
       debugPrint('response${response.body}');
 
-      if (response.statusCode == 200) {
-        return {"data": response.body};
-        // } else {
-        //   return jsonDecode(response.body);
-        // }
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var responseBody = jsonDecode(response.body);
+        if (responseBody is List) {
+          return {'data': response.body};
+        } else {
+          return responseBody;
+        }
+        // return {"data": response.body};
       } else {
         // Parse the response body to extract debugMessage
         final responseBody = jsonDecode(response.body);
@@ -131,6 +136,37 @@ class ApiService {
 
       // Rethrow the exception with the actual error message
       throw Exception(errorMessage);
+    }
+  }
+
+  Future<String> uploadImage(File file) async {
+    String uploadedImageUrl = '';
+    var url = Uri.parse('$baseUrl/api/v1/auth/upload-to-cloudinary');
+    try {
+      var request = http.MultipartRequest('POST', url)
+        ..files.add(await http.MultipartFile.fromPath('file', file.path));
+
+      var response = await request.send();
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseBody = await response.stream.bytesToString();
+        uploadedImageUrl = responseBody;
+        return uploadedImageUrl;
+      } else {
+        Get.snackbar(
+          'Error',
+          "Failed to upload image. Status code: ${response.statusCode}",
+          snackPosition: SnackPosition.TOP,
+        );
+        throw Exception("Failed to upload image. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        "An error occurred while uploading the image: $e",
+        snackPosition: SnackPosition.TOP,
+      );
+      throw Exception("An error occurred while uploading the image: $e");
     }
   }
 }

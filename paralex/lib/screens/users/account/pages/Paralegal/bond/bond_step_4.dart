@@ -58,7 +58,6 @@ class BondFourthStep extends StatelessWidget {
                       TextfieldWidget(
                         controller: controller.arrestingAgency,
                         hintText: 'Arresting agency',
-                        keyboardType: TextInputType.number,
                         validator: (value) => Validators.minLength(value, 3),
                       ),
                       TextfieldWidget(

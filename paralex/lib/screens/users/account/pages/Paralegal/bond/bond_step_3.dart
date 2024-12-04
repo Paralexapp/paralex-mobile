@@ -49,7 +49,7 @@ class BondThirdStep extends StatelessWidget {
                         },
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1900),
-                        lastDate: DateTime(2018),
+                        lastDate: DateTime(2020),
                       ),
                       const SizedBox(
                         height: 10,
@@ -69,7 +69,6 @@ class BondThirdStep extends StatelessWidget {
                       TextfieldWidget(
                         controller: controller.placeOfBirth,
                         hintText: 'Place of Birth(City & State)',
-                        keyboardType: TextInputType.number,
                         validator: (value) => Validators.minLength(value, 3),
                       ),
                       TextfieldWidget(

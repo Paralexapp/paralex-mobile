@@ -55,12 +55,21 @@ class BondFirstStep extends StatelessWidget {
                         hintText: 'Enter bond amount',
                         validator: (value) => Validators.minLength(value, 3),
                       ),
-                      TextfieldWidget(
-                          controller: controller.totalAmount,
+                      Obx(() {
+                        return TextfieldWidget(
+                          controller: controller.discountAmount,
                           hintText: '10% Bail-bond fee',
+                          readOnly: true,
+                          fillColor:
+                              controller.changeFilColor.value ? Color(0xFFD265C3) : null,
+                          textStyle: TextStyle(
+                              color: controller.changeFilColor.value
+                                  ? PaintColors.white
+                                  : Colors.grey),
                           formatters: [FilteringTextInputFormatter.digitsOnly],
                           keyboardType: TextInputType.number,
-                          validator: (value) => Validators.minLength(value, 3)),
+                        );
+                      }),
                       TextfieldWidget(
                           controller: controller.legalFirmName,
                           hintText: 'Court',

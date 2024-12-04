@@ -146,8 +146,8 @@ class BailBondServiceController extends GetxController {
       double discount = total * 0.1;
 
       // Update the discountAmount text
-      discountAmount.text = discount.toInt().toString();
-      totalAmount.text = (total + discount).toStringAsFixed(0);
+      totalAmount.text = (total + discount).toInt().toString();
+      discountAmount.text = totalAmount.text;
     } catch (e) {
       discountAmount.text = "0.00"; // Default value in case of error
     }

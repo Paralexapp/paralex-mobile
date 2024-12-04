@@ -90,12 +90,18 @@ class BondThirdStep extends StatelessWidget {
                       TextfieldWidget(
                         controller: controller.height,
                         hintText: 'Height',
-                        formatters: [FilteringTextInputFormatter.digitsOnly],
+                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        formatters: [
+                          FilteringTextInputFormatter(RegExp(r"[0-9.]"), allow: true),
+                        ],
                       ),
                       TextfieldWidget(
                         controller: controller.weight,
                         hintText: 'Weight',
-                        formatters: [FilteringTextInputFormatter.digitsOnly],
+                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        formatters: [
+                          FilteringTextInputFormatter(RegExp(r"[0-9.]"), allow: true),
+                        ],
                       ),
                       TextfieldWidget(
                         controller: controller.eyeColor,

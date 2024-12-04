@@ -45,6 +45,12 @@ class _ReusableDatePickerState extends State<ReusableDatePicker> {
           TextEditingController(
               text: _dateFormat.format(_selectedDate ?? DateTime.now())),
       readOnly: true,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Required *';
+        }
+        return null;
+      },
       decoration: InputDecoration(
         filled: true,
         fillColor: const Color(0xFFECF1F4),

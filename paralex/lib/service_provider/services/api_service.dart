@@ -141,7 +141,7 @@ class ApiService {
 
   Future<String> uploadImage(File file) async {
     String uploadedImageUrl = '';
-    var url = Uri.parse('$baseUrl/api/v1/auth/upload-to-cloudinary');
+    var url = Uri.parse('$baseUrl/api/v1/auth/upload-media');
     try {
       var request = http.MultipartRequest('POST', url)
         ..files.add(await http.MultipartFile.fromPath('file', file.path));
@@ -149,8 +149,8 @@ class ApiService {
       var response = await request.send();
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final responseBody = await response.stream.bytesToString();
-        uploadedImageUrl = responseBody;
+        var responseBody = await jsonDecode(response.stream.toString());
+        uploadedImageUrl = responseBody['secure_url'];
         return uploadedImageUrl;
       } else {
         Get.snackbar(

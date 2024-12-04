@@ -164,7 +164,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
   bool isRecording = false;
   bool hasRecording = false;
   String? filePath;
-  String? recordingUrl;
+  String recordingUrl = '';
   Duration recordingDuration = Duration.zero;
   Duration currentPlaybackPosition = Duration.zero;
   bool isPlaying = false;
@@ -444,7 +444,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
     if (filePath != null) {
       File(filePath!).deleteSync();
       filePath = null;
-      recordingUrl = null;
+      recordingUrl = '';
     }
     setState(() {
       hasRecording = false;
@@ -803,12 +803,20 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                           Column(
                             children: [
                               Text("Recording Ready"),
-                              (recordingUrl != null)
-                                  ? Text("Recording Url:  $recordingUrl")
-                                  : ElevatedButton(
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              (recordingUrl.isEmpty)
+                                  ? ElevatedButton(
                                       onPressed: _uploadRecording,
                                       child: Text("Upload Recording"),
-                                    ),
+                                    )
+                                  : Text(
+                                      recordingUrl,
+                                      style: TextStyle(),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    )
                             ],
                           ),
                         SizedBox(

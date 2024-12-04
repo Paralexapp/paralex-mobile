@@ -60,8 +60,8 @@ class _ReusableDatePickerState extends State<ReusableDatePicker> {
         final DateTime? picked = await DatePicker.showSimpleDatePicker(
           context,
           initialDate: _selectedDate ?? DateTime.now(),
-          firstDate: widget.firstDate ?? DateTime(2020),
-          lastDate: widget.lastDate ?? DateTime(2030),
+          firstDate: widget.firstDate ?? DateTime(1900),
+          lastDate: widget.lastDate ?? DateTime(2100),
           dateFormat: "dd-MMMM-yyyy",
           locale: DateTimePickerLocale.en_us,
           looping: true,

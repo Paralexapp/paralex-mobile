@@ -247,14 +247,22 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       final response = await _apiService.postRequest('api/v1/auth/login',
           {"email": _emailController.text, "password": _passwordController.text});
 
-      _authController.token.value = response['data'];
+      final authToken = response['data'];
+
+      _authController.token.value = authToken;
+
+      userController.authToken.value = authToken; // Pass token to UserChoiceController
+
+      // Fetch logged-in user data
+      await userController.fetchLoggedInUser();
+
       Get.snackbar(
         'Success',
         'Login successful!',
         snackPosition: SnackPosition.TOP,
       );
       if (userController.isUser.value) {
-        Get.toNamed(Nav.tellusMoreforUsers);
+        Get.toNamed(Nav.home);
       } else {
         Get.toNamed(Nav.selectServiceScreen);
       }

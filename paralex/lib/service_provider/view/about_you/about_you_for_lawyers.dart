@@ -4,6 +4,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../../reusables/back_button.dart';
 import '../../../reusables/fonts.dart';
 import '../../../reusables/paints.dart';
+import '../../../routes/navs.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_form_field.dart';
 
@@ -69,6 +70,9 @@ class AboutYouForLawyers extends StatelessWidget {
     "Energy and natural resources",
     "Entertainments",
     "Human Rights",
+    "International Law",
+    "Criminal Law",
+    "Land Law",
     "International trade",
     "Intellectual property",
     "Litigation",
@@ -317,6 +321,8 @@ class AboutYouForLawyers extends StatelessWidget {
                   } else {
                     // If all fields, including the phone number, are valid
                     Get.snackbar('Success', 'All fields are valid!');
+                    // Navigate to the home page
+                    Get.toNamed(Nav.bondSubmitted);
                   }
 
                 },

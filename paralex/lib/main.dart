@@ -35,20 +35,27 @@ import 'package:paralex/screens/welcomeslides/welcome.dart';
 import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
 import 'package:paralex/service_provider/view/about_you/about_you.dart';
 import 'package:paralex/service_provider/view/about_you/about_you_contd.dart';
+import 'package:paralex/service_provider/view/about_you/about_you_for_lawyers.dart';
 import 'package:paralex/service_provider/view/bank_info.dart';
 import 'package:paralex/service_provider/view/delivery_info.dart';
 import 'package:paralex/service_provider/view/delivery_info1.dart';
 import 'package:paralex/service_provider/view/delivery_info2.dart';
 import 'package:paralex/service_provider/view/departure_detail.dart';
 import 'package:paralex/service_provider/view/destination_detail.dart';
+import 'package:paralex/service_provider/view/dropoff_confirmation.dart';
+import 'package:paralex/service_provider/view/earning.dart';
 import 'package:paralex/service_provider/view/guarantor_detail.dart';
 import 'package:paralex/service_provider/view/delivery_notification.dart';
+import 'package:paralex/service_provider/view/order_detail.dart';
 import 'package:paralex/service_provider/view/pick_up_drop_off.dart';
 import 'package:paralex/service_provider/view/pick_up_drop_off_details.dart';
+import 'package:paralex/service_provider/view/profile.dart';
+import 'package:paralex/service_provider/view/rating.dart';
 import 'package:paralex/service_provider/view/schedule_list.dart';
 import 'package:paralex/service_provider/view/setup_schedule.dart';
 import 'package:paralex/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralex/service_provider/view/signup_screens/signup_welcome_screen.dart';
+import 'package:paralex/service_provider/view/update_service_for_lawyer.dart';
 import 'screens/users/account/pages/Logistics/logistics_call.dart';
 import 'screens/users/account/pages/Logistics/logistics_find_delivery.dart';
 import 'screens/users/account/pages/Logistics/logistics_home.dart';
@@ -117,6 +124,13 @@ Future<void> main() async{
       GetPage(name: Nav.deliveryInfo2, page: () => DeliveryInfo2()),
       GetPage(name: Nav.pickUp, page: () => PickUpDropOff()),
       GetPage(name: Nav.pickUpDetail, page: () => PickUpDropOffDetails()),
+      GetPage(name: Nav.dropoffConfirmation, page: () => DropoffConfirmation()),
+      GetPage(name: Nav.rating, page: () => Rating()),
+      GetPage(name: Nav.earning, page: () => Earning()),
+      GetPage(name: Nav.profile, page: () => Profile()),
+      GetPage(name: Nav.orderDetail, page: () => OrderDetail()),
+      GetPage(name: Nav.updateLawyerData, page: () => UpdateServiceForLawyer()),
+      GetPage(name: Nav.aboutYouForLawyer, page: () => AboutYouForLawyers()),
     ],
     debugShowCheckedModeBanner: false,
   ));

@@ -10,6 +10,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final bool readonly;
   final Widget? suffixIcon;
+  final Widget? prefix;
   final VoidCallback? onSuffixTap;
   final FormFieldValidator<String>? validator;
   final VoidCallback? ontap;
@@ -29,6 +30,7 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.readonly = false,
     this.suffixIcon,
+    this.prefix,
     this.onSuffixTap,
     this.validator,
     this.ontap,
@@ -71,6 +73,7 @@ class CustomTextField extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         suffixIcon: suffixIcon,
+        prefixIcon: prefix,
       ),
     );
   }

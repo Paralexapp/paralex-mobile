@@ -36,26 +36,30 @@ class SelectServiceScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Obx(() => InkWell(
-                  onTap: () => controller.selectedButtonIndex(0),
-                  child: SelectServiceWidget(
-                      imgPath: "assets/images/mace.svg",
-                      firstText: "Lawyer",
-                      secondText: "I provide legal",
-                      thirdText: "services to clients",
-                      bckgColor: controller.getButtonColor(0),
+                Obx(() => Expanded(
+                  child: InkWell(
+                    onTap: () => controller.selectedButtonIndex(0),
+                    child: SelectServiceWidget(
+                        imgPath: "assets/images/mace.svg",
+                        firstText: "Lawyer",
+                        secondText: "I provide legal",
+                        thirdText: "services to clients",
+                        bckgColor: controller.getButtonColor(0),
+                    ),
                   ),
                 ),
                 ),
                 const SizedBox(width: 30),
-                Obx(() => InkWell(
-                  onTap: () => controller.selectedButtonIndex(1),
-                  child: SelectServiceWidget(
-                      imgPath: "assets/images/truck.svg",
-                      firstText: "Delivery Agent",
-                      secondText: "I provide legal",
-                      thirdText: "delivery services",
-                      bckgColor: controller.getButtonColor(1),
+                Obx(() => Expanded(
+                  child: InkWell(
+                    onTap: () => controller.selectedButtonIndex(1),
+                    child: SelectServiceWidget(
+                        imgPath: "assets/images/truck.svg",
+                        firstText: "Delivery Agent",
+                        secondText: "I provide legal",
+                        thirdText: "delivery services",
+                        bckgColor: controller.getButtonColor(1),
+                    ),
                   ),
                 ),
                 ),
@@ -71,7 +75,12 @@ class SelectServiceScreen extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: InkWell(
-                onTap: () => Get.toNamed(Nav.aboutServiceProvider),
+                onTap: (){
+                  if (controller.selectedButtonIndex == 0) {
+                    Get.toNamed(Nav.aboutYouForLawyer);
+                  } else if (controller.selectedButtonIndex == 1){
+                    Get.toNamed(Nav.aboutServiceProvider);
+                  }},
                 child: Center(
                   child: Text(
                     "CONTINUE",

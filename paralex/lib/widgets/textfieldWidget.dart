@@ -34,7 +34,13 @@ class TextfieldWidget extends StatelessWidget {
       height: 80,
       child: TextFormField(
         controller: controller,
-        validator: validator,
+        validator: validator ??
+            (value) {
+              if (value!.isEmpty) {
+                return 'Required *';
+              }
+              return null;
+            },
         readOnly: readOnly,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: textStyle ?? const TextStyle(color: Colors.black),

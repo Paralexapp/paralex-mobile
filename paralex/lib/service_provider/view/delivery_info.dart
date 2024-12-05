@@ -5,9 +5,11 @@ import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import 'package:paralex/service_provider/view/widgets/custom_text_field.dart';
 import '../../reusables/fonts.dart';
 import '../../routes/navs.dart';
+import 'drawer.dart';
 
 class DeliveryInfo extends StatefulWidget {
-  const DeliveryInfo({super.key});
+  DeliveryInfo({super.key});
+
 
   @override
   State<DeliveryInfo> createState() => _DeliveryInfoState();
@@ -24,6 +26,7 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
+      drawer: MyDrawer(),
       body: Stack(
         children: [
           // Background map image and main content
@@ -41,13 +44,22 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(Icons.menu, size: 24),
+                      Builder(
+                        builder: (context) {
+                          return GestureDetector(
+                            onTap:(){
+                              Scaffold.of(context).openDrawer();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Icon(Icons.menu, size: 24),
+                            ),
+                          );
+                        }
                       ),
                       Container(
                         padding: EdgeInsets.all(10),

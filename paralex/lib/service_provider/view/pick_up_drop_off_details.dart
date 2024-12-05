@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import '../../reusables/fonts.dart';
 import '../../reusables/paints.dart';
+import '../../routes/navs.dart';
 import '../controllers/package_feedback_controller.dart';
 
 class PickUpDropOffDetails extends StatelessWidget {
@@ -87,6 +88,13 @@ class PickUpDropOffDetails extends StatelessWidget {
                 desiredWidth: 0.9,
                 buttonText: pointName,
                 buttonColor: PaintColors.paralexpurple,
+                ontap: () {
+                  if (pointName == "Drop-off") {
+                    Get.toNamed(Nav.dropoffConfirmation);
+                  } else {
+                    Get.toNamed(Nav.rating);
+                  }
+                },
               ),
             ),
           ],

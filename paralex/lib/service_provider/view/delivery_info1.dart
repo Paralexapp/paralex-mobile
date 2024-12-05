@@ -4,19 +4,24 @@ import 'package:get/get.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import '../../reusables/paints.dart';
 import '../../routes/navs.dart';
+import 'drawer.dart';
 
 class DeliveryInfo1 extends StatelessWidget {
-  const DeliveryInfo1({super.key});
+  DeliveryInfo1({super.key});
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         toolbarHeight: 15,
         backgroundColor: Colors.white,
         elevation: 0,
       ),
+      drawer: const MyDrawer(),
       body: Stack(
         children: [
           // Background map image
@@ -35,13 +40,18 @@ class DeliveryInfo1 extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                      GestureDetector(
+                        onTap:(){
+                          _scaffoldKey.currentState!.openDrawer();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(Icons.menu, size: 24),
                         ),
-                        child: Icon(Icons.menu, size: 24),
                       ),
                       Container(
                         padding: EdgeInsets.all(10),
@@ -74,7 +84,8 @@ class DeliveryInfo1 extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: size.height * 0.45, // Total height for the scrollable sheet
+                  height: size.height *
+                      0.45, // Total height for the scrollable sheet
                   child: DraggableScrollableSheet(
                     initialChildSize: 0.8,
                     minChildSize: 0.12,
@@ -107,11 +118,15 @@ class DeliveryInfo1 extends StatelessWidget {
                                 ),
                                 SizedBox(height: 8),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "₦18.06",
-                                      style: TextStyle(color: Colors.black, fontSize: 24,fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Container(
                                       width: 68,
@@ -122,9 +137,19 @@ class DeliveryInfo1 extends StatelessWidget {
                                       ),
                                       child: Row(
                                         children: [
-                                          SvgPicture.asset("assets/images/blank_human_image.svg"),
-                                          Icon(Icons.star,size: 10,color: PaintColors.paralexpurple,),
-                                          Text("5.0",style: TextStyle(color: Colors.black,fontSize: 11),)
+                                          SvgPicture.asset(
+                                              "assets/images/blank_human_image.svg"),
+                                          Icon(
+                                            Icons.star,
+                                            size: 10,
+                                            color: PaintColors.paralexpurple,
+                                          ),
+                                          Text(
+                                            "5.0",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 11),
+                                          )
                                         ],
                                       ),
                                     )
@@ -135,19 +160,18 @@ class DeliveryInfo1 extends StatelessWidget {
                                   height: 6,
                                   width: size.width * 0.78,
                                   decoration: BoxDecoration(
-                                    color: PaintColors.paralexpurple,
-                                    borderRadius:BorderRadius.circular(10)
-                                  ),
+                                      color: PaintColors.paralexpurple,
+                                      borderRadius: BorderRadius.circular(10)),
                                 ),
                                 SizedBox(height: 20),
                                 Row(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Column(
                                       children: [
                                         Icon(
-                                          Icons.arrow_drop_down_circle_sharp, color: PaintColors.paralexpurple,
+                                          Icons.arrow_drop_down_circle_sharp,
+                                          color: PaintColors.paralexpurple,
                                         ),
                                         SizedBox(height: 4),
                                         DottedLine(), // Custom dashed line
@@ -156,7 +180,7 @@ class DeliveryInfo1 extends StatelessWidget {
                                     SizedBox(width: 8),
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "8 County Road 11/6",
@@ -176,8 +200,7 @@ class DeliveryInfo1 extends StatelessWidget {
                                 ),
                                 SizedBox(height: 16),
                                 Row(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Column(
                                       children: [
@@ -189,7 +212,7 @@ class DeliveryInfo1 extends StatelessWidget {
                                     SizedBox(width: 8),
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "1124 Cave Road",
@@ -213,8 +236,7 @@ class DeliveryInfo1 extends StatelessWidget {
                                   child: Text(
                                     "3 packages - Vip",
                                     style: TextStyle(
-                                        fontSize: 14,
-                                        color: Color(0xFF21252C)),
+                                        fontSize: 14, color: Color(0xFF21252C)),
                                   ),
                                 ),
                               ],
@@ -227,13 +249,13 @@ class DeliveryInfo1 extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.only(
-                      bottom: 16.0), // Add spacing as needed
+                  padding:
+                      EdgeInsets.only(bottom: 16.0), // Add spacing as needed
                   child: CustomButton(
                       desiredWidth: 0.9,
                       buttonText: "Accept",
                       buttonColor: PaintColors.paralexpurple,
-                      ontap: (){
+                      ontap: () {
                         Get.toNamed(Nav.deliveryInfo2);
                       }),
                 ),
@@ -246,7 +268,6 @@ class DeliveryInfo1 extends StatelessWidget {
   }
 }
 
-
 class DottedLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -256,7 +277,7 @@ class DottedLine extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(
           6,
-              (index) => Container(
+          (index) => Container(
             width: 2,
             height: 2,
             color: Colors.grey,

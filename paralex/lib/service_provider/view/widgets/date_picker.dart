@@ -67,7 +67,7 @@ class _ReusableDatePickerState extends State<ReusableDatePicker> {
           context,
           initialDate: _selectedDate ?? DateTime.now(),
           firstDate: widget.firstDate ?? DateTime(1900),
-          lastDate: widget.lastDate ?? DateTime(2030),
+          lastDate: widget.lastDate ?? DateTime(2100),
           dateFormat: "dd-MMMM-yyyy",
           locale: DateTimePickerLocale.en_us,
           looping: true,

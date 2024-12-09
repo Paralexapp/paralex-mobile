@@ -4,8 +4,10 @@ import 'package:paralex/reusables/fonts.dart';
 
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
+import '../../../../../../service_provider/controllers/user_choice_controller.dart';
 import '../../../../../../service_provider/view/widgets/custom_button.dart';
 
+final userChoiceController = Get.find<UserChoiceController>();
 class BondSuccess extends StatelessWidget {
   final String? message;
   const BondSuccess({super.key, this.message});
@@ -49,7 +51,14 @@ class BondSuccess extends StatelessWidget {
                 desiredWidth: 70,
                 buttonText: "Go back to home ",
                 buttonColor: PaintColors.paralexpurple,
-                ontap: () => Get.toNamed(Nav.paralegalHome))
+                ontap: () {
+                  if (userChoiceController.isUser.value) {
+                    Get.offNamed(Nav.paralegalHome);
+                  } else {
+                    Get.offNamed(Nav.selectServiceScreen);
+                  }
+                },
+            )
           ],
         ),
       ),

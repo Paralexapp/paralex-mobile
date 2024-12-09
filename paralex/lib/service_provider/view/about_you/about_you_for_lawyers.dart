@@ -610,7 +610,7 @@ class _AboutYouForLawyersState extends State<AboutYouForLawyers> {
                           );
 
                           Get.snackbar('Success', 'Profile updated successfully!');
-                          Get.toNamed(Nav.bondSubmitted); // Navigate to the next page
+                          Get.toNamed(Nav.bondSubmitted);
                         } catch (e) {
                           Get.snackbar('Error', e.toString());
                         } finally {

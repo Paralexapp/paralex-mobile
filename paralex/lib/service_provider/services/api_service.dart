@@ -25,7 +25,8 @@ class ApiService {
         },
         body: jsonEncode(data),
       );
-      debugPrint('response>>>>${jsonDecode(response.body)}');
+      debugPrint('response>>>>${response.body}');
+      debugPrint('response>>>>${response.statusCode}');
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonDecode(response.body);
       } else {
@@ -33,7 +34,7 @@ class ApiService {
         final responseBody = jsonDecode(response.body);
         String errorMessage =
             responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
-
+        debugPrint('response>>>>${response}');
         // Display the actual error message
         Get.snackbar(
           'Error',
@@ -169,4 +170,40 @@ class ApiService {
       throw Exception("An error occurred while uploading the image: $e");
     }
   }
+
+  Future<String> uploadImage1(File file) async {
+    String uploadedImageUrl = '';
+    var url = Uri.parse('$baseUrl/api/v1/auth/upload-to-cloudinary');
+    try {
+      var request = http.MultipartRequest('POST', url)
+        ..files.add(await http.MultipartFile.fromPath('file', file.path));
+
+      var response = await request.send();
+
+      // Read the response stream into a string
+      String responseString = await response.stream.bytesToString();
+      responseString = responseString.trim(); // Remove any leading/trailing whitespace
+      debugPrint('Raw Response String: $responseString');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Server returned plain text (URL)
+        if (Uri.tryParse(responseString)?.isAbsolute == true) {
+          uploadedImageUrl = responseString; // Assign the URL directly
+          return uploadedImageUrl;
+        } else {
+          throw Exception("Unexpected response format: $responseString");
+        }
+      } else {
+        // Handle error responses
+        throw Exception(
+          "Failed to upload image. Status code: ${response.statusCode}. Response: $responseString",
+        );
+      }
+    } catch (e) {
+      debugPrint("Error during image upload: $e");
+      throw Exception("An error occurred while uploading the image: $e");
+    }
+  }
 }
+
+

@@ -6,28 +6,41 @@ import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/widgets/logistics_button.dart';
+import 'package:paralex/screens/users/account/pages/controllers/logistics_delivery_info_controller.dart';
 
 import 'widgets/logistics_textfield.dart';
 
 class LogisticsFindDelivery extends StatelessWidget {
-  const LogisticsFindDelivery({super.key});
+  LogisticsFindDelivery({super.key});
+  final LogisticsDeliveryInfoController _controller = LogisticsDeliveryInfoController();
+  var _formKey = GlobalKey<FormState>();
+  final fromLocationController = TextEditingController();
+  final toDestinationController = TextEditingController();
+  final orderDetailsController = TextEditingController();
+  final fareController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: SizedBox(
+      body: SafeArea(
+          child: SizedBox(
         height: deviceHeight(context),
         width: deviceWidth(context),
         child: Stack(
           children: [
             Column(
               children: [
-                SizedBox(height: 7.0,),
-               LogisticsCancelButton(),
+                SizedBox(
+                  height: 7.0,
+                ),
+                LogisticsCancelButton(),
                 SizedBox(
                   height: deviceHeight(context) * 0.45,
                   width: deviceWidth(context),
-                  child: Image.asset('assets/images/map.jpg', fit: BoxFit.cover,),
+                  child: Image.asset(
+                    'assets/images/map.jpg',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ],
             ),
@@ -38,65 +51,95 @@ class LogisticsFindDelivery extends StatelessWidget {
                 width: deviceWidth(context),
                 decoration: BoxDecoration(
                   color: PaintColors.white,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(40), topLeft: Radius.circular(40)),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(40), topLeft: Radius.circular(40)),
                 ),
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0, left: 25, right: 25, bottom: 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: deviceWidth(context) * 0.2,
-                          height: 5,
-                          decoration: BoxDecoration(
-                            color: PaintColors.paralexLightGrey,
-                            borderRadius: BorderRadius.circular(20),
+                    padding:
+                        const EdgeInsets.only(top: 10.0, left: 25, right: 25, bottom: 0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: deviceWidth(context) * 0.2,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: PaintColors.paralexLightGrey,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 15,),
-                        Row(
-                          children: [
-                            Icon(Iconsax.lamp_charge,color: PaintColors.paralexpurple,),
-                            SizedBox(width: 5,),
-                            Text('Courier delivery', style: FontStyles.bodyText1,),
-                          ],
-                        ),
-                        SizedBox(height: 15,),
-                        LogisticsTextfield(
-                          showPrefixIcon: true,
-                          borderColor: PaintColors.textFieldBorderColor,
-                          hintText: 'From',
-                          icon: Iconsax.location,
-                        ),
-                        SizedBox(height: 15,),
-                        LogisticsTextfield(
-                          showPrefixIcon: true,
-                          borderColor: PaintColors.textFieldBorderColor,
-                          hintText: 'To',
-                          icon: Iconsax.gps,
-                        ),
-                        SizedBox(height: 20,),
-                        LogisticsTextfield(
-                          showPrefixIcon: true,
-                          borderColor: PaintColors.textFieldBorderColor,
-                          hintText: 'Order details',
-                          icon: Iconsax.d_rotate,
-                        ),
-                        SizedBox(height: 15,),
-                        LogisticsTextfield(
-                          borderColor: PaintColors.textFieldBorderColor,
-                          showPrefixIcon: true,
-                          hintText: 'Fare',
-                          icon: Iconsax.moneys,
-                        ),
-                        SizedBox(height: 18,),
-                        LogisticsButton(text: 'PROCEED TO PAYMENT',
-                          check: false,
-                          onTap: (){
-                          Get.toNamed(Nav.logisticsPaymentMethod);
-                          },),
-                      ],
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Iconsax.lamp_charge,
+                                color: PaintColors.paralexpurple,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'Courier delivery',
+                                style: FontStyles.bodyText1,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          LogisticsTextfield(
+                            controller: fromLocationController,
+                            showPrefixIcon: true,
+                            borderColor: PaintColors.textFieldBorderColor,
+                            hintText: 'From',
+                            icon: Iconsax.location,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          LogisticsTextfield(
+                            controller: toDestinationController,
+                            showPrefixIcon: true,
+                            borderColor: PaintColors.textFieldBorderColor,
+                            hintText: 'To',
+                            icon: Iconsax.gps,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          LogisticsTextfield(
+                            controller: orderDetailsController,
+                            showPrefixIcon: true,
+                            borderColor: PaintColors.textFieldBorderColor,
+                            hintText: 'Order details',
+                            icon: Iconsax.d_rotate,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          LogisticsTextfield(
+                            borderColor: PaintColors.textFieldBorderColor,
+                            showPrefixIcon: true,
+                            hintText: 'Fare',
+                            icon: Iconsax.moneys,
+                          ),
+                          SizedBox(
+                            height: 18,
+                          ),
+                          LogisticsButton(
+                            text: 'PROCEED TO PAYMENT',
+                            check: _formKey.currentState!.validate(),
+                            onTap: () {
+                              Get.toNamed(Nav.logisticsPaymentMethod);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

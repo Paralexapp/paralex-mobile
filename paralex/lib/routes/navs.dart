@@ -52,6 +52,13 @@ class Nav {
   static const logisticsCall = '/logisticsCall';
   static const logisticsChat = '/logisticsChat';
   static const lawyerProfile = '/lawyerProfile';
+  static const dropoffConfirmation = '/dropoffConfirmation';
+  static const rating = '/rating';
+  static const earning = '/earning';
+  static const profile = '/profile';
+  static const orderDetail = '/orderDetail';
+  static const updateLawyerData = '/updateLawyerData';
+  static const aboutYouForLawyer = '/aboutYouForLawyer';
 
 
 }

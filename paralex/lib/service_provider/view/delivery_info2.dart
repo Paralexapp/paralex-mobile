@@ -3,6 +3,7 @@ import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import 'package:paralex/service_provider/view/widgets/pick_up_drop_off_widget.dart';
 import '../../enums/points.dart';
 import '../../reusables/paints.dart';
+import 'drawer.dart';
 
 class DeliveryInfo2 extends StatelessWidget {
   const DeliveryInfo2({super.key});
@@ -16,6 +17,7 @@ class DeliveryInfo2 extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
+      drawer: MyDrawer(),
       body: Stack(
         children: [
           // Background map image
@@ -35,13 +37,22 @@ class DeliveryInfo2 extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(Icons.menu, size: 24),
+                Builder(
+                  builder: (context) {
+                    return GestureDetector(
+                      onTap: (){
+                        Scaffold.of(context).openDrawer();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(Icons.menu, size: 24),
+                      ),
+                    );
+                  }
                 ),
                 Container(
                   padding: EdgeInsets.all(10),

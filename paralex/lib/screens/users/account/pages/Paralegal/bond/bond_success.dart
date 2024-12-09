@@ -7,7 +7,8 @@ import 'package:paralex/routes/navs.dart';
 import '../../../../../../service_provider/view/widgets/custom_button.dart';
 
 class BondSuccess extends StatelessWidget {
-  const BondSuccess({super.key});
+  final String? message;
+  const BondSuccess({super.key, this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +40,9 @@ class BondSuccess extends StatelessWidget {
               style: FontStyles.headingText.copyWith(color: Colors.black),
             ),
             Text(
-              "your submission was successful ",
-              style: FontStyles.smallCapsIntro.copyWith(
-                  color: Colors.black, letterSpacing: 0, fontSize: 14),
+              message ?? "your submission was successful ",
+              style: FontStyles.smallCapsIntro
+                  .copyWith(color: Colors.black, letterSpacing: 0, fontSize: 14),
             ),
             const SizedBox(height: 40),
             CustomButton(

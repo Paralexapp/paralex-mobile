@@ -5,27 +5,81 @@ import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
 import 'package:paralex/routes/navs.dart';
+import 'package:paralex/screens/users/account/pages/controllers/logistics_delivery_info_controller.dart';
+import 'package:paralex/service_provider/models/place_model.dart';
+import '../../../../../service_provider/controllers/user_choice_controller.dart';
 import 'widgets/logistics_button.dart';
 import 'widgets/logistics_textfield.dart';
 
-class LogisticsHome extends StatelessWidget {
-  const LogisticsHome({super.key});
+class LogisticsHome extends StatefulWidget {
+  LogisticsHome({super.key});
+
+  @override
+  State<LogisticsHome> createState() => _LogisticsHomeState();
+}
+
+class _LogisticsHomeState extends State<LogisticsHome> {
+  final userController = Get.find<UserChoiceController>();
+  final LogisticsDeliveryInfoController _controller = LogisticsDeliveryInfoController();
+  final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> arguments = Get.arguments;
+
+  @override
+  void initState() {
+    super.initState();
+    debugPrint('arguments ===$arguments');
+  }
+
+  void requestDelivery() {
+    if (!_formKey.currentState!.validate()) return;
+    var senderPlace = arguments['senderPlace'] as PlaceModel;
+    var recipientPlace = arguments['recipientPlace'] as PlaceModel;
+
+    var deliveryData = {
+      "driverProfileId": "N/A",
+      "pickup": {
+        "customerName":
+            "${userController.lastName.value} ${userController.firstName.value}",
+        "phoneNumber": _controller.senderPhoneNumberController.text,
+        "address": _controller.senderStreetController.text,
+        "latitude": double.tryParse(senderPlace.latitude),
+        "longitude": double.tryParse(senderPlace.longitude),
+        "description": arguments['orderDetails']
+      },
+      "destination": {
+        "recipientName": _controller.receiverNameController.text,
+        "phoneNumber": _controller.receiverPhoneNumberController.text,
+        "address": _controller.receiverStreetController.text,
+        "latitude": double.tryParse(recipientPlace.latitude),
+        "longitude": double.tryParse(recipientPlace.longitude),
+        "categoryId": "N/A",
+        "description": _controller.whatToDeliverController.text
+      }
+    };
+    _controller.requestDelivery(deliveryData);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: SizedBox(
+      body: SafeArea(
+          child: SizedBox(
         height: deviceHeight(context),
         width: deviceWidth(context),
         child: Stack(
           children: [
             Column(
               children: [
-                SizedBox(height: 12.0,),
+                SizedBox(
+                  height: 12.0,
+                ),
                 SizedBox(
                   height: deviceHeight(context) * 0.45,
                   width: deviceWidth(context),
-                  child: Image.asset('assets/images/map.jpg', fit: BoxFit.cover,),
+                  child: Image.asset(
+                    'assets/images/map.jpg',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ],
             ),
@@ -36,142 +90,213 @@ class LogisticsHome extends StatelessWidget {
                 width: deviceWidth(context),
                 decoration: BoxDecoration(
                   color: PaintColors.white,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(40), topLeft: Radius.circular(40)),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(40), topLeft: Radius.circular(40)),
                 ),
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0, left: 25, right: 25, bottom: 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: deviceWidth(context) * 0.2,
-                          height: 5,
-                          decoration: BoxDecoration(
-                            color: PaintColors.paralexLightGrey,
-                            borderRadius: BorderRadius.circular(20),
+                    padding:
+                        const EdgeInsets.only(top: 10.0, left: 25, right: 25, bottom: 0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: deviceWidth(context) * 0.2,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: PaintColors.paralexLightGrey,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 15,),
-                        Text('Order details', style: FontStyles.bodyText1,),
-                        SizedBox(height: 20,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('Where to pick up', style: FontStyles.bodyText1,),
-                          ],
-                        ),
-                        SizedBox(height: 8,),
-                        SizedBox(
-                          width: deviceWidth(context),
-                          child: Row(
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Order details',
+                            style: FontStyles.bodyText1,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                            SizedBox(
-                              width: deviceWidth(context) * 0.58,
-                              child: LogisticsTextfield(
-                              hintText: 'Street',
-                            ),),
-                              Spacer(),
-                              // SizedBox(width: 8),
-                              SizedBox(
-                                width: deviceWidth(context) * 0.25,
-                                child: LogisticsTextfield(
-                                  hintText: 'Entran...',
-                                ),),
+                              Text(
+                                'Where to pick up',
+                                style: FontStyles.bodyText1,
+                              ),
                             ],
                           ),
-                        ),
-                        SizedBox(height: 8,),
-                        LogisticsTextfield(
-                          hintText: 'Floor, apartment, entryphone',
-                        ),
-                        // SizedBox(height: 8,),
-                        // LogisticsTextfield(
-                        //   hintText: 'Sender phone number',
-                        //   // suffixIcon: Iconsax.call,
-                        //   suffix: InkWell(
-                        //     onTap: (){},
-                        //     child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
-                        //   ),
-                        //   // showSuffixIcon: true,
-                        // ),
-                        SizedBox(height: 8,),
-                        LogisticsPhoneField(
-                          hintText: 'Sender phone number',
-                          suffixWidget: InkWell(
-                            onTap: (){},
-                              child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
+                          SizedBox(
+                            height: 8,
                           ),
-                        ),
-                        SizedBox(height: 20,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('Where to deliver', style: FontStyles.bodyText1,),
-                          ],
-                        ),
-                        SizedBox(height: 8,),
-                        SizedBox(
-                          width: deviceWidth(context),
-                          child: Row(
+                          SizedBox(
+                            width: deviceWidth(context),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: deviceWidth(context) * 0.58,
+                                  child: LogisticsTextfield(
+                                    controller: _controller.senderStreetController,
+                                    hintText: 'Street',
+                                  ),
+                                ),
+                                Spacer(),
+                                // SizedBox(width: 8),
+                                SizedBox(
+                                  width: deviceWidth(context) * 0.25,
+                                  child: LogisticsTextfield(
+                                    controller: _controller.senderEntransController,
+                                    hintText: 'Entran...',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+
+                          LogisticsTextfield(
+                            controller: _controller.senderEntryphoneController,
+                            hintText: 'Floor, apartment, entryphone',
+                          ),
+                          // SizedBox(height: 8,),
+                          // LogisticsTextfield(
+                          //   hintText: 'Sender phone number',
+                          //   // suffixIcon: Iconsax.call,
+                          //   suffix: InkWell(
+                          //     onTap: (){},
+                          //     child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
+                          //   ),
+                          //   // showSuffixIcon: true,
+                          // ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          LogisticsPhoneField(
+                            controller: _controller.senderPhoneNumberController,
+                            hintText: 'Sender phone number',
+                            suffixWidget: InkWell(
+                              onTap: () {},
+                              child: Icon(
+                                Iconsax.call,
+                                color: PaintColors.paralexpurple,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                width: deviceWidth(context) * 0.58,
-                                child: LogisticsTextfield(
-                                  hintText: 'Street',
-                                ),),
-                              // SizedBox(width: 8),
-                              Spacer(),
-                              SizedBox(
-                                width: deviceWidth(context) * 0.25,
-                                child: LogisticsTextfield(
-                                  hintText: 'Entran...',
-                                ),),
+                              Text(
+                                'Where to deliver',
+                                style: FontStyles.bodyText1,
+                              ),
                             ],
                           ),
-                        ),
-                        SizedBox(height: 8,),
-                        LogisticsTextfield(
-                          hintText: 'Floor, apartment, entryphone',
-                        ),
-                        SizedBox(height: 8,),
-                        // LogisticsTextfield(
-                        //   hintText: 'Recipient phone number',
-                        //   suffix: InkWell(
-                        //     onTap: (){},
-                        //     child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
-                        //   ),
-                        //   // suffixIcon: Iconsax.call,
-                        //   // showSuffixIcon: true,
-                        // ),
-                        // SizedBox(height: 8,),
-                        LogisticsPhoneField(
-                          hintText: 'Recipient phone number',
-                          suffixWidget: InkWell(
-                            onTap: (){},
-                            child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
+                          SizedBox(
+                            height: 8,
                           ),
-                        ),
-                        SizedBox(height: 20,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('What to deliver', style: FontStyles.bodyText1,),
-                          ],
-                        ),
-                        SizedBox(height: 8,),
-                        LogisticsTextfield(
-                          hintText: 'Example: Medium-sized box with legal documents that weight 5kg',
-                          maxLines: 4,
-                          minLines: 4,
-                        ),
-                        SizedBox(height: 18,),
-                        LogisticsButton(text: 'SAVE',
-                          check: false,
-                          onTap: (){
-                            Get.toNamed(Nav.logisticsFindDelivery);
-                          },),
-                      ],
+                          LogisticsTextfield(
+                            controller: _controller.receiverNameController,
+                            hintText: 'Enter Recipient Name',
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          SizedBox(
+                            width: deviceWidth(context),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: deviceWidth(context) * 0.58,
+                                  child: LogisticsTextfield(
+                                    controller: _controller.receiverStreetController,
+                                    hintText: 'Street',
+                                  ),
+                                ),
+                                // SizedBox(width: 8),
+                                Spacer(),
+                                SizedBox(
+                                  width: deviceWidth(context) * 0.25,
+                                  child: LogisticsTextfield(
+                                    controller: _controller.receiverEntransController,
+                                    hintText: 'Entran...',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          LogisticsTextfield(
+                            controller: _controller.receiverEntryphoneController,
+                            hintText: 'Floor, apartment, entryphone',
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          // LogisticsTextfield(
+                          //   hintText: 'Recipient phone number',
+                          //   suffix: InkWell(
+                          //     onTap: (){},
+                          //     child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
+                          //   ),
+                          //   // suffixIcon: Iconsax.call,
+                          //   // showSuffixIcon: true,
+                          // ),
+                          // SizedBox(height: 8,),
+                          LogisticsPhoneField(
+                            controller: _controller.receiverPhoneNumberController,
+                            hintText: 'Recipient phone number',
+                            suffixWidget: InkWell(
+                              onTap: () {},
+                              child: Icon(
+                                Iconsax.call,
+                                color: PaintColors.paralexpurple,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'What to deliver',
+                                style: FontStyles.bodyText1,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          LogisticsTextfield(
+                            controller: _controller.whatToDeliverController,
+                            hintText:
+                                'Example: Medium-sized box with legal documents that weight 5kg',
+                            maxLines: 4,
+                            minLines: 4,
+                          ),
+                          SizedBox(
+                            height: 18,
+                          ),
+                          LogisticsButton(
+                            text: 'SAVE',
+                            check: false,
+                            onTap: () {
+                              requestDelivery();
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

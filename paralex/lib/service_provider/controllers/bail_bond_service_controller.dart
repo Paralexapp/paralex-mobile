@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_success.dart';
 
 import '../../routes/navs.dart';
 import '../services/api_service.dart';
@@ -123,6 +124,7 @@ class BailBondServiceController extends GetxController {
   var enjoyedSuretyBond = true.obs;
   var agreeToTermsAndConditions = true.obs;
   var changeFilColor = false.obs;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
@@ -308,10 +310,15 @@ class BailBondServiceController extends GetxController {
     };
 
     try {
+      isLoading.value = true;
       final response = await _apiService.postRequest('bail-bond/', data);
 
-      Get.toNamed(Nav.bondSubmitted);
+      isLoading.value = false;
+      Get.to(() => BondSuccess(
+            message: 'Admin will reach out to you via email',
+          ));
     } catch (e) {
+      isLoading.value = false;
       Get.snackbar(
         'Error',
         'Failed to register. Please try again.',

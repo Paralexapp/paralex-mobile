@@ -25,7 +25,8 @@ class ApiService {
         },
         body: jsonEncode(data),
       );
-      debugPrint('response>>>>${jsonDecode(response.body)}');
+      debugPrint('response>>>>${response.body}');
+      debugPrint('response>>>>${response.statusCode}');
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonDecode(response.body);
       } else {
@@ -33,7 +34,7 @@ class ApiService {
         final responseBody = jsonDecode(response.body);
         String errorMessage =
             responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
-
+        debugPrint('response>>>>${response}');
         // Display the actual error message
         Get.snackbar(
           'Error',

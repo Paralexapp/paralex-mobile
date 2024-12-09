@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
@@ -32,7 +31,7 @@ class LogisticsPaymentMethod extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 8.0, left: 25),
                   child: LogisticsCloseButton(
                     text: 'Payment',
-                    icon:  Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new,
                       color: PaintColors.paralexTextColor1,
                       size: 14,
@@ -46,22 +45,22 @@ class LogisticsPaymentMethod extends StatelessWidget {
                   height: 150,
                   width: double.infinity,
                   child: ListView.builder(
-                    padding: EdgeInsets.only(left: 25),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.paymentCards.length,
-                      itemBuilder: (_,index){
-                      var e = controller.paymentCards[index];
-                    return InkWell(
-                      onTap: (){
-                       // controller.updateSelected(!e.selected, index);
-                      },
-                      child: PaymentCard(
-                        image: e.image,
-                        text: e.text,
-                        selected: e.selected,
-                      ),
-                    );
-                  }),
+                      padding: EdgeInsets.only(left: 25),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.paymentCards.length,
+                      itemBuilder: (_, index) {
+                        var e = controller.paymentCards[index];
+                        return InkWell(
+                          onTap: () {
+                            // controller.updateSelected(!e.selected, index);
+                          },
+                          child: PaymentCard(
+                            image: e.image,
+                            text: e.text,
+                            selected: e.selected,
+                          ),
+                        );
+                      }),
                 ),
                 SizedBox(height: 25),
                 Padding(
@@ -83,25 +82,39 @@ class LogisticsPaymentMethod extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               // color: Colors.green,
-                              image: DecorationImage(image: AssetImage('assets/images/samplecard.png'),fit: BoxFit.fitWidth),
+                              image: DecorationImage(
+                                  image: AssetImage('assets/images/samplecard.png'),
+                                  fit: BoxFit.fitWidth),
                             ),
                             // child: Image.asset('assets/images/map.png', width: 168, height: 106, fit: BoxFit.cover,),
                           ),
-                          SizedBox(height: 15,),
-                          Text('No master card added', style: FontStyles.cancelTextStyle.copyWith(
-                            color: Color(0xFF32343E),
-                            fontWeight: FontWeight.w700
-                          ),),
-                          SizedBox(height: 12,),
-                          Text('You can add a mastercard and\n save it for later',
-                            style: FontStyles.cancelTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 15.7, color: Color(0xFF8C8CA1)),
-                            textAlign: TextAlign.center,),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'No master card added',
+                            style: FontStyles.cancelTextStyle.copyWith(
+                                color: Color(0xFF32343E), fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            'You can add a mastercard and\n save it for later',
+                            style: FontStyles.cancelTextStyle.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15.7,
+                                color: Color(0xFF8C8CA1)),
+                            textAlign: TextAlign.center,
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: InkWell(
@@ -140,27 +153,39 @@ class LogisticsPaymentMethod extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text('TOTAL:', style: FontStyles.cancelTextStyle.copyWith(
-                        fontSize: 14,
-                        color: Color(0xFFA0A5BA),
-                      ),),
-                      Text('N906', style: FontStyles.cancelTextStyle.copyWith(
-                        color: PaintColors.paralexTextColor1,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                      ),),
+                      Text(
+                        'TOTAL:',
+                        style: FontStyles.cancelTextStyle.copyWith(
+                          fontSize: 14,
+                          color: Color(0xFFA0A5BA),
+                        ),
+                      ),
+                      Text(
+                        'N906',
+                        style: FontStyles.cancelTextStyle.copyWith(
+                          color: PaintColors.paralexTextColor1,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(height: 25,),
+                SizedBox(
+                  height: 25,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: LogisticsButton(text: 'PAY & CONFIRM',
-                  onTap: (){
-                    Get.toNamed(Nav.logisticsPaymentMethod2);
-                  },),
+                  child: LogisticsButton(
+                    text: 'PAY & CONFIRM',
+                    onTap: () {
+                      Get.toNamed(Nav.logisticsPaymentMethod2);
+                    },
+                  ),
                 ),
-                SizedBox(height: 35,),
+                SizedBox(
+                  height: 35,
+                ),
               ],
             ),
           ),

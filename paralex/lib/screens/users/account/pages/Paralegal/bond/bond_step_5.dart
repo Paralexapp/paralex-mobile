@@ -101,14 +101,17 @@ class BondStepFive extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    CustomButton(
-                        desiredWidth: 90,
-                        buttonText: "SUBMIT",
-                        buttonColor: PaintColors.paralexpurple,
-                        ontap: () {
-                          if (!_formKey.currentState!.validate()) return;
-                          controller.summitBailBondDetails();
-                        })
+                    Obx(() {
+                      return CustomButton(
+                          desiredWidth: 90,
+                          buttonText: "SUBMIT",
+                          loading: controller.isLoading.value,
+                          buttonColor: PaintColors.paralexpurple,
+                          ontap: () {
+                            if (!_formKey.currentState!.validate()) return;
+                            controller.summitBailBondDetails();
+                          });
+                    })
                   ],
                 ),
               )

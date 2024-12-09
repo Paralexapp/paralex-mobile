@@ -15,6 +15,8 @@ import 'package:paralex/screens/users/account/pages/Logistics/widgets/logistics_
 import 'package:paralex/screens/users/account/pages/controllers/logistics_delivery_info_controller.dart';
 import 'package:paralex/service_provider/models/place_model.dart';
 
+import '../../../../../service_provider/view/widgets/places_text_form_field.dart';
+
 class LogisticsDeliveryInfo extends StatefulWidget {
   const LogisticsDeliveryInfo({super.key});
 
@@ -81,9 +83,20 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
             infoWindow: InfoWindow(title: "To Destination"),
           );
         }
-        _mapController?.animateCamera(CameraUpdate.newLatLng(
-          position,
-        ));
+        _mapController?.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target:
+                  position, //LatLng(place.latitude, place.longitude), // Assuming PlaceModel has these fields
+              zoom: 19.0,
+            ),
+          ),
+          //     CameraUpdate.newLatLng(
+          //   position,
+          // )
+        );
+
+        // CameraPosition(zoom: 16, target: position);
       });
     } catch (e) {
       print("Error handling location selection: $e");
@@ -120,10 +133,6 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                   height: deviceHeight(context) * 0.45,
                   width: deviceWidth(context),
                   child: _buildGoogleMap(),
-
-                  // Image.asset(
-                  //   'assets/images/map.jpg',
-                  //   fit: BoxFit.cover,),
                 ),
               ],
             ),
@@ -197,9 +206,9 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                             hintText: 'To',
                             icon: Iconsax.gps,
                             onSelected: (place) async {
-                              setState(() {
-                                toDestinationController.text = place.displayName;
-                              });
+                              // setState(() {
+                              //   toDestinationController.text = place.displayName;
+                              // });
                               _handleLocationSelection(place, isFrom: false);
                               recipientPlace = place;
                               print('this i===========${toDestinationController.text}');

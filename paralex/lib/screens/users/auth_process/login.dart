@@ -244,7 +244,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
     };
 
     try {
-      final response = await _apiService.postRequest('api/v1/auth/hlogin',
+      final response = await _apiService.postRequest('api/v1/auth/login',
           {"email": _emailController.text, "password": _passwordController.text});
 
       final authToken = response['data'];

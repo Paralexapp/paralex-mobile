@@ -37,6 +37,8 @@ dependencies:
 
   fl_chart: ^0.69.2
   dio: ^5.1.2
+  webview_flutter: ^4.10.0
+  flutter_inappwebview: ^6.1.5
 
 dev_dependencies:
   flutter_test:

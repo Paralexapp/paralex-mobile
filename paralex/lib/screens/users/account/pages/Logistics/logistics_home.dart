@@ -4,9 +4,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
-import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/users/account/pages/controllers/logistics_delivery_info_controller.dart';
-import 'package:paralex/service_provider/models/place_model.dart';
 import '../../../../../service_provider/controllers/user_choice_controller.dart';
 import 'widgets/logistics_button.dart';
 import 'widgets/logistics_textfield.dart';
@@ -20,43 +18,40 @@ class LogisticsHome extends StatefulWidget {
 
 class _LogisticsHomeState extends State<LogisticsHome> {
   final userController = Get.find<UserChoiceController>();
-  final LogisticsDeliveryInfoController _controller = LogisticsDeliveryInfoController();
+  final LogisticsDeliveryInfoController _controller = Get.find();
   final _formKey = GlobalKey<FormState>();
-  Map<String, dynamic> arguments = Get.arguments;
+
+  var senderStreetController = TextEditingController();
+  var senderEntransController = TextEditingController();
+  var senderEntryphoneController = TextEditingController();
+  var senderPhoneNumberController = TextEditingController();
+  var receiverStreetController = TextEditingController();
+  var receiverEntransController = TextEditingController();
+  var receiverEntryphoneController = TextEditingController();
+  var receiverPhoneNumberController = TextEditingController();
+  var receiverNameController = TextEditingController();
+  var whatToDeliverController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    debugPrint('arguments ===$arguments');
   }
 
   void requestDelivery() {
     if (!_formKey.currentState!.validate()) return;
-    var senderPlace = arguments['senderPlace'] as PlaceModel;
-    var recipientPlace = arguments['recipientPlace'] as PlaceModel;
 
-    var deliveryData = {
-      "driverProfileId": "N/A",
-      "pickup": {
-        "customerName":
-            "${userController.lastName.value} ${userController.firstName.value}",
-        "phoneNumber": _controller.senderPhoneNumberController.text,
-        "address": _controller.senderStreetController.text,
-        "latitude": double.tryParse(senderPlace.latitude),
-        "longitude": double.tryParse(senderPlace.longitude),
-        "description": arguments['orderDetails']
-      },
-      "destination": {
-        "recipientName": _controller.receiverNameController.text,
-        "phoneNumber": _controller.receiverPhoneNumberController.text,
-        "address": _controller.receiverStreetController.text,
-        "latitude": double.tryParse(recipientPlace.latitude),
-        "longitude": double.tryParse(recipientPlace.longitude),
-        "categoryId": "N/A",
-        "description": _controller.whatToDeliverController.text
-      }
-    };
-    _controller.requestDelivery(deliveryData);
+    _controller.senderStreetController.value = senderStreetController.text;
+    _controller.senderEntransController.value = senderEntransController.text;
+    _controller.senderEntryphoneController.value = senderEntryphoneController.text;
+    _controller.senderPhoneNumberController.value = senderPhoneNumberController.text;
+    _controller.receiverStreetController.value = receiverStreetController.text;
+    _controller.receiverEntransController.value = receiverEntransController.text;
+    _controller.receiverEntryphoneController.value = receiverEntryphoneController.text;
+    _controller.receiverPhoneNumberController.value = receiverPhoneNumberController.text;
+    _controller.receiverNameController.value = receiverNameController.text;
+    _controller.whatToDeliverController.value = whatToDeliverController.text;
+
+    _controller.initializePayment();
   }
 
   @override
@@ -139,7 +134,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 SizedBox(
                                   width: deviceWidth(context) * 0.58,
                                   child: LogisticsTextfield(
-                                    controller: _controller.senderStreetController,
+                                    controller: senderStreetController,
                                     hintText: 'Street',
                                   ),
                                 ),
@@ -148,7 +143,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 SizedBox(
                                   width: deviceWidth(context) * 0.25,
                                   child: LogisticsTextfield(
-                                    controller: _controller.senderEntransController,
+                                    controller: senderEntransController,
                                     hintText: 'Entran...',
                                   ),
                                 ),
@@ -160,24 +155,14 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                           ),
 
                           LogisticsTextfield(
-                            controller: _controller.senderEntryphoneController,
+                            controller: senderEntryphoneController,
                             hintText: 'Floor, apartment, entryphone',
                           ),
-                          // SizedBox(height: 8,),
-                          // LogisticsTextfield(
-                          //   hintText: 'Sender phone number',
-                          //   // suffixIcon: Iconsax.call,
-                          //   suffix: InkWell(
-                          //     onTap: (){},
-                          //     child: Icon(Iconsax.call, color: PaintColors.paralexpurple,),
-                          //   ),
-                          //   // showSuffixIcon: true,
-                          // ),
                           SizedBox(
                             height: 8,
                           ),
                           LogisticsPhoneField(
-                            controller: _controller.senderPhoneNumberController,
+                            controller: senderPhoneNumberController,
                             hintText: 'Sender phone number',
                             suffixWidget: InkWell(
                               onTap: () {},
@@ -203,7 +188,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                             height: 8,
                           ),
                           LogisticsTextfield(
-                            controller: _controller.receiverNameController,
+                            controller: receiverNameController,
                             hintText: 'Enter Recipient Name',
                           ),
                           SizedBox(
@@ -216,7 +201,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 SizedBox(
                                   width: deviceWidth(context) * 0.58,
                                   child: LogisticsTextfield(
-                                    controller: _controller.receiverStreetController,
+                                    controller: receiverStreetController,
                                     hintText: 'Street',
                                   ),
                                 ),
@@ -225,7 +210,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 SizedBox(
                                   width: deviceWidth(context) * 0.25,
                                   child: LogisticsTextfield(
-                                    controller: _controller.receiverEntransController,
+                                    controller: receiverEntransController,
                                     hintText: 'Entran...',
                                   ),
                                 ),
@@ -236,7 +221,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                             height: 8,
                           ),
                           LogisticsTextfield(
-                            controller: _controller.receiverEntryphoneController,
+                            controller: receiverEntryphoneController,
                             hintText: 'Floor, apartment, entryphone',
                           ),
                           SizedBox(
@@ -253,7 +238,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                           // ),
                           // SizedBox(height: 8,),
                           LogisticsPhoneField(
-                            controller: _controller.receiverPhoneNumberController,
+                            controller: receiverPhoneNumberController,
                             hintText: 'Recipient phone number',
                             suffixWidget: InkWell(
                               onTap: () {},
@@ -279,7 +264,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                             height: 8,
                           ),
                           LogisticsTextfield(
-                            controller: _controller.whatToDeliverController,
+                            controller: whatToDeliverController,
                             hintText:
                                 'Example: Medium-sized box with legal documents that weight 5kg',
                             maxLines: 4,
@@ -288,12 +273,18 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                           SizedBox(
                             height: 18,
                           ),
-                          LogisticsButton(
-                            text: 'SAVE',
-                            check: false,
-                            onTap: () {
-                              requestDelivery();
-                            },
+                          Obx(() {
+                            return LogisticsButton(
+                              isLoading: _controller.isLoading.value,
+                              text: 'SAVE',
+                              check: false,
+                              onTap: () {
+                                requestDelivery();
+                              },
+                            );
+                          }),
+                          SizedBox(
+                            height: 18,
                           ),
                         ],
                       ),

@@ -250,6 +250,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       final authToken = response['data'];
 
       _authController.token.value = authToken;
+      _authController.userEmail.value = _emailController.text;
 
       userController.authToken.value = authToken; // Pass token to UserChoiceController
 

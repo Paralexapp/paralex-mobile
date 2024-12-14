@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,8 +10,10 @@ import 'package:paralex/reusables/ui_helpers.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/widgets/logistics_button.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/widgets/logistics_textfield.dart';
-import 'package:paralex/screens/users/account/pages/controllers/logistics_delivery_info_controller.dart';
 import 'package:paralex/service_provider/models/place_model.dart';
+
+import '../../../../../service_provider/view/widgets/places_text_form_field.dart';
+import '../controllers/logistics_delivery_info_controller.dart';
 
 class LogisticsDeliveryInfo extends StatefulWidget {
   const LogisticsDeliveryInfo({super.key});
@@ -23,13 +23,14 @@ class LogisticsDeliveryInfo extends StatefulWidget {
 }
 
 class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
+  final LogisticsDeliveryInfoController _controller =
+      Get.put(LogisticsDeliveryInfoController());
+
   TextEditingController fromLocationController = TextEditingController();
   TextEditingController toDestinationController = TextEditingController();
-  TextEditingController orderDetailsController = TextEditingController();
-  TextEditingController fareController = TextEditingController();
+  final _orderDetailsController = TextEditingController();
+  final _fareController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  PlaceModel? senderPlace;
-  PlaceModel? recipientPlace;
 
   GoogleMapController? _mapController;
 
@@ -81,9 +82,15 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
             infoWindow: InfoWindow(title: "To Destination"),
           );
         }
-        _mapController?.animateCamera(CameraUpdate.newLatLng(
-          position,
-        ));
+        _mapController?.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target:
+                  position, //LatLng(place.latitude, place.longitude), // Assuming PlaceModel has these fields
+              zoom: 19.0,
+            ),
+          ),
+        );
       });
     } catch (e) {
       print("Error handling location selection: $e");
@@ -91,13 +98,9 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
   }
 
   void submitForm() {
-    var form = {
-      "orderDetails": orderDetailsController.text,
-      "fare": fareController.text,
-      "senderPlace": senderPlace,
-      "recipientPlace": recipientPlace
-    };
-    Get.toNamed(Nav.logisticsHome, arguments: form);
+    _controller.fareController.value = _fareController.text;
+    _controller.orderDetailsController.value = _orderDetailsController.text;
+    Get.toNamed(Nav.logisticsHome);
   }
 
   @override
@@ -120,10 +123,6 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                   height: deviceHeight(context) * 0.45,
                   width: deviceWidth(context),
                   child: _buildGoogleMap(),
-
-                  // Image.asset(
-                  //   'assets/images/map.jpg',
-                  //   fit: BoxFit.cover,),
                 ),
               ],
             ),
@@ -184,7 +183,13 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                               setState(() {
                                 fromLocationController.text = place.displayName;
                               });
-                              senderPlace = place;
+                              _controller.senderLatitude.value =
+                                  double.parse(place.latitude);
+                              _controller.senderLongitude.value =
+                                  double.parse(place.longitude);
+                              print('${place.latitude}===${place.latitude}');
+                              print(
+                                  '_controller.senderLongitude.value= ===${_controller.senderLongitude.value}');
                               _handleLocationSelection(place, isFrom: true);
                             },
                           ),
@@ -197,19 +202,18 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                             hintText: 'To',
                             icon: Iconsax.gps,
                             onSelected: (place) async {
-                              setState(() {
-                                toDestinationController.text = place.displayName;
-                              });
                               _handleLocationSelection(place, isFrom: false);
-                              recipientPlace = place;
-                              print('this i===========${toDestinationController.text}');
+                              _controller.recipientLatitude.value =
+                                  double.parse(place.latitude);
+                              _controller.recipientLongitude.value =
+                                  double.parse(place.longitude);
                             },
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           LogisticsTextfield(
-                            controller: orderDetailsController,
+                            controller: _orderDetailsController,
                             showPrefixIcon: true,
                             hintText: 'Order details',
                             icon: Iconsax.d_rotate,
@@ -218,7 +222,7 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                             height: 15,
                           ),
                           LogisticsTextfield(
-                            controller: fareController,
+                            controller: _fareController,
                             showPrefixIcon: true,
                             hintText: 'Fare',
                             icon: Iconsax.moneys,

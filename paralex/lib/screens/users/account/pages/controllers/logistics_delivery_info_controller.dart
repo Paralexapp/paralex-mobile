@@ -6,29 +6,45 @@ import 'package:paralex/service_provider/services/api_service.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../../routes/navs.dart';
+import '../../../../../service_provider/controllers/auth_controller.dart';
+import '../../../../../service_provider/controllers/user_choice_controller.dart';
 import '../../../../../service_provider/models/place_model.dart';
+import '../../../auth_process/login.dart';
+import '../Logistics/webview_payment_screen.dart';
 
 class LogisticsDeliveryInfoController extends GetxController {
+  final AuthController _authController = Get.find();
+  final UserChoiceController userController = Get.find();
+
   final ApiService _apiService = ApiService();
   //For order details
-  final senderStreetController = TextEditingController();
-  final senderEntransController = TextEditingController();
-  final senderEntryphoneController = TextEditingController();
-  final senderPhoneNumberController = TextEditingController();
-  final receiverStreetController = TextEditingController();
-  final receiverEntransController = TextEditingController();
-  final receiverEntryphoneController = TextEditingController();
-  final receiverPhoneNumberController = TextEditingController();
-  final receiverNameController = TextEditingController();
-  final whatToDeliverController = TextEditingController();
+  var senderStreetController = ''.obs;
+  var senderEntransController = ''.obs;
+  var senderEntryphoneController = ''.obs;
+  var senderPhoneNumberController = ''.obs;
+  var receiverStreetController = ''.obs;
+  var receiverEntransController = ''.obs;
+  var receiverEntryphoneController = ''.obs;
+  var receiverPhoneNumberController = ''.obs;
+  var receiverNameController = ''.obs;
+  var whatToDeliverController = ''.obs;
+  var orderDetailsController = ''.obs;
+  var fareController = ''.obs;
+
+  var senderLatitude = 0.0.obs;
+  var senderLongitude = 0.0.obs;
+  var recipientLatitude = 0.0.obs;
+  var recipientLongitude = 0.0.obs;
 
   var isLoading = false.obs;
+  Map<String, dynamic> deliveryData = <String, dynamic>{}.obs;
 
   void submitCourierDelivery() {}
 
   void requestDelivery(Map<String, dynamic> data) async {
     try {
       isLoading.value = true;
+
       final response = await _apiService.postRequest('delivery/request/', data);
 
       Get.snackbar(
@@ -51,50 +67,77 @@ class LogisticsDeliveryInfoController extends GetxController {
     }
   }
 
-  void initializePayment(Map<String, dynamic> data) async {
+  void initializePayment() async {
     try {
       isLoading.value = true;
-      final response =
-          await _apiService.postRequest('payment/bill/initialize-payment/', data);
+      final initResponse =
+          await _apiService.postRequest('payment/bill/initialize-payment', {
+        "email": _authController.userEmail.value,
+        "amount": 1000,
+      });
 
-      Get.snackbar(
-        'Success',
-        'Payment Initialized successfully!',
-        snackPosition: SnackPosition.TOP,
+      debugPrint('initResponse====${initResponse['data']}');
+      final Map<String, dynamic> authUrl = initResponse['data'];
+
+      // Navigate to the WebViewPaymentScreen
+      Get.to(
+        () => WebViewPaymentScreen(paymentData: authUrl),
       );
-
-      // Pass firstName and lastName to the next screen
-      Get.toNamed(Nav.logisticsPaymentMethod);
+      isLoading.value = false;
     } catch (e) {
+      isLoading.value = false;
       debugPrint('error====$e');
       Get.snackbar(
         'Error',
         e.toString(),
         snackPosition: SnackPosition.TOP,
       );
-    } finally {
-      isLoading.value = false;
     }
   }
 
-  // Future<PredictionModel?> placeAutoComplete({required String placeInput}) async {
-  //   try {
-  //     Map<String, dynamic> querys = {'input': placeInput, 'key': APIKey.googleApiKey};
-  //     final url =
-  //         Uri.https("maps.googleapis.com", "/maps/api/place/autocomplete/json", querys);
-  //     final response = await http.get(url);
-  //     print('response.body====${response.body}');
-  //     if (response.statusCode == 200) {
-  //       return PredictionModel.fromJson(jsonDecode(response.body));
-  //     } else {
-  //       print('response.body====${response.body}');
-  //       response.body;
-  //     }
-  //   } on Exception catch (e) {
-  //     print(e.toString());
-  //   }
-  //   return null;
-  // }
+  void verifyPayment(String reference) async {
+    var data = {
+      "driverProfileId": userController.email.value,
+      "pickup": {
+        "customerName":
+            "${userController.lastName.value} ${userController.firstName.value}",
+        "phoneNumber": senderPhoneNumberController.value,
+        "address": senderStreetController.value,
+        "latitude": senderLatitude.value,
+        "longitude": senderLongitude.value,
+        "description": orderDetailsController.value
+      },
+      "destination": {
+        "recipientName": receiverNameController.value,
+        "phoneNumber": receiverPhoneNumberController.value,
+        "address": receiverStreetController.value,
+        "latitude": recipientLatitude.value,
+        "longitude": recipientLongitude.value,
+        "categoryId": "na",
+        "description": whatToDeliverController.value
+      }
+    };
+    try {
+      isLoading.value = true;
+
+      final verifyResponse = await _apiService.postRequest(
+          'payment/bill/verify-transaction?reference=$reference',
+          {"reference": reference});
+      //
+      debugPrint("request data====$data");
+      final response = await _apiService.postRequest('delivery/request/', data);
+      isLoading.value = false;
+      Get.toNamed(Nav.logisticsPaymentMethod3);
+    } catch (e) {
+      isLoading.value = false;
+      debugPrint('error====$e');
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.TOP,
+      );
+    }
+  }
 
   Future<List<PlaceModel>> searchPlace(String query) async {
     final url = Uri.parse(

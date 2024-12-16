@@ -113,6 +113,7 @@ class LogisticsPhoneField extends StatelessWidget {
       dropdownIconPosition: IconPosition.trailing,
       dropdownDecoration: BoxDecoration(),
       controller: controller,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         filled: true,
         fillColor: PaintColors.paralexVeryLightGrey,

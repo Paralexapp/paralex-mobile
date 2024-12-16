@@ -108,6 +108,32 @@ class BankInfo extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 15),
+                Text("Bank code", style: _labelStyle()),
+                CustomTextFormField(
+                  hintText: "",
+                  keyboardType: TextInputType.text,
+                  controller: controller.bankCodeController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Bank code is required";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 15),
+                Text("Account name", style: _labelStyle()),
+                CustomTextFormField(
+                  hintText: "",
+                  keyboardType: TextInputType.text,
+                  controller: controller.accNameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Account name is required";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 15),
                 Text("Account number", style: _labelStyle()),
                 CustomTextFormField(
                   hintText: "0737906787",
@@ -185,17 +211,29 @@ class BankInfo extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
-                CustomButton(
-                  desiredWidth: 0.85,
-                  buttonText: "SUBMIT",
-                  buttonColor: PaintColors.paralexpurple,
-                  ontap: controller.submitForm,
-                ),
-                const SizedBox(height: 20),
-                _termsText(),
               ],
             ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomButton(
+                desiredWidth: 0.85,
+                buttonText: "SUBMIT",
+                buttonColor: PaintColors.paralexpurple,
+                ontap: controller.submitForm,
+              ),
+              const SizedBox(height: 20),
+              _termsText()
+            ],
           ),
         ),
       ),

@@ -11,12 +11,10 @@ import '../controllers/guarantor_detail_controller.dart';
 class GuarantorDetail extends StatelessWidget {
   final GuarantorDetailController controller =
       Get.put(GuarantorDetailController());
-
   GuarantorDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: PaintColors.bgColor,
       appBar: AppBar(
@@ -117,52 +115,83 @@ class GuarantorDetail extends StatelessWidget {
                       ? 'Please select a state'
                       : null,
                 ),
-                SizedBox(height: size.height * 0.185),
-                CustomButton(
-                  desiredWidth: 0.85,
-                  buttonText: "CONTINUE",
-                  buttonColor: PaintColors.paralexpurple,
-                  ontap: controller.validateAndSubmit,
+                const SizedBox(height: 15),
+                Text(
+                  "Guarantor residential address",
+                  style: FontStyles.smallCapsIntro.copyWith(
+                      letterSpacing: 0,
+                      color: const Color(0xFF868686),
+                      fontSize: 15),
                 ),
-                const SizedBox(height: 20),
-                Center(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "By clicking continue you agree to our ",
-                            style: FontStyles.smallCapsIntro.copyWith(
-                                letterSpacing: 0,
-                                color: PaintColors.generalTextsm,
-                                fontSize: 14),
-                          ),
-                          Text(
-                            "Terms of ",
-                            style: FontStyles.smallCapsIntro.copyWith(
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.bold,
-                                color: PaintColors.paralexpurple,
-                                fontSize: 14),
-                          ),
-                        ],
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Service"),
-                          SizedBox(width: 5),
-                          Text("and"),
-                          SizedBox(width: 5),
-                          Text("Privacy policy "),
-                        ],
-                      ),
-                    ],
-                  ),
+                CustomTextFormField(
+                  hintText: "",
+                  controller: controller.addressController,
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Please enter your residential address'
+                      : null,
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomButton(
+                desiredWidth: 0.85,
+                buttonText: "CONTINUE",
+                buttonColor: PaintColors.paralexpurple,
+                ontap: controller.validateAndSubmit,
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "By clicking continue you agree to our ",
+                          style: FontStyles.smallCapsIntro.copyWith(
+                              letterSpacing: 0,
+                              color: PaintColors.generalTextsm,
+                              fontSize: 14),
+                        ),
+                        Text(
+                          "Terms of ",
+                          style: FontStyles.smallCapsIntro.copyWith(
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.bold,
+                              color: PaintColors.paralexpurple,
+                              fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Service"),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("and"),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Privacy policy "),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),

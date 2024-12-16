@@ -10,6 +10,8 @@ class UserChoiceController extends GetxController {
 
   var lastName =''.obs;
 
+  var isRider = true.obs;
+
   String get userType => isUser.value ? 'USER' : 'SERVICE_PROVIDER';
 
   void selectUser() {
@@ -18,6 +20,14 @@ class UserChoiceController extends GetxController {
 
   void selectServiceProvider() {
     isUser.value = false;
+  }
+
+  void selectRider() {
+    isRider.value = true;
+  }
+
+  void selectLawyer() {
+    isRider.value = false;
   }
 
  var userIdToken = ''.obs;

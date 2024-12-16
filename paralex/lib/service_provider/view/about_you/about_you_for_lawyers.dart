@@ -13,8 +13,42 @@ import '../../../routes/navs.dart';
 import '../../services/api_service.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_form_field.dart';
+import 'package:geolocator/geolocator.dart';
 
 final userChoiceController = Get.find<UserChoiceController>();
+
+
+
+Future<Position> _getCurrentLocation() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  // Check if location services are enabled
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    throw Exception('Location services are disabled.');
+  }
+
+  // Check for location permissions
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      throw Exception('Location permissions are denied.');
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    throw Exception(
+        'Location permissions are permanently denied. Cannot request permissions.');
+  }
+
+  // Get the current location
+  return await Geolocator.getCurrentPosition(
+    desiredAccuracy: LocationAccuracy.low,
+  );
+}
+
 
 class AboutYouForLawyers extends StatefulWidget {
   AboutYouForLawyers({super.key});
@@ -582,6 +616,10 @@ class _AboutYouForLawyersState extends State<AboutYouForLawyers> {
                             .toList();
 
                         try {
+                          Position position = await _getCurrentLocation();
+                          double latitude = position.latitude;
+                          double longitude = position.longitude;
+
                           Get.snackbar('Uploading', 'Uploading image... Please wait.');
                           ApiService apiService = ApiService();
 
@@ -598,8 +636,9 @@ class _AboutYouForLawyersState extends State<AboutYouForLawyers> {
                             "stateOfPractice": _stateOfPracticeController.text,
                             "practiceAreas": practiceAreaList,
                             "photoUrl": photoUrl,
-                            "longitude": 0,
-                            "latitude": 0,
+                            "longitude": longitude,
+                            "latitude": latitude,
+                            "lawFirm": lawFirm
                           };
 
                           Get.snackbar('Submitting', 'Submitting your information...');
@@ -635,8 +674,6 @@ class _AboutYouForLawyersState extends State<AboutYouForLawyers> {
                     ),
                 ],
               ),
-
-
               const SizedBox(height: 20),
               Center(
                 child: Column(

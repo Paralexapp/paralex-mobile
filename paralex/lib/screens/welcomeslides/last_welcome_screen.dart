@@ -82,8 +82,7 @@ class LastWelcomeScreen extends StatelessWidget {
                   const SizedBox(width: 35),
                   InkWell(
                     onTap: () {
-                      userChoiceController.selectServiceProvider();
-                      Get.toNamed(Nav.serviceProviderSignupWelcomeScreen);
+                      Get.toNamed(Nav.selectServiceScreen);
                     },
                     child: const ParticipantWidget(
                       imgPath: "assets/images/medal-star.svg",

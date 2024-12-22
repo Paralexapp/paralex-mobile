@@ -225,12 +225,16 @@ class BankInfo extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CustomButton(
-                desiredWidth: 0.85,
-                buttonText: "SUBMIT",
-                buttonColor: PaintColors.paralexpurple,
-                ontap: controller.submitForm,
-              ),
+              Obx(() {
+                return CustomButton(
+                  desiredWidth: 0.85,
+                  buttonColor: PaintColors.paralexpurple,
+                  ontap: controller.isLoading.value ? null : controller.submitForm, // Disable button if loading
+                  buttonText: controller.isLoading.value
+                      ? "SUBMITING..."
+                      : "SUBMIT",
+                );
+              }),
               const SizedBox(height: 20),
               _termsText()
             ],

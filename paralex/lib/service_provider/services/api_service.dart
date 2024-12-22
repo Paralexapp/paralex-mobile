@@ -59,8 +59,7 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> putRequest(
-      String endpoint, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> putRequest(String endpoint, Map<String, dynamic> data) async {
     final url = Uri.parse('$baseUrl/$endpoint');
     debugPrint('url==$url');
     try {

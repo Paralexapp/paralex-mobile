@@ -44,7 +44,7 @@ class SelectServiceScreen extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         controller.selectedButtonIndex(0);
-                        userChoiceController.selectLawyer();
+                        userChoiceController.selectServiceProviderLawyer();
                       },
                       child: SelectServiceWidget(
                         imgPath: "assets/images/mace.svg",
@@ -62,7 +62,7 @@ class SelectServiceScreen extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         controller.selectedButtonIndex(1);
-                        userChoiceController.selectRider();
+                        userChoiceController.selectServiceProviderRider();
                       },
                       child: SelectServiceWidget(
                         imgPath: "assets/images/truck.svg",
@@ -88,9 +88,9 @@ class SelectServiceScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   if (controller.selectedButtonIndex == 0) {
-                    Get.toNamed(Nav.aboutYouForLawyer);
+                    Get.toNamed(Nav.serviceProviderSignupWelcomeScreen);
                   } else if (controller.selectedButtonIndex == 1) {
-                    Get.toNamed(Nav.aboutServiceProvider);
+                    Get.toNamed(Nav.serviceProviderSignupWelcomeScreen);
                   }
                 },
                 child: Center(

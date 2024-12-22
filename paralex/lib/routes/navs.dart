@@ -59,6 +59,7 @@ class Nav {
   static const orderDetail = '/orderDetail';
   static const updateLawyerData = '/updateLawyerData';
   static const aboutYouForLawyer = '/aboutYouForLawyer';
+  static const lawyerDashboard = '/lawyerDashboard';
 
 
 }

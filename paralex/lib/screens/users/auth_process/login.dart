@@ -244,30 +244,57 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
     };
 
     try {
-      final response = await _apiService.postRequest('api/v1/auth/login',
-          {"email": _emailController.text, "password": _passwordController.text});
+      // Step 1: Authenticate the user and retrieve the token
+      final response = await _apiService.postRequest(
+        'api/v1/auth/login', loginData,
+      );
 
       final authToken = response['data'];
-
       _authController.token.value = authToken;
       _authController.userEmail.value = _emailController.text;
 
       userController.authToken.value = authToken; // Pass token to UserChoiceController
 
-      // Fetch logged-in user data
-      await userController.fetchLoggedInUser();
+      // Step 2: Fetch user data by email
+      final userData = await userController.fetchUserByEmail(_emailController.text);
 
-      Get.snackbar(
-        'Success',
-        'Login successful!',
-        snackPosition: SnackPosition.TOP,
-      );
-      if (userController.isUser.value) {
-        Get.toNamed(Nav.home);
+      final String registrationLevel = userData['registrationLevel'];
+      final String userType = userData['userType'];
+
+      // Step 3: Navigate based on registrationLevel and userType
+      if (registrationLevel != 'KYC_COMPLETED') {
+        if (userType == 'SERVICE_PROVIDER_LAWYER') {
+          Get.toNamed(Nav.aboutYouForLawyer); // Lawyer registration screen
+        } else if (userType == 'SERVICE_PROVIDER_RIDER') {
+          Get.toNamed(Nav.aboutServiceProvider); // Rider registration screen
+        } else if (userType == 'USER') {
+          Get.toNamed(Nav.tellusMoreforUsers); // Rider registration screen
+        } else {
+          // Handle other user types if needed
+          Get.snackbar(
+            'Error',
+            'Unknown user type: $userType',
+            snackPosition: SnackPosition.TOP,
+          );
+        }
       } else {
-        Get.toNamed(Nav.selectServiceScreen);
+        if (userType == 'SERVICE_PROVIDER_LAWYER') {
+          Get.toNamed(Nav.lawyerDashboard); // Lawyer home screen
+        } else if (userType == 'SERVICE_PROVIDER_RIDER') {
+          Get.toNamed(Nav.deliveryInfo1); // Rider home screen
+        } else if (userType == 'USER') {
+          Get.toNamed(Nav.home); // Rider registration screen
+        } else {
+          // Handle other user types if needed
+          Get.snackbar(
+            'Error',
+            'Unknown user type: $userType',
+            snackPosition: SnackPosition.TOP,
+          );
+        }
       }
     } catch (e) {
+      // Step 4: Handle errors
       if (e is Exception) {
         String errorMessage = e.toString();
         if (errorMessage.contains("Account is yet to be verified")) {
@@ -281,6 +308,12 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
             'email': _emailController.text,
           });
         }
+      } else {
+        Get.snackbar(
+          'Error',
+          'An unexpected error occurred: $e',
+          snackPosition: SnackPosition.TOP,
+        );
       }
     } finally {
       setState(() {

@@ -64,13 +64,18 @@ class DeliveryInfo1 extends StatelessWidget {
                           style: TextStyle(color: Colors.black, fontSize: 24),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                      GestureDetector(
+                        onTap: (){
+                          Get.toNamed(Nav.notification);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(Icons.notifications_outlined, size: 24),
                         ),
-                        child: Icon(Icons.notifications_outlined, size: 24),
                       ),
                     ],
                   ),

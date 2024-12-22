@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paralex/paralegal/lawyer_dashboard.dart';
 import 'package:paralex/paralegal/lawyer_profile.dart';
 import 'package:paralex/paralegal/request_lawyer_form.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/logistics_chat.dart';
@@ -67,7 +68,7 @@ Future<void> main() async {
   Get.put(UserChoiceController());
 
   runApp(GetMaterialApp(
-    initialRoute: Nav.splash,
+    initialRoute: Nav.deliveryInfo1,
     getPages: [
       GetPage(name: Nav.splash, page: () => const SplashScreen()),
       GetPage(name: Nav.welcomeShow, page: () => const WelcomeSliders()),
@@ -135,6 +136,7 @@ Future<void> main() async {
       GetPage(name: Nav.orderDetail, page: () => OrderDetail()),
       GetPage(name: Nav.updateLawyerData, page: () => UpdateServiceForLawyer()),
       GetPage(name: Nav.aboutYouForLawyer, page: () => AboutYouForLawyers()),
+      GetPage(name: Nav.lawyerDashboard, page: () => LawyerDashboard()),
     ],
     debugShowCheckedModeBanner: false,
   ));

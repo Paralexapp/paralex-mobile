@@ -207,8 +207,10 @@ class _OtpVerificationState extends State<OtpVerification> {
       );
       if (userController.isUser.value) {
         Get.toNamed(Nav.tellusMoreforUsers); // Navigate to UserHomeScreen
-      } else {
-        Get.toNamed(Nav.selectServiceScreen); // Navigate to ServiceProviderHomeScreen
+      } else if (userController.isRider.value) {
+        Get.toNamed(Nav.aboutServiceProvider); // Navigate to ServiceProviderHomeScreen
+      }else{
+        Get.toNamed(Nav.aboutYouForLawyer);
       }
     } catch (e) {
       Get.snackbar(

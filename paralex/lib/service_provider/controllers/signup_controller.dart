@@ -55,6 +55,7 @@ class SignupController extends GetxController {
 
   Future<void> signUp() async {
     try {
+      userChoiceController.password.value = passwordText.value;
       loading.value = true;
       final response = await apiService.postRequest('api/v1/auth/register', {
         'password': passwordText.value,
@@ -65,6 +66,8 @@ class SignupController extends GetxController {
 
       log('Signup successful: ${response['user_id']}');
       Get.toNamed(Nav.otpScreen);
+      // Call loginUser here and log in silently
+      userChoiceController.loginUser(emailText.value, passwordText.value);
     } catch (e) {
       log('Error during signup: $e');
       if (e is Exception) {

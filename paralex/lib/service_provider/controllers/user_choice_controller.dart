@@ -153,6 +153,52 @@ class UserChoiceController extends GetxController {
     }
   }
 
+  Future<Map<String, dynamic>> fetchUserByEmail(String email) async {
+    try {
+      // Construct the endpoint with the email parameter
+      String endpoint = 'api/v1/auth/get-user-by-email/email?email=$email';
+
+      Map<String, dynamic> response = await apiService.getRequest(endpoint);
+
+      // Debugging: Print the response
+      debugPrint("User Data: $response");
+
+      // Return the response
+      return response;
+    } catch (e) {
+      // Handle errors
+      debugPrint("Error fetching user by email: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> loginUser(email,password) async {
+    final loginData = {
+      'email':  email,
+      'password': password,
+    };
+
+    try {
+      // Step 1: Authenticate the user and retrieve the token
+      final response = await _apiService.postRequest(
+        'api/v1/auth/login', loginData,
+      );
+
+      final authToken = response['data'];
+      _authController.token.value = authToken;
+      _authController.userEmail.value = email.toString();
+
+      authToken.value = authToken; // Pass token to UserChoiceController
+    } catch (e) {
+        Get.snackbar(
+          'Error',
+          'An unexpected error occurred: $e',
+          snackPosition: SnackPosition.TOP,
+        );
+
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();

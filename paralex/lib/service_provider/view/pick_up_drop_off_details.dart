@@ -198,7 +198,7 @@ class PackageDetailWithStatusIcon extends StatelessWidget {
                 borderType: BorderType.RRect,
                 radius: Radius.circular(12),
                 dashPattern: [6, 4],
-                child: Container(
+                child: SizedBox(
                   height: 100,
                   child: Center(
                     child: Column(

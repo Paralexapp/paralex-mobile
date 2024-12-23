@@ -10,7 +10,7 @@ import 'widgets/logistics_button.dart';
 import 'widgets/logistics_textfield.dart';
 
 class LogisticsHome extends StatefulWidget {
-  LogisticsHome({super.key});
+  const LogisticsHome({super.key});
 
   @override
   State<LogisticsHome> createState() => _LogisticsHomeState();

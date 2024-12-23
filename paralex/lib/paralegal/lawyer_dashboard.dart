@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../reusables/bottom_nav.dart';
 import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../routes/navs.dart';
@@ -18,14 +19,28 @@ class LawyerDashboard extends StatefulWidget {
 }
 
 class _LawyerDashboardState extends State<LawyerDashboard> {
+  int _currentIndex = 0; // Track the active tab
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Retrieve firstName and lastName from Get.arguments and set them in the userController
+    final args = Get.arguments;
+    if (args != null) {
+      userController.firstName.value = args['firstName'] ?? '';
+      userController.lastName.value = args['lastName'] ?? '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final DateTime now = DateTime.now(); // Get current date and time
     final String formattedDate = DateFormat('EEEE, MMM d, y').format(now);
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: PaintColors.bgColor,
-      // Assign the drawer
       drawer: const MyDrawer(),
       body: Builder(
         builder: (BuildContext context) => Padding(
@@ -35,7 +50,6 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
               children: [
                 Row(
                   children: [
-                    // Wrap the menu icon in a GestureDetector to open the drawer
                     GestureDetector(
                       onTap: () {
                         Scaffold.of(context).openDrawer();
@@ -59,7 +73,7 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
                           ),
                         ),
                         Obx(() => Text(
-                          "Hello, ${userController.lastName.value} ${userController.firstName.value}",
+                          "Hello, ${userController.firstName.value} ${userController.lastName.value}",
                           style: FontStyles.headingText.copyWith(
                             color: PaintColors.paralexpurple,
                             fontWeight: FontWeight.w900,
@@ -88,15 +102,44 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
                       image: const DecorationImage(
                         image: AssetImage('assets/images/paralegal.png'),
                       ),
-                      borderRadius: BorderRadius.circular(
-                          16), // Optional: Rounded corners
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(width: 200),
+                    const Text(""),
+                  ],
+                ),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Delivery to Ikoyi Supreme court"),
+                    Text("SEPTEMBER 16 . 8:00AM"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(width: 200),
+                        Text("Submitted"),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+          // Optionally, navigate or perform actions based on index
+        },
       ),
     );
   }

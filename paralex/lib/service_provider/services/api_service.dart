@@ -34,7 +34,7 @@ class ApiService {
         final responseBody = jsonDecode(response.body);
         String errorMessage =
             responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
-        debugPrint('response>>>>${response}');
+        debugPrint('response>>>>$response');
         // Display the actual error message
         Get.snackbar(
           'Error',

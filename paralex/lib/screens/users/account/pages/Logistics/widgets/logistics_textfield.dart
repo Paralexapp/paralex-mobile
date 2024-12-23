@@ -1,19 +1,10 @@
-import 'dart:ffi';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
-import 'package:paralex/screens/users/account/pages/controllers/logistics_delivery_info_controller.dart';
-import 'package:paralex/service_provider/models/place_model.dart';
-import 'package:paralex/utils/validator.dart';
 
 class LogisticsTextfield extends StatelessWidget {
   const LogisticsTextfield(
@@ -88,6 +79,7 @@ class LogisticsTextfield extends StatelessWidget {
         if (value!.isEmpty) {
           return 'Required *';
         }
+        return null;
       },
     );
   }
@@ -143,6 +135,7 @@ class LogisticsPhoneField extends StatelessWidget {
       onCountryChanged: onCountryChanged,
       validator: (value) {
         if (value!.isValidNumber()) return null;
+        return null;
       },
     );
   }

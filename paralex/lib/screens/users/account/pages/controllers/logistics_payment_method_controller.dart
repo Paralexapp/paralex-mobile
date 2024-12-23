@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralex/screens/users/account/pages/Logistics/widgets/card.dart';
 
 class LogisticsPaymentMethodController extends GetxController {
  List<Card> paymentCards = [

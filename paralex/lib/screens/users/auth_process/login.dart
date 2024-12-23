@@ -260,7 +260,10 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
 
       final String registrationLevel = userData['registrationLevel'];
       final String userType = userData['userType'];
+      print("usertype: $userType");
 
+      userController.firstName.value = userData['firstName'];
+      userController.lastName.value = userData['lastName'];
       // Step 3: Navigate based on registrationLevel and userType
       if (registrationLevel != 'KYC_COMPLETED') {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {
@@ -279,11 +282,14 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
         }
       } else {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {
-          Get.toNamed(Nav.lawyerDashboard); // Lawyer home screen
+          userController.selectServiceProviderLawyer();
+          Get.offNamed(Nav.lawyerDashboard); // Lawyer home screen
         } else if (userType == 'SERVICE_PROVIDER_RIDER') {
-          Get.toNamed(Nav.deliveryInfo1); // Rider home screen
+          userController.selectServiceProviderRider();
+          Get.offNamed(Nav.deliveryInfo1); // Rider home screen
         } else if (userType == 'USER') {
-          Get.toNamed(Nav.home); // Rider registration screen
+          userController.selectUser();
+          Get.offNamed(Nav.home); // Rider registration screen
         } else {
           // Handle other user types if needed
           Get.snackbar(

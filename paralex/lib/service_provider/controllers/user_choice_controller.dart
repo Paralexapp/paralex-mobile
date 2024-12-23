@@ -141,7 +141,8 @@ class UserChoiceController extends GetxController {
       _authController.token.value = authToken;
       _authController.userEmail.value = email.toString();
 
-      authToken.value = authToken; // Pass token to UserChoiceController
+      this.authToken.value = authToken;
+      print("authToken = $authToken");
     } catch (e) {
         Get.snackbar(
           'Error',

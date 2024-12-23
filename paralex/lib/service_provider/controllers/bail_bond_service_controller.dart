@@ -324,7 +324,7 @@ class BailBondServiceController extends GetxController {
         'Failed to register. Please try again.',
         snackPosition: SnackPosition.TOP,
       );
-      throw Exception('Failed to register: ${e}}');
+      throw Exception('Failed to register: $e}');
     }
   }
 

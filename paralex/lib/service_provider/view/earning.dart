@@ -396,7 +396,7 @@ class EarningsCard extends StatelessWidget {
   final String title;
   final String value;
 
-  EarningsCard({required this.title, required this.value});
+  const EarningsCard({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {

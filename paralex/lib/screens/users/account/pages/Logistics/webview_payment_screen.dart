@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../controllers/logistics_delivery_info_controller.dart';
@@ -33,7 +32,7 @@ class _WebViewPaymentScreenState extends State<WebViewPaymentScreen> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url!.contains(
+            if (request.url.contains(
                 'https://paralex-app-fddb148a81ad.herokuapp.com/verify-transaction')) {
               _controller.verifyPayment(referenceCode);
               NavigationDecision.prevent;

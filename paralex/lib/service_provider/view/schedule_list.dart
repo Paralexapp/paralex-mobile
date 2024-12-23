@@ -74,7 +74,7 @@ class ScheduleList extends StatelessWidget {
                       children: [
                         Image.asset("assets/images/package.png"),
                         SizedBox(width: 8),
-                        Container(
+                        SizedBox(
                           width: 150,
                           child: Text(
                             "15/08/2023 | San Jose",
@@ -131,7 +131,7 @@ class DeliveryScheduleWidget extends StatelessWidget {
             children: [
               Image.asset("assets/images/package.png"),
               SizedBox(width: 8),
-              Container(
+              SizedBox(
                 width: 150,
                 child: Text(
                   "$date | $place",
@@ -177,7 +177,7 @@ class DeliveryScheduleWidget extends StatelessWidget {
                     color: PaintColors.paralexpurple,
                   ),
                   SizedBox(height: 4),
-                  Container(
+                  SizedBox(
                     height: 40,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

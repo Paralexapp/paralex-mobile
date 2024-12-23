@@ -68,7 +68,7 @@ Future<void> main() async {
   Get.put(UserChoiceController());
 
   runApp(GetMaterialApp(
-    initialRoute: Nav.deliveryInfo1,
+    initialRoute: Nav.splash,
     getPages: [
       GetPage(name: Nav.splash, page: () => const SplashScreen()),
       GetPage(name: Nav.welcomeShow, page: () => const WelcomeSliders()),

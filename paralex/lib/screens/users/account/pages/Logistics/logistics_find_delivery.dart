@@ -13,7 +13,7 @@ import 'widgets/logistics_textfield.dart';
 class LogisticsFindDelivery extends StatelessWidget {
   LogisticsFindDelivery({super.key});
   final LogisticsDeliveryInfoController _controller = LogisticsDeliveryInfoController();
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final fromLocationController = TextEditingController();
   final toDestinationController = TextEditingController();
   final orderDetailsController = TextEditingController();

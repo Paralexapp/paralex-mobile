@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import 'package:paralex/service_provider/view/widgets/custom_text_field.dart';
 import '../../reusables/fonts.dart';
 import '../../reusables/paints.dart';
 
 class Rating extends StatefulWidget {
-  Rating({super.key});
+  const Rating({super.key});
 
   @override
   State<Rating> createState() => _RatingState();

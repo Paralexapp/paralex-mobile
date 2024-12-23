@@ -51,7 +51,7 @@ Future<Position> _getCurrentLocation() async {
 
 
 class AboutYouForLawyers extends StatefulWidget {
-  AboutYouForLawyers({super.key});
+  const AboutYouForLawyers({super.key});
 
   @override
   State<AboutYouForLawyers> createState() => _AboutYouForLawyersState();
@@ -730,12 +730,12 @@ class StyledTextWidget extends StatelessWidget {
   final TextStyle secondTextStyle;
 
   const StyledTextWidget({
-    Key? key,
+    super.key,
     required this.firstText,
     required this.secondText,
     required this.firstTextStyle,
     required this.secondTextStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -260,6 +260,8 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
 
       final String registrationLevel = userData['registrationLevel'];
       final String userType = userData['userType'];
+      final String firstName = userData['firstName'];
+      final String lastName = userData['lastName'];
 
       // Step 3: Navigate based on registrationLevel and userType
       if (registrationLevel != 'KYC_COMPLETED') {
@@ -279,12 +281,24 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
         }
       } else {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {
-          Get.toNamed(Nav.lawyerDashboard); // Lawyer home screen
+          Get.toNamed(Nav.lawyerDashboard, arguments: {
+            'firstName': firstName,
+            'lastName': lastName,
+          }); // Lawyer home screen
         } else if (userType == 'SERVICE_PROVIDER_RIDER') {
-          Get.toNamed(Nav.deliveryInfo1); // Rider home screen
+          Get.toNamed(Nav.deliveryInfo1, arguments: {
+            'firstName': firstName,
+            'lastName': lastName,
+          }); // Rider home screen
         } else if (userType == 'USER') {
-          Get.toNamed(Nav.home); // Rider registration screen
-        } else {
+          Get.toNamed(Nav.home, arguments: {
+            'firstName': firstName,
+            'lastName': lastName,
+          }); // User home screen
+        }
+
+
+        else {
           // Handle other user types if needed
           Get.snackbar(
             'Error',

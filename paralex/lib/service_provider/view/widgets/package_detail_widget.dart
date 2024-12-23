@@ -47,7 +47,7 @@ class PackageDetailWidget extends StatelessWidget {
           borderType: BorderType.RRect,
           radius: Radius.circular(12), // Rounded corners (optional)
           dashPattern: [6, 4], // Length of dots and spacing
-          child: Container(
+          child: SizedBox(
             width: 87,
             height: 85,
             child: Image.asset("assets/images/package_in_carton.png"),

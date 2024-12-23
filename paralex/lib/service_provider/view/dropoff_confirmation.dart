@@ -8,7 +8,7 @@ import '../../reusables/paints.dart';
 import '../../routes/navs.dart';
 
 class DropoffConfirmation extends StatelessWidget {
-  DropoffConfirmation({super.key});
+  const DropoffConfirmation({super.key});
 
   @override
   Widget build(BuildContext context) {

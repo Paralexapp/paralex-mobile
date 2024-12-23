@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
-import 'package:paralex/routes/navs.dart';
 import '../../../../../../service_provider/controllers/bail_bond_service_controller.dart';
 import '../../../../../../service_provider/view/widgets/date_picker.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';

@@ -11,7 +11,7 @@ import 'package:geolocator/geolocator.dart';
 
 
 class DeliveryInfo extends StatefulWidget {
-  DeliveryInfo({super.key});
+  const DeliveryInfo({super.key});
 
 
   @override
@@ -376,9 +376,11 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
 
 // Custom dashed line widget
 class DottedLine extends StatelessWidget {
+  const DottedLine({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 40,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

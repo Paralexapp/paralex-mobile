@@ -88,7 +88,7 @@ class DeliveryInfo1 extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
+                SizedBox(
                   height: size.height *
                       0.45, // Total height for the scrollable sheet
                   child: DraggableScrollableSheet(
@@ -274,9 +274,11 @@ class DeliveryInfo1 extends StatelessWidget {
 }
 
 class DottedLine extends StatelessWidget {
+  const DottedLine({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 40,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

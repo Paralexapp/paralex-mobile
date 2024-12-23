@@ -11,7 +11,6 @@ import 'package:paralex/service_provider/view/widgets/custom_text_field.dart';
 import 'dart:math' as Math;
 import '../../reusables/fonts.dart';
 import '../../reusables/paints.dart';
-import '../../routes/navs.dart';
 
 class DateTextInputFormatter extends TextInputFormatter {
   @override
@@ -30,7 +29,7 @@ class DateTextInputFormatter extends TextInputFormatter {
     String monthPart = '';
     String yearPart = '';
 
-    if (text.length >= 1) {
+    if (text.isNotEmpty) {
       dayPart = text.substring(0, Math.min(2, text.length));
 
       // Ensure the day is valid (01-31 at this stage)
@@ -77,7 +76,7 @@ class DateTextInputFormatter extends TextInputFormatter {
       }
 
       // Update the formatted text with validated day
-      formattedText = StringBuffer('${dayPart}-${monthPart}-${yearPart}');
+      formattedText = StringBuffer('$dayPart-$monthPart-$yearPart');
     }
 
     // Limit to maximum length of "dd-MM-yyyy"
@@ -588,12 +587,12 @@ class StyledTextWidget extends StatelessWidget {
   final TextStyle secondTextStyle;
 
   const StyledTextWidget({
-    Key? key,
+    super.key,
     required this.firstText,
     required this.secondText,
     required this.firstTextStyle,
     required this.secondTextStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

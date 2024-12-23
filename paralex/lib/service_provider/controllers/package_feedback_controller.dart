@@ -1,7 +1,6 @@
 import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 class PackageController extends GetxController {
   // Observable variables to track video status and metadata

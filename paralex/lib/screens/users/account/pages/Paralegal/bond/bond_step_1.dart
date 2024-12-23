@@ -3,11 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
-import 'package:paralex/routes/navs.dart';
 import 'package:paralex/service_provider/controllers/bail_bond_service_controller.dart';
 import 'package:paralex/utils/validator.dart';
 
-import '../../../../../../service_provider/controllers/about_you_contd_controller.dart';
 import '../../../../../../service_provider/view/widgets/custom_button.dart';
 import '../../../../../../widgets/textfieldWidget.dart';
 

@@ -3,15 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../reusables/paints.dart';
 import '../../routes/navs.dart';
-import 'package:paralex/service_provider/controllers/signup_controller.dart';
 import '../controllers/user_choice_controller.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+  const MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Fetch the UserChoiceController
     final userChoiceController = Get.find<UserChoiceController>();
 
     return Drawer(
@@ -26,7 +24,7 @@ class MyDrawer extends StatelessWidget {
             child: Row(
               children: [
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Get.toNamed(Nav.profile);
                   },
                   child: Container(
@@ -34,8 +32,9 @@ class MyDrawer extends StatelessWidget {
                     height: 70,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: PaintColors.paralexpurple),
+                      borderRadius: BorderRadius.circular(50),
+                      color: PaintColors.paralexpurple,
+                    ),
                     child: SvgPicture.asset(
                       "assets/images/blue_blank_human_image.svg",
                       colorFilter:
@@ -47,23 +46,29 @@ class MyDrawer extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Welcome back,",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      "Joseph",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    const SizedBox(height: 10),
+                    Obx(() {
+                      final firstName = userChoiceController.firstName.value;
+                      final lastName = userChoiceController.lastName.value;
+                      return Text(
+                        firstName.isEmpty && lastName.isEmpty
+                            ? "User" // Fallback text
+                            : "$firstName $lastName",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ],
@@ -73,15 +78,15 @@ class MyDrawer extends StatelessWidget {
             // Show or hide tiles based on UserType
             return Column(
               children: [
-            if (userChoiceController.selectedUserType.value !=
-            UserType.SERVICE_PROVIDER_RIDER) ...[
-                ListTile(
-                  leading: const Icon(Icons.star_border_outlined),
-                  title: const Text("Update service"),
-                  onTap: () {
-                    Get.toNamed(Nav.updateLawyerData);
-                  },
-                ),
+                if (userChoiceController.selectedUserType.value !=
+                    UserType.SERVICE_PROVIDER_RIDER) ...[
+                  ListTile(
+                    leading: const Icon(Icons.star_border_outlined),
+                    title: const Text("Update service"),
+                    onTap: () {
+                      Get.toNamed(Nav.updateLawyerData);
+                    },
+                  ),
                 ],
                 if (userChoiceController.selectedUserType.value !=
                     UserType.SERVICE_PROVIDER_LAWYER) ...[

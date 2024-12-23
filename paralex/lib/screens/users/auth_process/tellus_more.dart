@@ -198,7 +198,7 @@ class _MoreAboutYouState extends State<MoreAboutYou> {
       );
 
       // Pass firstName and lastName to the next screen
-      Get.toNamed(Nav.home);
+      Get.offNamed(Nav.home);
     } catch (e) {
       Get.snackbar(
         'Error',

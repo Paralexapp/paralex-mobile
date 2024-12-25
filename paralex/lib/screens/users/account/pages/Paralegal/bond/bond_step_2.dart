@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
-import 'package:paralex/routes/navs.dart';
 import 'package:paralex/utils/validator.dart';
 import 'package:paralex/widgets/phone_number_inputfield.dart';
 
@@ -82,22 +80,30 @@ class BondSecondStep extends StatelessWidget {
                       TextfieldWidget(
                         controller: controller.durationOfStay,
                         hintText: 'Duration of stay e.g 2 years',
-                        validator: (value) => Validators.minLength(value, 3),
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       TextfieldWidget(
                         controller: controller.nameOfLandlord,
                         hintText: 'Name of Landlord',
-                        validator: (value) => Validators.minLength(value, 3),
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       TextfieldWidget(
                         controller: controller.howLongInCurrentState,
                         hintText: 'How long in current state',
-                        validator: (value) => Validators.minLength(value, 3),
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       TextfieldWidget(
                         controller: controller.howLongInResidingCity,
                         hintText: 'How long resided in current city',
-                        validator: (value) => Validators.minLength(value, 3),
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       TextfieldWidget(
                         controller: controller.formerResidentAddress,

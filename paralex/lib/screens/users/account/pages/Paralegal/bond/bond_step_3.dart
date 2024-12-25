@@ -85,7 +85,9 @@ class BondThirdStep extends StatelessWidget {
                       TextfieldWidget(
                         controller: controller.internationalPassportNumber,
                         hintText: 'International Passport Number',
-                        validator: (value) => Validators.minLength(value, 3),
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       TextfieldWidget(
                         controller: controller.height,
@@ -106,6 +108,9 @@ class BondThirdStep extends StatelessWidget {
                       TextfieldWidget(
                         controller: controller.eyeColor,
                         hintText: 'Eye color',
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       ReusableRadioButtons(
                         label: "   Physical Challenge",
@@ -122,6 +127,9 @@ class BondThirdStep extends StatelessWidget {
                       TextfieldWidget(
                         controller: controller.memberOfAnyGroup,
                         hintText: 'Member of any group',
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       // TextfieldWidget(
                       //   hintText: 'How long resided in current city',

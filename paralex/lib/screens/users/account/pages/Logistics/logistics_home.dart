@@ -18,7 +18,8 @@ class LogisticsHome extends StatefulWidget {
 
 class _LogisticsHomeState extends State<LogisticsHome> {
   final userController = Get.find<UserChoiceController>();
-  final LogisticsDeliveryInfoController _controller = Get.find();
+  final LogisticsDeliveryInfoController _controller =
+      Get.put(LogisticsDeliveryInfoController());
   final _formKey = GlobalKey<FormState>();
 
   var senderStreetController = TextEditingController();

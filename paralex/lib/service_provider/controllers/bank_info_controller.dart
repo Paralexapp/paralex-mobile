@@ -78,7 +78,7 @@ class BankInfoController extends GetxController {
         );
 
         Get.snackbar("Success", "Your profile has been successfully updated!");
-        Get.toNamed(Nav.deliveryInfo);
+        Get.offNamed(Nav.deliveryInfo);
       } catch (e) {
         Get.snackbar("Error", "An error occurred: $e");
       } finally {

@@ -226,7 +226,6 @@ class SignupWelcomeScreen extends StatelessWidget {
                             controller.isUpperCaseValid.value &&
                             controller.isSpecialCharacterValid.value) {
                           controller.signUp();
-                           //Get.toNamed(Nav.otpScreen);
                         } else {
                           Get.snackbar("Error",
                               "Password does not meet all requirements");

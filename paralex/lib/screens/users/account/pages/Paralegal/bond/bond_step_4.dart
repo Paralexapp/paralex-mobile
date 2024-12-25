@@ -87,6 +87,9 @@ class BondFourthStep extends StatelessWidget {
                       TextfieldWidget(
                         controller: controller.detailsOfBond,
                         hintText: 'Details of Bond',
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       CustomButton(
                           desiredWidth: 90,

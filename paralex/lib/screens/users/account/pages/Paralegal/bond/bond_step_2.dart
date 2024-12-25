@@ -80,22 +80,30 @@ class BondSecondStep extends StatelessWidget {
                       TextfieldWidget(
                         controller: controller.durationOfStay,
                         hintText: 'Duration of stay e.g 2 years',
-                        validator: (value) => Validators.minLength(value, 3),
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       TextfieldWidget(
                         controller: controller.nameOfLandlord,
                         hintText: 'Name of Landlord',
-                        validator: (value) => Validators.minLength(value, 3),
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       TextfieldWidget(
                         controller: controller.howLongInCurrentState,
                         hintText: 'How long in current state',
-                        validator: (value) => Validators.minLength(value, 3),
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       TextfieldWidget(
                         controller: controller.howLongInResidingCity,
                         hintText: 'How long resided in current city',
-                        validator: (value) => Validators.minLength(value, 3),
+                        validator: (val) {
+                          return null;
+                        },
                       ),
                       TextfieldWidget(
                         controller: controller.formerResidentAddress,

@@ -53,21 +53,33 @@ class BondStepFive extends StatelessWidget {
                       controller: controller.occupation2,
                       hintText: 'Occupation 2',
                       keyboardType: TextInputType.text,
+                      validator: (val) {
+                        return null;
+                      },
                     ),
                     TextfieldWidget(
                       controller: controller.occupation3,
                       hintText: 'Occupation 3',
                       keyboardType: TextInputType.text,
+                      validator: (val) {
+                        return null;
+                      },
                     ),
                     TextfieldWidget(
                       controller: controller.occupation4,
                       hintText: 'Occupation 4',
                       keyboardType: TextInputType.text,
+                      validator: (val) {
+                        return null;
+                      },
                     ),
                     TextfieldWidget(
                       controller: controller.occupation5,
                       hintText: 'Occupation 5',
                       keyboardType: TextInputType.text,
+                      validator: (val) {
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: 10,
@@ -80,7 +92,9 @@ class BondStepFive extends StatelessWidget {
                     TextfieldWidget(
                       controller: controller.durationOfEmployment,
                       hintText: 'How long',
-                      validator: (value) => Validators.minLength(value, 3),
+                      validator: (val) {
+                        return null;
+                      },
                     ),
                     TextfieldWidget(
                       controller: controller.position,

@@ -283,7 +283,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       } else {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {
           userController.selectServiceProviderLawyer();
-          Get.toNamed(Nav.lawyerDashboard, arguments: {
+          Get.toNamed(Nav.home, arguments: {
             'firstName': firstName,
             'lastName': lastName,
           }); // Lawyer home screen

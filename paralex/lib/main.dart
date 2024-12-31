@@ -18,6 +18,7 @@ import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_step_3.d
 import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_step_4.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_step_5.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_success.dart';
+import 'package:paralex/screens/users/account/pages/Paralegal/lawyer_paralegal_home.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_one.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/nafdac_steps.dart/nafdac_step_two.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/paralegal_home.dart';
@@ -137,6 +138,7 @@ Future<void> main() async {
       GetPage(name: Nav.updateLawyerData, page: () => UpdateServiceForLawyer()),
       GetPage(name: Nav.aboutYouForLawyer, page: () => AboutYouForLawyers()),
       GetPage(name: Nav.lawyerDashboard, page: () => LawyerDashboard()),
+      GetPage(name: Nav.lawyerParalegalHome, page: () => LawyerParalegalDashboard()),
     ],
     debugShowCheckedModeBanner: false,
   ));

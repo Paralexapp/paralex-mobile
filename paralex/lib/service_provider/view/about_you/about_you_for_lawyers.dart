@@ -649,7 +649,10 @@ class _AboutYouForLawyersState extends State<AboutYouForLawyers> {
                           );
 
                           Get.snackbar('Success', 'Profile updated successfully!');
-                          Get.offNamed(Nav.lawyerDashboard);
+                          Get.offNamed(Nav.lawyerDashboard, arguments: {
+                            'firstName': firstName,
+                            'lastName': lastName,
+                          });
                         } catch (e) {
                           Get.snackbar('Error', e.toString());
                         } finally {

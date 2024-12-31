@@ -68,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                   const Icon(
-                    Iconsax.sms,
+                    Iconsax.notification,
                     color: PaintColors.paralexpurple,
                     size: 30,
                   ),

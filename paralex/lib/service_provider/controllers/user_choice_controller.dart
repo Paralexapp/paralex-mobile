@@ -77,7 +77,7 @@ class UserChoiceController extends GetxController {
 
   Future<void> fetchLoggedInUser() async {
     if (authToken.value.isEmpty) {
-      debugPrint('Error: Auth token is not set.');
+      print('Error: Auth token is not set.');
       return;
     }
 
@@ -99,10 +99,10 @@ class UserChoiceController extends GetxController {
         lastName.value = data['lastName'] ?? '';
         email.value = data['email'] ?? '';
       } else {
-        debugPrint('Failed to fetch logged-in user: ${response.statusMessage}');
+        print('Failed to fetch logged-in user: ${response.statusMessage}');
       }
     } catch (e) {
-      debugPrint('Error fetching logged-in user: $e');
+      print('Error fetching logged-in user: $e');
     }
   }
 

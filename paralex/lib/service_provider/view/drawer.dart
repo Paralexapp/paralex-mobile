@@ -130,7 +130,9 @@ class MyDrawer extends StatelessWidget {
                     "Log out",
                     style: TextStyle(color: Colors.red),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Nav.login);
+                  },
                 ),
               ],
             );

@@ -144,11 +144,11 @@ class BailBondServiceController extends GetxController {
       // Parse the total amount to double
       double total = double.tryParse(chargeAmount.text) ?? 0.0;
 
-      // Calculate 10% discount
+      // Calculate 10% bond fee
       double discount = total * 0.1;
 
       // Update the discountAmount text
-      totalAmount.text = (total + discount).toInt().toString();
+      totalAmount.text = (discount).toInt().toString();
       discountAmount.text = totalAmount.text;
     } catch (e) {
       discountAmount.text = "0.00"; // Default value in case of error

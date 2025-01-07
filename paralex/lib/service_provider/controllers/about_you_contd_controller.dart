@@ -8,7 +8,6 @@ class AboutYouContdController extends GetxController {
   var bikeType = TextEditingController();
   var bikeCapacity = TextEditingController();
   var chasisNumber = TextEditingController();
-
   var hasBike = true.obs; // Observable for the checkbox option
 
   bool validateForm() {

@@ -43,7 +43,7 @@ class Lawyer2 {
 
 List<Lawyer> parseLawyers(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-  debugPrint('parsed>>>${parsed}');
+  debugPrint('parsed>>>$parsed');
   return parsed.map<Lawyer>((json) => Lawyer.fromJson(json)).toList();
 }
 

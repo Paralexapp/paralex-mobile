@@ -51,7 +51,7 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
 
   getLocation() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var pp = await Geolocator.checkPermission();
+      await Geolocator.checkPermission();
       // if (pp.name == LocationPermission.always) {
       _currentPosition =
           await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -218,15 +218,15 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                             hintText: 'Order details',
                             icon: Iconsax.d_rotate,
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          LogisticsTextfield(
-                            controller: _fareController,
-                            showPrefixIcon: true,
-                            hintText: 'Fare',
-                            icon: Iconsax.moneys,
-                          ),
+                          // SizedBox(
+                          //   height: 15,
+                          // ),
+                          // LogisticsTextfield(
+                          //   controller: _fareController,
+                          //   showPrefixIcon: true,
+                          //   hintText: 'Fare',
+                          //   icon: Iconsax.moneys,
+                          // ),
                           SizedBox(
                             height: 18,
                           ),

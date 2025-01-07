@@ -1,6 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:paralex/reusables/back_button.dart';
@@ -17,7 +16,6 @@ import 'package:intl/intl.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path/path.dart' as p;
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:math' as Math;
 
 import '../service_provider/view/widgets/date_picker.dart';
 import 'lawyer_controller.dart';
@@ -273,17 +271,17 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
 
     _countryController.text = "Nigeria";
 
-    void _updateButtonState() {
+    void updateButtonState() {
       setState(() {
         _isButtonEnabled = _areAllFieldsValid();
       });
     }
 
-    _nameController.addListener(_updateButtonState);
-    _matterDescController.addListener(_updateButtonState);
-    _matterTitleController.addListener(_updateButtonState);
-    _ngStatesController.addListener(_updateButtonState);
-    _deadlineController.addListener(_updateButtonState);
+    _nameController.addListener(updateButtonState);
+    _matterDescController.addListener(updateButtonState);
+    _matterTitleController.addListener(updateButtonState);
+    _ngStatesController.addListener(updateButtonState);
+    _deadlineController.addListener(updateButtonState);
   }
 
   @override
@@ -1010,12 +1008,12 @@ class StyledTextWidget extends StatelessWidget {
   final TextStyle secondTextStyle;
 
   const StyledTextWidget({
-    Key? key,
+    super.key,
     required this.firstText,
     required this.secondText,
     required this.firstTextStyle,
     required this.secondTextStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

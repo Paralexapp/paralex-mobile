@@ -1,4 +1,5 @@
 // about_you.dart
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -54,12 +55,24 @@ class AboutYou extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomTextFormField(
-                      controller: controller.legalName,
-                      hintText: 'Legal last name',
-                      labelText: 'Legal last name',
+                      controller: controller.firstName,
+                      hintText: 'First name',
+                      labelText: 'First name',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter your legal name";
+                          return "Please enter your First name";
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    CustomTextFormField(
+                      controller: controller.lastName,
+                      hintText: 'Last name',
+                      labelText: 'Last name',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter your last name";
                         }
                         return null;
                       },
@@ -104,6 +117,106 @@ class AboutYou extends StatelessWidget {
                       suffixIcon: const Icon(Icons.calendar_today),
                       //onSuffixTap: () => controller.onDateOfBirthTap(context),
                     ),
+                    const SizedBox(height: 20),
+                    CustomTextFormField(
+                      hintText: "Lagos",
+                      labelText: "State of residence",
+                      readonly: true,
+                      suffixIcon:
+                          const Icon(Icons.keyboard_arrow_down_outlined),
+                      ontap: controller.showNgStatesDialog,
+                      controller: controller.stateController,
+                      validator: (value) => value == null || value.isEmpty
+                          ? 'Please select a state'
+                          : null,
+                    ),
+                    const SizedBox(height: 20),
+                    Text("Upload passport",
+                        style: FontStyles.smallCapsIntro.copyWith(
+                            letterSpacing: 0,
+                            color: Color(0xFF868686),
+                            fontSize: 15)),
+                    const SizedBox(height: 15),
+                    Center(
+                      child: GestureDetector(
+                        onTap: controller.passportImage.value == null
+                            ? controller.pickImage
+                            : null,
+                        child: SizedBox(
+                          height: 113,
+                          child: DottedBorder(
+                            color: Colors.grey,
+                            strokeWidth: 1,
+                            dashPattern: [6, 4],
+                            borderType: BorderType.RRect,
+                            radius: Radius.circular(8),
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Obx(() {
+                                    return controller.passportImage.value ==
+                                            null
+                                        ? Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.insert_drive_file,
+                                                color: Colors.grey[400],
+                                                size: 50,
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                'Upload File',
+                                                style: FontStyles.smallCapsIntro
+                                                    .copyWith(
+                                                        letterSpacing: 0,
+                                                        color: PaintColors
+                                                            .paralexpurple,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                              ),
+                                              Text(
+                                                'Supports Jpg',
+                                                style: FontStyles.smallCapsIntro
+                                                    .copyWith(
+                                                        letterSpacing: 0,
+                                                        color:
+                                                            Color(0xFF999999),
+                                                        fontSize: 10),
+                                              ),
+                                            ],
+                                          )
+                                        : ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: Image.file(
+                                              controller.passportImage.value!,
+                                              fit: BoxFit.cover,
+                                              height: double.infinity,
+                                            ),
+                                          );
+                                  }),
+                                ),
+                                Obx(() {
+                                  return controller.passportImage.value != null
+                                      ? Positioned(
+                                          bottom: 4,
+                                          right: 4,
+                                          child: GestureDetector(
+                                            onTap: controller.removeImage,
+                                            child: _deleteIcon(),
+                                          ),
+                                        )
+                                      : SizedBox.shrink();
+                                }),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 15),
                     Text(
                       "Do you have a rider card?",
@@ -116,57 +229,90 @@ class AboutYou extends StatelessWidget {
                       controller: controller,
                       onOptionSelected: controller.onCheckboxChanged,
                     ),
-                    SizedBox(height: size.height * 0.12),
-                    CustomButton(
-                        desiredWidth: 0.85,
-                        buttonText: "CONTINUE",
-                        buttonColor: PaintColors.paralexpurple,
-                        ontap: controller.onContinueButtonPressed),
-                    const SizedBox(height: 20),
-                    Center(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "By clicking continue you agree to our ",
-                                style: FontStyles.smallCapsIntro.copyWith(
-                                    letterSpacing: 0,
-                                    color: PaintColors.generalTextsm,
-                                    fontSize: 14),
-                              ),
-                              Text(
-                                "Terms of ",
-                                style: FontStyles.smallCapsIntro.copyWith(
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.bold,
-                                    color: PaintColors.paralexpurple,
-                                    fontSize: 14),
-                              ),
-                            ],
-                          ),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Service"),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text("and"),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text("Privacy policy "),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
                   ],
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Custom Button
+                  Obx(() => CustomButton(
+                    desiredWidth: 0.85,
+                    buttonText: controller.isLoading.value ? "" : "CONTINUE",
+                    buttonColor: PaintColors.paralexpurple,
+                    ontap: controller.onContinueButtonPressed,
+                  )),
+                  // Circular Progress Indicator
+                  Obx(() => controller.isLoading.value
+                      ? Positioned(
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
+                    ),
+                  )
+                      : const SizedBox.shrink()),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+              Center(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "By clicking continue you agree to our ",
+                          style: FontStyles.smallCapsIntro.copyWith(
+                              letterSpacing: 0,
+                              color: PaintColors.generalTextsm,
+                              fontSize: 14),
+                        ),
+                        Text(
+                          "Terms of ",
+                          style: FontStyles.smallCapsIntro.copyWith(
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.bold,
+                              color: PaintColors.paralexpurple,
+                              fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Service"),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("and"),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Privacy policy "),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
@@ -216,3 +362,15 @@ class CheckboxOptions extends StatelessWidget {
     );
   }
 }
+
+Widget _deleteIcon() => Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.red,
+      ),
+      child: Icon(
+        Icons.close,
+        color: Colors.white,
+        size: 20,
+      ),
+    );

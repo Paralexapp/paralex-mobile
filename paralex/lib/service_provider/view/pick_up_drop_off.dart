@@ -12,6 +12,8 @@ import '../controllers/pick_up_drop_off_controller.dart';
 class PickUpDropOff extends StatelessWidget {
   final PickUpDropOffController controller = Get.put(PickUpDropOffController());
   final points = Get.arguments as Points;
+
+  PickUpDropOff({super.key});
   @override
   Widget build(BuildContext context) {
     String pointName = points.name =="pickUpPoint" ? "Pick-up" :"Drop-off";

@@ -10,7 +10,7 @@ import 'widgets/logistics_button.dart';
 import 'widgets/logistics_textfield.dart';
 
 class LogisticsHome extends StatefulWidget {
-  LogisticsHome({super.key});
+  const LogisticsHome({super.key});
 
   @override
   State<LogisticsHome> createState() => _LogisticsHomeState();
@@ -133,7 +133,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                             child: Row(
                               children: [
                                 SizedBox(
-                                  width: deviceWidth(context) * 0.58,
+                                  width: deviceWidth(context) * 0.88,
                                   child: LogisticsTextfield(
                                     controller: senderStreetController,
                                     hintText: 'Street',
@@ -141,13 +141,13 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 ),
                                 Spacer(),
                                 // SizedBox(width: 8),
-                                SizedBox(
-                                  width: deviceWidth(context) * 0.25,
-                                  child: LogisticsTextfield(
-                                    controller: senderEntransController,
-                                    hintText: 'Entran...',
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   width: deviceWidth(context) * 0.25,
+                                //   child: LogisticsTextfield(
+                                //     controller: senderEntransController,
+                                //     hintText: 'Entran...',
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -155,10 +155,10 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                             height: 8,
                           ),
 
-                          LogisticsTextfield(
-                            controller: senderEntryphoneController,
-                            hintText: 'Floor, apartment, entryphone',
-                          ),
+                          // LogisticsTextfield(
+                          //   controller: senderEntryphoneController,
+                          //   hintText: 'Floor, apartment, entryphone',
+                          // ),
                           SizedBox(
                             height: 8,
                           ),
@@ -200,7 +200,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                             child: Row(
                               children: [
                                 SizedBox(
-                                  width: deviceWidth(context) * 0.58,
+                                  width: deviceWidth(context) * 0.88,
                                   child: LogisticsTextfield(
                                     controller: receiverStreetController,
                                     hintText: 'Street',
@@ -208,23 +208,23 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 ),
                                 // SizedBox(width: 8),
                                 Spacer(),
-                                SizedBox(
-                                  width: deviceWidth(context) * 0.25,
-                                  child: LogisticsTextfield(
-                                    controller: receiverEntransController,
-                                    hintText: 'Entran...',
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   width: deviceWidth(context) * 0.25,
+                                //   child: LogisticsTextfield(
+                                //     controller: receiverEntransController,
+                                //     hintText: 'Entran...',
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
                           SizedBox(
                             height: 8,
                           ),
-                          LogisticsTextfield(
-                            controller: receiverEntryphoneController,
-                            hintText: 'Floor, apartment, entryphone',
-                          ),
+                          // LogisticsTextfield(
+                          //   controller: receiverEntryphoneController,
+                          //   hintText: 'Floor, apartment, entryphone',
+                          // ),
                           SizedBox(
                             height: 8,
                           ),

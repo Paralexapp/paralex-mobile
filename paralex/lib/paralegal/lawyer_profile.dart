@@ -6,7 +6,6 @@ import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import '../reusables/back_button.dart';
 import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
-import '../routes/navs.dart';
 import 'lawyer_controller.dart';
 
 class LawyerProfile extends StatelessWidget {
@@ -289,7 +288,7 @@ class ReviewWidget extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 8),
-                Container(
+                SizedBox(
                   width: size.width * 0.6,
                   child: Text(
                     reviewerText ??

@@ -10,12 +10,12 @@ import '../../controllers/about_you_contd_controller.dart';
 
 class AboutYouContd extends StatelessWidget {
   final AboutYouContdController controller = Get.put(AboutYouContdController());
+  final Map<String, dynamic> userData = Get.arguments;
 
   AboutYouContd({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: PaintColors.bgColor,
       appBar: AppBar(
@@ -70,59 +70,85 @@ class AboutYouContd extends StatelessWidget {
                     controller.bikeCapacity, controller),
                 buildCustomFormField("Chasis number", "Chasis number",
                     controller.chasisNumber, controller),
-                SizedBox(height: size.height * 0.16),
-                CustomButton(
-                  desiredWidth: 0.85,
-                  buttonText: "CONTINUE",
-                  buttonColor: PaintColors.paralexpurple,
-                  ontap: () {
-                    if (controller.hasBike.isTrue &&
-                        controller.validateForm()) {
-                      Get.toNamed(Nav.guarantorDetail);
-                    } else if (controller.hasBike.isFalse) {
-                      Get.toNamed(Nav.guarantorDetail);
-                    }
-                  },
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "By clicking continue you agree to our ",
-                            style: FontStyles.smallCapsIntro.copyWith(
-                                letterSpacing: 0,
-                                color: PaintColors.generalTextsm,
-                                fontSize: 14),
-                          ),
-                          Text(
-                            "Terms of ",
-                            style: FontStyles.smallCapsIntro.copyWith(
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.bold,
-                                color: PaintColors.paralexpurple,
-                                fontSize: 14),
-                          ),
-                        ],
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Service"),
-                          SizedBox(width: 5),
-                          Text("and"),
-                          SizedBox(width: 5),
-                          Text("Privacy policy "),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomButton(
+                desiredWidth: 0.85,
+                buttonText: "CONTINUE",
+                buttonColor: PaintColors.paralexpurple,
+                ontap: () {
+                  if (controller.hasBike.isTrue && controller.validateForm()) {
+                    userData.addAll({
+                      "hasBike": controller.hasBike.value, // true or false
+                      "bikeNumber": controller.bikeNumber.text,
+                      "bikeType": controller.bikeType.text,
+                      "bikeCapacity": controller.bikeCapacity.text,
+                      "chasisNumber": controller.chasisNumber.text,
+                    });
+                    Get.toNamed(Nav.guarantorDetail, arguments: userData);
+                  } else if (controller.hasBike.isFalse) {
+                    userData.addAll({
+                      "hasBike": controller.hasBike.value, // false
+                    });
+                    Get.toNamed(Nav.guarantorDetail, arguments: userData);
+                  }
+                },
+              ),
+
+              const SizedBox(height: 20),
+              Center(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "By clicking continue you agree to our ",
+                          style: FontStyles.smallCapsIntro.copyWith(
+                              letterSpacing: 0,
+                              color: PaintColors.generalTextsm,
+                              fontSize: 14),
+                        ),
+                        Text(
+                          "Terms of ",
+                          style: FontStyles.smallCapsIntro.copyWith(
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.bold,
+                              color: PaintColors.paralexpurple,
+                              fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Service"),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("and"),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Privacy policy "),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),

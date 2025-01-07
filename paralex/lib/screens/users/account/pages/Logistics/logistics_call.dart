@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
-import 'package:paralex/routes/navs.dart';
 
 class LogisticsCall extends StatelessWidget {
   const LogisticsCall({super.key});

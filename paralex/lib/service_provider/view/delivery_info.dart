@@ -6,9 +6,12 @@ import 'package:paralex/service_provider/view/widgets/custom_text_field.dart';
 import '../../reusables/fonts.dart';
 import '../../routes/navs.dart';
 import 'drawer.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+
 
 class DeliveryInfo extends StatefulWidget {
-  DeliveryInfo({super.key});
+  const DeliveryInfo({super.key});
 
 
   @override
@@ -17,6 +20,43 @@ class DeliveryInfo extends StatefulWidget {
 
 class _DeliveryInfoState extends State<DeliveryInfo> {
   bool isOnline = false;
+  late GoogleMapController _mapController;
+  LatLng _currentLocation = LatLng(37.7749, -122.4194); // Default to San Francisco
+  bool _locationPermissionGranted = false;
+
+
+  Future<void> _getUserLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled
+      return;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        // Permissions are denied
+        return;
+      }
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      _currentLocation = LatLng(position.latitude, position.longitude);
+      _locationPermissionGranted = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserLocation();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,62 +70,19 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
       body: Stack(
         children: [
           // Background map image and main content
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/map.jpg"),
-                fit: BoxFit.cover,
-              ),
+          GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: _currentLocation,
+              zoom: 14.0,
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Builder(
-                        builder: (context) {
-                          return GestureDetector(
-                            onTap:(){
-                              Scaffold.of(context).openDrawer();
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Icon(Icons.menu, size: 24),
-                            ),
-                          );
-                        }
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          "₦0",
-                          style: TextStyle(color: Colors.black, fontSize: 24),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(Icons.notifications_outlined, size: 24),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            onMapCreated: (GoogleMapController controller) {
+              _mapController = controller;
+            },
+            myLocationEnabled: _locationPermissionGranted,
+            myLocationButtonEnabled: true,
+            zoomControlsEnabled: false,
           ),
+
           DraggableScrollableSheet(
             initialChildSize: 0.1,
             minChildSize: 0.1,
@@ -379,9 +376,11 @@ class _DeliveryInfoState extends State<DeliveryInfo> {
 
 // Custom dashed line widget
 class DottedLine extends StatelessWidget {
+  const DottedLine({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 40,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

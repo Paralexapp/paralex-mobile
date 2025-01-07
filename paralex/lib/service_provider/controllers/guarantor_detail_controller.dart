@@ -6,11 +6,13 @@ import '../../routes/navs.dart';
 class GuarantorDetailController extends GetxController {
   // Define controllers for each form field
   final formKey = GlobalKey<FormState>();
+  final Map<String, dynamic> userData = Get.arguments;
 
   final guarantorController = TextEditingController();
   final stateController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
+  final addressController = TextEditingController();
 
   // Define reactive variables for selected values and validation states
   var selectedOption = ''.obs;
@@ -25,10 +27,17 @@ class GuarantorDetailController extends GetxController {
     return _emailRegex.hasMatch(email);
   }
 
-  // Function to handle validation and submission
   void validateAndSubmit() {
     if (formKey.currentState!.validate() && phoneNumber.value.isNotEmpty) {
-      Get.toNamed(Nav.bankInfo);
+      Map<String, dynamic> guarantorData = {
+        "guarantorClass": guarantorController.text,
+        "guarantorPhoneNumber": phoneNumber.value,
+        "guarantorEmail": emailController.text,
+        "guarantorStateOfResidence": stateController.text,
+        "guarantorResidentialAddress": addressController.text,
+      };
+      userData.addAll(guarantorData);
+      Get.toNamed(Nav.bankInfo, arguments: userData);
     } else {
       if (phoneNumber.value.isEmpty) {
         Get.snackbar("Error", "Please enter a valid phone number.");
@@ -61,7 +70,7 @@ class GuarantorDetailController extends GetxController {
             onChanged: (value) {
               selectedOption.value = value!;
               guarantorController.text = selectedOption.value;
-              Get.back(); // Close the dialog immediately
+              Get.back();
             },
           ),
           RadioListTile<String>(
@@ -94,6 +103,7 @@ class GuarantorDetailController extends GetxController {
       title: "Choose a State in Nigeria",
       content: SizedBox(
         height: 300,
+        width: 300,
         child: Obx(() => ListView(
           children: nigeriaStates.map((state) {
             return RadioListTile<String>(

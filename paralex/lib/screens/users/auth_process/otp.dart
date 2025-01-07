@@ -205,10 +205,14 @@ class _OtpVerificationState extends State<OtpVerification> {
         'OTP validated successfully!',
         snackPosition: SnackPosition.TOP,
       );
+      await userController.loginUser(userController.email.value, userController.password.value);
+      userController.password.value = ''; // Clear the password value after logging in
       if (userController.isUser.value) {
-        Get.toNamed(Nav.tellusMoreforUsers); // Navigate to UserHomeScreen
-      } else {
-        Get.toNamed(Nav.selectServiceScreen); // Navigate to ServiceProviderHomeScreen
+        Get.toNamed(Nav.tellusMoreforUsers);
+      } else if (userController.isRider.value) {
+        Get.toNamed(Nav.aboutServiceProvider);
+      }else{
+        Get.toNamed(Nav.aboutYouForLawyer);
       }
     } catch (e) {
       Get.snackbar(

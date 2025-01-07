@@ -64,13 +64,18 @@ class DeliveryInfo1 extends StatelessWidget {
                           style: TextStyle(color: Colors.black, fontSize: 24),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                      GestureDetector(
+                        onTap: (){
+                          Get.toNamed(Nav.notification);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(Icons.notifications_outlined, size: 24),
                         ),
-                        child: Icon(Icons.notifications_outlined, size: 24),
                       ),
                     ],
                   ),
@@ -83,7 +88,7 @@ class DeliveryInfo1 extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
+                SizedBox(
                   height: size.height *
                       0.45, // Total height for the scrollable sheet
                   child: DraggableScrollableSheet(
@@ -269,9 +274,11 @@ class DeliveryInfo1 extends StatelessWidget {
 }
 
 class DottedLine extends StatelessWidget {
+  const DottedLine({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 40,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

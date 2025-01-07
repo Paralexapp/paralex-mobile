@@ -9,7 +9,6 @@ import '../../../../../routes/navs.dart';
 import '../../../../../service_provider/controllers/auth_controller.dart';
 import '../../../../../service_provider/controllers/user_choice_controller.dart';
 import '../../../../../service_provider/models/place_model.dart';
-import '../../../auth_process/login.dart';
 import '../Logistics/webview_payment_screen.dart';
 
 class LogisticsDeliveryInfoController extends GetxController {

@@ -55,6 +55,8 @@ class SignupController extends GetxController {
 
   Future<void> signUp() async {
     try {
+      userChoiceController.email.value = emailText.value;
+      userChoiceController.password.value = passwordText.value;
       loading.value = true;
       final response = await apiService.postRequest('api/v1/auth/register', {
         'password': passwordText.value,
@@ -81,6 +83,8 @@ class SignupController extends GetxController {
     } finally {
       loading.value = false;
     }
+
+
   }
 
   @override

@@ -5,6 +5,7 @@ import '../../../reusables/fonts.dart';
 import '../../../reusables/paints.dart';
 import '../../../routes/navs.dart';
 import '../../controllers/select_service_controller.dart';
+import '../../controllers/user_choice_controller.dart';
 import '../widgets/select_service_widget.dart';
 
 class SelectServiceScreen extends StatelessWidget {
@@ -12,7 +13,9 @@ class SelectServiceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SelectServiceController controller = Get.put(SelectServiceController());
+    final userChoiceController = Get.find<UserChoiceController>();
+    final SelectServiceController controller =
+        Get.put(SelectServiceController());
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: PaintColors.bgColor,
@@ -36,32 +39,40 @@ class SelectServiceScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Obx(() => Expanded(
-                  child: InkWell(
-                    onTap: () => controller.selectedButtonIndex(0),
-                    child: SelectServiceWidget(
+                Obx(
+                  () => Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        controller.selectedButtonIndex(0);
+                        userChoiceController.selectServiceProviderLawyer();
+                      },
+                      child: SelectServiceWidget(
                         imgPath: "assets/images/mace.svg",
                         firstText: "Lawyer",
                         secondText: "I provide legal",
                         thirdText: "services to clients",
                         bckgColor: controller.getButtonColor(0),
+                      ),
                     ),
                   ),
                 ),
-                ),
                 const SizedBox(width: 30),
-                Obx(() => Expanded(
-                  child: InkWell(
-                    onTap: () => controller.selectedButtonIndex(1),
-                    child: SelectServiceWidget(
+                Obx(
+                  () => Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        controller.selectedButtonIndex(1);
+                        userChoiceController.selectServiceProviderRider();
+                      },
+                      child: SelectServiceWidget(
                         imgPath: "assets/images/truck.svg",
                         firstText: "Delivery Agent",
                         secondText: "I provide legal",
                         thirdText: "delivery services",
                         bckgColor: controller.getButtonColor(1),
+                      ),
                     ),
                   ),
-                ),
                 ),
               ],
             ),
@@ -71,16 +82,17 @@ class SelectServiceScreen extends StatelessWidget {
               height: 50,
               width: size.width * 0.9,
               decoration: const BoxDecoration(
-                color:  PaintColors.paralexpurple,
+                color: PaintColors.paralexpurple,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   if (controller.selectedButtonIndex == 0) {
-                    Get.toNamed(Nav.aboutYouForLawyer);
-                  } else if (controller.selectedButtonIndex == 1){
-                    Get.toNamed(Nav.aboutServiceProvider);
-                  }},
+                    Get.toNamed(Nav.serviceProviderSignupWelcomeScreen);
+                  } else if (controller.selectedButtonIndex == 1) {
+                    Get.toNamed(Nav.serviceProviderSignupWelcomeScreen);
+                  }
+                },
                 child: Center(
                   child: Text(
                     "CONTINUE",

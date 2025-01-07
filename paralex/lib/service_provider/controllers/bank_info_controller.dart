@@ -4,39 +4,32 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../routes/navs.dart';
+import '../services/api_service.dart';
+import 'user_choice_controller.dart'; // Import the UserChoiceController
 
 class BankInfoController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final List<String> banks = [
-    "Access Bank",
-    "Citibank",
-    "Diamond Bank",
-    "Ecobank",
-    "Fidelity Bank",
-    "First Bank of Nigeria",
-    "FCMB",
-    "GTBank",
-    "Heritage Bank",
-    "Keystone Bank",
-    "Polaris Bank",
-    "Stanbic IBTC Bank",
-    "Sterling Bank",
-    "Union Bank",
-    "United Bank for Africa (UBA)",
-    "Unity Bank",
-    "Wema Bank",
-    "Zenith Bank",
+    "Access Bank", "Citibank", "Diamond Bank", "Ecobank", "Fidelity Bank",
+    "First Bank of Nigeria", "FCMB", "GTBank", "Heritage Bank", "Keystone Bank",
+    "Polaris Bank", "Stanbic IBTC Bank", "Sterling Bank", "Union Bank",
+    "United Bank for Africa (UBA)", "Unity Bank", "Wema Bank", "Zenith Bank",
   ];
 
   final bvnController = TextEditingController();
   final ninController = TextEditingController();
   final bankController = TextEditingController();
   final accountNumberController = TextEditingController();
+  final bankCodeController = TextEditingController();
+  final accNameController = TextEditingController();
 
   Rx<File?> passportImage = Rx<File?>(null);
+  RxBool isLoading = false.obs;
 
   final ImagePicker _picker = ImagePicker();
+
+  final UserChoiceController _userChoiceController = Get.find<UserChoiceController>();
 
   Future<void> pickImage() async {
     final pickedFile = await _picker.pickImage(
@@ -58,12 +51,42 @@ class BankInfoController extends GetxController {
     passportImage.value = null;
   }
 
-  void submitForm() {
+  void submitForm() async {
     if (formKey.currentState?.validate() ?? false) {
       if (passportImage.value == null) {
         Get.snackbar("Error", "Please upload a passport image.");
-      } else {
-        Get.toNamed(Nav.notification);
+        return;
+      }
+
+      try {
+        isLoading.value = true;
+        ApiService apiService = ApiService();
+        String uploadedPhotoUrl = await apiService.uploadImage1(passportImage.value!);
+
+        Map<String, dynamic> userData = Get.arguments;
+
+        userData.addAll({
+          "bvn": bvnController.text,
+          "nin": ninController.text,
+          "bankName": bankController.text,
+          "accountNumber": accountNumberController.text,
+          "bankCode": bankCodeController.text,
+          "accountName": accNameController.text,
+          "passportUrl": uploadedPhotoUrl,
+          "email": _userChoiceController.email.value, // Include email
+        });
+
+        var response = await apiService.postRequest(
+          'service-provider/driver/profile/',
+          userData,
+        );
+
+        Get.snackbar("Success", "Your profile has been successfully updated!");
+        Get.offNamed(Nav.deliveryInfo);
+      } catch (e) {
+        Get.snackbar("Error", "An error occurred: $e");
+      } finally {
+        isLoading.value = false;
       }
     } else {
       Get.snackbar("Error", "Please fill all required fields.");
@@ -76,6 +99,8 @@ class BankInfoController extends GetxController {
     ninController.dispose();
     bankController.dispose();
     accountNumberController.dispose();
+    accNameController.dispose();
+    bankCodeController.dispose();
     super.dispose();
   }
 }

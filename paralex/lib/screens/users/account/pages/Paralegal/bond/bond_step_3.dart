@@ -60,9 +60,9 @@ class BondThirdStep extends StatelessWidget {
                         initialValue: 'M',
                         onChanged: (value) {
                           if (value == 'M') {
-                            controller.gender.text = 'Male'!;
+                            controller.gender.text = 'Male';
                           } else {
-                            controller.gender.text = 'Female'!;
+                            controller.gender.text = 'Female';
                           }
                         },
                       ),

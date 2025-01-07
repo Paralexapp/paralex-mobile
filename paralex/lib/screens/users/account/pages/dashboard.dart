@@ -67,11 +67,16 @@ class _DashboardState extends State<Dashboard> {
                       )),
                     ],
                   ),
-                  const Icon(
-                    Iconsax.sms,
+                  // const Icon(
+                  //   Iconsax.notification,
+                  //   color: PaintColors.paralexpurple,
+                  //   size: 30,
+                  // ),
+                  IconButton(onPressed: () => Get.toNamed(Nav.notification), icon: const Icon(
+                    Iconsax.notification,
                     color: PaintColors.paralexpurple,
                     size: 30,
-                  ),
+                  ),)
                 ],
               ),
             ),
@@ -79,7 +84,7 @@ class _DashboardState extends State<Dashboard> {
           // Main widgets and elements follow
           Padding(
             padding: const EdgeInsets.all(25),
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 Get.toNamed(Nav.logisticsDeliveryInfo);
               },

@@ -262,8 +262,10 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       final String userType = userData['userType'];
       final String firstName = userData['firstName'];
       final String lastName = userData['lastName'];
+      final String userId =userData['id'];
       userController.firstName.value = userData['firstName'];
       userController.lastName.value = userData['lastName'];
+      userController.userIdToken.value = userId;
       // Step 3: Navigate based on registrationLevel and userType
       if (registrationLevel != 'KYC_COMPLETED') {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {
@@ -283,7 +285,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       } else {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {
           userController.selectServiceProviderLawyer();
-          Get.toNamed(Nav.lawyerDashboard, arguments: {
+          Get.toNamed(Nav.home, arguments: {
             'firstName': firstName,
             'lastName': lastName,
           }); // Lawyer home screen

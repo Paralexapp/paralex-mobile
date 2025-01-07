@@ -6,7 +6,7 @@ class ParalegalHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: const Center(child: Text("")),
+      child: const Center(child: Text(" No news available here yet")),
     );
   }
 }

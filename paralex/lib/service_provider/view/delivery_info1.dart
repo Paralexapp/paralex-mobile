@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import '../../reusables/paints.dart';
 import '../../routes/navs.dart';
+import 'delivery_notification.dart';
 import 'drawer.dart';
 
 class DeliveryInfo1 extends StatelessWidget {
@@ -66,7 +67,13 @@ class DeliveryInfo1 extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: (){
-                          Get.toNamed(Nav.notification);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => DeliveryNotification(
+                                appBarTitle: "Notification",
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
                           padding: EdgeInsets.all(10),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paralex/paralegal/lawyer_dashboard.dart';
 
 import '../../routes/navs.dart';
 import '../services/api_service.dart';
@@ -71,14 +72,14 @@ class BankInfoController extends GetxController {
           "accountName": accNameController.text,
           "passportUrl": uploadedPhotoUrl,
         });
-
+        print("User Data: $userData");
         var response = await apiService.postRequest(
           'service-provider/driver/profile/',
           userData,
         );
 
         Get.snackbar("Success", "Your profile has been successfully updated!");
-        Get.offNamed(Nav.deliveryInfo);
+        Get.offNamed(Nav.deliveryInfo1);
       } catch (e) {
         Get.snackbar("Error", "An error occurred: $e");
       } finally {

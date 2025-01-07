@@ -60,6 +60,10 @@ class Nav {
   static const updateLawyerData = '/updateLawyerData';
   static const aboutYouForLawyer = '/aboutYouForLawyer';
   static const lawyerDashboard = '/lawyerDashboard';
+  static const newsScreen = '/newsScreen';
+  static const detailedNewsScreen = '/DetailedNewsScreen';
+  static const notificationDetail = '/NotificationDetail';
+
 
 
 }

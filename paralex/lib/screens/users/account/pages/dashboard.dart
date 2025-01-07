@@ -7,6 +7,7 @@ import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
 
 import '../../../../service_provider/controllers/user_choice_controller.dart';
+import '../../../../service_provider/view/delivery_notification.dart';
 
 final userController = Get.find<UserChoiceController>();
 
@@ -67,10 +68,19 @@ class _DashboardState extends State<Dashboard> {
                       )),
                     ],
                   ),
-                  const Icon(
+                  IconButton(onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DeliveryNotification(
+                          appBarTitle: "Notification",
+                        ),
+                      ),
+                    );
+                  }, icon: const Icon(
                     Iconsax.notification,
                     color: PaintColors.paralexpurple,
                     size: 30,
+                  ),
                   ),
                 ],
               ),
@@ -79,7 +89,7 @@ class _DashboardState extends State<Dashboard> {
           // Main widgets and elements follow
           Padding(
             padding: const EdgeInsets.all(25),
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 Get.toNamed(Nav.logisticsDeliveryInfo);
               },

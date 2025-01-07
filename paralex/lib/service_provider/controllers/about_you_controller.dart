@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/phone_number.dart';
+import 'package:paralex/paralegal/lawyer_dashboard.dart';
 import '../../routes/navs.dart';
 import '../services/api_service.dart';
 
@@ -130,10 +131,11 @@ class AboutYouController extends GetxController {
               ApiService apiService = ApiService();
               String photoUrl = await apiService.uploadImage1(passportImage.value!);
               Map<String, dynamic> userData = {
+                "email": userController.email.value,
                 "firstName": firstName.text,
                 "lastName": lastName.text,
-                "address": address.text,
-                "dateOfBirth": dateController.text,
+                //"address": address.text,
+                //"dateOfBirth": dateController.text,
                 "stateOfResidence": stateController.text,
                 "phoneNumber": phoneNumber.value,
                 "photoUrl": photoUrl,

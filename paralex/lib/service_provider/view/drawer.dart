@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../reusables/paints.dart';
 import '../../routes/navs.dart';
 import '../controllers/user_choice_controller.dart';
+import 'delivery_notification.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -106,12 +107,28 @@ class MyDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.notifications_outlined),
                   title: const Text("Notifications"),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DeliveryNotification(
+                          appBarTitle: "Notification",
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.inbox),
                   title: const Text("Inbox"),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DeliveryNotification(
+                          appBarTitle: "Message",
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.settings_outlined),

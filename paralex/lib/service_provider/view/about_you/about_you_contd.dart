@@ -95,7 +95,7 @@ class AboutYouContd extends StatelessWidget {
                       "bikeNumber": controller.bikeNumber.text,
                       "bikeType": controller.bikeType.text,
                       "bikeCapacity": controller.bikeCapacity.text,
-                      "chasisNumber": controller.chasisNumber.text,
+                      "chassisNumber": controller.chasisNumber.text,
                     });
                     Get.toNamed(Nav.guarantorDetail, arguments: userData);
                   } else if (controller.hasBike.isFalse) {

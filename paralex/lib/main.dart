@@ -48,6 +48,7 @@ import 'package:paralex/service_provider/view/dropoff_confirmation.dart';
 import 'package:paralex/service_provider/view/earning.dart';
 import 'package:paralex/service_provider/view/guarantor_detail.dart';
 import 'package:paralex/service_provider/view/delivery_notification.dart';
+import 'package:paralex/service_provider/view/notification_detail.dart';
 import 'package:paralex/service_provider/view/order_detail.dart';
 import 'package:paralex/service_provider/view/pick_up_drop_off.dart';
 import 'package:paralex/service_provider/view/pick_up_drop_off_details.dart';
@@ -58,6 +59,8 @@ import 'package:paralex/service_provider/view/setup_schedule.dart';
 import 'package:paralex/service_provider/view/signup_screens/select_service_screen.dart';
 import 'package:paralex/service_provider/view/signup_screens/signup_welcome_screen.dart';
 import 'package:paralex/service_provider/view/update_service_for_lawyer.dart';
+import 'news/detailed_news_screen.dart';
+import 'news/news_screen.dart';
 import 'screens/users/account/pages/Logistics/logistics_call.dart';
 import 'screens/users/account/pages/Logistics/logistics_find_delivery.dart';
 import 'screens/users/account/pages/Logistics/logistics_home.dart';
@@ -107,7 +110,7 @@ Future<void> main() async {
       GetPage(name: Nav.nafdacStepOne, page: () => const NafdacStepOne()),
       GetPage(name: Nav.nafdacStepTwo, page: () => const NafdacStepTwo()),
       GetPage(name: Nav.bankInfo, page: () => BankInfo()),
-      GetPage(name: Nav.notification, page: () => DeliveryNotification()),
+      //GetPage(name: Nav.notification, page: () => DeliveryNotification()),
       GetPage(name: Nav.findAlawyer, page: () => const LawyerHome()),
       GetPage(name: Nav.deliveryInfo, page: () => DeliveryInfo()),
       GetPage(name: Nav.logisticsDeliveryInfo, page: () => LogisticsDeliveryInfo()),
@@ -138,6 +141,9 @@ Future<void> main() async {
       GetPage(name: Nav.updateLawyerData, page: () => UpdateServiceForLawyer()),
       GetPage(name: Nav.aboutYouForLawyer, page: () => AboutYouForLawyers()),
       GetPage(name: Nav.lawyerDashboard, page: () => LawyerDashboard()),
+      GetPage(name: Nav.newsScreen, page: () => NewsScreen()),
+      GetPage(name: Nav.detailedNewsScreen, page: () => DetailedNewsScreen()),
+      //GetPage(name: Nav.notificationDetail, page: () => NotificationDetailScreen()),
       GetPage(name: Nav.lawyerParalegalHome, page: () => LawyerParalegalDashboard()),
     ],
     debugShowCheckedModeBanner: false,

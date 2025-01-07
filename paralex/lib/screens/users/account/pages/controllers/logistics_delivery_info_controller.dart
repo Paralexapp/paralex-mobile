@@ -152,4 +152,23 @@ class LogisticsDeliveryInfoController extends GetxController {
       throw Exception('Failed to fetch places');
     }
   }
+
+  Future<void> addLocation(PlaceModel place) async {
+    final response = await _apiService.postRequest('locations', {
+      "name": place.name,
+      "status": true,
+      "latitude": place.latitude,
+      "longitude": place.longitude
+    });
+
+    if (response['statusCode'] == 200 || response['statusCode'] == 201) {
+      Get.snackbar(
+        'Success',
+        'Location add successful',
+        snackPosition: SnackPosition.TOP,
+      );
+    } else {
+      throw Exception('Failed to add location');
+    }
+  }
 }

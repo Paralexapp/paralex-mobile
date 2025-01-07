@@ -6,6 +6,7 @@ import 'package:paralex/paralegal/lawyer_dashboard.dart';
 
 import '../../routes/navs.dart';
 import '../services/api_service.dart';
+import 'user_choice_controller.dart'; // Import the UserChoiceController
 
 class BankInfoController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -25,9 +26,11 @@ class BankInfoController extends GetxController {
   final accNameController = TextEditingController();
 
   Rx<File?> passportImage = Rx<File?>(null);
-  RxBool isLoading = false.obs; // Reactive variable to track loading state.
+  RxBool isLoading = false.obs;
 
   final ImagePicker _picker = ImagePicker();
+
+  final UserChoiceController _userChoiceController = Get.find<UserChoiceController>();
 
   Future<void> pickImage() async {
     final pickedFile = await _picker.pickImage(
@@ -57,7 +60,7 @@ class BankInfoController extends GetxController {
       }
 
       try {
-        isLoading.value = true; // Set loading to true
+        isLoading.value = true;
         ApiService apiService = ApiService();
         String uploadedPhotoUrl = await apiService.uploadImage1(passportImage.value!);
 
@@ -71,6 +74,7 @@ class BankInfoController extends GetxController {
           "bankCode": bankCodeController.text,
           "accountName": accNameController.text,
           "passportUrl": uploadedPhotoUrl,
+          "email": _userChoiceController.email.value, // Include email
         });
         print("User Data: $userData");
         var response = await apiService.postRequest(
@@ -83,7 +87,7 @@ class BankInfoController extends GetxController {
       } catch (e) {
         Get.snackbar("Error", "An error occurred: $e");
       } finally {
-        isLoading.value = false; // Set loading to false
+        isLoading.value = false;
       }
     } else {
       Get.snackbar("Error", "Please fill all required fields.");
@@ -101,4 +105,3 @@ class BankInfoController extends GetxController {
     super.dispose();
   }
 }
-

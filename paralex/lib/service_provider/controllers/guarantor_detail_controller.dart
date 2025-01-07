@@ -103,6 +103,7 @@ class GuarantorDetailController extends GetxController {
       title: "Choose a State in Nigeria",
       content: SizedBox(
         height: 300,
+        width: 300,
         child: Obx(() => ListView(
           children: nigeriaStates.map((state) {
             return RadioListTile<String>(

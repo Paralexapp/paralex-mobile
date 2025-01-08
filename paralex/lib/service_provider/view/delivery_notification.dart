@@ -53,7 +53,7 @@ class DeliveryNotification extends StatelessWidget {
               print(
                   'Building ListView with ${notificationsController.notifications.length} items');
               return notificationsController.notifications.isEmpty
-                  ? Center(child: Text('No notifications available'))
+                  ? Center(child: Text('No notification available'))
                   : ListView.builder(
                       itemCount: notificationsController.notifications.length,
                       itemBuilder: (context, index) {

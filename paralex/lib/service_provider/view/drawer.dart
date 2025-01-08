@@ -135,11 +135,11 @@ class MyDrawer extends StatelessWidget {
                   title: const Text("Account Settings"),
                   onTap: () {},
                 ),
-                ListTile(
-                  leading: const Icon(Icons.help_outline_outlined),
-                  title: const Text("Help & feedback"),
-                  onTap: () {},
-                ),
+                // ListTile(
+                //   leading: const Icon(Icons.help_outline_outlined),
+                //   title: const Text("Help & feedback"),
+                //   onTap: () {},
+                // ),
                 const Divider(),
                 ListTile(
                   leading: const Icon(Icons.logout, color: Colors.red),

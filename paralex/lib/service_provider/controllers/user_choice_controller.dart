@@ -30,6 +30,10 @@ extension UserTypeExtension on UserType {
 }
 
 class UserChoiceController extends GetxController {
+
+  // Store the initial UserType
+  late UserType initialUserType;
+
   // Observable UserType, default to USER
   var selectedUserType = UserType.USER.obs;
 
@@ -38,6 +42,7 @@ class UserChoiceController extends GetxController {
   var firstName = ''.obs;
   var lastName = ''.obs;
   var password = ''.obs;
+  var phoneNumber = ''.obs;
 
   // Authentication details
   var userIdToken = ''.obs;
@@ -52,6 +57,23 @@ class UserChoiceController extends GetxController {
   // Getter for user type as string
   String get userType => selectedUserType.value.stringValue;
 
+
+  void setInitialUserType(UserType userType) {
+    initialUserType = userType;
+    selectedUserType.value = userType;
+  }
+
+  void clearSession() {
+    firstName.value = '';
+    lastName.value = '';
+    email.value = '';
+    userIdToken.value = '';
+    authToken.value = '';
+    selectedUserType.value = initialUserType; // Reset to the initial user type
+
+    // Optionally clear other session-related data if necessary
+  }
+
   // Update logic for backward compatibility
   void _updateCompatibilityFlags() {
     isUser.value = selectedUserType.value == UserType.USER;
@@ -65,10 +87,12 @@ class UserChoiceController extends GetxController {
     _updateCompatibilityFlags();
   }
 
+
   void selectServiceProviderLawyer() {
     selectedUserType.value = UserType.SERVICE_PROVIDER_LAWYER;
     _updateCompatibilityFlags();
   }
+
 
   void selectServiceProviderRider() {
     selectedUserType.value = UserType.SERVICE_PROVIDER_RIDER;
@@ -98,6 +122,7 @@ class UserChoiceController extends GetxController {
         firstName.value = data['firstName'] ?? '';
         lastName.value = data['lastName'] ?? '';
         email.value = data['email'] ?? '';
+        phoneNumber.value = data['phoneNumber'] ?? '';  // Set phone number
       } else {
         print('Failed to fetch logged-in user: ${response.statusMessage}');
       }

@@ -53,7 +53,13 @@ class LawyerController extends GetxController {
         'service-provider/lawyer/profile/?pageSize=$pageSize',
       );
 
-      lawyersList.assignAll(parseLawyers('''${response['data']}''')); //= ;
+      var res = response['data'] as List;
+      debugPrint('Lawyer>>>${res.first}');
+      debugPrint('Lawyer>>>${Lawyer.fromJson(res.first)}');
+
+      lawyersList.assignAll(
+        (response['data'] as List).map((item) => Lawyer.fromJson(item)).toList(),
+      );
     } catch (e) {
       debugPrint('error>>>$e');
     }

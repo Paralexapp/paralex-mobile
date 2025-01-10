@@ -325,7 +325,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
       ],
       "lawyerProfileId": widget.lawyer?.id,
       "lawFirmId": widget.lawyer?.id,
-      "userId": widget.lawyer?.user.id,
+      "userId": widget.lawyer?.user?.id,
       "amount": 0
     };
 

@@ -6,6 +6,7 @@ import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
 import 'package:paralex/screens/users/account/pages/controllers/logistics_delivery_info_controller.dart';
 import '../../../../../service_provider/controllers/user_choice_controller.dart';
+import '../../../../../service_provider/models/driver_model.dart';
 import 'widgets/logistics_button.dart';
 import 'widgets/logistics_textfield.dart';
 
@@ -38,7 +39,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
     super.initState();
   }
 
-  void requestDelivery() {
+  void requestDelivery() async {
     if (!_formKey.currentState!.validate()) return;
 
     _controller.senderStreetController.value = senderStreetController.text;
@@ -52,7 +53,100 @@ class _LogisticsHomeState extends State<LogisticsHome> {
     _controller.receiverNameController.value = receiverNameController.text;
     _controller.whatToDeliverController.value = whatToDeliverController.text;
 
-    _controller.initializePayment();
+    var response = await _controller.requestDelivery();
+    if (response != null) {
+      showNearbyDrivers(context, response);
+    }
+  }
+
+  void showNearbyDrivers(BuildContext context, List<DriverModel>? nearbyDriver) {
+    if (nearbyDriver == null || nearbyDriver.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No nearby drivers available.')),
+      );
+      return;
+    }
+
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Adjust modal height dynamically
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.2,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: PaintColors.paralexLightGrey,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              SizedBox(height: 15),
+              Text(
+                'Nearby Drivers',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: PaintColors.paralexpurple,
+                ),
+              ),
+              SizedBox(height: 20),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: nearbyDriver.length,
+                  itemBuilder: (context, index) {
+                    final rider = nearbyDriver[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          _controller.initializePayment(rider);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: PaintColors.bgColor,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                width: 1,
+                                color: PaintColors.paralexpurple,
+                              )),
+                          child: ListTile(
+                            leading: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    width: 1,
+                                    color: PaintColors.fadedPinkBg,
+                                  )),
+                              child: Image(image: NetworkImage(rider.riderPhotoUrl)),
+                            ),
+                            title: Text(rider.name,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: PaintColors.paralexpurple,
+                                )),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Phone: ${rider.phoneNumber}'),
+                                Text('Distance: ${rider.distance}'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -139,7 +233,6 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                     hintText: 'Street',
                                   ),
                                 ),
-                                Spacer(),
                                 // SizedBox(width: 8),
                                 // SizedBox(
                                 //   width: deviceWidth(context) * 0.25,
@@ -172,6 +265,12 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 color: PaintColors.paralexpurple,
                               ),
                             ),
+                            validator: (value) {
+                              if (value!.number.isEmpty) {
+                                return "Require";
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20,
@@ -241,6 +340,10 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                           LogisticsPhoneField(
                             controller: receiverPhoneNumberController,
                             hintText: 'Recipient phone number',
+                            onChanged: (val) {
+                              print(val.number);
+                              print(val.completeNumber);
+                            },
                             suffixWidget: InkWell(
                               onTap: () {},
                               child: Icon(
@@ -248,6 +351,12 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 color: PaintColors.paralexpurple,
                               ),
                             ),
+                            validator: (value) {
+                              if (value!.number.isEmpty) {
+                                return "Require";
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20,

@@ -15,7 +15,7 @@ class LegalAssistance extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: PaintColors.bgColor,
         title: Text(
-          "Bail Bond Application Form",
+          "Legal Assistance Service",
           style: FontStyles.headingText
               .copyWith(color: PaintColors.paralexpurple, fontSize: 14),
         ),

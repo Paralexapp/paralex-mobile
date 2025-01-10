@@ -6,8 +6,11 @@ import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../routes/navs.dart';
 import '../../../../service_provider/controllers/user_choice_controller.dart';
+import '../service_provider/view/delivery_notification.dart';
 import '../service_provider/view/drawer.dart';
 import '../reusables/bottom_nav.dart'; // Import for the bottom navigation bar
+import '../news/news_screen.dart';
+import '../../../../service_provider/view/search_tab.dart';
 
 final userController = Get.find<UserChoiceController>();
 
@@ -20,10 +23,12 @@ class LawyerDashboard extends StatefulWidget {
 
 class _LawyerDashboardState extends State<LawyerDashboard> {
   int _currentIndex = 0; // Index to track the current selected tab
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: _currentIndex);
 
     // Retrieve firstName and lastName from Get.arguments and set them in the userController
     final args = Get.arguments;
@@ -34,150 +39,174 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
   }
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onPageChanged(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  void _onItemTapped(int index) {
+    _pageController.jumpToPage(index);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final DateTime now = DateTime.now(); // Get current date and time
+    final DateTime now = DateTime.now();
     final String formattedDate = DateFormat('EEEE, MMM d, y').format(now);
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: PaintColors.bgColor,
-      drawer: const MyDrawer(), // Add drawer
-      body: Builder(
-        builder: (context) => SafeArea(
-          child: SingleChildScrollView(
-            child: Stack(
+      drawer: const MyDrawer(),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        children: [
+          _buildDashboard(context, formattedDate, size),
+          NewsScreen(),
+          SearchTab(),
+        ],
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+
+  Widget _buildDashboard(BuildContext context, String formattedDate, Size size) {
+    return Builder(
+      builder: (context) => SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(25),
-                  child: Column(
-                    children: [
-                      // Header Section
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () => Scaffold.of(context).openDrawer(),
-                            child: Icon(
-                              Icons.menu,
-                              color: PaintColors.paralexpurple,
-                              size: 30,
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                formattedDate,
-                                style: FontStyles.smallCapsIntro.copyWith(
-                                  color: PaintColors.paralexpurple,
-                                  fontSize: 14,
-                                  letterSpacing: 0,
-                                ),
-                              ),
-                              Obx(() => Text(
-                                "Hello, ${userController.firstName.value} ${userController.lastName.value}",
-                                style: FontStyles.headingText.copyWith(
-                                  color: PaintColors.paralexpurple,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 20,
-                                ),
-                              )),
-                            ],
-                          ),
-                          const Icon(
-                            Iconsax.notification,
-                            color: PaintColors.paralexpurple,
-                            size: 30,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.03),
-                      // Paralegal Image Section
-                      InkWell(
-                        onTap: () {
-                          Get.toNamed(Nav.logisticsDeliveryInfo);
-                        },
-                        child: Container(
-                          width: size.width * 0.9,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            image: const DecorationImage(
-                              image: AssetImage('assets/images/paralegal.png'),
-                              fit: BoxFit.contain,
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.03),
-                      // Logistics Image Section
-                      GestureDetector(
-                        onTap: () => Get.toNamed(Nav.lawyerParalegalHome),
-                        child: Container(
-                          width: size.width * 0.9,
-                          height: 150,
-                          decoration: BoxDecoration(
-                            image: const DecorationImage(
-                              image: AssetImage('assets/images/log2.png'),
-                              fit: BoxFit.contain,
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                      ),
-                      // SizedBox(height: size.height * 0.03),
-                      // Delivery Details Section
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: PaintColors.white,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/law.png",
-                              height: 40,
-                            ),
-                            const SizedBox(width: 15),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "Delivery to Ikoyi Supreme court",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 4),
-                                Text("DECEMBER 31 . 8:00AM"),
-                                SizedBox(height: 8),
-                                Text(
-                                  "Submitted",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.green),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.03),
-                    ],
-                  ),
-                ),
+                _buildHeader(context, formattedDate),
+                SizedBox(height: size.height * 0.03),
+                _buildImageSection(context, size, 'assets/images/paralegal.png', Nav.logisticsDeliveryInfo),
+                SizedBox(height: size.height * 0.03),
+                _buildImageSection(context, size, 'assets/images/log2.png', Nav.lawyerParalegalHome),
+                SizedBox(height: size.height * 0.03),
+                _buildDeliveryDetails(),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+    );
+  }
+
+  Widget _buildHeader(BuildContext context, String formattedDate) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () => Scaffold.of(context).openDrawer(),
+          child: Icon(
+            Icons.menu,
+            color: PaintColors.paralexpurple,
+            size: 30,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              formattedDate,
+              style: FontStyles.smallCapsIntro.copyWith(
+                color: PaintColors.paralexpurple,
+                fontSize: 14,
+                letterSpacing: 0,
+              ),
+            ),
+            Obx(() => Text(
+              "Hello, ${userController.firstName.value} ${userController.lastName.value}",
+              style: FontStyles.headingText.copyWith(
+                color: PaintColors.paralexpurple,
+                fontWeight: FontWeight.w900,
+                fontSize: 20,
+              ),
+            )),
+          ],
+        ),
+
+        IconButton(onPressed: () {
+    Navigator.of(context).push(
+    MaterialPageRoute(
+    builder: (context) => DeliveryNotification(
+    appBarTitle: "Notification",
+    ),
+    ),
+    );
+    },
+       icon:  const Icon(
+          Iconsax.notification,
+          color: PaintColors.paralexpurple,
+          size: 30,
+        ),
+        ),
+    ],
+    );
+  }
+
+  Widget _buildImageSection(BuildContext context, Size size, String imagePath, String routeName) {
+    return InkWell(
+      onTap: () => Get.toNamed(routeName),
+      child: Container(
+        width: size.width * 0.9,
+        height: 100,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(imagePath),
+            fit: BoxFit.contain,
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDeliveryDetails() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: PaintColors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Image.asset(
+            "assets/images/law.png",
+            height: 40,
+          ),
+          const SizedBox(width: 15),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                "Delivery to Ikoyi Supreme court",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 4),
+              Text("DECEMBER 31 . 8:00AM"),
+              SizedBox(height: 8),
+              Text(
+                "Submitted",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

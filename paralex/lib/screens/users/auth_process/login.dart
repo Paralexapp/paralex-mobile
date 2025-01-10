@@ -146,6 +146,26 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                         BorderSide(color: PaintColors.paralexpurple))),
                           )),
 
+                          // New here? Sign up link
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,  // Align to the end (right)
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  // Navigate to the signup page
+                                  Get.toNamed(Nav.lastWelcomeScreen);  // Replace `Nav.lastWelcomeScreen` with the actual route to the signup page
+                                },
+                                child: Text(
+                                  "New here? Sign up.",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: PaintColors.paralexpurple,  // Or use a color that fits your design
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
                           // Password Validation Indicators
                           const SizedBox(height: 20),
                           Column(
@@ -262,8 +282,20 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       final String userType = userData['userType'];
       final String firstName = userData['firstName'];
       final String lastName = userData['lastName'];
+      final String userId =userData['id'];
       userController.firstName.value = userData['firstName'];
       userController.lastName.value = userData['lastName'];
+      userController.userIdToken.value = userId;
+
+      // Set initial UserType in UserChoiceController
+      if (userType == 'SERVICE_PROVIDER_LAWYER') {
+        userController.setInitialUserType(UserType.SERVICE_PROVIDER_LAWYER);
+      } else if (userType == 'SERVICE_PROVIDER_RIDER') {
+        userController.setInitialUserType(UserType.SERVICE_PROVIDER_RIDER);
+      } else if (userType == 'USER') {
+        userController.setInitialUserType(UserType.USER);
+      }
+
       // Step 3: Navigate based on registrationLevel and userType
       if (registrationLevel != 'KYC_COMPLETED') {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {

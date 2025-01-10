@@ -88,7 +88,7 @@ class NafdacStepTwo extends StatelessWidget {
             CustomButton(
                 ontap: () => Get.toNamed(Nav.bondSubmitted),
                 desiredWidth: 90,
-                buttonText: "Proceed to payment",
+                buttonText: "Submit",
                 buttonColor: PaintColors.paralexpurple)
           ],
         ),

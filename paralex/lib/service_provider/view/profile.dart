@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:paralex/routes/navs.dart';
+import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
 import 'dart:math'; // For random color generation
 import '../../reusables/fonts.dart';
 import '../../reusables/paints.dart';
+import '../../screens/users/account/pages/account_settings_page.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -14,7 +19,7 @@ class Profile extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: PaintColors.white,
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () => Get.back(),
             icon: Icon(
               Icons.close,
               size: 20,
@@ -31,7 +36,9 @@ class Profile extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => const AccountSettingsPage());
+              },
               icon: Icon(
                 Icons.mode_edit,
                 color: Colors.black,
@@ -61,14 +68,30 @@ class Profile extends StatelessWidget {
                       "assets/images/blue_blank_human_image.svg",
                     ),
                   ),
+                  // SizedBox(height: 15),
+                  // Text(
+                  //   "Joseph",
+                  //   style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 20,
+                  //       fontWeight: FontWeight.bold),
+                  // ),
+
                   SizedBox(height: 15),
-                  Text(
-                    "Joseph",
-                    style: TextStyle(
+                  Obx(() {
+                    // Accessing the userName from the UserController
+                    final userName = "${Get.find<UserChoiceController>().firstName.value} ${Get.find<UserChoiceController>().lastName.value}";
+
+                    return Text(
+                      userName,  // Use the dynamic user name here
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  }),
+
                 ],
               ),
             ),

@@ -87,10 +87,11 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
             CameraPosition(
               target:
                   position, //LatLng(place.latitude, place.longitude), // Assuming PlaceModel has these fields
-              zoom: 19.0,
+              zoom: 14.0,
             ),
           ),
         );
+        _controller.addLocation(place);
       });
     } catch (e) {
       print("Error handling location selection: $e");
@@ -100,6 +101,7 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
   void submitForm() {
     _controller.fareController.value = _fareController.text;
     _controller.orderDetailsController.value = _orderDetailsController.text;
+
     Get.toNamed(Nav.logisticsHome);
   }
 

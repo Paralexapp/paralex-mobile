@@ -99,7 +99,7 @@ class LogisticsDeliveryInfoController extends GetxController {
         snackPosition: SnackPosition.TOP,
       );
 
-      return delivery2?.nearbyDrivers;
+      return delivery?.nearbyDrivers;
 
       // // Pass firstName and lastName to the next screen
       // Get.toNamed(Nav.logisticsPaymentMethod);

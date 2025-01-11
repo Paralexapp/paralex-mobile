@@ -10,14 +10,41 @@ import 'package:paralex/screens/users/account/pages/controllers/logistics_delive
 
 import 'widgets/logistics_textfield.dart';
 
-class LogisticsFindDelivery extends StatelessWidget {
-  LogisticsFindDelivery({super.key});
-  final LogisticsDeliveryInfoController _controller = LogisticsDeliveryInfoController();
+class LogisticsFindDelivery extends StatefulWidget {
+  final String? fromLocation;
+  final String? toDestination;
+  final String? orderDetails;
+  final String? fare;
+  LogisticsFindDelivery(
+      {super.key, this.fromLocation, this.toDestination, this.orderDetails, this.fare});
+
+  @override
+  State<LogisticsFindDelivery> createState() => _LogisticsFindDeliveryState();
+}
+
+class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
+  final LogisticsDeliveryInfoController _controller =
+      Get.put(LogisticsDeliveryInfoController());
+
   final _formKey = GlobalKey<FormState>();
+
   final fromLocationController = TextEditingController();
+
   final toDestinationController = TextEditingController();
+
   final orderDetailsController = TextEditingController();
+
   final fareController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    fromLocationController.text = widget.fromLocation ?? '';
+
+    toDestinationController.text = widget.toDestination ?? '';
+    orderDetailsController.text = widget.orderDetails ?? '';
+    fareController.text = widget.fare ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +122,7 @@ class LogisticsFindDelivery extends StatelessWidget {
                           LogisticsTextfield(
                             controller: fromLocationController,
                             showPrefixIcon: true,
+                            readOnly: true,
                             borderColor: PaintColors.textFieldBorderColor,
                             hintText: 'From',
                             icon: Iconsax.location,
@@ -105,6 +133,7 @@ class LogisticsFindDelivery extends StatelessWidget {
                           LogisticsTextfield(
                             controller: toDestinationController,
                             showPrefixIcon: true,
+                            readOnly: true,
                             borderColor: PaintColors.textFieldBorderColor,
                             hintText: 'To',
                             icon: Iconsax.gps,
@@ -115,6 +144,7 @@ class LogisticsFindDelivery extends StatelessWidget {
                           LogisticsTextfield(
                             controller: orderDetailsController,
                             showPrefixIcon: true,
+                            readOnly: true,
                             borderColor: PaintColors.textFieldBorderColor,
                             hintText: 'Order details',
                             icon: Iconsax.d_rotate,
@@ -123,8 +153,10 @@ class LogisticsFindDelivery extends StatelessWidget {
                             height: 15,
                           ),
                           LogisticsTextfield(
+                            controller: fareController,
                             borderColor: PaintColors.textFieldBorderColor,
                             showPrefixIcon: true,
+                            readOnly: true,
                             hintText: 'Fare',
                             icon: Iconsax.moneys,
                           ),
@@ -133,9 +165,10 @@ class LogisticsFindDelivery extends StatelessWidget {
                           ),
                           LogisticsButton(
                             text: 'PROCEED TO PAYMENT',
-                            check: _formKey.currentState!.validate(),
+                            // check: _formKey.currentState!.validate(),
                             onTap: () {
-                              Get.toNamed(Nav.logisticsPaymentMethod);
+                              _controller.initializePayment(widget.fare ?? '0');
+                              // Get.toNamed(Nav.logisticsPaymentMethod);
                             },
                           ),
                         ],

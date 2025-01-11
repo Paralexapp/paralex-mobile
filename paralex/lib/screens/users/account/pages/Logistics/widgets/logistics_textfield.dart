@@ -20,7 +20,9 @@ class LogisticsTextfield extends StatelessWidget {
       this.showSuffixIcon = false,
       this.maxLines,
       this.prefix,
-      this.suffix});
+      this.suffix,
+      this.readOnly = false,
+      this.enabled});
   final String? hintText;
   final IconData? icon;
   final IconData? suffixIcon;
@@ -34,6 +36,8 @@ class LogisticsTextfield extends StatelessWidget {
   final Widget? suffix;
   final TextInputType? keyboardType;
   final EdgeInsetsGeometry? padding;
+  final bool? readOnly;
+  final bool? enabled;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -42,6 +46,8 @@ class LogisticsTextfield extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLines: maxLines ?? 1,
       minLines: minLines ?? 1,
+      readOnly: readOnly ?? false,
+      enabled: enabled,
       decoration: InputDecoration(
         contentPadding: padding,
         prefixIcon: prefix ??

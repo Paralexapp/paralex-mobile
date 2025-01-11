@@ -216,7 +216,7 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                             height: 20,
                           ),
                           CustomDropdown(
-                              items: ['Parcel', 'Document'],
+                              items: ['Parcel', 'Document', 'Others'],
                               hint: 'Order details',
                               icon: Iconsax.d_rotate,
                               onChanged: (val) {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paralex/screens/users/account/home.dart';
 import 'package:paralex/service_provider/models/driver_model.dart';
 import 'package:paralex/service_provider/services/api_service.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,7 @@ import '../../../../../routes/navs.dart';
 import '../../../../../service_provider/controllers/auth_controller.dart';
 import '../../../../../service_provider/controllers/user_choice_controller.dart';
 import '../../../../../service_provider/models/place_model.dart';
+import '../Logistics/logistics_find_delivery.dart';
 import '../Logistics/webview_payment_screen.dart';
 
 class LogisticsDeliveryInfoController extends GetxController {
@@ -115,22 +117,76 @@ class LogisticsDeliveryInfoController extends GetxController {
     }
   }
 
-  void initializePayment(DriverModel driver) async {
+  void assignDriver(DriverModel driver) async {
+    debugPrint(
+        'error===={"driverProfileId": ${driver.id}, "deliveryRequestId": ${delivery?.id}');
+    final assignDriver = await _apiService.postRequest('delivery/request/assign',
+        {"driverProfileId": driver.id, "deliveryRequestId": delivery?.id});
+    Get.snackbar(
+      'Successful',
+      "Assign Driver Successful",
+      snackPosition: SnackPosition.TOP,
+    );
+    Get.offAllNamed(Nav.home);
+  }
+
+  Future<Map<String, dynamic>?> getDeliveryAmount() async {
+    var data = {
+      "driverProfileId": userController.email.value,
+      "pickup": {
+        "customerName":
+            "${userController.lastName.value} ${userController.firstName.value}",
+        "phoneNumber": senderPhoneNumberController.value,
+        "address": senderStreetController.value,
+        "latitude": senderLatitude.value,
+        "longitude": senderLongitude.value,
+        "description": orderDetailsController.value
+      },
+      "destination": {
+        "recipientName": receiverNameController.value,
+        "phoneNumber": receiverPhoneNumberController.value,
+        "address": receiverStreetController.value,
+        "latitude": recipientLatitude.value,
+        "longitude": recipientLongitude.value,
+        "categoryId": "na",
+        "description": whatToDeliverController.value
+      }
+    };
+
     try {
       isLoading.value = true;
-      debugPrint(
-          'error===={"driverProfileId": ${driver.id}, "deliveryRequestId": ${delivery?.id}');
-      final assignDriver = await _apiService.postRequest('delivery/request/assign',
-          {"driverProfileId": driver.id, "deliveryRequestId": delivery?.id});
+
+      final Map<String, dynamic> deliveryInformation =
+          await _apiService.postRequest('delivery/request/information', data);
+      Get.to(
+        () => LogisticsFindDelivery(
+          toDestination: senderStreetController.value,
+          fromLocation: receiverStreetController.value,
+          orderDetails: orderDetailsController.value,
+          fare: deliveryInformation['amount'].toString(),
+        ),
+      );
+      isLoading.value = false;
+      return deliveryInformation;
+    } catch (e) {
+      isLoading.value = false;
+      debugPrint('error====$e');
       Get.snackbar(
-        'Successful',
-        "Assign Driver Successful",
+        'Error',
+        e.toString(),
         snackPosition: SnackPosition.TOP,
       );
+      return null;
+    }
+  }
+
+  void initializePayment(String amount) async {
+    try {
+      isLoading.value = true;
       final initResponse =
           await _apiService.postRequest('payment/bill/initialize-payment', {
         "email": _authController.userEmail.value,
-        "amount": 1000,
+        "amount": amount,
       });
 
       final Map<String, dynamic> authUrl = initResponse['data'];
@@ -153,27 +209,6 @@ class LogisticsDeliveryInfoController extends GetxController {
   }
 
   void verifyPayment(String reference) async {
-    var data = {
-      "driverProfileId": userController.email.value,
-      "pickup": {
-        "customerName":
-            "${userController.lastName.value} ${userController.firstName.value}",
-        "phoneNumber": senderPhoneNumberController.value,
-        "address": senderStreetController.value,
-        "latitude": senderLatitude.value,
-        "longitude": senderLongitude.value,
-        "description": orderDetailsController.value
-      },
-      "destination": {
-        "recipientName": receiverNameController.value,
-        "phoneNumber": receiverPhoneNumberController.value,
-        "address": receiverStreetController.value,
-        "latitude": recipientLatitude.value,
-        "longitude": recipientLongitude.value,
-        "categoryId": "na",
-        "description": whatToDeliverController.value
-      }
-    };
     try {
       isLoading.value = true;
 
@@ -224,8 +259,6 @@ class LogisticsDeliveryInfoController extends GetxController {
         'Location add successful',
         snackPosition: SnackPosition.TOP,
       );
-    } else {
-      throw Exception('Failed to add location');
-    }
+    } else {}
   }
 }

@@ -164,6 +164,7 @@ class LogisticsDeliveryInfoController extends GetxController {
           fromLocation: receiverStreetController.value,
           orderDetails: orderDetailsController.value,
           fare: deliveryInformation['amount'].toString(),
+          distance: deliveryInformation['distance'].toString(),
         ),
       );
       isLoading.value = false;
@@ -246,19 +247,41 @@ class LogisticsDeliveryInfoController extends GetxController {
   }
 
   Future<void> addLocation(PlaceModel place) async {
-    final response = await _apiService.postRequest('locations/', {
-      "name": place.name,
-      "status": true,
-      "latitude": place.latitude,
-      "longitude": place.longitude
-    });
+    List<Map<String, dynamic>> data = [
+      {
+        "name": place.displayName,
+        "status": true,
+        "latitude": place.latitude,
+        "longitude": place.longitude
+      }
+    ];
+    final url = Uri.parse('https://paralex-app-fddb148a81ad.herokuapp.com/locations/');
+    debugPrint('url==$url');
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${_authController.token.value}'
+        },
+        body: jsonEncode(data),
+      );
 
-    if (response['statusCode'] == 200 || response['statusCode'] == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Get.snackbar(
+          'Success',
+          'Location add successful',
+          snackPosition: SnackPosition.TOP,
+        );
+      }
+    } catch (e) {
+      String errorMessage = e.toString();
       Get.snackbar(
-        'Success',
-        'Location add successful',
+        'Error',
+        errorMessage,
         snackPosition: SnackPosition.TOP,
       );
-    } else {}
+      throw Exception(errorMessage);
+    }
   }
 }

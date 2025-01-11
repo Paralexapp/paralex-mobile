@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
@@ -15,8 +16,14 @@ class LogisticsFindDelivery extends StatefulWidget {
   final String? toDestination;
   final String? orderDetails;
   final String? fare;
-  LogisticsFindDelivery(
-      {super.key, this.fromLocation, this.toDestination, this.orderDetails, this.fare});
+  final String? distance;
+  const LogisticsFindDelivery(
+      {super.key,
+      this.fromLocation,
+      this.toDestination,
+      this.orderDetails,
+      this.fare,
+      this.distance});
 
   @override
   State<LogisticsFindDelivery> createState() => _LogisticsFindDeliveryState();
@@ -35,6 +42,7 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
   final orderDetailsController = TextEditingController();
 
   final fareController = TextEditingController();
+  final distanceController = TextEditingController();
 
   @override
   void initState() {
@@ -43,7 +51,11 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
 
     toDestinationController.text = widget.toDestination ?? '';
     orderDetailsController.text = widget.orderDetails ?? '';
-    fareController.text = widget.fare ?? '';
+    distanceController.text = widget.distance ?? '';
+    fareController.text = NumberFormat.currency(
+      decimalDigits: 2,
+      symbol: "₦",
+    ).format(widget.fare ?? '');
   }
 
   @override
@@ -159,6 +171,17 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
                             readOnly: true,
                             hintText: 'Fare',
                             icon: Iconsax.moneys,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          LogisticsTextfield(
+                            controller: distanceController,
+                            borderColor: PaintColors.textFieldBorderColor,
+                            showPrefixIcon: true,
+                            readOnly: true,
+                            hintText: 'Distance',
+                            icon: Icons.social_distance,
                           ),
                           SizedBox(
                             height: 18,

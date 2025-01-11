@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -32,42 +34,74 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
   final _orderDetailsController = TextEditingController();
   final _fareController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  bool showOthers = false;
+  Position? devicePosition;
   GoogleMapController? _mapController;
 
   // Markers and Initial Location
-  final LatLng _initialLocation = const LatLng(37.7749, -122.4194);
-
+  LatLng _initialLocation = LatLng(0.0, 0.0);
+  StreamSubscription<Position>? _locationStream;
   Marker? _fromMarker;
   Marker? _toMarker;
-
-  Position? _currentPosition;
-  LatLng _currentLatLng = const LatLng(27.671332124757402, 85.3125417636781);
+  Set<Polyline> _polylines = {};
 
   @override
   void initState() {
-    getLocation();
     super.initState();
+    _setInitialLocation();
   }
 
-  getLocation() async {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Geolocator.checkPermission();
-      // if (pp.name == LocationPermission.always) {
-      _currentPosition =
-          await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      _currentLatLng = LatLng(_currentPosition!.latitude, _currentPosition!.longitude);
-      _mapController?.animateCamera(CameraUpdate.newLatLng(
-        _currentLatLng,
-      ));
-      setState(() {});
-    });
+  Future<void> _setInitialLocation() async {
+    try {
+      // Check location permissions
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+        if (permission != LocationPermission.whileInUse &&
+            permission != LocationPermission.always) {
+          // Permissions denied
+          return;
+        }
+      }
+
+      // Get the current location
+      Position position = await Geolocator.getCurrentPosition(
+        locationSettings: LocationSettings(
+          accuracy: LocationAccuracy.best,
+        ),
+      );
+
+      setState(() {
+        _initialLocation = LatLng(position.latitude, position.longitude);
+      });
+      debugPrint(
+          "current location: ${_initialLocation.longitude} ---latitude==${_initialLocation.latitude}");
+    } catch (e) {
+      debugPrint("Error getting current location: $e");
+    }
+  }
+
+  cancelLocationStream() {
+    _locationStream?.cancel();
+    _locationStream = null;
   }
 
   Future<void> _handleLocationSelection(PlaceModel place, {required bool isFrom}) async {
     try {
-      LatLng position = LatLng(double.tryParse(place.latitude) ?? 0.0,
-          double.tryParse(place.longitude) ?? 0.0);
+      LatLng position = LatLng(
+        double.tryParse(place.latitude) ?? 0.0,
+        double.tryParse(place.longitude) ?? 0.0,
+      );
+
+      BitmapDescriptor markerIcon = isFrom
+          ? BitmapDescriptor.defaultMarker
+          : await BitmapDescriptor.fromAssetImage(
+              ImageConfiguration(size: Size(40, 40)),
+              Platform.isIOS
+                  ? 'assets/images/marker.png'
+                  : 'assets/images/marker_android.png',
+            );
 
       setState(() {
         if (isFrom) {
@@ -75,29 +109,85 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
             markerId: MarkerId("from"),
             position: position,
             infoWindow: InfoWindow(title: "From Location"),
+            icon: markerIcon,
           );
         } else {
           _toMarker = Marker(
             markerId: MarkerId("to"),
             position: position,
             infoWindow: InfoWindow(title: "To Destination"),
+            icon: markerIcon,
           );
         }
-        _mapController?.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target:
-                  position, //LatLng(place.latitude, place.longitude), // Assuming PlaceModel has these fields
-              zoom: 14.0,
-            ),
-          ),
-        );
-        _controller.addLocation(place);
       });
+
+      // Add the place to the controller
+      _controller.addLocation(place);
+
+      // Adjust camera to show both markers
+      _updatePolyline();
     } catch (e) {
       print("Error handling location selection: $e");
     }
   }
+
+  void _updatePolyline() {
+    if (_fromMarker != null && _toMarker != null) {
+      setState(() {
+        _polylines = {
+          Polyline(
+            polylineId: PolylineId("route"),
+            points: [
+              _fromMarker!.position,
+              _toMarker!.position,
+            ],
+            color: Colors.blue,
+            width: 4, // Thickness of the line
+          ),
+        };
+      });
+    }
+  }
+
+  // Future<void> _handleLocationSelection(PlaceModel place, {required bool isFrom}) async {
+  //   try {
+  //     LatLng position = LatLng(double.tryParse(place.latitude) ?? 0.0,
+  //         double.tryParse(place.longitude) ?? 0.0);
+  //
+  //     setState(() async {
+  //       if (isFrom) {
+  //         _fromMarker = Marker(
+  //           markerId: MarkerId("from"),
+  //           position: position,
+  //           infoWindow: InfoWindow(title: "From Location"),
+  //         );
+  //       } else {
+  //         _toMarker = Marker(
+  //             markerId: MarkerId("to"),
+  //             position: position,
+  //             infoWindow: InfoWindow(title: "To Destination"),
+  //             icon: await BitmapDescriptor.fromAssetImage(
+  //               ImageConfiguration(size: Size(40, 40)),
+  //               Platform.isIOS
+  //                   ? 'assets/images/marker.png'
+  //                   : 'assets/images/marker_android.png',
+  //             ));
+  //       }
+  //       _mapController?.animateCamera(
+  //         CameraUpdate.newCameraPosition(
+  //           CameraPosition(
+  //             target:
+  //                 position, //LatLng(place.latitude, place.longitude), // Assuming PlaceModel has these fields
+  //             zoom: 11.0,
+  //           ),
+  //         ),
+  //       );
+  //       _controller.addLocation(place);
+  //     });
+  //   } catch (e) {
+  //     print("Error handling location selection: $e");
+  //   }
+  // }
 
   void submitForm() {
     _controller.fareController.value = _fareController.text;
@@ -220,17 +310,30 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                               hint: 'Order details',
                               icon: Iconsax.d_rotate,
                               onChanged: (val) {
-                                _orderDetailsController.text = val!;
+                                if (val?.toLowerCase() == 'others') {
+                                  setState(() {
+                                    showOthers = true;
+                                    _orderDetailsController.clear();
+                                  });
+                                } else {
+                                  setState(() {
+                                    showOthers = false;
+                                  });
+                                  _orderDetailsController.text = val!;
+                                }
                               }),
-                          // SizedBox(
-                          //   height: 15,
-                          // ),
-                          // LogisticsTextfield(
-                          //   controller: _fareController,
-                          //   showPrefixIcon: true,
-                          //   hintText: 'Fare',
-                          //   icon: Iconsax.moneys,
-                          // ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Visibility(
+                            visible: showOthers,
+                            child: LogisticsTextfield(
+                              controller: _orderDetailsController,
+                              showPrefixIcon: true,
+                              hintText: 'Order details',
+                              icon: Iconsax.moneys,
+                            ),
+                          ),
                           SizedBox(
                             height: 18,
                           ),
@@ -256,16 +359,34 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
   }
 
   Widget _buildGoogleMap() {
+    _mapController?.animateCamera(
+      CameraUpdate.newLatLngZoom(_initialLocation, 16),
+    );
     return GoogleMap(
-      onMapCreated: (controller) => _mapController = controller,
+      onMapCreated: (map) async {
+        _setInitialLocation();
+        _mapController = map;
+        try {
+          String mapStyle = await DefaultAssetBundle.of(context)
+              .loadString('assets/json/map_style.json');
+          _mapController?.setMapStyle(mapStyle);
+        } catch (_) {}
+      },
       initialCameraPosition: CameraPosition(
         target: _initialLocation,
-        zoom: 14.0,
+        zoom: 11.0,
       ),
       markers: {
         if (_fromMarker != null) _fromMarker!,
-        if (_toMarker != null) _toMarker!,
+        (_toMarker != null)
+            ? _toMarker!
+            : Marker(
+                markerId: MarkerId("to"),
+                position: _initialLocation,
+                infoWindow: InfoWindow(title: "Current position"),
+              )
       },
+      polylines: _polylines,
     );
   }
 }

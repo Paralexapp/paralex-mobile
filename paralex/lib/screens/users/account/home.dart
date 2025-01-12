@@ -24,7 +24,7 @@ class Home extends StatelessWidget {
           onPageChanged: (index) {
             controller.currentPage.value = index;
           },
-          children: const [
+          children:  [
             Dashboard(),
             NewsScreen(),
             SearchTab(),

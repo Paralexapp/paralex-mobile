@@ -1,64 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:paralex/reusables/paints.dart';
+import 'package:paralex/service_provider/controllers/search_controller.dart';
+import 'package:get/get.dart';
 
-class SearchTab extends StatefulWidget {
-  const SearchTab({super.key});
-
-  @override
-  _SearchTabState createState() => _SearchTabState();
-}
-
-class _SearchTabState extends State<SearchTab> {
-  final TextEditingController _searchController = TextEditingController();
-  String _searchResult = '';
-
-  void _onSearch() {
-    if (_searchController.text.isEmpty) {
-      setState(() {
-        _searchResult = 'Please enter a search query';
-      });
-    } else {
-      setState(() {
-        _searchResult = 'No result found';
-      });
-    }
-  }
+class SearchTab extends StatelessWidget {
+  final MySearchController searchController = Get.put(MySearchController());
+   SearchTab({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              height: 60,
-              width: MediaQuery.of(context).size.width * 0.8,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color(0xFFF2F2F2),
-                  prefixIcon: const Icon(Icons.search),
-                  labelText: 'Search App',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                ),
+      backgroundColor: PaintColors.bgColor,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width * 0.8,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Obx(() => TextField(
+                  controller: searchController.textEditingController,
+                  onChanged: (value) {
+                    searchController.updateSuggestions(value);
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "Search...",
+                    suffixIcon: searchController.searchText.value.isNotEmpty
+                        ? IconButton(
+                      icon: Icon(Icons.clear,color: Colors.red,),
+                      onPressed: () {
+                        searchController.textEditingController.clear();
+                        searchController.updateSuggestions('');
+                      },
+                    )
+                        : null,
+                  ),
+                )),
+
               ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _onSearch,
-              child: const Text('Search'),
-            ),
-            const SizedBox(height: 20),
-            if (_searchResult.isNotEmpty)
-              Text(
-                _searchResult,
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
+              SizedBox(height: 10),
+              Obx(() {
+                if (searchController.suggestions.isEmpty) {
+                  return SizedBox();
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: searchController.suggestions.length,
+                    itemBuilder: (context, index) {
+                      final suggestion = searchController.suggestions[index];
+                      return ListTile(
+                        title: Text(suggestion),
+                        onTap: () => searchController.selectSuggestion(suggestion),
+                      );
+                    },
+                  ),
+                );
+              }),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: searchController.performSearch,
+                child: const Text('Search',style: TextStyle(color: PaintColors.paralexpurple),),
               ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
+

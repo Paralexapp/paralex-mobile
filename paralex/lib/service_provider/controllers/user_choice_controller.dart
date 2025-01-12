@@ -43,6 +43,7 @@ class UserChoiceController extends GetxController {
   var userIdToken = ''.obs;
   var userEmail = ''.obs;
   var authToken = ''.obs;
+  var resetToken = ''.obs;
 
   // Backward-compatible properties
   var isUser = true.obs; // Reflects if the user is a "USER"

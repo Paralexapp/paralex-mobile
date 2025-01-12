@@ -24,11 +24,11 @@ class NotificationDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<NotificationDetailScreen> createState() => _NotificationDetailScreenState();
+  State<NotificationDetailScreen> createState() =>
+      _NotificationDetailScreenState();
 }
 
 class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
-
   final ApiService apiService = ApiService();
   bool isLoading = true;
 
@@ -45,14 +45,36 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
     }
 
     try {
-      String endpoint;
+      late String endpoint;
       String userId;
 
       if (widget.appBarTitle.toLowerCase() == "message") {
-        endpoint = "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/inbox/mark-as-read";
+        if (userController.selectedUserType.value == UserType.USER) {
+          endpoint =
+              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/inbox/mark-as-read";
+        } else if (userController.selectedUserType.value ==
+            UserType.SERVICE_PROVIDER_LAWYER) {
+          endpoint =
+              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/inbox/lawyer/mark-as-read";
+        } else if (userController.selectedUserType.value ==
+            UserType.SERVICE_PROVIDER_RIDER) {
+          endpoint =
+              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/inbox/rider/mark-as-read";
+        }
         userId = userController.userIdToken.value;
       } else {
-        endpoint = "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/mark-as-read";
+        if (userController.selectedUserType.value == UserType.USER) {
+          endpoint =
+              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/mark-as-read";
+        } else if (userController.selectedUserType.value ==
+            UserType.SERVICE_PROVIDER_LAWYER) {
+          endpoint =
+              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/lawyer/mark-as-read";
+        } else if (userController.selectedUserType.value ==
+            UserType.SERVICE_PROVIDER_RIDER) {
+          endpoint =
+              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/rider/mark-as-read";
+        }
         userId = "null";
       }
       final queryParams = {
@@ -74,7 +96,8 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
       // Handle the response
       if (response.statusCode == 200) {
         if (response.body.isEmpty) {
-          debugPrint('Notification marked as read successfully with no response body.');
+          debugPrint(
+              'Notification marked as read successfully with no response body.');
         } else {
           debugPrint('Notification marked as read: ${response.body}');
         }
@@ -91,11 +114,12 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppBar(appBarTitle: widget.appBarTitle,),
+      appBar: CustomAppBar(
+        appBarTitle: widget.appBarTitle,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
@@ -143,7 +167,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       title: Text(
-        "$appBarTitle details" ,
+        "$appBarTitle details",
         style: FontStyles.smallCapsIntro.copyWith(
           fontSize: 16,
           letterSpacing: 0,

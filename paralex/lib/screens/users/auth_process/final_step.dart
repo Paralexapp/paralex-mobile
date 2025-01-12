@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
+import 'package:get/get.dart';
+
+import '../../../routes/navs.dart';
 
 class FinalStep extends StatefulWidget {
   const FinalStep({super.key});
@@ -59,7 +62,7 @@ class _FinalStepState extends State<FinalStep> {
                   height: size.height * 0.40,
                 ),
                 GestureDetector(
-                  // onTap: () => Get.toNamed(Nav.tellusMoreforUsers),
+                   onTap: () => Get.toNamed(Nav.login),
 
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -70,7 +73,7 @@ class _FinalStepState extends State<FinalStep> {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Center(
                         child: Text(
-                      "OKAY",
+                      "Click to login",
                       style: FontStyles.smallCapsIntro.copyWith(
                           color: Colors.white,
                           letterSpacing: 0,

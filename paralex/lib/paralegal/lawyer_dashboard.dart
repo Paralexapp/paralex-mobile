@@ -6,13 +6,17 @@ import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../routes/navs.dart';
 import '../../../../service_provider/controllers/user_choice_controller.dart';
+import '../service_provider/controllers/notification_controller.dart';
 import '../service_provider/view/delivery_notification.dart';
 import '../service_provider/view/drawer.dart';
 import '../reusables/bottom_nav.dart'; // Import for the bottom navigation bar
 import '../news/news_screen.dart';
 import '../../../../service_provider/view/search_tab.dart';
+import 'package:badges/badges.dart' as badges;
 
 final userController = Get.find<UserChoiceController>();
+final NotificationsController controller = Get.put(NotificationsController());
+final NotificationsController inboxController = Get.put(NotificationsController());
 
 class LawyerDashboard extends StatefulWidget {
   const LawyerDashboard({super.key});
@@ -79,7 +83,8 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
     );
   }
 
-  Widget _buildDashboard(BuildContext context, String formattedDate, Size size) {
+  Widget _buildDashboard(
+      BuildContext context, String formattedDate, Size size) {
     return Builder(
       builder: (context) => SafeArea(
         child: SingleChildScrollView(
@@ -89,9 +94,11 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
               children: [
                 _buildHeader(context, formattedDate),
                 SizedBox(height: size.height * 0.03),
-                _buildImageSection(context, size, 'assets/images/paralegal.png', Nav.logisticsDeliveryInfo),
+                _buildImageSection(context, size, 'assets/images/paralegal.png',
+                    Nav.logisticsDeliveryInfo),
                 SizedBox(height: size.height * 0.03),
-                _buildImageSection(context, size, 'assets/images/log2.png', Nav.lawyerParalegalHome),
+                _buildImageSection(context, size, 'assets/images/log2.png',
+                    Nav.lawyerParalegalHome),
                 SizedBox(height: size.height * 0.03),
                 _buildDeliveryDetails(),
               ],
@@ -126,36 +133,53 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
               ),
             ),
             Obx(() => Text(
-              "Hello, ${userController.firstName.value} ${userController.lastName.value}",
-              style: FontStyles.headingText.copyWith(
-                color: PaintColors.paralexpurple,
-                fontWeight: FontWeight.w900,
-                fontSize: 20,
-              ),
-            )),
+                  "Hello, ${userController.firstName.value} ${userController.lastName.value}",
+                  style: FontStyles.headingText.copyWith(
+                    color: PaintColors.paralexpurple,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                  ),
+                )),
           ],
         ),
+        Obx(() {
+          int unreadCount = controller.unreadCount.value;
 
-        IconButton(onPressed: () {
-    Navigator.of(context).push(
-    MaterialPageRoute(
-    builder: (context) => DeliveryNotification(
-    appBarTitle: "Notification",
-    ),
-    ),
-    );
-    },
-       icon:  const Icon(
-          Iconsax.notification,
-          color: PaintColors.paralexpurple,
-          size: 30,
-        ),
-        ),
-    ],
+          return badges.Badge(
+            position: badges.BadgePosition.topEnd(top: -10, end: -10),
+            showBadge: unreadCount > 0,
+            badgeContent: Text(
+              unreadCount.toString(),
+              style: const TextStyle(color: Colors.white, fontSize: 12),
+            ),
+            badgeStyle: const badges.BadgeStyle(
+              badgeColor: Colors.red,
+              shape: badges.BadgeShape.circle,
+            ),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DeliveryNotification(
+                      appBarTitle: "Notification",
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(
+                Iconsax.notification,
+                color: PaintColors.paralexpurple,
+                size: 30,
+              ),
+            ),
+          );
+        }),
+      ],
     );
   }
 
-  Widget _buildImageSection(BuildContext context, Size size, String imagePath, String routeName) {
+  Widget _buildImageSection(
+      BuildContext context, Size size, String imagePath, String routeName) {
     return InkWell(
       onTap: () => Get.toNamed(routeName),
       child: Container(

@@ -4,7 +4,10 @@ import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 
 import '../../../../routes/navs.dart';
+import '../../../../service_provider/controllers/user_choice_controller.dart';
+import '../../../../service_provider/services/api_service.dart';
 
+final userController = Get.find<UserChoiceController>();
 class StepThree extends StatefulWidget {
   const StepThree({super.key});
 
@@ -18,7 +21,10 @@ class _StepThreeState extends State<StepThree> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  var _isObscure;
+  final ApiService _apiService = ApiService();
+
+  bool _isObscure = false;
+  bool _isObscure1 = false;
   bool _hasEightChars = false;
   bool _hasCapitalLetters = false;
   bool _hasSpecialChar = false;
@@ -28,6 +34,7 @@ class _StepThreeState extends State<StepThree> {
   @override
   void initState() {
     _isObscure = true;
+    _isObscure1 = true;
     super.initState();
   }
 
@@ -111,7 +118,7 @@ class _StepThreeState extends State<StepThree> {
                           // padding: const EdgeInsets.all(0),
                           margin: const EdgeInsets.symmetric(vertical: 20),
                           child: TextFormField(
-                            obscureText: _isObscure,
+                            obscureText: _isObscure1,
                             onChanged: (value) => (updateFormValidity()),
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -127,8 +134,12 @@ class _StepThreeState extends State<StepThree> {
                             decoration: InputDecoration(
                                 // icon: Icon(Icons.person),
                                 suffixIcon: IconButton(
-                                    onPressed: () {},
-                                    icon: _isObscure
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure1 = !_isObscure1;
+                                      });
+                                    },
+                                    icon: _isObscure1
                                         ? const Icon(Icons.visibility)
                                         : const Icon(Icons.visibility_off)),
                                 hintText: 'confirm password',
@@ -150,38 +161,38 @@ class _StepThreeState extends State<StepThree> {
                       const SizedBox(height: 20),
 
                       Center(
-                          child: ElevatedButton.icon(
-                              onPressed: () {
-                                if (!_key.currentState!.validate()) {
-                                  return;
-                                }
-                                Get.toNamed(Nav.finalStep);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  backgroundColor: _isFormValid
-                                      ? PaintColors.paralexpurple
-                                      : PaintColors.fadedPinkBg,
-                                  foregroundColor: Colors.white,
-                                  minimumSize: Size(size.width * 0.90, 48),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8))),
-                              label: Text(
-                                "CONTINUE",
-                                style: FontStyles.headingText
-                                    .copyWith(fontSize: 20),
-                              ),
-                              icon: loading == true
-                                  ? Container(
-                                      width: 30,
-                                      height: 30,
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: const CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 3,
-                                      ),
-                                    )
-                                  : Container()))
+                        child: ElevatedButton.icon(
+                          onPressed: _isFormValid && !loading
+                              ? _resetPassword
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: _isFormValid
+                                ? PaintColors.paralexpurple
+                                : PaintColors.fadedPinkBg,
+                            foregroundColor: Colors.white,
+                            minimumSize: Size(size.width * 0.90, 48),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          label: Text(
+                            loading ? "LOADING..." : "CONTINUE",
+                            style: FontStyles.headingText.copyWith(fontSize: 20),
+                          ),
+                          icon: loading
+                              ? Container(
+                            width: 30,
+                            height: 30,
+                            padding: const EdgeInsets.all(2.0),
+                            child: const CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          )
+                              : Container(),
+                        ),
+                      )
                     ],
                   ))
             ],
@@ -225,4 +236,46 @@ class _StepThreeState extends State<StepThree> {
       ],
     );
   }
+
+  Future<void> _resetPassword() async {
+    if (!_key.currentState!.validate()) {
+      return;
+    }
+
+    setState(() {
+      loading = true;
+    });
+
+    try {
+      final response = await _apiService.postRequest(
+        'api/v1/auth/reset-password',
+        {
+          'resetToken': userController.resetToken.value,
+          'newPassword': _passwordController.text.trim(),
+          'confirmPassword': _confirmPasswordController.text.trim(),
+        },
+      );
+      Get.snackbar(
+        'Success',
+        response['message'] ?? 'Password reset successfully!',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+      Get.toNamed(Nav.finalStep);
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      setState(() {
+        loading = false;
+      });
+    }
+  }
+
 }

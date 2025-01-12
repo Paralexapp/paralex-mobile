@@ -46,7 +46,7 @@ class LawyerList extends StatelessWidget {
         return InkWell(
           onTap: () {
             Get.to(() => LawyerProfile(
-                  imgPath: lawyer.user.photoUrl,
+                  imgPath: lawyer.user?.photoUrl,
                   lawyerName: lawyer.lawyerName,
                   specialization: lawyer.practiceAreas.toString(),
                   rating: 4.5,
@@ -56,7 +56,7 @@ class LawyerList extends StatelessWidget {
                 ));
           },
           child: Lawyers(
-            imgPath: lawyer.user.photoUrl,
+            imgPath: lawyer.user?.photoUrl,
             lawyerName: lawyer.lawyerName,
             specialization: lawyer.practiceAreas.join(','),
             rating: 4.5,

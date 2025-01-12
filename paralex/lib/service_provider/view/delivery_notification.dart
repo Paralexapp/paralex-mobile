@@ -81,13 +81,12 @@ class _DeliveryNotificationState extends State<DeliveryNotification> {
             })
 
             ),
-          ],
+           ],
         ),
       ),
     );
   }
 }
-
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String appBarTitle;
   const CustomAppBar({super.key, required this.appBarTitle});

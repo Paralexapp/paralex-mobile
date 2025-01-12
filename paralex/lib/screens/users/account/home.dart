@@ -19,17 +19,17 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: PaintColors.bgColor,
       body: PageView(
-          controller: controller.pageController,
-          physics: const BouncingScrollPhysics(),
-          onPageChanged: (index) {
-            controller.currentPage.value = index;
-          },
-          children:  [
-            Dashboard(),
-            NewsScreen(),
-            SearchTab(),
-          ],
-        ),
+        controller: controller.pageController,
+        physics: const BouncingScrollPhysics(),
+        onPageChanged: (index) {
+          controller.currentPage.value = index;
+        },
+        children:  [
+          Dashboard(),
+          NewsScreen(),
+          SearchTab(),
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
         color: PaintColors.white,
         child: Obx(() {
@@ -70,7 +70,6 @@ class Home extends StatelessWidget {
           );
         }),
       ),
-
     );
   }
 
@@ -100,6 +99,4 @@ class Home extends StatelessWidget {
       ),
     );
   }
-
-
 }

@@ -6,6 +6,7 @@ import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
 import 'package:paralex/screens/users/account/pages/controllers/logistics_delivery_info_controller.dart';
 import '../../../../../service_provider/controllers/user_choice_controller.dart';
+import '../../../../../service_provider/models/driver_model.dart';
 import 'widgets/logistics_button.dart';
 import 'widgets/logistics_textfield.dart';
 
@@ -38,7 +39,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
     super.initState();
   }
 
-  void requestDelivery() {
+  void requestDelivery() async {
     if (!_formKey.currentState!.validate()) return;
 
     _controller.senderStreetController.value = senderStreetController.text;
@@ -52,7 +53,7 @@ class _LogisticsHomeState extends State<LogisticsHome> {
     _controller.receiverNameController.value = receiverNameController.text;
     _controller.whatToDeliverController.value = whatToDeliverController.text;
 
-    _controller.initializePayment();
+    var response = await _controller.getDeliveryAmount();
   }
 
   @override
@@ -139,7 +140,6 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                     hintText: 'Street',
                                   ),
                                 ),
-                                Spacer(),
                                 // SizedBox(width: 8),
                                 // SizedBox(
                                 //   width: deviceWidth(context) * 0.25,
@@ -172,6 +172,12 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 color: PaintColors.paralexpurple,
                               ),
                             ),
+                            validator: (value) {
+                              if (value!.number.isEmpty) {
+                                return "Require";
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20,
@@ -241,6 +247,10 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                           LogisticsPhoneField(
                             controller: receiverPhoneNumberController,
                             hintText: 'Recipient phone number',
+                            onChanged: (val) {
+                              print(val.number);
+                              print(val.completeNumber);
+                            },
                             suffixWidget: InkWell(
                               onTap: () {},
                               child: Icon(
@@ -248,6 +258,12 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                                 color: PaintColors.paralexpurple,
                               ),
                             ),
+                            validator: (value) {
+                              if (value!.number.isEmpty) {
+                                return "Require";
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20,

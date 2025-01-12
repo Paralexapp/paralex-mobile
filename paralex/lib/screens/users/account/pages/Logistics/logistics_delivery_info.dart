@@ -11,6 +11,7 @@ import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/widgets/logistics_button.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/widgets/logistics_textfield.dart';
 import 'package:paralex/service_provider/models/place_model.dart';
+import 'package:paralex/widgets/dropdown.dart';
 
 import '../../../../../service_provider/view/widgets/places_text_form_field.dart';
 import '../controllers/logistics_delivery_info_controller.dart';
@@ -87,10 +88,11 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
             CameraPosition(
               target:
                   position, //LatLng(place.latitude, place.longitude), // Assuming PlaceModel has these fields
-              zoom: 19.0,
+              zoom: 14.0,
             ),
           ),
         );
+        _controller.addLocation(place);
       });
     } catch (e) {
       print("Error handling location selection: $e");
@@ -100,6 +102,7 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
   void submitForm() {
     _controller.fareController.value = _fareController.text;
     _controller.orderDetailsController.value = _orderDetailsController.text;
+
     Get.toNamed(Nav.logisticsHome);
   }
 
@@ -212,12 +215,13 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                           SizedBox(
                             height: 20,
                           ),
-                          LogisticsTextfield(
-                            controller: _orderDetailsController,
-                            showPrefixIcon: true,
-                            hintText: 'Order details',
-                            icon: Iconsax.d_rotate,
-                          ),
+                          CustomDropdown(
+                              items: ['Parcel', 'Document', 'Others'],
+                              hint: 'Order details',
+                              icon: Iconsax.d_rotate,
+                              onChanged: (val) {
+                                _orderDetailsController.text = val!;
+                              }),
                           // SizedBox(
                           //   height: 15,
                           // ),

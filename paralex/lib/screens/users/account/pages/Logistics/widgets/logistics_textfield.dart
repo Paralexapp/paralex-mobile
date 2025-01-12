@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -21,7 +20,9 @@ class LogisticsTextfield extends StatelessWidget {
       this.showSuffixIcon = false,
       this.maxLines,
       this.prefix,
-      this.suffix});
+      this.suffix,
+      this.readOnly = false,
+      this.enabled});
   final String? hintText;
   final IconData? icon;
   final IconData? suffixIcon;
@@ -35,6 +36,8 @@ class LogisticsTextfield extends StatelessWidget {
   final Widget? suffix;
   final TextInputType? keyboardType;
   final EdgeInsetsGeometry? padding;
+  final bool? readOnly;
+  final bool? enabled;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -43,6 +46,8 @@ class LogisticsTextfield extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLines: maxLines ?? 1,
       minLines: minLines ?? 1,
+      readOnly: readOnly ?? false,
+      enabled: enabled,
       decoration: InputDecoration(
         contentPadding: padding,
         prefixIcon: prefix ??
@@ -92,51 +97,49 @@ class LogisticsPhoneField extends StatelessWidget {
       this.hintText,
       this.onChanged,
       this.onCountryChanged,
-      this.controller});
+      this.controller,
+      this.validator});
   final Widget? suffixWidget;
   final String? hintText;
   final TextEditingController? controller;
   final void Function(PhoneNumber phoneNumber)? onChanged;
   final void Function(Country country)? onCountryChanged;
+  final String? Function(PhoneNumber?)? validator;
   @override
   Widget build(BuildContext context) {
     return IntlPhoneField(
-      disableLengthCheck: true,
-      dropdownIconPosition: IconPosition.trailing,
-      dropdownDecoration: BoxDecoration(),
-      controller: controller,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: PaintColors.paralexVeryLightGrey,
-        suffixIcon: suffixWidget,
-        hintText: hintText,
-        hintStyle: FontStyles.cancelTextStyle
-            .copyWith(fontWeight: FontWeight.w500, color: PaintColors.bodyText1Color),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          borderSide: BorderSide(color: PaintColors.paralexTransparent),
+        keyboardType: TextInputType.number,
+        dropdownIconPosition: IconPosition.trailing,
+        dropdownDecoration: BoxDecoration(),
+        controller: controller,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: PaintColors.paralexVeryLightGrey,
+          suffixIcon: suffixWidget,
+          hintText: hintText,
+          hintStyle: FontStyles.cancelTextStyle
+              .copyWith(fontWeight: FontWeight.w500, color: PaintColors.bodyText1Color),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            borderSide: BorderSide(color: PaintColors.paralexTransparent),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            borderSide: BorderSide(color: PaintColors.paralexTransparent),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            borderSide: BorderSide(color: PaintColors.paralexTransparent),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            borderSide: BorderSide(color: PaintColors.paralexTransparent),
+          ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          borderSide: BorderSide(color: PaintColors.paralexTransparent),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          borderSide: BorderSide(color: PaintColors.paralexTransparent),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          borderSide: BorderSide(color: PaintColors.paralexTransparent),
-        ),
-      ),
-      initialCountryCode: 'NG',
-      onChanged: onChanged,
-      onCountryChanged: onCountryChanged,
-      validator: (value) {
-        if (value!.isValidNumber()) return null;
-        return null;
-      },
-    );
+        initialCountryCode: 'NG',
+        onChanged: onChanged,
+        onCountryChanged: onCountryChanged,
+        validator: validator);
   }
 }

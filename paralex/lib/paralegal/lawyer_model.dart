@@ -41,10 +41,11 @@ class Lawyer2 {
   }
 }
 
-List<Lawyer> parseLawyers(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-  debugPrint('parsed>>>$parsed');
-  return parsed.map<Lawyer>((json) => Lawyer.fromJson(json)).toList();
+List<Lawyer> parseLawyers(List<dynamic> responseBody) {
+  // final parsed = responseBody.cast<Map<String, dynamic>>();
+  // debugPrint('parsed>>>$parsed');
+
+  return responseBody.map((json) => Lawyer.fromJson(json)).toList();
 }
 
 class Lawyer {
@@ -53,10 +54,10 @@ class Lawyer {
   final Location location;
   final String supremeCourtNumber;
   final List<String> practiceAreas;
-  final User user;
+  final User? user;
   final String lawyerName;
   final bool status;
-  final String? time;
+  final List<int> time;
 
   Lawyer({
     required this.id,
@@ -64,28 +65,26 @@ class Lawyer {
     required this.location,
     required this.supremeCourtNumber,
     required this.practiceAreas,
-    required this.user,
+    this.user,
     required this.lawyerName,
     required this.status,
-    this.time,
+    required this.time,
   });
 
-  // Manual fromJson method
   factory Lawyer.fromJson(Map<String, dynamic> json) {
     return Lawyer(
-      id: json['id'] ?? '',
-      state: json['state'] ?? '',
+      id: json['id'],
+      state: json['state'],
       location: Location.fromJson(json['location']),
-      supremeCourtNumber: json['supremeCourtNumber'] ?? '',
+      supremeCourtNumber: json['supremeCourtNumber'],
       practiceAreas: List<String>.from(json['practiceAreas']),
-      user: User.fromJson(json['user']),
-      lawyerName: json['lawyerName'] ?? '',
-      status: json['status'] ?? '',
-      time: json['time'] ?? '',
+      user: json['user'] != null ? User.fromJson(json['user']) : null,
+      lawyerName: json['lawyerName'],
+      status: json['status'],
+      time: List<int>.from(json['time']),
     );
   }
 
-  // Manual toJson method
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -93,7 +92,7 @@ class Lawyer {
       'location': location.toJson(),
       'supremeCourtNumber': supremeCourtNumber,
       'practiceAreas': practiceAreas,
-      'user': user.toJson(),
+      'user': user?.toJson(),
       'lawyerName': lawyerName,
       'status': status,
       'time': time,
@@ -112,8 +111,8 @@ class Location {
 
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
-      x: json['x'].toDouble() ?? 0,
-      y: json['y'].toDouble() ?? 0,
+      x: json['x'],
+      y: json['y'],
     );
   }
 
@@ -127,42 +126,44 @@ class Location {
 
 class User {
   final String id;
-  final String name;
+  final String? name;
   final String firstName;
   final String lastName;
   final String? dateOfBirth;
-  final String? customerCode;
+  final String customerCode;
+  final String walletId;
+  final String businessId;
   final String email;
   final String userType;
   final String registrationLevel;
-  final String phoneNumber;
+  final String? phoneNumber;
   final String? photoUrl;
-  final String? time;
+  final List<int> time;
   final String? bailBond;
   final bool enabled;
   final String username;
-  final List<String>? authorities;
   final bool accountNonExpired;
   final bool accountNonLocked;
   final bool credentialsNonExpired;
 
   User({
     required this.id,
-    required this.name,
+    this.name,
     required this.firstName,
     required this.lastName,
     this.dateOfBirth,
-    this.customerCode,
+    required this.customerCode,
+    required this.walletId,
+    required this.businessId,
     required this.email,
     required this.userType,
     required this.registrationLevel,
-    required this.phoneNumber,
+    this.phoneNumber,
     this.photoUrl,
-    this.time,
+    required this.time,
     this.bailBond,
     required this.enabled,
     required this.username,
-    this.authorities,
     required this.accountNonExpired,
     required this.accountNonLocked,
     required this.credentialsNonExpired,
@@ -170,26 +171,26 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'] ?? '',
-      name: json['name'] ?? '',
-      firstName: json['firstName'] ?? '',
-      lastName: json['lastName'] ?? '',
-      dateOfBirth: json['dateOfBirth'] ?? '',
-      customerCode: json['customerCode'] ?? '',
-      email: json['email'] ?? '',
-      userType: json['userType'] ?? '',
-      registrationLevel: json['registrationLevel'] ?? '',
-      phoneNumber: json['phoneNumber'] ?? '',
-      photoUrl: json['photoUrl'] ?? 'assets/images/law_catalogue.png',
-      time: json['time'],
-      bailBond: json['bailBond'] ?? '',
-      enabled: json['enabled'] ?? '',
-      username: json['username'] ?? '',
-      authorities:
-          json['authorities'] != null ? List<String>.from(json['authorities']) : null,
-      accountNonExpired: json['accountNonExpired'] ?? '',
-      accountNonLocked: json['accountNonLocked'] ?? '',
-      credentialsNonExpired: json['credentialsNonExpired'] ?? '',
+      id: json['id'],
+      name: json['name'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      dateOfBirth: json['dateOfBirth'],
+      customerCode: json['customerCode'],
+      walletId: json['walletId'],
+      businessId: json['businessId'],
+      email: json['email'],
+      userType: json['userType'],
+      registrationLevel: json['registrationLevel'],
+      phoneNumber: json['phoneNumber'],
+      photoUrl: json['photoUrl'],
+      time: List<int>.from(json['time']),
+      bailBond: json['bailBond'],
+      enabled: json['enabled'],
+      username: json['username'],
+      accountNonExpired: json['accountNonExpired'],
+      accountNonLocked: json['accountNonLocked'],
+      credentialsNonExpired: json['credentialsNonExpired'],
     );
   }
 
@@ -201,6 +202,8 @@ class User {
       'lastName': lastName,
       'dateOfBirth': dateOfBirth,
       'customerCode': customerCode,
+      'walletId': walletId,
+      'businessId': businessId,
       'email': email,
       'userType': userType,
       'registrationLevel': registrationLevel,
@@ -210,7 +213,6 @@ class User {
       'bailBond': bailBond,
       'enabled': enabled,
       'username': username,
-      'authorities': authorities,
       'accountNonExpired': accountNonExpired,
       'accountNonLocked': accountNonLocked,
       'credentialsNonExpired': credentialsNonExpired,

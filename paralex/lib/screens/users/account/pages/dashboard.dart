@@ -42,49 +42,67 @@ class _DashboardState extends State<Dashboard> {
         children: [
           Padding(
             padding: const EdgeInsets.all(25),
-            child: Container(
-              margin: const EdgeInsets.only(top: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        formattedDate,
-                        style: FontStyles.smallCapsIntro.copyWith(
-                          color: PaintColors.paralexpurple,
-                          fontSize: 14,
-                          letterSpacing: 0,
+              child: Container(
+                margin: const EdgeInsets.only(top: 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Ensures icons are spaced out evenly
+                  crossAxisAlignment: CrossAxisAlignment.center,  // Vertically aligns the icons in the middle
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          formattedDate,
+                          style: FontStyles.smallCapsIntro.copyWith(
+                            color: PaintColors.paralexpurple,
+                            fontSize: 14,
+                            letterSpacing: 0,
+                          ),
                         ),
-                      ),
-                      Obx(() => Text(
-                        "Hello, ${userController.firstName.value} ${userController.lastName.value}",
-                        style: FontStyles.headingText.copyWith(
-                          color: PaintColors.paralexpurple,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 20,
+                        Obx(() => Text(
+                          "Hello, ${userController.firstName.value} ${userController.lastName.value}",
+                          style: FontStyles.headingText.copyWith(
+                            color: PaintColors.paralexpurple,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20,
+                          ),
+                        )),
+                      ],
+                    ),
+
+                    // Wrap the icons in a Row to align them properly
+                    Row(
+                      mainAxisSize: MainAxisSize.min, // Ensures the row doesn't take up extra space
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => DeliveryNotification(
+                                  appBarTitle: "Notification",
+                                ),
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Iconsax.notification,
+                            color: PaintColors.paralexpurple,
+                            size: 30,
+                          ),
                         ),
-                      )),
-                    ],
-                  ),
-                  IconButton(onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => DeliveryNotification(
-                          appBarTitle: "Notification",
+                        IconButton(
+                          icon: const Icon(Icons.exit_to_app, color: PaintColors.paralexpurple),
+                          onPressed: () {
+                            // Perform the logout action and navigate to the logout screen
+                            _logoutUser();
+                          },
                         ),
-                      ),
-                    );
-                  }, icon: const Icon(
-                    Iconsax.notification,
-                    color: PaintColors.paralexpurple,
-                    size: 30,
-                  ),
-                  ),
-                ],
-              ),
-            ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+
           ),
           // Main widgets and elements follow
           Padding(
@@ -258,5 +276,12 @@ class _DashboardState extends State<Dashboard> {
         ],
       ),
     );
+  }
+
+  Future<void> _logoutUser() async {
+    // Handle logout logic here, like clearing session or token
+userController.clearSession();
+    // Navigate to the logout route or login screen
+    Get.offAllNamed(Nav.login);  // Adjust the route according to your app's flow
   }
 }

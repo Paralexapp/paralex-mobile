@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 
+import 'delivery_notification.dart';
+import 'drawer.dart';
+
 class Earning extends StatefulWidget {
   const Earning({super.key});
 
@@ -11,11 +14,14 @@ class Earning extends StatefulWidget {
 }
 
 class _EarningState extends State<Earning> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _selected = "Day";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // Add the key here
       backgroundColor: PaintColors.paralexpurple,
+      drawer: const MyDrawer(),
       body: SafeArea(
         child: Column(
           children: [
@@ -24,8 +30,7 @@ class _EarningState extends State<Earning> {
               child: Container(
                 color: Color(0xFFFAFCFE),
                 child: Stack(
-                  clipBehavior: Clip
-                      .none, // Ensures cards can overflow the purple container
+                  clipBehavior: Clip.none,
                   children: [
                     Container(
                       height: 150,
@@ -44,7 +49,9 @@ class _EarningState extends State<Earning> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    _scaffoldKey.currentState!.openDrawer();  // Opens the drawer when tapped
+                                  },
                                   child: Container(
                                     padding: EdgeInsets.all(7),
                                     decoration: BoxDecoration(
@@ -71,10 +78,21 @@ class _EarningState extends State<Earning> {
                                     color: Color(0x50ffffff),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Icon(
-                                    Icons.notifications_outlined,
-                                    size: 24,
-                                    color: Colors.white,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => DeliveryNotification(
+                                            appBarTitle: "Notification",
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Icon(
+                                      Icons.notifications_outlined,
+                                      size: 24,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -95,8 +113,7 @@ class _EarningState extends State<Earning> {
                       ),
                     ),
                     Positioned(
-                      top:
-                          120, // Ensures the Row overlaps with the purple container
+                      top: 120, // Ensures the Row overlaps with the purple container
                       left: 12,
                       right: 12,
                       child: Row(
@@ -106,8 +123,7 @@ class _EarningState extends State<Earning> {
                           ),
                           SizedBox(width: 10),
                           Expanded(
-                            child:
-                                EarningsCard(title: "Online", value: "23h 39m"),
+                            child: EarningsCard(title: "Online", value: "23h 39m"),
                           ),
                         ],
                       ),
@@ -138,8 +154,7 @@ class _EarningState extends State<Earning> {
                             children: [
                               // Toggle Buttons
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 48.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 48.0),
                                 child: Container(
                                   //height: 33,
                                   decoration: BoxDecoration(
@@ -148,7 +163,7 @@ class _EarningState extends State<Earning> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children:
-                                        ['Day', 'Week', 'Month'].map((option) {
+                                    ['Day', 'Week', 'Month'].map((option) {
                                       final isSelected = _selected == option;
                                       return GestureDetector(
                                         onTap: () {
@@ -161,8 +176,7 @@ class _EarningState extends State<Earning> {
                                             color: isSelected
                                                 ? Colors.white
                                                 : Color(0xFFE2E7F1),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                            borderRadius: BorderRadius.circular(8),
                                           ),
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 16, vertical: 8),
@@ -194,13 +208,10 @@ class _EarningState extends State<Earning> {
                                       leftTitles: AxisTitles(
                                         sideTitles: SideTitles(
                                           showTitles: true,
-                                          reservedSize:
-                                              40, // Space for the titles on the left axis
+                                          reservedSize: 40,
                                           getTitlesWidget: (value, meta) {
                                             return Text(
-                                              value
-                                                  .toInt()
-                                                  .toString(), // Y-axis values
+                                              value.toInt().toString(),
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 12),
@@ -248,25 +259,18 @@ class _EarningState extends State<Earning> {
                                         ),
                                       ),
                                       topTitles: AxisTitles(
-                                          sideTitles:
-                                              SideTitles(showTitles: false)),
+                                          sideTitles: SideTitles(showTitles: false)),
                                       rightTitles: AxisTitles(
-                                          sideTitles:
-                                              SideTitles(showTitles: false)),
+                                          sideTitles: SideTitles(showTitles: false)),
                                     ),
                                     gridData: FlGridData(
-                                      show: true, // Enable grid lines
-                                      drawHorizontalLine:
-                                          true, // Enable horizontal grid lines
-                                      drawVerticalLine:
-                                          false, // Disable vertical grid lines
+                                      show: true,
+                                      drawHorizontalLine: true,
+                                      drawVerticalLine: false,
                                       getDrawingHorizontalLine: (value) {
-                                        // Customize the appearance of each horizontal line
                                         return FlLine(
-                                          color: Colors.grey.withOpacity(
-                                              0.5), // Line color and transparency
-                                          strokeWidth: 1.0, // Line thickness
-                                          //dashArray: [5, 5], // Dashed line pattern [gap, length]
+                                          color: Colors.grey.withOpacity(0.5),
+                                          strokeWidth: 1.0,
                                         );
                                       },
                                     ),
@@ -274,38 +278,31 @@ class _EarningState extends State<Earning> {
                                     barGroups: [
                                       BarChartGroupData(x: 0, barRods: [
                                         BarChartRodData(
-                                            toY: 1000,
-                                            color: PaintColors.paralexpurple)
+                                            toY: 1000, color: PaintColors.paralexpurple)
                                       ]),
                                       BarChartGroupData(x: 1, barRods: [
                                         BarChartRodData(
-                                            toY: 2000,
-                                            color: PaintColors.paralexpurple)
+                                            toY: 2000, color: PaintColors.paralexpurple)
                                       ]),
                                       BarChartGroupData(x: 2, barRods: [
                                         BarChartRodData(
-                                            toY: 500,
-                                            color: PaintColors.paralexpurple)
+                                            toY: 500, color: PaintColors.paralexpurple)
                                       ]),
                                       BarChartGroupData(x: 3, barRods: [
                                         BarChartRodData(
-                                            toY: 1500,
-                                            color: PaintColors.paralexpurple)
+                                            toY: 1500, color: PaintColors.paralexpurple)
                                       ]),
                                       BarChartGroupData(x: 4, barRods: [
                                         BarChartRodData(
-                                            toY: 2000,
-                                            color: PaintColors.paralexpurple)
+                                            toY: 2000, color: PaintColors.paralexpurple)
                                       ]),
                                       BarChartGroupData(x: 5, barRods: [
                                         BarChartRodData(
-                                            toY: 500,
-                                            color: PaintColors.paralexpurple)
+                                            toY: 500, color: PaintColors.paralexpurple)
                                       ]),
                                       BarChartGroupData(x: 6, barRods: [
                                         BarChartRodData(
-                                            toY: 1000,
-                                            color: PaintColors.paralexpurple)
+                                            toY: 1000, color: PaintColors.paralexpurple)
                                       ]),
                                     ],
                                   ),
@@ -334,20 +331,13 @@ class _EarningState extends State<Earning> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            "See all",
-                            style: TextStyle(
-                                color: PaintColors.paralexpurple,
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold),
-                          ),
                         ],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Container(
-                        padding:const EdgeInsets.symmetric(horizontal: 12.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         height: 50,
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -389,6 +379,7 @@ class _EarningState extends State<Earning> {
         ),
       ),
     );
+
   }
 }
 

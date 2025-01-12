@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paralex/screens/users/account/home.dart';
+import 'package:paralex/service_provider/models/driver_model.dart';
 import 'package:paralex/service_provider/services/api_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +11,7 @@ import '../../../../../routes/navs.dart';
 import '../../../../../service_provider/controllers/auth_controller.dart';
 import '../../../../../service_provider/controllers/user_choice_controller.dart';
 import '../../../../../service_provider/models/place_model.dart';
+import '../Logistics/logistics_find_delivery.dart';
 import '../Logistics/webview_payment_screen.dart';
 
 class LogisticsDeliveryInfoController extends GetxController {
@@ -16,6 +19,9 @@ class LogisticsDeliveryInfoController extends GetxController {
   final UserChoiceController userController = Get.find();
 
   final ApiService _apiService = ApiService();
+
+  DeliveryResponse? delivery;
+  DeliveryResponse? delivery2;
   //For order details
   var senderStreetController = ''.obs;
   var senderEntransController = ''.obs;
@@ -40,61 +46,7 @@ class LogisticsDeliveryInfoController extends GetxController {
 
   void submitCourierDelivery() {}
 
-  void requestDelivery(Map<String, dynamic> data) async {
-    try {
-      isLoading.value = true;
-
-      final response = await _apiService.postRequest('delivery/request/', data);
-
-      Get.snackbar(
-        'Success',
-        'Delivery  Requested successfully!',
-        snackPosition: SnackPosition.TOP,
-      );
-
-      // Pass firstName and lastName to the next screen
-      Get.toNamed(Nav.logisticsPaymentMethod);
-    } catch (e) {
-      debugPrint('error====$e');
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.TOP,
-      );
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  void initializePayment() async {
-    try {
-      isLoading.value = true;
-      final initResponse =
-          await _apiService.postRequest('payment/bill/initialize-payment', {
-        "email": _authController.userEmail.value,
-        "amount": 1000,
-      });
-
-      debugPrint('initResponse====${initResponse['data']}');
-      final Map<String, dynamic> authUrl = initResponse['data'];
-
-      // Navigate to the WebViewPaymentScreen
-      Get.to(
-        () => WebViewPaymentScreen(paymentData: authUrl),
-      );
-      isLoading.value = false;
-    } catch (e) {
-      isLoading.value = false;
-      debugPrint('error====$e');
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.TOP,
-      );
-    }
-  }
-
-  void verifyPayment(String reference) async {
+  Future<List<DriverModel>?> requestDelivery() async {
     var data = {
       "driverProfileId": userController.email.value,
       "pickup": {
@@ -119,12 +71,153 @@ class LogisticsDeliveryInfoController extends GetxController {
     try {
       isLoading.value = true;
 
+      final response = await _apiService.postRequest('delivery/request/', data);
+
+      delivery = DeliveryResponse.fromJson(response);
+      delivery2 = DeliveryResponse.fromJson({
+        "id": "677e6f0124bf9f2b5a81f140",
+        "trackingId": "OCOkA0A",
+        "deliveryStage": null,
+        "nearbyDrivers": [
+          {
+            "id": '1',
+            "name": 'John Doe',
+            "phoneNumber": '123-456-7890',
+            "riderPhotoUrl": 'https://via.placeholder.com/150',
+            "distance": '2.5 km',
+          },
+          {
+            "id": '2',
+            "name": 'Jane Smith',
+            "phoneNumber": '987-654-3210',
+            "riderPhotoUrl": 'https://via.placeholder.com/150',
+            "distance": '3.1 km',
+          },
+        ]
+      });
+      Get.snackbar(
+        'Success',
+        'Delivery  Requested successfully!',
+        snackPosition: SnackPosition.TOP,
+      );
+
+      return delivery?.nearbyDrivers;
+
+      // // Pass firstName and lastName to the next screen
+      // Get.toNamed(Nav.logisticsPaymentMethod);
+    } catch (e) {
+      debugPrint('error====$e');
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.TOP,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void assignDriver(DriverModel driver) async {
+    debugPrint(
+        'error===={"driverProfileId": ${driver.id}, "deliveryRequestId": ${delivery?.id}');
+    final assignDriver = await _apiService.postRequest('delivery/request/assign',
+        {"driverProfileId": driver.id, "deliveryRequestId": delivery?.id});
+    Get.snackbar(
+      'Successful',
+      "Assign Driver Successful",
+      snackPosition: SnackPosition.TOP,
+    );
+    Get.offAllNamed(Nav.home);
+  }
+
+  Future<Map<String, dynamic>?> getDeliveryAmount() async {
+    var data = {
+      "driverProfileId": userController.email.value,
+      "pickup": {
+        "customerName":
+            "${userController.lastName.value} ${userController.firstName.value}",
+        "phoneNumber": senderPhoneNumberController.value,
+        "address": senderStreetController.value,
+        "latitude": senderLatitude.value,
+        "longitude": senderLongitude.value,
+        "description": orderDetailsController.value
+      },
+      "destination": {
+        "recipientName": receiverNameController.value,
+        "phoneNumber": receiverPhoneNumberController.value,
+        "address": receiverStreetController.value,
+        "latitude": recipientLatitude.value,
+        "longitude": recipientLongitude.value,
+        "categoryId": "na",
+        "description": whatToDeliverController.value
+      }
+    };
+
+    try {
+      isLoading.value = true;
+
+      final Map<String, dynamic> deliveryInformation =
+          await _apiService.postRequest('delivery/request/information', data);
+      Get.to(
+        () => LogisticsFindDelivery(
+          toDestination: senderStreetController.value,
+          fromLocation: receiverStreetController.value,
+          orderDetails: orderDetailsController.value,
+          fare: deliveryInformation['amount'].toString(),
+        ),
+      );
+      isLoading.value = false;
+      return deliveryInformation;
+    } catch (e) {
+      isLoading.value = false;
+      debugPrint('error====$e');
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.TOP,
+      );
+      return null;
+    }
+  }
+
+  void initializePayment(String amount) async {
+    try {
+      isLoading.value = true;
+      final initResponse =
+          await _apiService.postRequest('payment/bill/initialize-payment', {
+        "email": _authController.userEmail.value,
+        "amount": amount,
+      });
+
+      final Map<String, dynamic> authUrl = initResponse['data'];
+
+      // Navigate to the WebViewPaymentScreen
+      Get.to(
+        () => WebViewPaymentScreen(paymentData: authUrl),
+      );
+
+      isLoading.value = false;
+    } catch (e) {
+      isLoading.value = false;
+      debugPrint('error====$e');
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.TOP,
+      );
+    }
+  }
+
+  void verifyPayment(String reference) async {
+    try {
+      isLoading.value = true;
+
       final verifyResponse = await _apiService.postRequest(
           'payment/bill/verify-transaction?reference=$reference',
           {"reference": reference});
       //
-      debugPrint("request data====$data");
-      final response = await _apiService.postRequest('delivery/request/', data);
+      // debugPrint("request data====$data");
+      // final response = await _apiService.postRequest('delivery/request/', data);
       isLoading.value = false;
       Get.toNamed(Nav.logisticsPaymentMethod3);
     } catch (e) {
@@ -150,5 +243,22 @@ class LogisticsDeliveryInfoController extends GetxController {
     } else {
       throw Exception('Failed to fetch places');
     }
+  }
+
+  Future<void> addLocation(PlaceModel place) async {
+    final response = await _apiService.postRequest('locations/', {
+      "name": place.name,
+      "status": true,
+      "latitude": place.latitude,
+      "longitude": place.longitude
+    });
+
+    if (response['statusCode'] == 200 || response['statusCode'] == 201) {
+      Get.snackbar(
+        'Success',
+        'Location add successful',
+        snackPosition: SnackPosition.TOP,
+      );
+    } else {}
   }
 }

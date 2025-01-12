@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../reusables/paints.dart';
 import '../../routes/navs.dart';
 import '../controllers/notification_controller.dart';
+import '../../screens/users/account/pages/account_settings_page.dart';
 import '../controllers/user_choice_controller.dart';
 import 'delivery_notification.dart';
 import 'package:badges/badges.dart' as badges;
@@ -99,7 +100,9 @@ class MyDrawer extends StatelessWidget {
                   ListTile(
                     leading: const Icon(Icons.update_outlined),
                     title: const Text("Recent Orders"),
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(Nav.earning);
+                    },
                   ),
                   ListTile(
                     leading: const Icon(Icons.monetization_on_outlined),
@@ -176,7 +179,9 @@ class MyDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.settings_outlined),
                   title: const Text("Account Settings"),
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => const AccountSettingsPage());
+                  },
                 ),
                 // ListTile(
                 //   leading: const Icon(Icons.help_outline_outlined),
@@ -191,9 +196,11 @@ class MyDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.red),
                   ),
                   onTap: () {
-                    Get.toNamed(Nav.login);
+                    userChoiceController.clearSession(); // Call the clearSession method to reset the session
+                    Get.toNamed(Nav.login); // Navigate to the login screen
                   },
                 ),
+
               ],
             );
           }),

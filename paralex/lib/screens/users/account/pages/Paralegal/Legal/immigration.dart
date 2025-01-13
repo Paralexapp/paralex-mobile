@@ -26,7 +26,7 @@ class ImmigrationRegistration extends StatelessWidget {
         child: Column(
           children: [
             Image.asset(
-              'assets/images/nafdac.png',
+              'assets/images/immigration_logo.jpg',
               height: 250,
               fit: BoxFit.cover,
             ),
@@ -108,7 +108,7 @@ class ImmigrationRegistration extends StatelessWidget {
                     height: 30,
                   ),
                   CustomButton(
-                      ontap: () => Get.toNamed(Nav.nafdacStepOne),
+                      ontap: () => Get.toNamed(Nav.immigrationStepOne),
                       desiredWidth: 90,
                       buttonText: "Next",
                       buttonColor: PaintColors.paralexpurple)

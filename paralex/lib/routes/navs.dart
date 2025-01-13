@@ -31,6 +31,12 @@ class Nav {
   static const trademarkReg = '/trademark';
   static const nafdacStepOne = '/nafdacA';
   static const nafdacStepTwo = '/nafdacB';
+  static const cacStepOne = '/cacA';
+  static const cacStepTwo = '/cacB';
+  static const immigrationStepOne = '/immigrationA';
+  static const immigrationStepTwo = '/immigrationB';
+  static const trademarkStepOne = '/trademarkA';
+  static const trademarkStepTwo = '/trademarkB';
   static const findAlawyer = '/lawHome';
   static const bankInfo = '/bankInfo';
   static const notification = '/notification';

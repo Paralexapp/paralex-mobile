@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:paralex/paralegal/lawyer_dashboard.dart';
-
+import 'package:geolocator/geolocator.dart';
 import '../../routes/navs.dart';
 import '../services/api_service.dart';
 import 'user_choice_controller.dart'; // Import the UserChoiceController
@@ -27,6 +26,7 @@ class BankInfoController extends GetxController {
 
   Rx<File?> passportImage = Rx<File?>(null);
   RxBool isLoading = false.obs;
+  Rx<Position?> userLocation = Rx<Position?>(null);
 
   final ImagePicker _picker = ImagePicker();
 
@@ -52,12 +52,59 @@ class BankInfoController extends GetxController {
     passportImage.value = null;
   }
 
+  // Request Location Permissions
+  Future<bool> _requestLocationPermission() async {
+    while (true) {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        await Geolocator.openLocationSettings();
+        continue; // Keep checking until service is enabled
+      }
+
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.deniedForever) {
+          Get.snackbar("Permission Error", "Please enable location permissions in settings.");
+          await Geolocator.openAppSettings();
+          continue; // Keep looping until permissions are granted
+        } else if (permission == LocationPermission.denied) {
+          continue; // Keep requesting until granted
+        }
+      }
+
+      if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
+        return true; // Exit the loop when permissions are granted
+      }
+    }
+  }
+
+  // Get User Location
+  Future<void> fetchUserLocation() async {
+    bool permissionGranted = await _requestLocationPermission();
+    if (permissionGranted) {
+      try {
+        Position position = await Geolocator.getCurrentPosition(
+          locationSettings: LocationSettings(
+            accuracy: LocationAccuracy.high,
+          ),
+        );
+        userLocation.value = position;
+      } catch (e) {
+        Get.snackbar("Location Error", "Failed to get location: $e");
+      }
+    }
+  }
+
+
   void submitForm() async {
     if (formKey.currentState?.validate() ?? false) {
       if (passportImage.value == null) {
         Get.snackbar("Error", "Please upload a passport image.");
         return;
       }
+
+      await fetchUserLocation();
 
       try {
         isLoading.value = true;
@@ -75,6 +122,10 @@ class BankInfoController extends GetxController {
           "accountName": accNameController.text,
           "passportUrl": uploadedPhotoUrl,
           "email": _userChoiceController.email.value, // Include email
+          "location": {
+            "x": userLocation.value!.longitude,
+            "y":userLocation.value!.latitude
+          },
         });
         print("User Data: $userData");
         var response = await apiService.postRequest(

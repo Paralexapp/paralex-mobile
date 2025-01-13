@@ -8,12 +8,25 @@ final userController = Get.find<UserChoiceController>();
 
 class NotificationsController extends GetxController {
   var notifications = <NotificationModel>[].obs;
+  var inboxMessages = <NotificationModel>[].obs;
+
+  var unreadCount = 0.obs; // count for  notifications
+  var inboxUnreadCount = 0.obs; // count for inbox messages
+
   final ApiService apiService = ApiService();
 
   Future<void> fetchNotifications({bool includeUserId = true}) async {
     try {
       String? userId = includeUserId ? userController.userIdToken.value : "null";
-      String endpoint = 'api/notifications/get?userId=$userId';
+      late String endpoint;
+
+      if (userController.selectedUserType.value == UserType.USER) {
+        endpoint = 'api/notifications/get?userId=$userId';
+      } else if (userController.selectedUserType.value == UserType.SERVICE_PROVIDER_LAWYER) {
+        endpoint = 'api/notifications/get-lawyer-notification?userId=$userId';
+      } else if (userController.selectedUserType.value == UserType.SERVICE_PROVIDER_RIDER) {
+        endpoint = 'api/notifications/get-rider-notification?userId=$userId';
+      }
 
       print('Fetching notifications from endpoint: $endpoint');
 
@@ -21,7 +34,6 @@ class NotificationsController extends GetxController {
       Map<String, dynamic> response = await apiService.getRequest(endpoint);
       print('Raw API response: $response');
 
-      // Validate and process 'data' field
       if (response.containsKey('data')) {
         print('Type of data: ${response['data'].runtimeType}');
         print('Content of data: ${response['data']}');
@@ -39,7 +51,7 @@ class NotificationsController extends GetxController {
         if (data is List) {
           print('Processing notifications list: $data');
 
-          notifications.value = data.map((notification) {
+          List<NotificationModel> parsedNotifications = data.map((notification) {
             try {
               print('Parsing notification: $notification');
 
@@ -66,6 +78,14 @@ class NotificationsController extends GetxController {
             }
           }).whereType<NotificationModel>().toList();
 
+          if (includeUserId) {
+            inboxMessages.value = parsedNotifications;
+            updateInboxUnreadCount();
+          } else {
+            notifications.value = parsedNotifications;
+            updateUnreadCount();
+          }
+
           print('Final notifications list: ${notifications.value}');
         } else {
           print('Error: `data` is not a list after decoding. Found: $data');
@@ -83,6 +103,16 @@ class NotificationsController extends GetxController {
     }
   }
 
+  void updateUnreadCount() {
+    unreadCount.value = notifications.where((n) => !n.readInbox).length;
+    print('Unread notifications count: ${unreadCount.value}');
+  }
+
+  void updateInboxUnreadCount() {
+    inboxUnreadCount.value = inboxMessages.where((n) => !n.readInbox).length;
+    print('Unread inbox messages count: ${inboxUnreadCount.value}');
+  }
+
   String _extractStatusFromMessage(String message) {
     final List<String> validStatuses = [
       "delivered",
@@ -98,6 +128,5 @@ class NotificationsController extends GetxController {
     }
     return "default";
   }
-
-
 }
+

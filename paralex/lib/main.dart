@@ -34,6 +34,7 @@ import 'package:paralex/screens/users/auth_process/tellus_more.dart';
 import 'package:paralex/screens/users/auth_process/verification_message.dart';
 import 'package:paralex/screens/welcomeslides/last_welcome_screen.dart';
 import 'package:paralex/screens/welcomeslides/welcome.dart';
+import 'package:paralex/service_provider/controllers/notification_controller.dart';
 import 'package:paralex/service_provider/controllers/user_choice_controller.dart';
 import 'package:paralex/service_provider/view/about_you/about_you.dart';
 import 'package:paralex/service_provider/view/about_you/about_you_contd.dart';
@@ -70,6 +71,7 @@ import 'screens/users/account/pages/Logistics/logistics_payment_method3.dart';
 
 Future<void> main() async {
   Get.put(UserChoiceController());
+  Get.put<NotificationsController>(NotificationsController());
 
   runApp(GetMaterialApp(
     initialRoute: Nav.splash,

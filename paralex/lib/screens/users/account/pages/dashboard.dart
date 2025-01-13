@@ -5,11 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
-
+import 'package:badges/badges.dart' as badges;
+import '../../../../service_provider/controllers/notification_controller.dart';
 import '../../../../service_provider/controllers/user_choice_controller.dart';
 import '../../../../service_provider/view/delivery_notification.dart';
 
 final userController = Get.find<UserChoiceController>();
+final NotificationsController controller = Get.find();
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -74,22 +76,38 @@ class _DashboardState extends State<Dashboard> {
                     Row(
                       mainAxisSize: MainAxisSize.min, // Ensures the row doesn't take up extra space
                       children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => DeliveryNotification(
-                                  appBarTitle: "Notification",
-                                ),
+                        Obx(() {
+                          int unreadCount = controller.unreadCount.value;
+
+                          return badges.Badge(
+                            position: badges.BadgePosition.topEnd(top: -10, end: -10),
+                            showBadge: unreadCount > 0,
+                            badgeContent: Text(
+                              unreadCount.toString(),
+                              style: const TextStyle(color: Colors.white, fontSize: 12),
+                            ),
+                            badgeStyle: const badges.BadgeStyle(
+                              badgeColor: Colors.red,
+                              shape: badges.BadgeShape.circle,
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => DeliveryNotification(
+                                      appBarTitle: "Notification",
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Iconsax.notification,
+                                color: PaintColors.paralexpurple,
+                                size: 30,
                               ),
-                            );
-                          },
-                          icon: const Icon(
-                            Iconsax.notification,
-                            color: PaintColors.paralexpurple,
-                            size: 30,
-                          ),
-                        ),
+                            ),
+                          );
+                        }),
                         IconButton(
                           icon: const Icon(Icons.exit_to_app, color: PaintColors.paralexpurple),
                           onPressed: () {

@@ -8,24 +8,34 @@ import '../controllers/notification_controller.dart';
 import '../models/notification_model.dart';
 import 'notification_detail.dart';
 
-class DeliveryNotification extends StatelessWidget {
-  DeliveryNotification({super.key, required this.appBarTitle});
+class DeliveryNotification extends StatefulWidget {
+  const DeliveryNotification({super.key, required this.appBarTitle});
 
-  final NotificationsController notificationsController =
-      Get.put(NotificationsController());
   final String appBarTitle;
 
   @override
-  Widget build(BuildContext context) {
-    bool includeUserId = appBarTitle.toLowerCase() == "message";
+  State<DeliveryNotification> createState() => _DeliveryNotificationState();
+}
+
+class _DeliveryNotificationState extends State<DeliveryNotification> {
+  final NotificationsController notificationsController = Get.find<NotificationsController>();
+
+  @override
+  void initState() {
+    super.initState();
+    bool includeUserId = widget.appBarTitle.toLowerCase() == "message";
     notificationsController.fetchNotifications(includeUserId: includeUserId);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        appBarTitle: appBarTitle,
+        appBarTitle: widget.appBarTitle,
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          bool includeUserId = appBarTitle.toLowerCase() == "message";
+          bool includeUserId = widget.appBarTitle.toLowerCase() == "message";
           await notificationsController.fetchNotifications(
               includeUserId: includeUserId);
         },
@@ -38,7 +48,7 @@ class DeliveryNotification extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "All ${appBarTitle}s",
+                    "All ${widget.appBarTitle}s",
                     style: FontStyles.smallCapsIntro.copyWith(
                         fontSize: 18,
                         color: Color(0xFF21252C),
@@ -49,31 +59,34 @@ class DeliveryNotification extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(child: Obx(() {
-              print(
-                  'Building ListView with ${notificationsController.notifications.length} items');
-              return notificationsController.notifications.isEmpty
-                  ? Center(child: Text('No messages yet'))
-                  : ListView.builder(
-                      itemCount: notificationsController.notifications.length,
-                      itemBuilder: (context, index) {
-                        final notification =
-                            notificationsController.notifications[index];
-                        print('Rendering notification: $notification');
-                        return NotificationWidget(
-                          notification: notification,
-                          appBarTitle: appBarTitle,
-                        );
-                      },
-                    );
-            })),
-          ],
+            Expanded(child:
+            Obx(() {
+              final messages = widget.appBarTitle.toLowerCase() == "message"
+                  ? notificationsController.inboxMessages
+                  : notificationsController.notifications;
+              if (messages.isEmpty) {
+                return Center(child: Text('No ${widget.appBarTitle}s available'));
+              }
+              final reversedMessages = messages.reversed.toList();
+              return ListView.builder(
+                itemCount: reversedMessages.length,
+                itemBuilder: (context, index) {
+                  final notification = reversedMessages[index];
+                  return NotificationWidget(
+                    notification: notification,
+                    appBarTitle: widget.appBarTitle,
+                  );
+                },
+              );
+            })
+
+            ),
+           ],
         ),
       ),
     );
   }
 }
-
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String appBarTitle;
   const CustomAppBar({super.key, required this.appBarTitle});
@@ -112,7 +125,7 @@ class NotificationWidget extends StatelessWidget {
   final NotificationModel notification;
   final String appBarTitle;
 
-  NotificationWidget(
+  const NotificationWidget(
       {super.key, required this.notification, required this.appBarTitle});
 
   // Background color based on status

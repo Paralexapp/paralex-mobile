@@ -5,10 +5,12 @@ import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/service_provider/controllers/auth_controller.dart';
+import '../../../service_provider/controllers/notification_controller.dart';
 import '../../../service_provider/controllers/user_choice_controller.dart';
 import '../../../service_provider/services/api_service.dart';
 
 final userController = Get.find<UserChoiceController>();
+final notificationController = Get.find<NotificationsController>();
 
 class LoginWithPassword extends StatefulWidget {
   const LoginWithPassword({super.key});
@@ -61,8 +63,8 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                       ),
                       Text(
                         "Committed to providing prompt,\nresponsive services ",
-                        style: FontStyles.smallCapsIntro
-                            .copyWith(color: PaintColors.generalTextsm, letterSpacing: 0),
+                        style: FontStyles.smallCapsIntro.copyWith(
+                            color: PaintColors.generalTextsm, letterSpacing: 0),
                       )
                     ],
                   ),
@@ -97,8 +99,8 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                   labelText: 'Email *',
                                   border: OutlineInputBorder(),
                                   focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: PaintColors.paralexpurple))),
+                                      borderSide: BorderSide(
+                                          color: PaintColors.paralexpurple))),
                             ),
                           ),
                           // Password Field
@@ -108,9 +110,11 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                             onChanged: (value) {
                               setState(() {
                                 _hasEightChars = value.length >= 8;
-                                _hasCapitalLetters = RegExp(r'[A-Z]').hasMatch(value);
+                                _hasCapitalLetters =
+                                    RegExp(r'[A-Z]').hasMatch(value);
                                 _hasSpecialChar =
-                                    RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value);
+                                    RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                        .hasMatch(value);
                                 updateFormValidity();
                               });
                             },
@@ -142,8 +146,8 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                 labelText: 'password *',
                                 border: const OutlineInputBorder(),
                                 focusedBorder: const OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: PaintColors.paralexpurple))),
+                                    borderSide: BorderSide(
+                                        color: PaintColors.paralexpurple))),
                           )),
 
                           // New here? Sign up link
@@ -172,14 +176,26 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                             children: [
                               indicator(_hasEightChars, 'Minimum 8 Characters'),
                               const SizedBox(width: 10),
-                              indicator(_hasCapitalLetters, 'One UPPERCASE Letter'),
+                              indicator(
+                                  _hasCapitalLetters, 'One UPPERCASE Letter'),
                               const SizedBox(width: 10),
                               indicator(_hasSpecialChar,
                                   'One Unique Character (e.g: !@#%^&*?)'),
                             ],
                           ),
                           const SizedBox(height: 50),
+                          InkWell(
+                            onTap: () => Get.toNamed(Nav.forgotPassword),
+                            child: Text(
+                              "Forgot password?",
+                              style: FontStyles.smallCapsIntro.copyWith(
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 14,color: PaintColors.paralexpurple),
+                            ),
+                          ),
 
+                          const SizedBox(height: 30),
                           // Submit Button
                           Center(
                               child: ElevatedButton.icon(
@@ -192,17 +208,20 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                                       foregroundColor: Colors.white,
                                       minimumSize: Size(size.width * 0.90, 48),
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8))),
+                                          borderRadius:
+                                              BorderRadius.circular(8))),
                                   label: Text(
                                     loading ? "LOADING..." : "CONTINUE",
-                                    style: FontStyles.headingText.copyWith(fontSize: 20),
+                                    style: FontStyles.headingText
+                                        .copyWith(fontSize: 20),
                                   ),
                                   icon: loading
                                       ? Container(
                                           width: 30,
                                           height: 30,
                                           padding: const EdgeInsets.all(2.0),
-                                          child: const CircularProgressIndicator(
+                                          child:
+                                              const CircularProgressIndicator(
                                             color: Colors.white,
                                             strokeWidth: 3,
                                           ),
@@ -266,23 +285,26 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
     try {
       // Step 1: Authenticate the user and retrieve the token
       final response = await _apiService.postRequest(
-        'api/v1/auth/login', loginData,
+        'api/v1/auth/login',
+        loginData,
       );
 
       final authToken = response['data'];
       _authController.token.value = authToken;
       _authController.userEmail.value = _emailController.text;
 
-      userController.authToken.value = authToken; // Pass token to UserChoiceController
+      userController.authToken.value =
+          authToken; // Pass token to UserChoiceController
 
       // Step 2: Fetch user data by email
-      final userData = await userController.fetchUserByEmail(_emailController.text);
+      final userData =
+          await userController.fetchUserByEmail(_emailController.text);
 
       final String registrationLevel = userData['registrationLevel'];
       final String userType = userData['userType'];
       final String firstName = userData['firstName'];
       final String lastName = userData['lastName'];
-      final String userId =userData['id'];
+      final String userId = userData['id'];
       userController.firstName.value = userData['firstName'];
       userController.lastName.value = userData['lastName'];
       userController.userIdToken.value = userId;
@@ -315,24 +337,29 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       } else {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {
           userController.selectServiceProviderLawyer();
+          notificationController.fetchNotifications(includeUserId: true);
+          notificationController.fetchNotifications(includeUserId: false);
           Get.toNamed(Nav.lawyerDashboard, arguments: {
             'firstName': firstName,
             'lastName': lastName,
           }); // Lawyer home screen
         } else if (userType == 'SERVICE_PROVIDER_RIDER') {
           userController.selectServiceProviderRider();
+          notificationController.fetchNotifications(includeUserId: true);
+          notificationController.fetchNotifications(includeUserId: false);
           Get.toNamed(Nav.deliveryInfo1, arguments: {
             'firstName': firstName,
             'lastName': lastName,
           }); // Rider home screen
         } else if (userType == 'USER') {
           userController.selectUser();
+          notificationController.fetchNotifications(includeUserId: true);
+          notificationController.fetchNotifications(includeUserId: false);
           Get.toNamed(Nav.home, arguments: {
             'firstName': firstName,
             'lastName': lastName,
           }); // User home screen
-        }
-        else {
+        } else {
           // Handle other user types if needed
           Get.snackbar(
             'Error',

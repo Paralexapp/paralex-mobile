@@ -3,16 +3,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../reusables/paints.dart';
 import '../../routes/navs.dart';
+import '../controllers/notification_controller.dart';
 import '../../screens/users/account/pages/account_settings_page.dart';
 import '../controllers/user_choice_controller.dart';
 import 'delivery_notification.dart';
+import 'package:badges/badges.dart' as badges;
+
+final NotificationsController controller = Get.find();
+final userChoiceController = Get.find<UserChoiceController>();
+
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final userChoiceController = Get.find<UserChoiceController>();
 
     return Drawer(
       backgroundColor: Colors.white,
@@ -108,9 +113,28 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ],
                 ListTile(
-                  leading: const Icon(Icons.notifications_outlined),
+                  leading: Obx(() {
+                    int unreadCount = controller.unreadCount.value;
+
+                    return badges.Badge(
+                      position: badges.BadgePosition.topEnd(top: -5, end: -5),
+                      showBadge: unreadCount > 0,
+                      badgeContent: Text(
+                        unreadCount.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                      ),
+                      badgeStyle: const badges.BadgeStyle(
+                        badgeColor: Colors.red,
+                        shape: badges.BadgeShape.circle,
+                      ),
+                      child: const Icon(Icons.notifications_outlined),
+                    );
+                  }),
                   title: const Text("Notifications"),
-                  onTap: () {
+                  onTap: (){
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => DeliveryNotification(
@@ -121,9 +145,28 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.inbox),
+                  leading: Obx(() {
+                    int unreadCount = controller.inboxUnreadCount.value;
+
+                    return badges.Badge(
+                      position: badges.BadgePosition.topEnd(top: -5, end: -5),
+                      showBadge: unreadCount > 0,
+                      badgeContent: Text(
+                        unreadCount.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                      ),
+                      badgeStyle: const badges.BadgeStyle(
+                        badgeColor: Colors.red,
+                        shape: badges.BadgeShape.circle,
+                      ),
+                      child: const Icon(Icons.inbox),
+                    );
+                  }),
                   title: const Text("Inbox"),
-                  onTap: () {
+                  onTap: (){
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => DeliveryNotification(

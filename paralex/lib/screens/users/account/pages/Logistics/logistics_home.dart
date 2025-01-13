@@ -131,25 +131,30 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                           ),
                           SizedBox(
                             width: deviceWidth(context),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: deviceWidth(context) * 0.88,
-                                  child: LogisticsTextfield(
-                                    controller: senderStreetController,
-                                    hintText: 'Street',
-                                  ),
-                                ),
-                                // SizedBox(width: 8),
-                                // SizedBox(
-                                //   width: deviceWidth(context) * 0.25,
-                                //   child: LogisticsTextfield(
-                                //     controller: senderEntransController,
-                                //     hintText: 'Entran...',
-                                //   ),
-                                // ),
-                              ],
+                            child: LogisticsTextfield(
+                              controller: senderStreetController,
+                              hintText: 'Street',
                             ),
+
+                            // Row(
+                            //   children: [
+                            //     SizedBox(
+                            //       width: deviceWidth(context) * 0.88,
+                            //       child: LogisticsTextfield(
+                            //         controller: senderStreetController,
+                            //         hintText: 'Street',
+                            //       ),
+                            //     ),
+                            //     // SizedBox(width: 8),
+                            //     // SizedBox(
+                            //     //   width: deviceWidth(context) * 0.25,
+                            //     //   child: LogisticsTextfield(
+                            //     //     controller: senderEntransController,
+                            //     //     hintText: 'Entran...',
+                            //     //   ),
+                            //     // ),
+                            //   ],
+                            // ),
                           ),
                           SizedBox(
                             height: 8,
@@ -203,26 +208,30 @@ class _LogisticsHomeState extends State<LogisticsHome> {
                           ),
                           SizedBox(
                             width: deviceWidth(context),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: deviceWidth(context) * 0.88,
-                                  child: LogisticsTextfield(
-                                    controller: receiverStreetController,
-                                    hintText: 'Street',
-                                  ),
-                                ),
-                                // SizedBox(width: 8),
-                                Spacer(),
-                                // SizedBox(
-                                //   width: deviceWidth(context) * 0.25,
-                                //   child: LogisticsTextfield(
-                                //     controller: receiverEntransController,
-                                //     hintText: 'Entran...',
-                                //   ),
-                                // ),
-                              ],
+                            child: LogisticsTextfield(
+                              controller: receiverStreetController,
+                              hintText: 'Street',
                             ),
+
+                            // Row(
+                            //   children: [
+                            //     SizedBox(
+                            //       width: deviceWidth(context) * 0.88,
+                            //       child: LogisticsTextfield(
+                            //         controller: receiverStreetController,
+                            //         hintText: 'Street',
+                            //       ),
+                            //     ),
+                            //     // SizedBox(width: 8),
+                            //     // SizedBox(
+                            //     //   width: deviceWidth(context) * 0.25,
+                            //     //   child: LogisticsTextfield(
+                            //     //     controller: receiverEntransController,
+                            //     //     hintText: 'Entran...',
+                            //     //   ),
+                            //     // ),
+                            //   ],
+                            // ),
                           ),
                           SizedBox(
                             height: 8,

@@ -184,26 +184,15 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
                             ],
                           ),
                           const SizedBox(height: 50),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Can't remember your password? ",
-                                style: FontStyles.smallCapsIntro
-                                    .copyWith(letterSpacing: 0, fontSize: 14,color: Colors.black),
-                              ),
-                              InkWell(
-                                onTap: () => Get.toNamed(Nav.forgotPassword),
-                                child: Text(
-                                  "Forgot password",
-                                  style: FontStyles.smallCapsIntro.copyWith(
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 14,color: PaintColors.paralexpurple),
-                                ),
-                              )
-                            ],
+                          InkWell(
+                            onTap: () => Get.toNamed(Nav.forgotPassword),
+                            child: Text(
+                              "Forgot password?",
+                              style: FontStyles.smallCapsIntro.copyWith(
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 14,color: PaintColors.paralexpurple),
+                            ),
                           ),
 
                           const SizedBox(height: 30),

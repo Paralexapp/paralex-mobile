@@ -6,7 +6,6 @@ import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../routes/navs.dart';
 import '../../../../service_provider/controllers/user_choice_controller.dart';
-import '../service_provider/controllers/notification_controller.dart';
 import '../service_provider/view/delivery_notification.dart';
 import '../service_provider/view/drawer.dart';
 import '../reusables/bottom_nav.dart'; // Import for the bottom navigation bar
@@ -15,8 +14,6 @@ import '../../../../service_provider/view/search_tab.dart';
 import 'package:badges/badges.dart' as badges;
 
 final userController = Get.find<UserChoiceController>();
-final NotificationsController controller = Get.put(NotificationsController());
-final NotificationsController inboxController = Get.put(NotificationsController());
 
 class LawyerDashboard extends StatefulWidget {
   const LawyerDashboard({super.key});

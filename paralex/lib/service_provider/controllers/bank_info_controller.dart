@@ -58,7 +58,6 @@ class BankInfoController extends GetxController {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         await Geolocator.openLocationSettings();
-        Get.snackbar("Location Error", "Please enable location");
         continue; // Keep checking until service is enabled
       }
 
@@ -124,11 +123,8 @@ class BankInfoController extends GetxController {
           "passportUrl": uploadedPhotoUrl,
           "email": _userChoiceController.email.value, // Include email
           "location": {
-            "type": "Point",
-            "coordinates": [
-              userLocation.value!.longitude,
-              userLocation.value!.latitude
-            ],
+            "x": userLocation.value!.longitude,
+            "y":userLocation.value!.latitude
           },
         });
         print("User Data: $userData");

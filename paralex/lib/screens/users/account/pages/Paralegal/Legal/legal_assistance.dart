@@ -33,7 +33,7 @@ class LegalAssistance extends StatelessWidget {
                   ontap: () => Get.toNamed(Nav.nafdacReg),
                 ),
                 LegalServices(
-                  ontap: () => Get.toNamed(Nav.nafdacReg),
+                  ontap: () => Get.toNamed(Nav.cacReg),
                   image: "assets/images/stamp.png",
                   text: "CAC",
                 )
@@ -46,11 +46,11 @@ class LegalAssistance extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 LegalServices(
-                    ontap: () => Get.toNamed(Nav.nafdacReg),
+                    ontap: () => Get.toNamed(Nav.trademarkReg),
                     image: "assets/images/stamp.png",
                     text: "TRADEMARK"),
                 LegalServices(
-                  ontap: () => Get.toNamed(Nav.nafdacReg),
+                  ontap: () => Get.toNamed(Nav.immigrationReg),
                   image: "assets/images/stamp.png",
                   text: "IMMIGRATION",
                 )

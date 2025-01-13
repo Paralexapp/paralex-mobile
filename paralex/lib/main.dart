@@ -10,8 +10,11 @@ import 'package:paralex/screens/users/account/pages/Logistics/logistics_parcel_t
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/splash/splash.dart';
 import 'package:paralex/screens/users/account/home.dart';
+import 'package:paralex/screens/users/account/pages/Paralegal/Legal/cac.dart';
+import 'package:paralex/screens/users/account/pages/Paralegal/Legal/immigration.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/Legal/legal_assistance.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/Legal/nafdac.dart';
+import 'package:paralex/screens/users/account/pages/Paralegal/Legal/trademark.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_step_1.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_step_2.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_step_3.dart';
@@ -109,6 +112,9 @@ Future<void> main() async {
       GetPage(name: Nav.bondSubmitted, page: () => const BondSuccess()),
       GetPage(name: Nav.legalServiceHome, page: () => const LegalAssistance()),
       GetPage(name: Nav.nafdacReg, page: () => const NafdacRegistration()),
+      GetPage(name: Nav.cacReg, page: () => const CacRegistration()),
+      GetPage(name: Nav.trademarkReg, page: () => const TrademarkRegistration()),
+      GetPage(name: Nav.immigrationReg, page: () => const ImmigrationRegistration()),
       GetPage(name: Nav.nafdacStepOne, page: () => const NafdacStepOne()),
       GetPage(name: Nav.nafdacStepTwo, page: () => const NafdacStepTwo()),
       GetPage(name: Nav.bankInfo, page: () => BankInfo()),

@@ -26,6 +26,9 @@ class Nav {
   static const legalServiceHome = '/legalService';
   static const bondSubmitted = '/bondSuccess';
   static const nafdacReg = '/nafdac';
+  static const cacReg = '/cac';
+  static const immigrationReg = '/immigration';
+  static const trademarkReg = '/trademark';
   static const nafdacStepOne = '/nafdacA';
   static const nafdacStepTwo = '/nafdacB';
   static const findAlawyer = '/lawHome';

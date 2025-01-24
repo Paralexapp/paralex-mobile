@@ -15,8 +15,8 @@ class LogisticsFindDelivery extends StatefulWidget {
   final String? fromLocation;
   final String? toDestination;
   final String? orderDetails;
-  final String? fare;
-  final String? distance;
+  final int? fare;
+  final int? distance;
   const LogisticsFindDelivery(
       {super.key,
       this.fromLocation,
@@ -51,7 +51,11 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
 
     toDestinationController.text = widget.toDestination ?? '';
     orderDetailsController.text = widget.orderDetails ?? '';
-    distanceController.text = widget.distance ?? '';
+    // distanceController.text = widget.distance?.toString() ?? '';
+    // Add "km" after the distance
+    distanceController.text = widget.distance != null
+        ? '${widget.distance} km'
+        : '';
     fareController.text = NumberFormat.currency(
       decimalDigits: 2,
       symbol: "₦",
@@ -123,7 +127,7 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
                                 width: 5,
                               ),
                               Text(
-                                'Courier delivery',
+                                'Confirm delivery',
                                 style: FontStyles.bodyText1,
                               ),
                             ],
@@ -190,7 +194,12 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
                             text: 'PROCEED TO PAYMENT',
                             // check: _formKey.currentState!.validate(),
                             onTap: () {
-                              _controller.initializePayment(widget.fare ?? '0');
+                              // Multiply the fare by 100 before passing it to the payment gateway
+                              int amountInKobo = (widget.fare ?? 0) * 100;
+
+                              // Pass the amountInKobo (in kobo) to the initializePayment function
+                              _controller.initializePayment(amountInKobo.toString());
+                              // _controller.initializePayment(widget.fare?.toString() ?? '0');
                               // Get.toNamed(Nav.logisticsPaymentMethod);
                             },
                           ),

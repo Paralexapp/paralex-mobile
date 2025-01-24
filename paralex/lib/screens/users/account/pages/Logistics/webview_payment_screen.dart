@@ -34,17 +34,29 @@ class _WebViewPaymentScreenState extends State<WebViewPaymentScreen> {
     _webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
+
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) async {
             if (request.url.contains(
                 'https://paralex-app-fddb148a81ad.herokuapp.com/verify-transaction')) {
-              // _controller.verifyPayment(referenceCode);
+              // Trigger modal only on the verify-transaction page
               var nearbyDriver = await _controller.requestDelivery();
               showNearbyDrivers(context, nearbyDriver);
-              NavigationDecision.prevent;
+              return NavigationDecision.prevent; // Stop further navigation
             }
-            return NavigationDecision.navigate;
+            return NavigationDecision.navigate; // Allow navigation for other URLs
           },
+        // NavigationDelegate(
+        //   onNavigationRequest: (NavigationRequest request) async {
+        //     if (request.url.contains(
+        //         'https://paralex-app-fddb148a81ad.herokuapp.com/verify-transaction')) {
+        //       // _controller.verifyPayment(referenceCode);
+        //       var nearbyDriver = await _controller.requestDelivery();
+        //       showNearbyDrivers(context, nearbyDriver);
+        //       NavigationDecision.prevent;
+        //     }
+        //     return NavigationDecision.navigate;
+        //   },
           // onUrlChange: (url) {
           //   if (url.url!.contains(
           //       'https://paralex-app-fddb148a81ad.herokuapp.com/verify-transaction')) {
@@ -57,8 +69,8 @@ class _WebViewPaymentScreenState extends State<WebViewPaymentScreen> {
             });
           },
           onPageFinished: (String url) async {
-            var nearbyDriver = await _controller.requestDelivery();
-            showNearbyDrivers(context, nearbyDriver);
+            // var nearbyDriver = await _controller.requestDelivery();
+            // showNearbyDrivers(context, nearbyDriver);
             setState(() {
               _isLoading = false;
             });

@@ -130,12 +130,63 @@ class LogisticsDeliveryInfoController extends GetxController {
     Get.offAllNamed(Nav.home);
   }
 
+  // Future<Map<String, dynamic>?> getDeliveryAmount() async {
+  //   var data = {
+  //     "driverProfileId": userController.email.value,
+  //     "pickup": {
+  //       "customerName":
+  //           "${userController.lastName.value} ${userController.firstName.value}",
+  //       "phoneNumber": senderPhoneNumberController.value,
+  //       "address": senderStreetController.value,
+  //       "latitude": senderLatitude.value,
+  //       "longitude": senderLongitude.value,
+  //       "description": orderDetailsController.value
+  //     },
+  //     "destination": {
+  //       "recipientName": receiverNameController.value,
+  //       "phoneNumber": receiverPhoneNumberController.value,
+  //       "address": receiverStreetController.value,
+  //       "latitude": recipientLatitude.value,
+  //       "longitude": recipientLongitude.value,
+  //       "categoryId": "na",
+  //       "description": whatToDeliverController.value
+  //     }
+  //   };
+  //
+  //   try {
+  //     isLoading.value = true;
+  //
+  //     final Map<String, dynamic> deliveryInformation =
+  //         await _apiService.postRequest('delivery/request/information', data);
+  //     Get.to(
+  //       () => LogisticsFindDelivery(
+  //         toDestination: senderStreetController.value,
+  //         fromLocation: receiverStreetController.value,
+  //         orderDetails: orderDetailsController.value,
+  //         fare: deliveryInformation['amount'].toString(),
+  //         distance: deliveryInformation['distance'].toString(),
+  //       ),
+  //     );
+  //     isLoading.value = false;
+  //     return deliveryInformation;
+  //   } catch (e) {
+  //     isLoading.value = false;
+  //     debugPrint('error====$e');
+  //     Get.snackbar(
+  //       'Error',
+  //       e.toString(),
+  //       snackPosition: SnackPosition.TOP,
+  //     );
+  //     return null;
+  //   }
+  // }
+
   Future<Map<String, dynamic>?> getDeliveryAmount() async {
     var data = {
       "driverProfileId": userController.email.value,
       "pickup": {
         "customerName":
-            "${userController.lastName.value} ${userController.firstName.value}",
+        "${userController.lastName.value} ${userController.firstName.value}",
         "phoneNumber": senderPhoneNumberController.value,
         "address": senderStreetController.value,
         "latitude": senderLatitude.value,
@@ -157,16 +208,33 @@ class LogisticsDeliveryInfoController extends GetxController {
       isLoading.value = true;
 
       final Map<String, dynamic> deliveryInformation =
-          await _apiService.postRequest('delivery/request/information', data);
+      await _apiService.postRequest('delivery/request/information', data);
+
+      // Validate and parse 'amount' (int from backend)
+      if (!deliveryInformation.containsKey('amount') ||
+          deliveryInformation['amount'] == null) {
+        throw Exception("Amount is missing or invalid in the API response");
+      }
+      int amount = deliveryInformation['amount'];
+
+      // Validate and parse 'distance' (long from backend, treat as int in Dart)
+      if (!deliveryInformation.containsKey('distance') ||
+          deliveryInformation['distance'] == null) {
+        throw Exception("Distance is missing or invalid in the API response");
+      }
+      int distance = deliveryInformation['distance'];
+
+      // Navigate with numeric fare (int) and distance (int)
       Get.to(
-        () => LogisticsFindDelivery(
+            () => LogisticsFindDelivery(
           toDestination: senderStreetController.value,
           fromLocation: receiverStreetController.value,
           orderDetails: orderDetailsController.value,
-          fare: deliveryInformation['amount'].toString(),
-          distance: deliveryInformation['distance'].toString(),
+          fare: amount, // Pass as int
+          distance: distance, // Pass as int
         ),
       );
+
       isLoading.value = false;
       return deliveryInformation;
     } catch (e) {
@@ -180,6 +248,7 @@ class LogisticsDeliveryInfoController extends GetxController {
       return null;
     }
   }
+
 
   void initializePayment(String amount) async {
     try {

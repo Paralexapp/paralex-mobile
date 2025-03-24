@@ -260,25 +260,25 @@ class _DashboardState extends State<Dashboard> {
                       padding: const EdgeInsets.all(10),
                       child: Row(
                         children: [
-                          Image.asset(
-                            "assets/images/law.png",
-                            height: 40,
-                          ),
+                          // Image.asset(
+                          //   "assets/images/law.png",
+                          //   height: 40,
+                          // ),
                           const SizedBox(
                             width: 15,
                           ),
                           const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Delivery to Ikoyi Supreme court"),
-                              Text("SEPTEMBER 16 . 8:00AM"),
+                              Text("No Activity Yet!"),
+                              // Text("SEPTEMBER 16 . 8:00AM"),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
                                     width: 200,
                                   ),
-                                  Text("Submitted"),
+                                  // Text("Submitted"),
                                 ],
                               ),
                             ],

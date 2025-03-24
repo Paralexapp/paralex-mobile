@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:paralex/service_provider/view/lawyer_drawer.dart';
 import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../routes/navs.dart';
@@ -63,7 +64,7 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
 
     return Scaffold(
       backgroundColor: PaintColors.bgColor,
-      drawer: const MyDrawer(),
+      drawer: const MyLawyerDrawer(),
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageChanged,
@@ -139,38 +140,38 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
                 )),
           ],
         ),
-        Obx(() {
-          int unreadCount = controller.unreadCount.value;
-
-          return badges.Badge(
-            position: badges.BadgePosition.topEnd(top: -10, end: -10),
-            showBadge: unreadCount > 0,
-            badgeContent: Text(
-              unreadCount.toString(),
-              style: const TextStyle(color: Colors.white, fontSize: 12),
-            ),
-            badgeStyle: const badges.BadgeStyle(
-              badgeColor: Colors.red,
-              shape: badges.BadgeShape.circle,
-            ),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DeliveryNotification(
-                      appBarTitle: "Notification",
-                    ),
-                  ),
-                );
-              },
-              icon: const Icon(
-                Iconsax.notification,
-                color: PaintColors.paralexpurple,
-                size: 30,
-              ),
-            ),
-          );
-        }),
+        // Obx(() {
+        //   int unreadCount = controller.unreadCount.value;
+        //
+        //   return badges.Badge(
+        //     position: badges.BadgePosition.topEnd(top: -10, end: -10),
+        //     showBadge: unreadCount > 0,
+        //     badgeContent: Text(
+        //       unreadCount.toString(),
+        //       style: const TextStyle(color: Colors.white, fontSize: 12),
+        //     ),
+        //     badgeStyle: const badges.BadgeStyle(
+        //       badgeColor: Colors.red,
+        //       shape: badges.BadgeShape.circle,
+        //     ),
+        //     child: IconButton(
+        //       onPressed: () {
+        //         Navigator.of(context).push(
+        //           MaterialPageRoute(
+        //             builder: (context) => DeliveryNotification(
+        //               appBarTitle: "Notification",
+        //             ),
+        //           ),
+        //         );
+        //       },
+        //       icon: const Icon(
+        //         Iconsax.notification,
+        //         color: PaintColors.paralexpurple,
+        //         size: 30,
+        //       ),
+        //     ),
+        //   );
+        // }),
       ],
     );
   }
@@ -200,31 +201,35 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
         color: PaintColors.white,
         borderRadius: BorderRadius.circular(16),
       ),
+
       child: Row(
+
         children: [
-          Image.asset(
-            "assets/images/law.png",
-            height: 40,
-          ),
+          // Image.asset(
+          //   "assets/images/law.png",
+          //   height: 40,
+          // ),
+
           const SizedBox(width: 15),
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
               Text(
-                "Delivery to Ikoyi Supreme court",
+                "No Activity Yet!",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 4),
-              Text("DECEMBER 31 . 8:00AM"),
-              SizedBox(height: 8),
-              Text(
-                "Submitted",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
-              ),
+              // SizedBox(height: 4),
+              // Text("DECEMBER 31 . 8:00AM"),
+              // SizedBox(height: 8),
+              // Text(
+              //   "Submitted",
+              //   style: TextStyle(
+              //     fontWeight: FontWeight.bold,
+              //     color: Colors.green,
+              //   ),
+              // ),
             ],
           ),
         ],

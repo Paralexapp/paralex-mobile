@@ -71,11 +71,12 @@ class BondFirstStep extends StatelessWidget {
                       TextfieldWidget(
                           controller: controller.legalFirmName,
                           hintText: 'Court',
-                          validator: (value) => Validators.minLength(value, 3)),
+                          // validator: (value) => Validators.minLength(value, 3)
+                      ),
                       TextfieldWidget(
                         controller: controller.investigatingAgency,
                         hintText: 'Investigating agency',
-                        validator: (value) => Validators.minLength(value, 3),
+                        // validator: (value) => Validators.minLength(value, 3),
                       ),
                       const SizedBox(
                         height: 40,

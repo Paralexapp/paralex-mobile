@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -289,50 +292,55 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
         loginData,
       );
 
+      if (response == null || response['data'] == null) {
+        throw Exception("Invalid response from server.");
+      }
+
       final authToken = response['data'];
       _authController.token.value = authToken;
       _authController.userEmail.value = _emailController.text;
-
-      userController.authToken.value =
-          authToken; // Pass token to UserChoiceController
+      userController.authToken.value = authToken;
 
       // Step 2: Fetch user data by email
-      final userData =
-          await userController.fetchUserByEmail(_emailController.text);
+      final userData = await userController.fetchUserByEmail(_emailController.text);
 
-      final String registrationLevel = userData['registrationLevel'];
-      final String userType = userData['userType'];
-      final String firstName = userData['firstName'];
-      final String lastName = userData['lastName'];
-      final String userId = userData['id'];
-      userController.firstName.value = userData['firstName'];
-      userController.lastName.value = userData['lastName'];
+      if (userData == null || userData.isEmpty) {
+        throw Exception("User not found.");
+      }
+
+      final String registrationLevel = userData['registrationLevel'] ?? '';
+      final String userType = userData['userType'] ?? '';
+      final String firstName = userData['firstName'] ?? '';
+      final String lastName = userData['lastName'] ?? '';
+      final String userId = userData['id'] ?? '';
+
+      userController.firstName.value = firstName;
+      userController.lastName.value = lastName;
       userController.userIdToken.value = userId;
 
-      // Set initial UserType in UserChoiceController
+      // Set initial UserType
       if (userType == 'SERVICE_PROVIDER_LAWYER') {
         userController.setInitialUserType(UserType.SERVICE_PROVIDER_LAWYER);
       } else if (userType == 'SERVICE_PROVIDER_RIDER') {
         userController.setInitialUserType(UserType.SERVICE_PROVIDER_RIDER);
       } else if (userType == 'USER') {
         userController.setInitialUserType(UserType.USER);
+      } else {
+        Get.snackbar('Error', 'Unknown user type.', snackPosition: SnackPosition.TOP);
+        return;
       }
 
       // Step 3: Navigate based on registrationLevel and userType
       if (registrationLevel != 'KYC_COMPLETED') {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {
-          Get.toNamed(Nav.aboutYouForLawyer); // Lawyer registration screen
+          Get.toNamed(Nav.aboutYouForLawyer);
         } else if (userType == 'SERVICE_PROVIDER_RIDER') {
-          Get.toNamed(Nav.aboutServiceProvider); // Rider registration screen
+          Get.toNamed(Nav.aboutServiceProvider);
         } else if (userType == 'USER') {
-          Get.toNamed(Nav.tellusMoreforUsers); // Rider registration screen
+          Get.toNamed(Nav.tellusMoreforUsers);
         } else {
-          // Handle other user types if needed
-          Get.snackbar(
-            'Error',
-            'Unknown user type: $userType',
-            snackPosition: SnackPosition.TOP,
-          );
+          Get.snackbar('Error', 'Unknown user type.', snackPosition: SnackPosition.TOP);
+          return;
         }
       } else {
         if (userType == 'SERVICE_PROVIDER_LAWYER') {
@@ -342,7 +350,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
           Get.toNamed(Nav.lawyerDashboard, arguments: {
             'firstName': firstName,
             'lastName': lastName,
-          }); // Lawyer home screen
+          });
         } else if (userType == 'SERVICE_PROVIDER_RIDER') {
           userController.selectServiceProviderRider();
           notificationController.fetchNotifications(includeUserId: true);
@@ -350,7 +358,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
           Get.toNamed(Nav.deliveryInfo1, arguments: {
             'firstName': firstName,
             'lastName': lastName,
-          }); // Rider home screen
+          });
         } else if (userType == 'USER') {
           userController.selectUser();
           notificationController.fetchNotifications(includeUserId: true);
@@ -358,44 +366,171 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
           Get.toNamed(Nav.home, arguments: {
             'firstName': firstName,
             'lastName': lastName,
-          }); // User home screen
-        } else {
-          // Handle other user types if needed
-          Get.snackbar(
-            'Error',
-            'Unknown user type: $userType',
-            snackPosition: SnackPosition.TOP,
-          );
-        }
-      }
-    } catch (e) {
-      // Step 4: Handle errors
-      if (e is Exception) {
-        String errorMessage = e.toString();
-        if (errorMessage.contains("Account is yet to be verified")) {
-          Get.snackbar(
-            'Error',
-            '$e.',
-            snackPosition: SnackPosition.TOP,
-          );
-          await sendOtp();
-          Get.toNamed(Nav.otpScreen, arguments: {
-            'email': _emailController.text,
           });
+        } else {
+          Get.snackbar('Error', 'Unknown user type.', snackPosition: SnackPosition.TOP);
         }
-      } else {
-        Get.snackbar(
-          'Error',
-          'An unexpected error occurred: $e',
-          snackPosition: SnackPosition.TOP,
-        );
       }
+    } catch (e, _) {  // Catch error but discard stack trace
+      String errorMessage = "An unexpected error occurred.";
+
+      // Handle network errors first
+      if (e is SocketException || e.toString().contains("Failed host lookup")) {
+        errorMessage = "Network is not connected.";
+      } else if (e is DioException) {
+        if (e.type == DioExceptionType.connectionError ||
+            e.type == DioExceptionType.connectionTimeout ||
+            e.type == DioExceptionType.sendTimeout ||
+            e.type == DioExceptionType.receiveTimeout) {
+          errorMessage = "Network is not connected.";
+        } else if (e.type == DioExceptionType.badResponse) {
+          if (e.response?.statusCode == 401) {
+            errorMessage = "Invalid email or password.";
+          } else {
+            errorMessage = "Something went wrong.";
+          }
+        }
+      }
+
+      // Only show the cleaned-up message, never the full error
+      Get.snackbar('Error', errorMessage, snackPosition: SnackPosition.TOP);
     } finally {
       setState(() {
         loading = false;
       });
     }
   }
+
+
+
+  // Future<void> loginUser() async {
+  //   if (!_key.currentState!.validate()) {
+  //     return;
+  //   }
+  //
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //
+  //   final loginData = {
+  //     'email': _emailController.text,
+  //     'password': _passwordController.text,
+  //   };
+  //
+  //   try {
+  //     // Step 1: Authenticate the user and retrieve the token
+  //     final response = await _apiService.postRequest(
+  //       'api/v1/auth/login',
+  //       loginData,
+  //     );
+  //
+  //     final authToken = response['data'];
+  //     _authController.token.value = authToken;
+  //     _authController.userEmail.value = _emailController.text;
+  //
+  //     userController.authToken.value =
+  //         authToken; // Pass token to UserChoiceController
+  //
+  //     // Step 2: Fetch user data by email
+  //     final userData =
+  //         await userController.fetchUserByEmail(_emailController.text);
+  //
+  //     final String registrationLevel = userData['registrationLevel'];
+  //     final String userType = userData['userType'];
+  //     final String firstName = userData['firstName'];
+  //     final String lastName = userData['lastName'];
+  //     final String userId = userData['id'];
+  //     userController.firstName.value = userData['firstName'];
+  //     userController.lastName.value = userData['lastName'];
+  //     userController.userIdToken.value = userId;
+  //
+  //     // Set initial UserType in UserChoiceController
+  //     if (userType == 'SERVICE_PROVIDER_LAWYER') {
+  //       userController.setInitialUserType(UserType.SERVICE_PROVIDER_LAWYER);
+  //     } else if (userType == 'SERVICE_PROVIDER_RIDER') {
+  //       userController.setInitialUserType(UserType.SERVICE_PROVIDER_RIDER);
+  //     } else if (userType == 'USER') {
+  //       userController.setInitialUserType(UserType.USER);
+  //     }
+  //
+  //     // Step 3: Navigate based on registrationLevel and userType
+  //     if (registrationLevel != 'KYC_COMPLETED') {
+  //       if (userType == 'SERVICE_PROVIDER_LAWYER') {
+  //         Get.toNamed(Nav.aboutYouForLawyer); // Lawyer registration screen
+  //       } else if (userType == 'SERVICE_PROVIDER_RIDER') {
+  //         Get.toNamed(Nav.aboutServiceProvider); // Rider registration screen
+  //       } else if (userType == 'USER') {
+  //         Get.toNamed(Nav.tellusMoreforUsers); // Rider registration screen
+  //       } else {
+  //         // Handle other user types if needed
+  //         Get.snackbar(
+  //           'Error',
+  //           'Unknown user type: $userType',
+  //           snackPosition: SnackPosition.TOP,
+  //         );
+  //       }
+  //     } else {
+  //       if (userType == 'SERVICE_PROVIDER_LAWYER') {
+  //         userController.selectServiceProviderLawyer();
+  //         notificationController.fetchNotifications(includeUserId: true);
+  //         notificationController.fetchNotifications(includeUserId: false);
+  //         Get.toNamed(Nav.lawyerDashboard, arguments: {
+  //           'firstName': firstName,
+  //           'lastName': lastName,
+  //         }); // Lawyer home screen
+  //       } else if (userType == 'SERVICE_PROVIDER_RIDER') {
+  //         userController.selectServiceProviderRider();
+  //         notificationController.fetchNotifications(includeUserId: true);
+  //         notificationController.fetchNotifications(includeUserId: false);
+  //         Get.toNamed(Nav.deliveryInfo1, arguments: {
+  //           'firstName': firstName,
+  //           'lastName': lastName,
+  //         }); // Rider home screen
+  //       } else if (userType == 'USER') {
+  //         userController.selectUser();
+  //         notificationController.fetchNotifications(includeUserId: true);
+  //         notificationController.fetchNotifications(includeUserId: false);
+  //         Get.toNamed(Nav.home, arguments: {
+  //           'firstName': firstName,
+  //           'lastName': lastName,
+  //         }); // User home screen
+  //       } else {
+  //         // Handle other user types if needed
+  //         Get.snackbar(
+  //           'Error',
+  //           'Unknown user type: $userType',
+  //           snackPosition: SnackPosition.TOP,
+  //         );
+  //       }
+  //     }
+  //   } catch (e) {
+  //     // Step 4: Handle errors
+  //     if (e is Exception) {
+  //       String errorMessage = e.toString();
+  //       if (errorMessage.contains("Account is yet to be verified")) {
+  //         Get.snackbar(
+  //           'Error',
+  //           '$e.',
+  //           snackPosition: SnackPosition.TOP,
+  //         );
+  //         await sendOtp();
+  //         Get.toNamed(Nav.otpScreen, arguments: {
+  //           'email': _emailController.text,
+  //         });
+  //       }
+  //     } else {
+  //       Get.snackbar(
+  //         'Error',
+  //         'An unexpected error occurred: $e',
+  //         snackPosition: SnackPosition.TOP,
+  //       );
+  //     }
+  //   } finally {
+  //     setState(() {
+  //       loading = false;
+  //     });
+  //   }
+  // }
 
   Future<void> sendOtp() async {
     try {

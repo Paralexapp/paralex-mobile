@@ -16,6 +16,7 @@ class ApiService {
       String endpoint, Map<String, dynamic> data) async {
     final url = Uri.parse('$baseUrl/$endpoint');
     debugPrint('url==$url');
+
     try {
       final response = await http.post(
         url,
@@ -25,39 +26,109 @@ class ApiService {
         },
         body: jsonEncode(data),
       );
-      debugPrint('response>>>>${response.body}');
+
       debugPrint('response>>>>${response.statusCode}');
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonDecode(response.body);
       } else {
         // Parse the response body to extract debugMessage
         final responseBody = jsonDecode(response.body);
         String errorMessage =
-            responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
-        debugPrint('response>>>>$response');
-        // Display the actual error message
+            responseBody['debugMessage'] ?? responseBody['message'] ?? "An error occurred.";
+
+        // Display only the cleaned-up message
         Get.snackbar(
           'Error',
           errorMessage,
           snackPosition: SnackPosition.TOP,
         );
 
-        // Throw the actual error message as an exception
-        throw Exception(errorMessage);
+        // Throw a user-friendly error
+        throw errorMessage;
       }
-    } catch (e) {
-      // Handle unexpected errors and display the actual error details
-      String errorMessage = e.toString();
+    } on SocketException {
+      // Handle network errors
       Get.snackbar(
         'Error',
-        errorMessage,
+        "Network is not connected.",
         snackPosition: SnackPosition.TOP,
       );
-
-      // Rethrow the exception with the actual error message
-      throw Exception(errorMessage);
+      throw "Network is not connected.";
+    } on HttpException {
+      // Handle HTTP protocol errors
+      Get.snackbar(
+        'Error',
+        "Couldn't connect to server.",
+        snackPosition: SnackPosition.TOP,
+      );
+      throw "Couldn't connect to server.";
+    } on FormatException {
+      // Handle JSON decoding errors
+      Get.snackbar(
+        'Error',
+        "Invalid response from server.",
+        snackPosition: SnackPosition.TOP,
+      );
+      throw "Invalid response from server.";
+    } catch (e) {
+      // Handle other unexpected errors
+      Get.snackbar(
+        'Error',
+        "An unexpected error occurred.",
+        snackPosition: SnackPosition.TOP,
+      );
+      throw "An unexpected error occurred.";
     }
   }
+
+
+  // Future<Map<String, dynamic>> postRequest(
+  //     String endpoint, Map<String, dynamic> data) async {
+  //   final url = Uri.parse('$baseUrl/$endpoint');
+  //   debugPrint('url==$url');
+  //   try {
+  //     final response = await http.post(
+  //       url,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer ${_authController.token.value}'
+  //       },
+  //       body: jsonEncode(data),
+  //     );
+  //     debugPrint('response>>>>${response.body}');
+  //     debugPrint('response>>>>${response.statusCode}');
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       return jsonDecode(response.body);
+  //     } else {
+  //       // Parse the response body to extract debugMessage
+  //       final responseBody = jsonDecode(response.body);
+  //       String errorMessage =
+  //           responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
+  //       debugPrint('response>>>>$response');
+  //       // Display the actual error message
+  //       Get.snackbar(
+  //         'Error',
+  //         errorMessage,
+  //         snackPosition: SnackPosition.TOP,
+  //       );
+  //
+  //       // Throw the actual error message as an exception
+  //       throw Exception(errorMessage);
+  //     }
+  //   } catch (e) {
+  //     // Handle unexpected errors and display the actual error details
+  //     String errorMessage = e.toString();
+  //     Get.snackbar(
+  //       'Error',
+  //       errorMessage,
+  //       snackPosition: SnackPosition.TOP,
+  //     );
+  //
+  //     // Rethrow the exception with the actual error message
+  //     throw Exception(errorMessage);
+  //   }
+  // }
 
   Future<Map<String, dynamic>> putRequest(String endpoint, Map<String, dynamic> data) async {
     final url = Uri.parse('$baseUrl/$endpoint');

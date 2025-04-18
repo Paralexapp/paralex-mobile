@@ -165,10 +165,9 @@ class Lawyers extends StatelessWidget {
   final double hourlyRates;
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Column(
       children: [
-        Divider(),
+        const Divider(),
         Row(
           children: [
             Container(
@@ -177,61 +176,74 @@ class Lawyers extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 image: DecorationImage(
-                    image: AssetImage(imgPath ?? "assets/images/law_catalogue.png"),
-                    fit: BoxFit.cover),
+                  image: AssetImage(imgPath ?? "assets/images/law_catalogue.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  lawyerName,
-                  style: FontStyles.headingText
-                      .copyWith(color: PaintColors.paralexpurple, fontSize: 20),
-                ),
-                Text(
-                  specialization,
-                  style: FontStyles.smallCapsIntro.copyWith(
-                      letterSpacing: 0, fontSize: 12, color: PaintColors.generalTextsm),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Icon(
-                      Icons.star,
-                      size: 10,
-                      color: Color(0xAAFFC403),
+            const SizedBox(width: 10),
+            Expanded(
+              // This ensures the column takes remaining space
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    lawyerName,
+                    style: FontStyles.headingText.copyWith(
+                      color: PaintColors.paralexpurple,
+                      fontSize: 20,
                     ),
-                    Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
+                  Text(
+                    specialization,
+                    style: FontStyles.smallCapsIntro.copyWith(
+                      letterSpacing: 0,
+                      fontSize: 12,
+                      color: PaintColors.generalTextsm,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                  SizedBox(
+                    width: double.infinity, // Constrains the inner Row
+                    child: Row(
                       children: [
-                        Text(
-                          "${rating.toString()}   (${reviewCount.toString()} Reviews)",
-                          style: FontStyles.smallCapsIntro.copyWith(
+                        const Icon(
+                          Icons.star,
+                          size: 10,
+                          color: Color(0xAAFFC403),
+                        ),
+                        Expanded(
+                          // Takes remaining space for rating text
+                          child: Text(
+                            "${rating.toString()}   (${reviewCount.toString()} Reviews)",
+                            style: FontStyles.smallCapsIntro.copyWith(
                               letterSpacing: 0,
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: PaintColors.generalTextsm),
+                              color: PaintColors.generalTextsm,
+                            ),
+                          ),
                         ),
-                        SizedBox(width: size.width * 0.2),
                         Text(
                           "₦${hourlyRates.toString()} per hour",
                           style: FontStyles.smallCapsIntro.copyWith(
-                              letterSpacing: 0,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: PaintColors.generalTextsm),
-                        )
+                            letterSpacing: 0,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: PaintColors.generalTextsm,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ],
-                    )
-                  ],
-                )
-              ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
-        Divider()
+        const Divider(),
       ],
     );
   }

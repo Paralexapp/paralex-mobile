@@ -30,6 +30,11 @@ class ApiService {
       debugPrint('response>>>>${response.statusCode}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        try {
+          return jsonDecode(response.body);
+        } catch (_) {
+          return {"data":response.body};
+        }
         return jsonDecode(response.body);
       } else {
         // Parse the response body to extract debugMessage
@@ -169,10 +174,10 @@ class ApiService {
           'Authorization': 'Bearer ${_authController.token.value}',
         },
       );
-      debugPrint('response${response.body}');
+      debugPrint('response${response.body.toString()}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        var responseBody = jsonDecode(response.body);
+        var responseBody = json.decode(response.body);
         if (responseBody is List) {
           return {'data': response.body};
         } else {

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -53,15 +54,16 @@ class LawyerController extends GetxController {
         'service-provider/lawyer/profile/?pageSize=$pageSize',
       );
 
+
       var res = response['data'] as List;
-      debugPrint('Lawyer>>>${res.first}');
-      debugPrint('Lawyer>>>${Lawyer.fromJson(res.first)}');
+      debugPrint('Lawyer>>>===${res.first}');
+      // debugPrint('Lawyer>>>${Lawyer.fromJson(res.first)}');
 
       lawyersList.assignAll(
         (response['data'] as List).map((item) => Lawyer.fromJson(item)).toList(),
       );
     } catch (e) {
-      debugPrint('error>>>$e');
+      debugPrint('error>>>${e}');
     }
   }
 

@@ -210,7 +210,13 @@ class _AboutYouForLawyersState extends State<AboutYouForLawyers> {
       appBar: AppBar(
         backgroundColor: PaintColors.bgColor,
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: (){
+            Get.offNamed(Nav.lawyerDashboard, arguments: {
+              'firstName': firstName,
+              'lastName': lastName,
+            });
+          },
+          // onPressed: () => Get.back(),
           icon: PinkButton.backButton,
         ),
       ),
@@ -618,9 +624,11 @@ class _AboutYouForLawyersState extends State<AboutYouForLawyers> {
                         Get.snackbar('Error', 'Please fill in all required fields.');
                       } else if (!isPhoneNumberValid) {
                         Get.snackbar('Error', 'Please enter a valid phone number.');
-                      } else if (passportImage == null) {
-                        Get.snackbar('Error', 'Please select a valid image.');
-                      } else {
+                      }
+                      // else if (passportImage == null) {
+                      //   Get.snackbar('Error', 'Please select a valid image.');
+                      // }
+                      else {
                         setState(() {
                           isLoading = true;
                         });
@@ -638,9 +646,11 @@ class _AboutYouForLawyersState extends State<AboutYouForLawyers> {
 
                           Get.snackbar('Uploading', 'Uploading image... Please wait.');
                           ApiService apiService = ApiService();
+                           if (passportImage != null) {
+                             String uploadedPhotoUrl = await apiService.uploadImage1(passportImage!);
+                             photoUrl = uploadedPhotoUrl;
+                          }
 
-                          String uploadedPhotoUrl = await apiService.uploadImage1(passportImage!);
-                          photoUrl = uploadedPhotoUrl;
 
                           Map<String, dynamic> formData = {
                             "email": userChoiceController.email.value,
@@ -651,7 +661,7 @@ class _AboutYouForLawyersState extends State<AboutYouForLawyers> {
                             "stateOfResidence": _stateOfResidenceController.text,
                             "stateOfPractice": _stateOfPracticeController.text,
                             "practiceAreas": practiceAreaList,
-                            "photoUrl": photoUrl,
+                            "photoUrl": photoUrl??"",
                             "longitude": longitude,
                             "latitude": latitude,
                             "lawFirm": lawFirm

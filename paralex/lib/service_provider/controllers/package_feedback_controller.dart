@@ -1,6 +1,9 @@
-import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:path_provider/path_provider.dart';
 
 class PackageController extends GetxController {
   // Observable variables to track video status and metadata
@@ -41,40 +44,56 @@ class PackageController extends GetxController {
       print("Error recording video: $e");
     }
   }
-
-  // Generate a thumbnail using ffmpeg
-  Future<String> _generateThumbnail(String videoFilePath) async {
-    String thumbnailPath = "${videoFilePath}_thumbnail.jpg";
-    await FFmpegKit.execute(
-        '-i $videoFilePath -ss 00:00:01 -vframes 1 $thumbnailPath');
+  Future<String> _generateThumbnail(String videoPath) async {
+    final player = Player();
+    final bytes = await player.screenshot(format: videoPath);
+    final thumbnailPath = '${(await getTemporaryDirectory()).path}/thumbnail.jpg';
+    await File(thumbnailPath).writeAsBytes(bytes!);
+    await player.dispose();
     return thumbnailPath;
   }
 
-  // Fetch the video duration using ffmpeg
-  Future<String> _getVideoDuration(String videoFilePath) async {
-    String duration = "00:00";
-
-    // Execute the FFmpeg command and await the session result
-    await FFmpegKit.execute('-i $videoFilePath -hide_banner').then((session) async {
-      // Get the output of the session
-      final sessionOutput = await session.getOutput();
-      print("FFmpeg Output: $sessionOutput"); // Debugging output
-
-      if (sessionOutput != null) {
-        // Match the 'Duration:' line using RegExp
-        final durationMatch = RegExp(r'Duration:\s(\d+:\d+:\d+)').firstMatch(sessionOutput);
-        if (durationMatch != null) {
-          duration = durationMatch.group(1)!; // Extracted duration
-        } else {
-          print("Duration not found in FFmpeg output.");
-        }
-      } else {
-        print("No output received from FFmpeg.");
-      }
-    });
-
-    return duration;
+  Future<String> _getVideoDuration(String videoPath) async {
+    final player = Player();
+    await player.open(Media(videoPath));
+    final duration = await player.stream.duration;
+    await player.dispose();
+    return duration.toString().split('.').first.padLeft(8, '0');
   }
+
+  // // Generate a thumbnail using ffmpeg
+  // Future<String> _generateThumbnail(String videoFilePath) async {
+  //   String thumbnailPath = "${videoFilePath}_thumbnail.jpg";
+  //   await FFmpegKit.execute(
+  //       '-i $videoFilePath -ss 00:00:01 -vframes 1 $thumbnailPath');
+  //   return thumbnailPath;
+  // }
+  //
+  // // Fetch the video duration using ffmpeg
+  // Future<String> _getVideoDuration(String videoFilePath) async {
+  //   String duration = "00:00";
+  //
+  //   // Execute the FFmpeg command and await the session result
+  //   await FFmpegKit.execute('-i $videoFilePath -hide_banner').then((session) async {
+  //     // Get the output of the session
+  //     final sessionOutput = await session.getOutput();
+  //     print("FFmpeg Output: $sessionOutput"); // Debugging output
+  //
+  //     if (sessionOutput != null) {
+  //       // Match the 'Duration:' line using RegExp
+  //       final durationMatch = RegExp(r'Duration:\s(\d+:\d+:\d+)').firstMatch(sessionOutput);
+  //       if (durationMatch != null) {
+  //         duration = durationMatch.group(1)!; // Extracted duration
+  //       } else {
+  //         print("Duration not found in FFmpeg output.");
+  //       }
+  //     } else {
+  //       print("No output received from FFmpeg.");
+  //     }
+  //   });
+  //
+  //   return duration;
+  // }
 
 
 }

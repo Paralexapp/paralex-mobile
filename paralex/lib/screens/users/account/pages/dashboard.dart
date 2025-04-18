@@ -300,6 +300,6 @@ class _DashboardState extends State<Dashboard> {
     // Handle logout logic here, like clearing session or token
 userController.clearSession();
     // Navigate to the logout route or login screen
-    Get.offAllNamed(Nav.login);  // Adjust the route according to your app's flow
+    Get.offAll(Nav.login);  // Adjust the route according to your app's flow
   }
 }

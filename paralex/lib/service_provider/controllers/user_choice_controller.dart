@@ -58,6 +58,8 @@ class UserChoiceController extends GetxController {
   // Getter for user type as string
   String get userType => selectedUserType.value.stringValue;
 
+  final RxBool isLoading = false.obs;
+  final RxString errorMessage = ''.obs;
 
   void setInitialUserType(UserType userType) {
     initialUserType = userType;
@@ -176,6 +178,30 @@ class UserChoiceController extends GetxController {
           snackPosition: SnackPosition.TOP,
         );
 
+    }
+  }
+
+  Future<bool> deleteAccount(String email) async {
+    try {
+      isLoading(true);
+      errorMessage('');
+
+      // Call your API endpoint for account deletion
+      final response = await _apiService.postRequest('admin/delete-user?userId=$userIdToken', {});
+
+      if (response['data'] != null) {
+        debugPrint('delete account response>>>>${response['data']}');
+        return true;
+      } else {
+        errorMessage(response['error'] ?? 'Failed to delete account');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('response>>>>$e');
+      errorMessage('An error occurred while deleting account');
+      return false;
+    } finally {
+      isLoading(false);
     }
   }
 

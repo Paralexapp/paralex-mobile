@@ -46,6 +46,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
     return Scaffold(
         backgroundColor: PaintColors.bgColor,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: PaintColors.bgColor,
         ),
         body: SingleChildScrollView(

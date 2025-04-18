@@ -47,17 +47,16 @@ List<Lawyer> parseLawyers(List<dynamic> responseBody) {
 
   return responseBody.map((json) => Lawyer.fromJson(json)).toList();
 }
-
 class Lawyer {
   final String id;
   final String state;
   final Location location;
   final String supremeCourtNumber;
   final List<String> practiceAreas;
-  final User? user;
+  final User? user;  // Made nullable
   final String lawyerName;
   final bool status;
-  final List<int> time;
+  final DateTime time;
 
   Lawyer({
     required this.id,
@@ -65,7 +64,7 @@ class Lawyer {
     required this.location,
     required this.supremeCourtNumber,
     required this.practiceAreas,
-    this.user,
+    this.user,  // Now nullable
     required this.lawyerName,
     required this.status,
     required this.time,
@@ -73,46 +72,41 @@ class Lawyer {
 
   factory Lawyer.fromJson(Map<String, dynamic> json) {
     return Lawyer(
-      id: json['id'],
-      state: json['state'],
-      location: Location.fromJson(json['location']),
-      supremeCourtNumber: json['supremeCourtNumber'],
-      practiceAreas: List<String>.from(json['practiceAreas']),
-      user: json['user'] != null ? User.fromJson(json['user']) : null,
-      lawyerName: json['lawyerName'],
-      status: json['status'],
-      time: List<int>.from(json['time']),
+      id: json['id'] as String? ?? '', // Handle null case
+      state: json['state'] as String? ?? '',
+      location: Location.fromJson(json['location'] as Map<String, dynamic>? ?? {}),
+      supremeCourtNumber: json['supremeCourtNumber'] as String? ?? '',
+      practiceAreas: (json['practiceAreas'] as List?)?.map((e) => e.toString()).toList() ?? [],
+      user: json['user'] != null ? User.fromJson(json['user'] as Map<String, dynamic>) : null,
+      lawyerName: json['lawyerName'] as String? ?? '',
+      status: json['status'] as bool? ?? false,
+      time: _parseDateTime(json['time'] as List? ?? []),
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'state': state,
-      'location': location.toJson(),
-      'supremeCourtNumber': supremeCourtNumber,
-      'practiceAreas': practiceAreas,
-      'user': user?.toJson(),
-      'lawyerName': lawyerName,
-      'status': status,
-      'time': time,
-    };
+  static DateTime _parseDateTime(List<dynamic>? timeList) {
+    final list = timeList ?? [];
+    return DateTime(
+      list.length > 0 ? list[0] as int : 1970,
+      list.length > 1 ? list[1] as int : 1,
+      list.length > 2 ? list[2] as int : 1,
+      list.length > 3 ? list[3] as int : 0,
+      list.length > 4 ? list[4] as int : 0,
+      list.length > 5 ? list[5] as int : 0,
+      list.length > 6 ? (list[6] as int) ~/ 1000000 : 0,
+    );
   }
 }
-
 class Location {
   final double x;
   final double y;
 
-  Location({
-    required this.x,
-    required this.y,
-  });
+  Location({required this.x, required this.y});
 
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
-      x: json['x'],
-      y: json['y'],
+      x: (json['x'] as num).toDouble(),
+      y: (json['y'] as num).toDouble(),
     );
   }
 
@@ -126,96 +120,98 @@ class Location {
 
 class User {
   final String id;
-  final String? name;
+  final String? name;  // Made nullable
   final String firstName;
   final String lastName;
-  final String? dateOfBirth;
+  final String? dateOfBirth;  // Made nullable
   final String customerCode;
   final String walletId;
   final String businessId;
   final String email;
   final String userType;
   final String registrationLevel;
-  final String? phoneNumber;
-  final String? photoUrl;
-  final List<int> time;
-  final String? bailBond;
+  final String? phoneNumber;  // Made nullable
+  final String? photoUrl;  // Made nullable
+  final DateTime time;
+  final dynamic bailBond;
   final bool enabled;
   final String username;
+  final List<dynamic>? authorities;
   final bool accountNonExpired;
   final bool accountNonLocked;
   final bool credentialsNonExpired;
+  final bool accountBlocked;
 
   User({
     required this.id,
-    this.name,
+    this.name,  // Now nullable
     required this.firstName,
     required this.lastName,
-    this.dateOfBirth,
+    this.dateOfBirth,  // Now nullable
     required this.customerCode,
     required this.walletId,
     required this.businessId,
     required this.email,
     required this.userType,
     required this.registrationLevel,
-    this.phoneNumber,
-    this.photoUrl,
+    this.phoneNumber,  // Now nullable
+    this.photoUrl,  // Now nullable
     required this.time,
     this.bailBond,
     required this.enabled,
     required this.username,
+    this.authorities,
     required this.accountNonExpired,
     required this.accountNonLocked,
     required this.credentialsNonExpired,
+    required this.accountBlocked,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      name: json['name'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      dateOfBirth: json['dateOfBirth'],
-      customerCode: json['customerCode'],
-      walletId: json['walletId'],
-      businessId: json['businessId'],
-      email: json['email'],
-      userType: json['userType'],
-      registrationLevel: json['registrationLevel'],
-      phoneNumber: json['phoneNumber'],
-      photoUrl: json['photoUrl'],
-      time: List<int>.from(json['time']),
-      bailBond: json['bailBond'],
-      enabled: json['enabled'],
-      username: json['username'],
-      accountNonExpired: json['accountNonExpired'],
-      accountNonLocked: json['accountNonLocked'],
-      credentialsNonExpired: json['credentialsNonExpired'],
-    );
-  }
+  factory User.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return User(
+        id: '',
+        firstName: '',
+        lastName: '',
+        customerCode: '',
+        walletId: '',
+        businessId: '',
+        email: '',
+        userType: '',
+        registrationLevel: '',
+        enabled: false,
+        username: '',
+        accountNonExpired: true,
+        accountNonLocked: true,
+        credentialsNonExpired: true,
+        accountBlocked: false,
+        time: DateTime.now(),
+      );
+    }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'firstName': firstName,
-      'lastName': lastName,
-      'dateOfBirth': dateOfBirth,
-      'customerCode': customerCode,
-      'walletId': walletId,
-      'businessId': businessId,
-      'email': email,
-      'userType': userType,
-      'registrationLevel': registrationLevel,
-      'phoneNumber': phoneNumber,
-      'photoUrl': photoUrl,
-      'time': time,
-      'bailBond': bailBond,
-      'enabled': enabled,
-      'username': username,
-      'accountNonExpired': accountNonExpired,
-      'accountNonLocked': accountNonLocked,
-      'credentialsNonExpired': credentialsNonExpired,
-    };
+    return User(
+      id: json['id'] as String? ?? '',
+      name: json['name'] as String?,
+      firstName: json['firstName'] as String? ?? '',
+      lastName: json['lastName'] as String? ?? '',
+      dateOfBirth: json['dateOfBirth']?.toString(),
+      customerCode: json['customerCode'] as String? ?? '',
+      walletId: json['walletId'] as String? ?? '',
+      businessId: json['businessId'] as String? ?? '',
+      email: json['email'] as String? ?? '',
+      userType: json['userType'] as String? ?? '',
+      registrationLevel: json['registrationLevel'] as String? ?? '',
+      phoneNumber: json['phoneNumber'] as String?,
+      photoUrl: json['photoUrl'] as String?,
+      time: Lawyer._parseDateTime(json['time'] as List?),
+      bailBond: json['bailBond'],
+      enabled: json['enabled'] as bool? ?? false,
+      username: json['username'] as String? ?? '',
+      authorities: json['authorities'] as List<dynamic>?,
+      accountNonExpired: json['accountNonExpired'] as bool? ?? true,
+      accountNonLocked: json['accountNonLocked'] as bool? ?? true,
+      credentialsNonExpired: json['credentialsNonExpired'] as bool? ?? true,
+      accountBlocked: json['accountBlocked'] as bool? ?? false,
+    );
   }
 }

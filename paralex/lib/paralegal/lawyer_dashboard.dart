@@ -31,13 +31,19 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _currentIndex);
-
-    // Retrieve firstName and lastName from Get.arguments and set them in the userController
-    final args = Get.arguments;
-    if (args != null) {
-      userController.firstName.value = args['firstName'] ?? '';
-      userController.lastName.value = args['lastName'] ?? '';
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args = Get.arguments;
+      if (args != null) {
+        userController.firstName.value = args['firstName'] ?? '';
+        userController.lastName.value = args['lastName'] ?? '';
+      }
+    });
+    // // Retrieve firstName and lastName from Get.arguments and set them in the userController
+    // final args = Get.arguments;
+    // if (args != null) {
+    //   userController.firstName.value = args['firstName'] ?? '';
+    //   userController.lastName.value = args['lastName'] ?? '';
+    // }
   }
 
   @override
@@ -201,9 +207,7 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
         color: PaintColors.white,
         borderRadius: BorderRadius.circular(16),
       ),
-
       child: Row(
-
         children: [
           // Image.asset(
           //   "assets/images/law.png",

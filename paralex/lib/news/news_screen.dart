@@ -18,13 +18,14 @@ class NewsScreen extends StatelessWidget {
       backgroundColor: PaintColors.bgColor,
       appBar: AppBar(
         backgroundColor: PaintColors.bgColor,
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: BlackButton(
-            containerColor: Colors.black,
-            iconColor: Colors.white,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () => Get.back(),
+        //   icon: BlackButton(
+        //     containerColor: Colors.black,
+        //     iconColor: Colors.white,
+        //   ),
+        // ),
+        automaticallyImplyLeading: false, // This removes the default back button
         centerTitle: true,
         title: Text(
           "News",

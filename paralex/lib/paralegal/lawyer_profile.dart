@@ -83,13 +83,13 @@ class LawyerProfile extends StatelessWidget {
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              "Lawyer based in Lagos",
-                              style: FontStyles.smallCapsIntro.copyWith(
-                                  color: Color(0xFF4A4A68),
-                                  fontSize: 12,
-                                  letterSpacing: 0),
-                            ),
+                            // Text(
+                            //   "Lawyer based in Lagos",
+                            //   style: FontStyles.smallCapsIntro.copyWith(
+                            //       color: Color(0xFF4A4A68),
+                            //       fontSize: 12,
+                            //       letterSpacing: 0),
+                            // ),
                           ],
                         ),
                         Padding(
@@ -104,31 +104,31 @@ class LawyerProfile extends StatelessWidget {
                                     fontSize: 15,
                                     letterSpacing: 0),
                               ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Color(0xFFFFC403),
-                                    size: 12,
-                                  ),
-                                  Text(
-                                    rating.toString(),
-                                    style: FontStyles.smallCapsIntro.copyWith(
-                                        color: Color(0xFF4A4A68),
-                                        fontSize: 11,
-                                        letterSpacing: 0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    "(${reviewCount.toString()} Reviews)",
-                                    style: FontStyles.smallCapsIntro.copyWith(
-                                        color: Color(0xFF4A4A68),
-                                        fontSize: 11,
-                                        letterSpacing: 0),
-                                  ),
-                                ],
-                              ),
+                              // Row(
+                              //   children: [
+                              //     Icon(
+                              //       Icons.star,
+                              //       color: Color(0xFFFFC403),
+                              //       size: 12,
+                              //     ),
+                              //     Text(
+                              //       rating.toString(),
+                              //       style: FontStyles.smallCapsIntro.copyWith(
+                              //           color: Color(0xFF4A4A68),
+                              //           fontSize: 11,
+                              //           letterSpacing: 0,
+                              //           fontWeight: FontWeight.bold),
+                              //     ),
+                              //     SizedBox(width: 5),
+                              //     // Text(
+                              //     //   "(${reviewCount.toString()} Reviews)",
+                              //     //   style: FontStyles.smallCapsIntro.copyWith(
+                              //     //       color: Color(0xFF4A4A68),
+                              //     //       fontSize: 11,
+                              //     //       letterSpacing: 0),
+                              //     // ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         )
@@ -141,7 +141,7 @@ class LawyerProfile extends StatelessWidget {
                     ),
                     SizedBox(height: 15),
                     Text(
-                      "About Land Lawyer",
+                      "About Lawyer",
                       style: FontStyles.smallCapsIntro.copyWith(
                           color: Color(0xFF4A4A68),
                           fontSize: 12,
@@ -150,7 +150,7 @@ class LawyerProfile extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet sem nec erat finibus tempus non a neque. Etiam arcu dolor, iaculis ut bibendum nec, tempor nec dui. Fusce consectetur, quam eu fringilla faucibus, dolor diam tempus nibh, vel eleifend nisl neque dapibus ipsum.",
+                      "",
                       style: FontStyles.smallCapsIntro.copyWith(
                           color: Color(0xFF4A4A68), fontSize: 12, letterSpacing: 0),
                     ),
@@ -183,34 +183,34 @@ class LawyerProfile extends StatelessWidget {
                       color: Color(0xFFE4E4E4),
                     ),
                     SizedBox(height: 15),
-                    Text(
-                      "Reviews",
-                      style: FontStyles.smallCapsIntro.copyWith(
-                          color: Color(0xFF4A4A68),
-                          fontSize: 12,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 15),
-                    Expanded(
-                      child: Obx(() {
-                        if (controller.reviews.isEmpty) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        return ListView.builder(
-                          itemCount: controller.reviews.length,
-                          itemBuilder: (context, index) {
-                            final review = controller.reviews[index];
-                            return ReviewWidget(
-                              reviewerName: review['name'],
-                              reviewerText: review['text'],
-                              reviewerRating: review['rating'],
-                              imgPath: review['imagePath'],
-                            );
-                          },
-                        );
-                      }),
-                    ),
+                    // Text(
+                    //   "Reviews",
+                    //   style: FontStyles.smallCapsIntro.copyWith(
+                    //       color: Color(0xFF4A4A68),
+                    //       fontSize: 12,
+                    //       letterSpacing: 0,
+                    //       fontWeight: FontWeight.bold),
+                    // ),
+                    // SizedBox(height: 15),
+                    // Expanded(
+                    //   child: Obx(() {
+                    //     if (controller.reviews.isEmpty) {
+                    //       return Center(child: CircularProgressIndicator());
+                    //     }
+                    //     return ListView.builder(
+                    //       itemCount: controller.reviews.length,
+                    //       itemBuilder: (context, index) {
+                    //         final review = controller.reviews[index];
+                    //         return ReviewWidget(
+                    //           reviewerName: review['name'],
+                    //           reviewerText: review['text'],
+                    //           reviewerRating: review['rating'],
+                    //           imgPath: review['imagePath'],
+                    //         );
+                    //       },
+                    //     );
+                    //   }),
+                    // ),
                   ],
                 ),
               ),
@@ -287,22 +287,22 @@ class ReviewWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
-                SizedBox(
-                  width: size.width * 0.6,
-                  child: Text(
-                    reviewerText ??
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet sem nec erat finibus tempus non a neque. Etiam arcu dolor, iaculis ut bibendum nec, tempor nec dui.",
-                    style: FontStyles.smallCapsIntro.copyWith(
-                      color: Color(0xFF8C8C8C),
-                      fontSize: 10,
-                      letterSpacing: 0,
-                    ),
-                    maxLines: 4,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
+                // SizedBox(height: 8),
+                // SizedBox(
+                //   width: size.width * 0.6,
+                //   child: Text(
+                //     reviewerText ??
+                //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet sem nec erat finibus tempus non a neque. Etiam arcu dolor, iaculis ut bibendum nec, tempor nec dui.",
+                //     style: FontStyles.smallCapsIntro.copyWith(
+                //       color: Color(0xFF8C8C8C),
+                //       fontSize: 10,
+                //       letterSpacing: 0,
+                //     ),
+                //     maxLines: 4,
+                //     softWrap: true,
+                //     overflow: TextOverflow.ellipsis,
+                //   ),
+                // ),
               ],
             ),
           ],

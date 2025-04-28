@@ -53,7 +53,7 @@ class BondSuccess extends StatelessWidget {
                 buttonColor: PaintColors.paralexpurple,
                 ontap: () {
                   if (userChoiceController.isUser.value) {
-                    Get.offNamed(Nav.paralegalHome);
+                    Get.offNamed(Nav.home);
                   } else {
                     Get.offNamed(Nav.selectServiceScreen);
                   }

@@ -884,8 +884,8 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                     // print('Selected date: $date');
                   },
                   initialDate: DateTime.now(),
-                  firstDate: DateTime(2024),
-                  lastDate: DateTime(2025),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime(2099),
                 ),
                 SizedBox(height: 15),
                 StyledTextWidget(

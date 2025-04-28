@@ -79,8 +79,11 @@ import 'screens/users/account/pages/Logistics/logistics_payment_method2.dart';
 import 'screens/users/account/pages/Logistics/logistics_payment_method3.dart';
 
 Future<void> main() async {
-  Get.put(UserChoiceController());
-  Get.put<NotificationsController>(NotificationsController());
+  // Get.put(UserChoiceController());
+  // Get.put<NotificationsController>(NotificationsController());
+
+  Get.put(UserChoiceController(), permanent: true);
+  Get.put<NotificationsController>(NotificationsController(), permanent: true);
 
   runApp(GetMaterialApp(
     initialRoute: Nav.splash,
@@ -88,9 +91,9 @@ Future<void> main() async {
       GetPage(name: Nav.splash, page: () => const SplashScreen()),
       GetPage(name: Nav.welcomeShow, page: () => const WelcomeSliders()),
       GetPage(name: Nav.lastWelcomeScreen, page: () => const LastWelcomeScreen()),
-      GetPage(
-          name: Nav.serviceProviderSignupWelcomeScreen,
-          page: () => SignupWelcomeScreen()),
+      // GetPage(
+      //     name: Nav.serviceProviderSignupWelcomeScreen,
+      //     page: () => SignupWelcomeScreen()),
       GetPage(name: Nav.selectServiceScreen, page: () => const SelectServiceScreen()),
       GetPage(
           name: Nav.serviceProviderSignupWelcomeScreen,

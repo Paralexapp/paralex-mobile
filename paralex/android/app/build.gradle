@@ -40,10 +40,10 @@ android {
     }
     signingConfigs {
         release {
-            keyAlias 'key0'
-            keyPassword 'Jog24u'
-            storeFile file('payinaks.jks')
-            storePassword 'Jogjog24u'
+            keyAlias ''
+            keyPassword ''
+            storeFile file('')
+            storePassword ''
         }
 
     }

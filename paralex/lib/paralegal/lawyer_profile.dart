@@ -92,46 +92,66 @@ class LawyerProfile extends StatelessWidget {
                             // ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                specialization!,
-                                style: FontStyles.smallCapsIntro.copyWith(
-                                    color: Color(0xFF4A4A68),
-                                    fontSize: 15,
-                                    letterSpacing: 0),
+
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width * 0.3, // adjust as needed
+                            ),
+                            child: Text(
+                              specialization!,
+                              style: FontStyles.smallCapsIntro.copyWith(
+                                color: Color(0xFF4A4A68),
+                                fontSize: 15,
+                                letterSpacing: 0,
                               ),
-                              // Row(
-                              //   children: [
-                              //     Icon(
-                              //       Icons.star,
-                              //       color: Color(0xFFFFC403),
-                              //       size: 12,
-                              //     ),
-                              //     Text(
-                              //       rating.toString(),
-                              //       style: FontStyles.smallCapsIntro.copyWith(
-                              //           color: Color(0xFF4A4A68),
-                              //           fontSize: 11,
-                              //           letterSpacing: 0,
-                              //           fontWeight: FontWeight.bold),
-                              //     ),
-                              //     SizedBox(width: 5),
-                              //     // Text(
-                              //     //   "(${reviewCount.toString()} Reviews)",
-                              //     //   style: FontStyles.smallCapsIntro.copyWith(
-                              //     //       color: Color(0xFF4A4A68),
-                              //     //       fontSize: 11,
-                              //     //       letterSpacing: 0),
-                              //     // ),
-                              //   ],
-                              // ),
-                            ],
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
-                        )
+                        ),
+
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 15.0),
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.end,
+                        //     children: [
+                        //       Text(
+                        //         specialization!,
+                        //         style: FontStyles.smallCapsIntro.copyWith(
+                        //             color: Color(0xFF4A4A68),
+                        //             fontSize: 15,
+                        //             letterSpacing: 0),
+                        //       ),
+                        //       // Row(
+                        //       //   children: [
+                        //       //     Icon(
+                        //       //       Icons.star,
+                        //       //       color: Color(0xFFFFC403),
+                        //       //       size: 12,
+                        //       //     ),
+                        //       //     Text(
+                        //       //       rating.toString(),
+                        //       //       style: FontStyles.smallCapsIntro.copyWith(
+                        //       //           color: Color(0xFF4A4A68),
+                        //       //           fontSize: 11,
+                        //       //           letterSpacing: 0,
+                        //       //           fontWeight: FontWeight.bold),
+                        //       //     ),
+                        //       //     SizedBox(width: 5),
+                        //       //     // Text(
+                        //       //     //   "(${reviewCount.toString()} Reviews)",
+                        //       //     //   style: FontStyles.smallCapsIntro.copyWith(
+                        //       //     //       color: Color(0xFF4A4A68),
+                        //       //     //       fontSize: 11,
+                        //       //     //       letterSpacing: 0),
+                        //       //     // ),
+                        //       //   ],
+                        //       // ),
+                        //     ],
+                        //   ),
+                        // )
                       ],
                     ),
                     SizedBox(height: 10),

@@ -7,6 +7,7 @@ import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../routes/navs.dart';
 import '../../../../service_provider/controllers/user_choice_controller.dart';
+import '../service_provider/controllers/notification_controller.dart';
 import '../service_provider/view/delivery_notification.dart';
 import '../service_provider/view/drawer.dart';
 import '../reusables/bottom_nav.dart'; // Import for the bottom navigation bar
@@ -24,6 +25,7 @@ class LawyerDashboard extends StatefulWidget {
 }
 
 class _LawyerDashboardState extends State<LawyerDashboard> {
+  final NotificationsController controller = Get.find();
   int _currentIndex = 0; // Index to track the current selected tab
   late PageController _pageController;
 
@@ -146,6 +148,47 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
                 )),
           ],
         ),
+        Row(
+          children: [
+            Obx(() {
+              int unreadCount = controller.unreadCount.value;
+              return badges.Badge(
+                position: badges.BadgePosition.topEnd(top: -10, end: -10),
+                showBadge: unreadCount > 0,
+                badgeContent: Text(
+                  unreadCount.toString(),
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                ),
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: Colors.red,
+                  shape: badges.BadgeShape.circle,
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DeliveryNotification(
+                          appBarTitle: "Notification",
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Iconsax.notification,
+                    color: PaintColors.paralexpurple,
+                    size: 30,
+                  ),
+                ),
+              );
+            }),
+            IconButton(
+              icon: const Icon(Icons.exit_to_app, color: PaintColors.paralexpurple),
+              onPressed: _logoutUser,
+            ),
+          ],
+        ),
+      ],
+
         // Obx(() {
         //   int unreadCount = controller.unreadCount.value;
         //
@@ -178,7 +221,6 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
         //     ),
         //   );
         // }),
-      ],
     );
   }
 
@@ -239,5 +281,12 @@ class _LawyerDashboardState extends State<LawyerDashboard> {
         ],
       ),
     );
+  }
+  // Logout Logic
+  Future<void> _logoutUser() async {
+    // Handle logout logic, like clearing session or token
+    userController.clearSession();
+    // Navigate to the login screen
+    Get.toNamed(Nav.login); // Adjust the route according to your app's flow
   }
 }

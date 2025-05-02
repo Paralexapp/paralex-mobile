@@ -208,23 +208,23 @@ class Lawyers extends StatelessWidget {
                     width: double.infinity, // Constrains the inner Row
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.star,
-                          size: 10,
-                          color: Color(0xAAFFC403),
-                        ),
-                        Expanded(
-                          // Takes remaining space for rating text
-                          child: Text(
-                            "${rating.toString()}   (${reviewCount.toString()} Reviews)",
-                            style: FontStyles.smallCapsIntro.copyWith(
-                              letterSpacing: 0,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: PaintColors.generalTextsm,
-                            ),
-                          ),
-                        ),
+                        // const Icon(
+                        //   Icons.star,
+                        //   size: 10,
+                        //   color: Color(0xAAFFC403),
+                        // ),
+                        // Expanded(
+                        //   // Takes remaining space for rating text
+                        //   child: Text(
+                        //     "${rating.toString()}   (${reviewCount.toString()} Reviews)",
+                        //     style: FontStyles.smallCapsIntro.copyWith(
+                        //       letterSpacing: 0,
+                        //       fontSize: 10,
+                        //       fontWeight: FontWeight.bold,
+                        //       color: PaintColors.generalTextsm,
+                        //     ),
+                        //   ),
+                        // ),
                         Text(
                           "₦${hourlyRates.toString()} per hour",
                           style: FontStyles.smallCapsIntro.copyWith(

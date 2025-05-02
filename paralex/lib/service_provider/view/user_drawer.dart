@@ -13,8 +13,8 @@ final NotificationsController controller = Get.find();
 final userChoiceController = Get.find<UserChoiceController>();
 
 
-class MyLawyerDrawer extends StatelessWidget {
-  const MyLawyerDrawer({super.key});
+class MyUserDrawer extends StatelessWidget {
+  const MyUserDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

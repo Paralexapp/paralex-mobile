@@ -568,44 +568,45 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            widget.specialization!,
-                            style: FontStyles.smallCapsIntro.copyWith(
-                                color: Color(0xFF4A4A68), fontSize: 15, letterSpacing: 0),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Color(0xFFFFC403),
-                                size: 12,
-                              ),
-                              Text(
-                                widget.rating.toString(),
-                                style: FontStyles.smallCapsIntro.copyWith(
-                                    color: Color(0xFF4A4A68),
-                                    fontSize: 11,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                "(${widget.reviewCount} Reviews)",
-                                style: FontStyles.smallCapsIntro.copyWith(
-                                    color: Color(0xFF4A4A68),
-                                    fontSize: 11,
-                                    letterSpacing: 0),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 15.0),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.end,
+                    //     children: [
+                    //       Text(
+                    //         widget.specialization!,
+                    //         style: FontStyles.smallCapsIntro.copyWith(
+                    //             color: Color(0xFF4A4A68), fontSize: 15, letterSpacing: 0),
+                    //       ),
+                    //       Row(
+                    //         children: [
+                    //           Icon(
+                    //             Icons.star,
+                    //             color: Color(0xFFFFC403),
+                    //             size: 12,
+                    //           ),
+                    //           Text(
+                    //             widget.rating.toString(),
+                    //             style: FontStyles.smallCapsIntro.copyWith(
+                    //                 color: Color(0xFF4A4A68),
+                    //                 fontSize: 11,
+                    //                 letterSpacing: 0,
+                    //                 fontWeight: FontWeight.bold),
+                    //           ),
+                    //           SizedBox(width: 5),
+                    //           Text(
+                    //             "(${widget.reviewCount} Reviews)",
+                    //             style: FontStyles.smallCapsIntro.copyWith(
+                    //                 color: Color(0xFF4A4A68),
+                    //                 fontSize: 11,
+                    //                 letterSpacing: 0),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // )
+
                   ],
                 ),
                 SizedBox(height: 25),
@@ -654,7 +655,7 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                 SizedBox(height: 8),
                 CustomTextField(
                   controller: _nameController,
-                  hintText: "Ade Balogun",
+                  hintText: "Your name...",
                   onChanged: (value) {},
                 ),
                 Text(

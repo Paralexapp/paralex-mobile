@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/users/auth_process/login.dart';
 import '../../../../reusables/paints.dart';
@@ -20,17 +23,47 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
   final TextEditingController _oldPasswordController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
+
   bool _isDarkMode = false;
 
   final UserChoiceController _userChoiceController = Get.find();
+
+  File? _selectedImage;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile == null) {
+      Get.snackbar('Error', 'No image selected');
+      return;
+    }
+
+    setState(() {
+      _selectedImage = File(pickedFile.path);
+    });
+
+    final success = await _userChoiceController.updateProfilePhoto(_selectedImage!);
+
+    if (success) {
+      Get.snackbar('Success', 'Profile photo updated');
+    } else {
+      Get.snackbar('Error', 'Failed to update photo');
+    }
+  }
+
+
 
   @override
   void initState() {
     super.initState();
     _userChoiceController.fetchLoggedInUser().then((_) {
+      print("Bio: ${_userChoiceController.aboutMe.value}");
       // Set the email and phone number fields after fetching the data
       _emailController.text = _userChoiceController.email.value;
       _phoneController.text = _userChoiceController.phoneNumber.value;
+      _bioController.text = _userChoiceController.aboutMe.value;
     });
   }
 
@@ -41,6 +74,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
     _oldPasswordController.dispose();
     _newPasswordController.dispose();
     _confirmPasswordController.dispose();
+    _bioController.dispose();
     super.dispose();
   }
 
@@ -71,13 +105,78 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           ),
           title: const Text("Account Settings"),
         ),
+
         body: Padding(
+
           padding: const EdgeInsets.all(16.0),
+
           child: ListView(
+
             children: [
+              Center(
+                child: GestureDetector(
+                  onTap: _pickImage, // Function to pick image when tapped
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: _selectedImage != null
+                        ? FileImage(_selectedImage!)
+                        : (_userChoiceController.photoUrl.value.isNotEmpty
+                        ? NetworkImage(_userChoiceController.photoUrl.value)
+                        : AssetImage('assets/images/dummy-dp.png') as ImageProvider),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Icon(
+                        Icons.edit,
+                        size: 35,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Center(
+              //   child: GestureDetector(
+              //     onTap: _pickImage,
+              //     child: CircleAvatar(
+              //       radius: 50,
+              //       backgroundImage: _selectedImage != null
+              //           ? FileImage(_selectedImage!)
+              //           : (_userChoiceController.photoUrl.value.isNotEmpty
+              //           ? NetworkImage(_userChoiceController.photoUrl.value)
+              //           : AssetImage('assets/images/law_catalogue.png') as ImageProvider),
+              //       child: Align(
+              //         alignment: Alignment.bottomRight,
+              //         child: Icon(Icons.edit, size: 24, color: Colors.white),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              const SizedBox(height: 20),
+
               _buildSectionTitle("Personal Information"),
               _buildTextField("Email", _emailController, isEditable: false),
               _buildTextField("Phone Number", _phoneController, isEditable: false),
+              _buildSectionTitle("About Me"),
+              _buildTextField("Short Bio", _bioController, isEditable: true),
+              ElevatedButton(
+                onPressed: () async {
+                  final updatedBio = _bioController.text.trim();
+                  final success = await _userChoiceController.updateBio(updatedBio);
+                  if (success) {
+                    Get.snackbar('Success', 'Bio updated successfully!',
+                        snackPosition: SnackPosition.TOP);
+                  } else {
+                    Get.snackbar('Error', 'Failed to update bio.',
+                        snackPosition: SnackPosition.TOP);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: PaintColors.paralexpurple,
+                ),
+                child: const Text("Save Changes", style: TextStyle(color: Colors.white)),
+              ),
+
               _buildSectionTitle("Change Password"),
               _buildTextField("Old Password", _oldPasswordController, obscureText: true),
               _buildTextField("New Password", _newPasswordController, obscureText: true),

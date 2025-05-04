@@ -156,6 +156,7 @@ class RequestLawyerForm extends StatefulWidget {
 
 class _RequestLawyerFormState extends State<RequestLawyerForm> {
   final LawyerController _controller = Get.put(LawyerController());
+  bool isUploading = false;
 
   FlutterSoundRecorder? _recorder;
   AudioPlayer? _audioPlayer;
@@ -429,10 +430,46 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
   }
 
   void _uploadRecording() async {
-    if (filePath != null) {
+    if (filePath == null) {
+      print("Upload skipped: filePath is null");
+      return;
+    }
+
+    setState(() {
+      isUploading = true;
+    });
+    print("Uploading recording...");
+
+    try {
       recordingUrl = await _controller.uploadFile(File(filePath!));
+      print("Upload successful. URL: $recordingUrl");
+
+      Get.snackbar(
+        'Success',
+        'Recording uploaded successfully!',
+        snackPosition: SnackPosition.TOP,
+      );
+    } catch (e) {
+      print("Upload failed: $e");
+      Get.snackbar(
+        'Error',
+        'Upload failed: $e',
+        snackPosition: SnackPosition.TOP,
+      );
+    } finally {
+      setState(() {
+        isUploading = false;
+      });
     }
   }
+
+
+
+  // void _uploadRecording() async {
+  //   if (filePath != null) {
+  //     recordingUrl = await _controller.uploadFile(File(filePath!));
+  //   }
+  // }
 
   void _deleteRecording() {
     if (isPlaying || isPaused) {
@@ -806,10 +843,17 @@ class _RequestLawyerFormState extends State<RequestLawyerForm> {
                                 height: 10.0,
                               ),
                               (recordingUrl.isEmpty)
-                                  ? ElevatedButton(
-                                      onPressed: _uploadRecording,
-                                      child: Text("Upload Recording"),
-                                    )
+                                  // ? ElevatedButton(
+                                  //     onPressed: _uploadRecording,
+                                  //     child: Text("Upload Recording"),
+                                  //   )
+                                  ? (isUploading
+                                  ? CircularProgressIndicator()
+                                  : ElevatedButton(
+                                onPressed: _uploadRecording,
+                                child: Text("Upload Recording"),
+                              )
+                              )
                                   : Text(
                                       recordingUrl,
                                       style: TextStyle(),

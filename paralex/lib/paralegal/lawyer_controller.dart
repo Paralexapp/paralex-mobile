@@ -78,7 +78,7 @@ class LawyerController extends GetxController {
       );
 
       // Pass firstName and lastName to the next screen
-      Get.toNamed(Nav.bondSubmitted);
+      Get.toNamed(Nav.getLawyerSubmitted);
     } catch (e) {
       Get.snackbar(
         'Error',

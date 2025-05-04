@@ -30,7 +30,7 @@ class SelectServiceScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Choose your \n preferred",
+              "Choose your \n Role",
               style: FontStyles.headingText.copyWith(
                   color: PaintColors.paralexpurple,
                   fontWeight: FontWeight.w900),
@@ -49,8 +49,8 @@ class SelectServiceScreen extends StatelessWidget {
                       child: SelectServiceWidget(
                         imgPath: "assets/images/mace.svg",
                         firstText: "Lawyer",
-                        secondText: "I provide legal",
-                        thirdText: "services to clients",
+                        secondText: "Sign Up",
+                        thirdText: "as Lawyer",
                         bckgColor: controller.getButtonColor(0),
                       ),
                     ),
@@ -67,8 +67,8 @@ class SelectServiceScreen extends StatelessWidget {
                       child: SelectServiceWidget(
                         imgPath: "assets/images/truck.svg",
                         firstText: "Delivery Agent",
-                        secondText: "I provide legal",
-                        thirdText: "delivery services",
+                        secondText: "Sign Up",
+                        thirdText: "as Delivery Agent",
                         bckgColor: controller.getButtonColor(1),
                       ),
                     ),

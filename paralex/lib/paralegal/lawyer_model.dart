@@ -55,6 +55,8 @@ class Lawyer {
   final List<String> practiceAreas;
   final User? user;  // Made nullable
   final String lawyerName;
+  final String photoUrl;
+  final String aboutMe;
   final bool status;
   final DateTime time;
 
@@ -66,8 +68,10 @@ class Lawyer {
     required this.practiceAreas,
     this.user,  // Now nullable
     required this.lawyerName,
+    required this.photoUrl,
     required this.status,
     required this.time,
+    required this.aboutMe
   });
 
   factory Lawyer.fromJson(Map<String, dynamic> json) {
@@ -79,6 +83,8 @@ class Lawyer {
       practiceAreas: (json['practiceAreas'] as List?)?.map((e) => e.toString()).toList() ?? [],
       user: json['user'] != null ? User.fromJson(json['user'] as Map<String, dynamic>) : null,
       lawyerName: json['lawyerName'] as String? ?? '',
+      aboutMe: json['aboutMe'] as String? ?? '',
+      photoUrl: json['photoUrl'] as String? ?? '',
       status: json['status'] as bool? ?? false,
       time: _parseDateTime(json['time'] as List? ?? []),
     );
@@ -178,6 +184,7 @@ class User {
         businessId: '',
         email: '',
         userType: '',
+        photoUrl: '',
         registrationLevel: '',
         enabled: false,
         username: '',

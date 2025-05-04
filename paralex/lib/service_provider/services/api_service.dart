@@ -135,13 +135,22 @@ class ApiService {
   //   }
   // }
 
-  Future<Map<String, dynamic>> putRequest(String endpoint, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> putRequest(String endpoint, Map<String, dynamic> data, {
+    bool requireAuth = true,
+  }) async {
     final url = Uri.parse('$baseUrl/$endpoint');
     debugPrint('url==$url');
+
+    final headers = {
+      'Content-Type': 'application/json',
+      if (requireAuth)
+        'Authorization': 'Bearer ${_authController.token.value}', // Only include if required
+    };
+
     try {
       final response = await http.put(
         url,
-        headers: {'Content-Type': 'application/json'},
+        headers: headers,
         body: jsonEncode(data),
       );
 
@@ -225,9 +234,10 @@ class ApiService {
       var response = await request.send();
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        var responseBody = await jsonDecode(response.stream.toString());
+        var responseString = await response.stream.bytesToString();
+        var responseBody = jsonDecode(responseString);
         uploadedImageUrl = responseBody['secure_url'];
-        return uploadedImageUrl;
+        return "Recording Uploaded Successfully!";
       } else {
         Get.snackbar(
           'Error',
@@ -245,6 +255,38 @@ class ApiService {
       throw Exception("An error occurred while uploading the image: $e");
     }
   }
+
+
+  // Future<String> uploadImage(File file) async {
+  //   String uploadedImageUrl = '';
+  //   var url = Uri.parse('$baseUrl/api/v1/auth/upload-media');
+  //   try {
+  //     var request = http.MultipartRequest('POST', url)
+  //       ..files.add(await http.MultipartFile.fromPath('file', file.path));
+  //
+  //     var response = await request.send();
+  //
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       var responseBody = await jsonDecode(response.stream.toString());
+  //       uploadedImageUrl = responseBody['secure_url'];
+  //       return uploadedImageUrl;
+  //     } else {
+  //       Get.snackbar(
+  //         'Error',
+  //         "Failed to upload image. Status code: ${response.statusCode}",
+  //         snackPosition: SnackPosition.TOP,
+  //       );
+  //       throw Exception("Failed to upload image. Status code: ${response.statusCode}");
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar(
+  //       'Error',
+  //       "An error occurred while uploading the image: $e",
+  //       snackPosition: SnackPosition.TOP,
+  //     );
+  //     throw Exception("An error occurred while uploading the image: $e");
+  //   }
+  // }
 
   Future<String> uploadImage1(File file) async {
     String uploadedImageUrl = '';
@@ -279,6 +321,53 @@ class ApiService {
       throw Exception("An error occurred while uploading the image: $e");
     }
   }
+
+  Future<String> uploadProfilePic(File file) async {
+    String uploadedImageUrl = '';
+    var url = Uri.parse('$baseUrl/api/v1/auth/upload-profile-pic');
+    try {
+      var request = http.MultipartRequest('POST', url)
+        ..headers['Authorization'] = 'Bearer ${_authController.token.value}' // Add the auth token
+        ..files.add(await http.MultipartFile.fromPath('file', file.path));
+
+      var response = await request.send();
+
+      // Read the response stream into a string
+      String responseString = await response.stream.bytesToString();
+      responseString = responseString.trim(); // Remove any leading/trailing whitespace
+      debugPrint('Raw Response String: $responseString');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Server returned plain text (URL)
+        if (Uri.tryParse(responseString)?.isAbsolute == true) {
+          uploadedImageUrl = responseString; // Assign the URL directly
+          return uploadedImageUrl;
+        } else {
+          throw Exception("Unexpected response format: $responseString");
+        }
+      } else {
+        // Handle error responses
+        throw Exception(
+          "Failed to upload image. Status code: ${response.statusCode}. Response: $responseString",
+        );
+      }
+    } catch (e) {
+      debugPrint("Error during image upload: $e");
+      throw Exception("An error occurred while uploading the image: $e");
+    }
+  }
+
+
+
+  Future<Map<String, dynamic>> updateUserBio(String bio) async {
+    return await putRequest('api/v1/auth/update-bio', {
+      'aboutMe': bio,
+    }, requireAuth: true); // Explicitly require auth
+  }
+
+
+
+
 }
 
 

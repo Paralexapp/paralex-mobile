@@ -22,6 +22,7 @@ import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_step_4.d
 import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_step_5.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/bond/bond_success.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/lawyer_paralegal_home.dart';
+import 'package:paralex/screens/users/account/pages/Paralegal/litigation/get_lawyer_success.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/nafdac_steps.dart/cac_step_one.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/nafdac_steps.dart/cac_step_two.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/nafdac_steps.dart/immigration_step_one.dart';
@@ -119,6 +120,7 @@ Future<void> main() async {
       GetPage(name: Nav.bondStepD, page: () => BondFourthStep()),
       GetPage(name: Nav.bondStepE, page: () => BondStepFive()),
       GetPage(name: Nav.bondSubmitted, page: () => const BondSuccess()),
+      GetPage(name: Nav.getLawyerSubmitted, page: () => const GetLawyerSuccess()),
       GetPage(name: Nav.legalServiceHome, page: () => const LegalAssistance()),
       GetPage(name: Nav.nafdacReg, page: () => const NafdacRegistration()),
       GetPage(name: Nav.cacReg, page: () => const CacRegistration()),

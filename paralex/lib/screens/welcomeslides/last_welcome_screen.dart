@@ -20,7 +20,7 @@ class LastWelcomeScreen extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/lady.jpeg"),
+                image: AssetImage("assets/images/new_lady.png"),
                 fit: BoxFit.cover,
               ),
             ),

@@ -6,7 +6,9 @@ import 'package:paralex/service_provider/view/widgets/custom_button.dart';
 import '../reusables/back_button.dart';
 import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
+import '../service_provider/controllers/user_choice_controller.dart';
 import 'lawyer_controller.dart';
+import 'dart:typed_data';
 
 class LawyerProfile extends StatelessWidget {
   final String? imgPath;
@@ -31,6 +33,8 @@ class LawyerProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LawyerController());
+    final _userChoiceController = Get.find<UserChoiceController>();
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -50,7 +54,8 @@ class LawyerProfile extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(imgPath ?? "assets/images/law_catalogue.png"),
+                    // image: AssetImage(imgPath ?? "assets/images/law_catalogue.png"),
+                    image: _getImageProvider(imgPath),
                     fit: BoxFit.cover),
               ),
             ),
@@ -170,7 +175,7 @@ class LawyerProfile extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "",
+                      lawyer?.aboutMe ?? 'No bio available', // Access aboutMe from the lawyer object
                       style: FontStyles.smallCapsIntro.copyWith(
                           color: Color(0xFF4A4A68), fontSize: 12, letterSpacing: 0),
                     ),
@@ -239,6 +244,14 @@ class LawyerProfile extends StatelessWidget {
         ],
       ),
     );
+  }
+  // Helper method (add inside the Lawyers widget class)
+  ImageProvider _getImageProvider(String? path) {
+    if (path != null && path.isNotEmpty && path.startsWith('http')) {
+      return NetworkImage(path);
+    } else {
+      return AssetImage('assets/images/dummy-dp.png') as ImageProvider;
+    }
   }
 }
 

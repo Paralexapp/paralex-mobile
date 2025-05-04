@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -43,6 +45,8 @@ class UserChoiceController extends GetxController {
   var lastName = ''.obs;
   var password = ''.obs;
   var phoneNumber = ''.obs;
+  var photoUrl = ''.obs;
+  var aboutMe = ''.obs;
 
   // Authentication details
   var userIdToken = ''.obs;
@@ -70,6 +74,8 @@ class UserChoiceController extends GetxController {
     firstName.value = '';
     lastName.value = '';
     email.value = '';
+    photoUrl.value = '';
+    aboutMe.value = '';
     userIdToken.value = '';
     authToken.value = '';
     selectedUserType.value = initialUserType; // Reset to the initial user type
@@ -126,6 +132,11 @@ class UserChoiceController extends GetxController {
         lastName.value = data['lastName'] ?? '';
         email.value = data['email'] ?? '';
         phoneNumber.value = data['phoneNumber'] ?? '';  // Set phone number
+        photoUrl.value = data['photoUrl'] ?? '';
+        aboutMe.value = data['aboutMe'] ?? '';
+        print('Fetched User Data: $data');
+
+
       } else {
         print('Failed to fetch logged-in user: ${response.statusMessage}');
       }
@@ -181,6 +192,23 @@ class UserChoiceController extends GetxController {
     }
   }
 
+  Future<bool> updateBio(String newBio) async {
+    try {
+      isLoading.value = true;
+      final result = await _apiService.updateUserBio(newBio);
+      aboutMe.value = newBio;
+      return true;
+    } catch (e) {
+      debugPrint('Bio update failed: $e');
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
+
+
   Future<bool> deleteAccount(String email) async {
     try {
       isLoading(true);
@@ -203,7 +231,27 @@ class UserChoiceController extends GetxController {
     } finally {
       isLoading(false);
     }
+
   }
+
+  Future<bool> updateProfilePhoto(File imageFile) async {
+    try {
+      // Step 1: Upload image and save URL to user entity
+      String uploadedUrl = await _apiService.uploadProfilePic(imageFile);
+
+      // Step 2: Update locally
+      photoUrl.value = uploadedUrl;
+
+      // Step 3: Success
+      Get.snackbar('Success', 'Profile photo updated successfully');
+      return true;
+    } catch (e) {
+      // Handle error
+      Get.snackbar('Error', e.toString());
+      return false;
+    }
+  }
+
 
   @override
   void onInit() {

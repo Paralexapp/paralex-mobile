@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:get/get.dart';
+import 'dart:typed_data';
 import '../../../../../paralegal/lawyer_list.dart';
 import '../../../../../paralegal/lawyer_model.dart';
 import '../../../../../service_provider/view/widgets/custom_text_field.dart';
@@ -16,13 +17,52 @@ class LawyerHome extends StatefulWidget {
 class _LawyerHomeState extends State<LawyerHome> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final List<String> tabs = [
-    'CORPORATE LAW',
-    'LAND LAW',
-    'FAMILY LAW',
-    'CRIMINAL LAW',
-    "INTELLECTUAL PROPERTY LAW",
-    "ENVIRONMENTAL LAW",
-    "CIVIL RIGHT LAW"
+    // 'CORPORATE LAW',
+    // 'LAND LAW',
+    // 'FAMILY LAW',
+    // 'CRIMINAL LAW',
+    // "INTELLECTUAL PROPERTY LAW",
+    // "ENVIRONMENTAL LAW",
+    // "CIVIL RIGHT LAW"
+    "CRIMINAL LAW",
+    "LAND LAW",
+    "INTELLECTUAL PROPERTY",
+    "ALTERNATIVE DISPUTE RESOLUTION PRACTICES.",
+    "AVIATION",
+    "BANKING AND FINANCE",
+    "BUSINESS ESTABLISHMENT AND CORPORATE IMMIGRATION",
+    "CAPITAL MARKETS",
+    "COMPANY SECRETARIAL SERVICES",
+    "COMPLIANCE AND INVESTIGATION",
+    "CORPORATE ADVISORY",
+    "CORPORATE GOVERNANCE",
+    "EMPLOYMENT",
+    "ENERGY AND NATURAL RESOURCES",
+    "ENTERTAINMENTS",
+    "HUMAN RIGHTS",
+    "INTERNATIONAL LAW",
+    "INTERNATIONAL TRADE",
+    "LITIGATION",
+    "CIVIL AND CRIMINAL",
+    "MERGERS, ACQUISITIONS AND RESTRUCTURING",
+    "TELECOMMUNICATIONS, MEDIA AND TECHNOLOGY",
+    "INFORMATION TECHNOLOGY",
+    "OIL AND GAS",
+    "POWER",
+    "PROBONO",
+    "PUBLIC POLICY AND REGULATIONS",
+    "REAL ESTATE AND PROPERTY MANAGEMENT",
+    "SHIPPING, MARITIME LEGAL ADVISORY",
+    "TAX",
+    "STARTUP FUNDING",
+    "FAMILY LAW",
+    "CORPORATE LAW",
+    "INTELLECTUAL PROPERTY",
+    "REAL ESTATE",
+    "EMPLOYMENT LAW",
+    "PERSONAL INJURY",
+    "IMMIGRATION LAW"
+
   ];
 
   String searchQuery = ""; // Add search query state
@@ -176,11 +216,13 @@ class Lawyers extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 image: DecorationImage(
-                  image: AssetImage(imgPath ?? "assets/images/law_catalogue.png"),
+                  // image: AssetImage(imgPath ?? "assets/images/law_catalogue.png"),
+                  image: _getImageProvider(imgPath),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
+
             const SizedBox(width: 10),
             Expanded(
               // This ensures the column takes remaining space
@@ -225,16 +267,16 @@ class Lawyers extends StatelessWidget {
                         //     ),
                         //   ),
                         // ),
-                        Text(
-                          "₦${hourlyRates.toString()} per hour",
-                          style: FontStyles.smallCapsIntro.copyWith(
-                            letterSpacing: 0,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: PaintColors.generalTextsm,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        // Text(
+                        //   "₦${hourlyRates.toString()} per hour",
+                        //   style: FontStyles.smallCapsIntro.copyWith(
+                        //     letterSpacing: 0,
+                        //     fontSize: 10,
+                        //     fontWeight: FontWeight.bold,
+                        //     color: PaintColors.generalTextsm,
+                        //   ),
+                        //   overflow: TextOverflow.ellipsis,
+                        // ),
                       ],
                     ),
                   ),
@@ -246,6 +288,13 @@ class Lawyers extends StatelessWidget {
         const Divider(),
       ],
     );
+  }
+  // Helper method (add inside the Lawyers widget class)
+  ImageProvider _getImageProvider(String? path) {
+    if (path != null && path.isNotEmpty && path.startsWith('http')) {
+      return NetworkImage(path);
+    } else {
+      return AssetImage('assets/images/dummy-dp.png') as ImageProvider;    }
   }
 }
 

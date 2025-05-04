@@ -45,6 +45,7 @@ class LawyerList extends StatelessWidget {
         final lawyer = filteredLawyers[index];
         return InkWell(
           onTap: () {
+
             Get.to(() => LawyerProfile(
                   imgPath: lawyer.user?.photoUrl,
                   lawyerName: lawyer.lawyerName,

@@ -133,38 +133,38 @@ class DeliveryInfo1 extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "₦18.06",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Container(
-                                      width: 68,
-                                      height: 28,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFEFF3FE),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/images/blank_human_image.svg"),
-                                          Icon(
-                                            Icons.star,
-                                            size: 10,
-                                            color: PaintColors.paralexpurple,
-                                          ),
-                                          Text(
-                                            "5.0",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 11),
-                                          )
-                                        ],
-                                      ),
-                                    )
+                                    // Text(
+                                    //   "₦18.06",
+                                    //   style: TextStyle(
+                                    //       color: Colors.black,
+                                    //       fontSize: 24,
+                                    //       fontWeight: FontWeight.bold),
+                                    // ),
+                                    // Container(
+                                    //   width: 68,
+                                    //   height: 28,
+                                    //   decoration: BoxDecoration(
+                                    //     color: Color(0xFFEFF3FE),
+                                    //     borderRadius: BorderRadius.circular(20),
+                                    //   ),
+                                    //   child: Row(
+                                    //     children: [
+                                    //       SvgPicture.asset(
+                                    //           "assets/images/blank_human_image.svg"),
+                                    //       Icon(
+                                    //         Icons.star,
+                                    //         size: 10,
+                                    //         color: PaintColors.paralexpurple,
+                                    //       ),
+                                    //       Text(
+                                    //         "5.0",
+                                    //         style: TextStyle(
+                                    //             color: Colors.black,
+                                    //             fontSize: 11),
+                                    //       )
+                                    //     ],
+                                    //   ),
+                                    // )
                                   ],
                                 ),
                                 SizedBox(height: 20),
@@ -180,14 +180,14 @@ class DeliveryInfo1 extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Column(
-                                      children: [
-                                        Icon(
-                                          Icons.arrow_drop_down_circle_sharp,
-                                          color: PaintColors.paralexpurple,
-                                        ),
-                                        SizedBox(height: 4),
-                                        DottedLine(), // Custom dashed line
-                                      ],
+                                      // children: [
+                                      //   Icon(
+                                      //     Icons.arrow_drop_down_circle_sharp,
+                                      //     color: PaintColors.paralexpurple,
+                                      //   ),
+                                      //   SizedBox(height: 4),
+                                      //   // DottedLine(), // Custom dashed line
+                                      // ],
                                     ),
                                     SizedBox(width: 8),
                                     Column(
@@ -195,17 +195,17 @@ class DeliveryInfo1 extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "8 County Road 11/6",
+                                          "No Order Yet!",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16,
                                               color: Color(0xFF21252C)),
                                         ),
-                                        Text(
-                                          "Mannington, WV, 26582, United States",
-                                          style: TextStyle(
-                                              color: Colors.grey[700]),
-                                        ),
+                                        // Text(
+                                        //   "Mannington, WV, 26582, United States",
+                                        //   style: TextStyle(
+                                        //       color: Colors.grey[700]),
+                                        // ),
                                       ],
                                     ),
                                   ],
@@ -215,42 +215,42 @@ class DeliveryInfo1 extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Column(
-                                      children: [
-                                        Icon(Icons.location_on,
-                                            color: Colors.red),
-                                        SizedBox(height: 4),
-                                      ],
+                                      // children: [
+                                      //   Icon(Icons.location_on,
+                                      //       color: Colors.red),
+                                      //   SizedBox(height: 4),
+                                      // ],
                                     ),
                                     SizedBox(width: 8),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          "1124 Cave Road",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                              color: Color(0xFF21252C)),
-                                        ),
-                                        Text(
-                                          "Gillette, WV, 26582, United States",
-                                          style: TextStyle(
-                                              color: Colors.grey[700]),
-                                        ),
+                                        // Text(
+                                        //   "1124 Cave Road",
+                                        //   style: TextStyle(
+                                        //       fontWeight: FontWeight.bold,
+                                        //       fontSize: 16,
+                                        //       color: Color(0xFF21252C)),
+                                        // ),
+                                        // Text(
+                                        //   "Gillette, WV, 26582, United States",
+                                        //   style: TextStyle(
+                                        //       color: Colors.grey[700]),
+                                        // ),
                                       ],
                                     ),
                                   ],
                                 ),
-                                Divider(),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
-                                  child: Text(
-                                    "3 packages - Vip",
-                                    style: TextStyle(
-                                        fontSize: 14, color: Color(0xFF21252C)),
-                                  ),
-                                ),
+                                // Divider(),
+                                // Padding(
+                                //   padding: const EdgeInsets.only(bottom: 5.0),
+                                //   child: Text(
+                                //     "3 packages - Vip",
+                                //     style: TextStyle(
+                                //         fontSize: 14, color: Color(0xFF21252C)),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -260,17 +260,17 @@ class DeliveryInfo1 extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-                Padding(
-                  padding:
-                      EdgeInsets.only(bottom: 16.0), // Add spacing as needed
-                  child: CustomButton(
-                      desiredWidth: 0.9,
-                      buttonText: "Accept",
-                      buttonColor: PaintColors.paralexpurple,
-                      ontap: () {
-                        Get.toNamed(Nav.deliveryInfo2);
-                      }),
-                ),
+                // Padding(
+                //   padding:
+                //       EdgeInsets.only(bottom: 16.0), // Add spacing as needed
+                //   child: CustomButton(
+                //       desiredWidth: 0.9,
+                //       buttonText: "Accept",
+                //       buttonColor: PaintColors.paralexpurple,
+                //       ontap: () {
+                //         Get.toNamed(Nav.deliveryInfo2);
+                //       }),
+                // ),
               ],
             ),
           ),

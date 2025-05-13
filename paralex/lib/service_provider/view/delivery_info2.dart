@@ -133,7 +133,7 @@ class DeliveryInfo2 extends StatelessWidget {
                                             color: Colors.black, fontSize: 14),
                                       ),
                                       Text(
-                                        "₦35.6",
+                                        "₦0.00",
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 24,
@@ -157,7 +157,7 @@ class DeliveryInfo2 extends StatelessWidget {
                                             color: Colors.black, fontSize: 14),
                                       ),
                                       Text(
-                                        "3",
+                                        "0",
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 24,
@@ -170,7 +170,7 @@ class DeliveryInfo2 extends StatelessWidget {
                             ),
                             SizedBox(height: 25),
                             Text(
-                              "Total distance: 478 km",
+                              "Total distance: 0 km",
                               style:
                                   TextStyle(color: Colors.black, fontSize: 14),
                             ),

@@ -98,12 +98,12 @@ class _EarningState extends State<Earning> {
                               ],
                             ),
                           ),
+                          // Text(
+                          //   "Jun 19 - Jun 25",
+                          //   style: TextStyle(color: Colors.white, fontSize: 13),
+                          // ),
                           Text(
-                            "Jun 19 - Jun 25",
-                            style: TextStyle(color: Colors.white, fontSize: 13),
-                          ),
-                          Text(
-                            "\$ 2,144.06",
+                            "₦0.00",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 27,
@@ -119,11 +119,11 @@ class _EarningState extends State<Earning> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: EarningsCard(title: "Orders", value: "123"),
+                            child: EarningsCard(title: "Orders", value: "0"),
                           ),
                           SizedBox(width: 10),
                           Expanded(
-                            child: EarningsCard(title: "Online", value: "23h 39m"),
+                            child: EarningsCard(title: "Online", value: ""),
                           ),
                         ],
                       ),
@@ -275,36 +275,36 @@ class _EarningState extends State<Earning> {
                                       },
                                     ),
                                     borderData: FlBorderData(show: false),
-                                    barGroups: [
-                                      BarChartGroupData(x: 0, barRods: [
-                                        BarChartRodData(
-                                            toY: 1000, color: PaintColors.paralexpurple)
-                                      ]),
-                                      BarChartGroupData(x: 1, barRods: [
-                                        BarChartRodData(
-                                            toY: 2000, color: PaintColors.paralexpurple)
-                                      ]),
-                                      BarChartGroupData(x: 2, barRods: [
-                                        BarChartRodData(
-                                            toY: 500, color: PaintColors.paralexpurple)
-                                      ]),
-                                      BarChartGroupData(x: 3, barRods: [
-                                        BarChartRodData(
-                                            toY: 1500, color: PaintColors.paralexpurple)
-                                      ]),
-                                      BarChartGroupData(x: 4, barRods: [
-                                        BarChartRodData(
-                                            toY: 2000, color: PaintColors.paralexpurple)
-                                      ]),
-                                      BarChartGroupData(x: 5, barRods: [
-                                        BarChartRodData(
-                                            toY: 500, color: PaintColors.paralexpurple)
-                                      ]),
-                                      BarChartGroupData(x: 6, barRods: [
-                                        BarChartRodData(
-                                            toY: 1000, color: PaintColors.paralexpurple)
-                                      ]),
-                                    ],
+                                    // barGroups: [
+                                    //   BarChartGroupData(x: 0, barRods: [
+                                    //     BarChartRodData(
+                                    //         toY: 1000, color: PaintColors.paralexpurple)
+                                    //   ]),
+                                    //   BarChartGroupData(x: 1, barRods: [
+                                    //     BarChartRodData(
+                                    //         toY: 2000, color: PaintColors.paralexpurple)
+                                    //   ]),
+                                    //   BarChartGroupData(x: 2, barRods: [
+                                    //     BarChartRodData(
+                                    //         toY: 500, color: PaintColors.paralexpurple)
+                                    //   ]),
+                                    //   BarChartGroupData(x: 3, barRods: [
+                                    //     BarChartRodData(
+                                    //         toY: 1500, color: PaintColors.paralexpurple)
+                                    //   ]),
+                                    //   BarChartGroupData(x: 4, barRods: [
+                                    //     BarChartRodData(
+                                    //         toY: 2000, color: PaintColors.paralexpurple)
+                                    //   ]),
+                                    //   BarChartGroupData(x: 5, barRods: [
+                                    //     BarChartRodData(
+                                    //         toY: 500, color: PaintColors.paralexpurple)
+                                    //   ]),
+                                    //   BarChartGroupData(x: 6, barRods: [
+                                    //     BarChartRodData(
+                                    //         toY: 1000, color: PaintColors.paralexpurple)
+                                    //   ]),
+                                    // ],
                                   ),
                                 ),
                               ),
@@ -334,43 +334,43 @@ class _EarningState extends State<Earning> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        height: 50,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFDBE8FF),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Saturday",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 11,
-                              ),
-                            ),
-                            Text(
-                              "17/06/2023",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    OrderWidget(orderNo: "123", orderAmount: "31.23"),
-                    OrderWidget(orderNo: "567", orderAmount: "61.23"),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(12.0),
+                    //   child: Container(
+                    //     padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    //     height: 50,
+                    //     width: double.infinity,
+                    //     decoration: BoxDecoration(
+                    //       color: Color(0xFFDBE8FF),
+                    //       borderRadius: BorderRadius.only(
+                    //         topRight: Radius.circular(10),
+                    //         topLeft: Radius.circular(10),
+                    //       ),
+                    //     ),
+                    //     child: Column(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         Text(
+                    //           "Saturday",
+                    //           style: TextStyle(
+                    //             color: Colors.black,
+                    //             fontSize: 11,
+                    //           ),
+                    //         ),
+                    //         Text(
+                    //           "17/06/2023",
+                    //           style: TextStyle(
+                    //               color: Colors.black,
+                    //               fontSize: 13,
+                    //               fontWeight: FontWeight.bold),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // OrderWidget(orderNo: "123", orderAmount: "31.23"),
+                    // OrderWidget(orderNo: "567", orderAmount: "61.23"),
                   ],
                 ),
               ),

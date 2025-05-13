@@ -104,13 +104,13 @@ class MyDrawer extends StatelessWidget {
                       Get.toNamed(Nav.earning);
                     },
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.monetization_on_outlined),
-                    title: const Text("Earnings"),
-                    onTap: () {
-                      Get.toNamed(Nav.earning);
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.monetization_on_outlined),
+                  //   title: const Text("Earnings"),
+                  //   onTap: () {
+                  //     Get.toNamed(Nav.earning);
+                  //   },
+                  // ),
                 ],
                 ListTile(
                   leading: Obx(() {

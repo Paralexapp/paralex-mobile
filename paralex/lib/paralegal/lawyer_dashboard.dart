@@ -9,7 +9,6 @@ import '../routes/navs.dart';
 import '../../../../service_provider/controllers/user_choice_controller.dart';
 import '../service_provider/controllers/notification_controller.dart';
 import '../service_provider/view/delivery_notification.dart';
-import '../service_provider/view/drawer.dart';
 import '../reusables/bottom_nav.dart'; // Import for the bottom navigation bar
 import '../news/news_screen.dart';
 import '../../../../service_provider/view/search_tab.dart';

@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:paralex/reusables/ui_helpers.dart';
-import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/users/account/pages/Logistics/widgets/logistics_button.dart';
 import 'package:paralex/screens/users/account/pages/controllers/logistics_delivery_info_controller.dart';
 

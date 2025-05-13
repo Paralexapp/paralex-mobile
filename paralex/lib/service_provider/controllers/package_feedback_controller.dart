@@ -56,7 +56,7 @@ class PackageController extends GetxController {
   Future<String> _getVideoDuration(String videoPath) async {
     final player = Player();
     await player.open(Media(videoPath));
-    final duration = await player.stream.duration;
+    final duration = player.stream.duration;
     await player.dispose();
     return duration.toString().split('.').first.padLeft(8, '0');
   }

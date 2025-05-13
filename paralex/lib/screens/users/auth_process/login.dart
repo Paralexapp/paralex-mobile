@@ -293,7 +293,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
         loginData,
       );
 
-      if (response == null || response['data'] == null) {
+      if (response['data'] == null) {
         throw Exception("Invalid response from server.");
       }
 
@@ -305,7 +305,7 @@ class _LoginWithPasswordState extends State<LoginWithPassword> {
       // Step 2: Fetch user data by email
       final userData = await userController.fetchUserByEmail(_emailController.text);
 
-      if (userData == null || userData.isEmpty) {
+      if (userData.isEmpty) {
         throw Exception("User not found.");
       }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:get/get.dart';
-import 'dart:typed_data';
 import '../../../../../paralegal/lawyer_list.dart';
 import '../../../../../paralegal/lawyer_model.dart';
 import '../../../../../service_provider/view/widgets/custom_text_field.dart';

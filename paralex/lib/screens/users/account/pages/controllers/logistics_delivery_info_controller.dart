@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paralex/screens/users/account/home.dart';
 import 'package:paralex/service_provider/models/driver_model.dart';
 import 'package:paralex/service_provider/services/api_service.dart';
 import 'package:http/http.dart' as http;
@@ -115,6 +114,7 @@ class LogisticsDeliveryInfoController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+    return null;
   }
 
   void assignDriver(DriverModel driver) async {

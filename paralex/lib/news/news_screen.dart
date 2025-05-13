@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../routes/navs.dart';
-import '../service_provider/view/widgets/black_button.dart';
 import 'news_controller.dart';
 
 class NewsScreen extends StatelessWidget {

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralex/news/news_screen.dart';
 import 'package:paralex/reusables/paints.dart';
-import 'package:paralex/screens/users/account/pages/logistics/home.dart';
 import 'package:paralex/screens/users/account/pages/controllers/home_controller.dart';
 import 'package:paralex/screens/users/account/pages/dashboard.dart';
 

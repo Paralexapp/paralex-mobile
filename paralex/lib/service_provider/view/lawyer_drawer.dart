@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import '../../reusables/paints.dart';
 import '../../routes/navs.dart';
 import '../controllers/notification_controller.dart';
 import '../../screens/users/account/pages/account_settings_page.dart';

@@ -1,6 +1,4 @@
-import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 
 class Lawyer2 {
   final String? imgPath;
@@ -93,7 +91,7 @@ class Lawyer {
   static DateTime _parseDateTime(List<dynamic>? timeList) {
     final list = timeList ?? [];
     return DateTime(
-      list.length > 0 ? list[0] as int : 1970,
+      list.isNotEmpty ? list[0] as int : 1970,
       list.length > 1 ? list[1] as int : 1,
       list.length > 2 ? list[2] as int : 1,
       list.length > 3 ? list[3] as int : 0,

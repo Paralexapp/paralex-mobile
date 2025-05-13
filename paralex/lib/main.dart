@@ -58,8 +58,6 @@ import 'package:paralex/service_provider/view/destination_detail.dart';
 import 'package:paralex/service_provider/view/dropoff_confirmation.dart';
 import 'package:paralex/service_provider/view/earning.dart';
 import 'package:paralex/service_provider/view/guarantor_detail.dart';
-import 'package:paralex/service_provider/view/delivery_notification.dart';
-import 'package:paralex/service_provider/view/notification_detail.dart';
 import 'package:paralex/service_provider/view/order_detail.dart';
 import 'package:paralex/service_provider/view/pick_up_drop_off.dart';
 import 'package:paralex/service_provider/view/pick_up_drop_off_details.dart';

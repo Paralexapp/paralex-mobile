@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -63,7 +62,7 @@ class LawyerController extends GetxController {
         (response['data'] as List).map((item) => Lawyer.fromJson(item)).toList(),
       );
     } catch (e) {
-      debugPrint('error>>>${e}');
+      debugPrint('error>>>$e');
     }
   }
 

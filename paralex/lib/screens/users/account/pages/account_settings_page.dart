@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/users/auth_process/login.dart';
 import '../../../../reusables/paints.dart';
-import '../../../../service_provider/controllers/auth_controller.dart';
 import '../../../../service_provider/controllers/user_choice_controller.dart';
 
 class AccountSettingsPage extends StatefulWidget {

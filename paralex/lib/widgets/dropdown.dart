@@ -9,13 +9,13 @@ class CustomDropdown extends StatefulWidget {
   final IconData? icon;
   final ValueChanged<String?> onChanged;
   const CustomDropdown({
-    Key? key,
+    super.key,
     required this.items,
     this.initialValue,
     required this.hint,
     required this.onChanged,
     this.icon,
-  }) : super(key: key);
+  });
 
   @override
   _CustomDropdownState createState() => _CustomDropdownState();

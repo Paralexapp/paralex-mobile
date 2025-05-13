@@ -191,7 +191,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:paralex/reusables/paints.dart';
-import 'package:paralex/screens/users/account/pages/dashboard.dart'; // LawyerDashboard
+// LawyerDashboard
 import 'package:paralex/news/news_screen.dart'; // NewsScreen
 import 'package:paralex/service_provider/view/search_tab.dart';
 
@@ -249,6 +249,8 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }

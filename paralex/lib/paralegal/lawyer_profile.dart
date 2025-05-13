@@ -8,7 +8,6 @@ import '../reusables/fonts.dart';
 import '../reusables/paints.dart';
 import '../service_provider/controllers/user_choice_controller.dart';
 import 'lawyer_controller.dart';
-import 'dart:typed_data';
 
 class LawyerProfile extends StatelessWidget {
   final String? imgPath;
@@ -33,7 +32,7 @@ class LawyerProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LawyerController());
-    final _userChoiceController = Get.find<UserChoiceController>();
+    final userChoiceController = Get.find<UserChoiceController>();
 
     return Scaffold(
       backgroundColor: Colors.black,

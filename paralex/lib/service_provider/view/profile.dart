@@ -112,11 +112,11 @@ class Profile extends StatelessWidget {
                     SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        OverviewCard(icon: Icons.star, quantity: "5.0", title: "Ratings"),
-                        OverviewCard(icon: Icons.account_circle, quantity: "60%", title: "Satisfy"),
-                        OverviewCard(icon: Icons.do_disturb_alt_sharp, quantity: "8%", title: "Cancel"),
-                      ],
+                      // children: [
+                      //   OverviewCard(icon: Icons.star, quantity: "5.0", title: "Ratings"),
+                      //   OverviewCard(icon: Icons.account_circle, quantity: "60%", title: "Satisfy"),
+                      //   OverviewCard(icon: Icons.do_disturb_alt_sharp, quantity: "8%", title: "Cancel"),
+                      // ],
                     ),
                     SizedBox(height: 10),
                     Align(
@@ -131,14 +131,22 @@ class Profile extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          ReviewCard(name: "Nana Harley", review: "Good service", daysAgo: 5),
-                          ReviewCard(name: "Alex Wall", review: "ok ok ok", daysAgo: 2),
-                          ReviewCard(name: "Hugo King", review: "swift like lightning", daysAgo: 1),
-                        ],
+                      scrollDirection: Axis.vertical,
+                      child: Text(
+                        "No Reviews Yet!",
+                        style: TextStyle(
+                            color: Color(0xFF404446),
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
                       ),
+                      // child: Row(
+                      //   children: [
+                      //
+                      //     // ReviewCard(name: "Nana Harley", review: "Good service", daysAgo: 5),
+                      //     // ReviewCard(name: "Alex Wall", review: "ok ok ok", daysAgo: 2),
+                      //     // ReviewCard(name: "Hugo King", review: "swift like lightning", daysAgo: 1),
+                      //   ],
+                      // ),
                     ),
                     SizedBox(height: 10),
                     Align(
@@ -164,9 +172,9 @@ class Profile extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset("assets/images/joy_icon.png",height: 44,width: 44,),
+                            // Image.asset("assets/images/joy_icon.png",height: 44,width: 44,),
                             Text(
-                              "Friendly Driver",
+                              "No Achievements Yet!",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 13,),

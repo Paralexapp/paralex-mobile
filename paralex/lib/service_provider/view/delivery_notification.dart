@@ -162,8 +162,8 @@ class NotificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        'Rendering NotificationWidget: message=${notification.message}, status=${notification.status}, dateTime=${notification.dateTime}');
+    // print(
+    //     'Rendering NotificationWidget: message=${notification.message}, status=${notification.status}, dateTime=${notification.dateTime}');
     Color backgroundColor = _getBackgroundColor(notification.status);
     Color iconColor = _getIconColor(notification.status);
 

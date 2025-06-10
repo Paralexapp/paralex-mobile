@@ -49,6 +49,7 @@ class LawyerController extends GetxController {
 
   void fetchLawyers({int? pageSize = 1000}) async {
     try {
+      isLoading.value = true;
       final response = await _apiService.getRequest(
         'service-provider/lawyer/profile/?pageSize=$pageSize',
       );
@@ -63,6 +64,9 @@ class LawyerController extends GetxController {
       );
     } catch (e) {
       debugPrint('error>>>$e');
+      errorMessage.value = e.toString();
+    } finally {
+      isLoading.value = false;
     }
   }
 

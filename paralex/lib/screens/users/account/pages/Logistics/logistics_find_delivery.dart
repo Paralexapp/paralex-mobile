@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:paralex/reusables/fonts.dart';
@@ -43,6 +45,50 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
   final fareController = TextEditingController();
   final distanceController = TextEditingController();
 
+  late GoogleMapController? _mapController;
+  LatLng _initialLocation = LatLng(6.5244, 3.3792); // Default to Lagos
+  Marker? _fromMarker;
+  Marker? _toMarker;
+  Set<Polyline> _polylines = {};
+
+  Widget _buildGoogleMap() {
+    return GoogleMap(
+      onMapCreated: (map) async {
+        _mapController = map;
+        await _setInitialLocation();
+
+        _mapController?.animateCamera(
+          CameraUpdate.newLatLngZoom(_initialLocation, 16),
+        );
+
+        try {
+          String mapStyle = await DefaultAssetBundle.of(context)
+              .loadString('assets/json/map_style.json');
+          _mapController?.setMapStyle(mapStyle);
+        } catch (e) {
+          debugPrint("Error setting map style: $e");
+        }
+      },
+      initialCameraPosition: CameraPosition(
+        target: _initialLocation,
+        zoom: 11.0,
+      ),
+      markers: {
+        if (_fromMarker != null) _fromMarker!,
+        if (_toMarker != null)
+          _toMarker!
+        else
+          Marker(
+            markerId: MarkerId("to"),
+            position: _initialLocation,
+            infoWindow: InfoWindow(title: "Current position"),
+          )
+      },
+      polylines: _polylines,
+    );
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -58,7 +104,7 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
     fareController.text = NumberFormat.currency(
       decimalDigits: 2,
       symbol: "₦",
-    ).format(widget.fare ?? '');
+    ).format(widget.fare ?? 0);
   }
 
   @override
@@ -79,11 +125,17 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
                 SizedBox(
                   height: deviceHeight(context) * 0.45,
                   width: deviceWidth(context),
-                  child: Image.asset(
-                    'assets/images/map.jpg',
-                    fit: BoxFit.cover,
-                  ),
+                  child: _buildGoogleMap(),
                 ),
+
+                // SizedBox(
+                //   height: deviceHeight(context) * 0.45,
+                //   width: deviceWidth(context),
+                //   child: Image.asset(
+                //     'assets/images/map.jpg',
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
               ],
             ),
             Align(
@@ -214,4 +266,32 @@ class _LogisticsFindDeliveryState extends State<LogisticsFindDelivery> {
       )),
     );
   }
+  Future<void> _setInitialLocation() async {
+    try {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+      }
+
+      if (permission == LocationPermission.always ||
+          permission == LocationPermission.whileInUse) {
+        Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+        );
+
+        setState(() {
+          _initialLocation = LatLng(position.latitude, position.longitude);
+          _fromMarker = Marker(
+            markerId: MarkerId("from"),
+            position: _initialLocation,
+            infoWindow: InfoWindow(title: "Current Location"),
+          );
+        });
+      }
+    } catch (e) {
+      debugPrint("Failed to get location: $e");
+    }
+  }
+
 }

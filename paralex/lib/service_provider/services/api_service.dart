@@ -9,7 +9,7 @@ import '../controllers/auth_controller.dart';
 
 class ApiService {
   // final String baseUrl = 'https://paralex-app-fddb148a81ad.herokuapp.com/api/v1/auth';
-  final String baseUrl = 'https://paralex-app-fddb148a81ad.herokuapp.com';
+  final String baseUrl = 'https://paralex-be.onrender.com';
   final AuthController _authController = Get.put(AuthController());
 
   Future<Map<String, dynamic>> postRequest(
@@ -165,7 +165,7 @@ class ApiService {
     } catch (e) {
       Get.snackbar(
         'Error',
-        'Failed to connect to the server.',
+        e.toString(),
         snackPosition: SnackPosition.BOTTOM,
       );
       throw Exception(e.toString());
@@ -200,11 +200,11 @@ class ApiService {
             responseBody['debugMessage'] ?? responseBody['message'] ?? response.body;
 
         // Display the actual error message
-        Get.snackbar(
-          'Error',
-          errorMessage,
-          snackPosition: SnackPosition.TOP,
-        );
+        // Get.snackbar(
+        //   'Error',
+        //   errorMessage,
+        //   snackPosition: SnackPosition.TOP,
+        // );
 
         // Throw the actual error message as an exception
         throw Exception(errorMessage);
@@ -213,11 +213,11 @@ class ApiService {
       debugPrint('error====$e');
       // Handle unexpected errors and display the actual error details
       String errorMessage = e.toString();
-      Get.snackbar(
-        'Error',
-        errorMessage,
-        snackPosition: SnackPosition.TOP,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   errorMessage,
+      //   snackPosition: SnackPosition.TOP,
+      // );
 
       // Rethrow the exception with the actual error message
       throw Exception(errorMessage);

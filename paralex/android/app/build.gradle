@@ -57,6 +57,11 @@ android {
             signingConfig = signingConfigs.release
         }
     }
+    dependencies {
+        implementation 'com.google.android.gms:play-services-maps:18.1.0'          // Maps SDK
+        implementation 'com.google.android.libraries.places:places:3.1.0'           // Places SDK
+        // Add any other dependencies you use
+    }
 }
 
 flutter {

@@ -31,6 +31,7 @@ class NotificationDetailScreen extends StatefulWidget {
 class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
   final ApiService apiService = ApiService();
   bool isLoading = true;
+  bool _buttonsActive = true;
 
   @override
   void initState() {
@@ -51,29 +52,29 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
       if (widget.appBarTitle.toLowerCase() == "message") {
         if (userController.selectedUserType.value == UserType.USER) {
           endpoint =
-              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/inbox/mark-as-read";
+              "https://paralex-be.onrender.com/api/notifications/inbox/mark-as-read";
         } else if (userController.selectedUserType.value ==
             UserType.SERVICE_PROVIDER_LAWYER) {
           endpoint =
-              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/inbox/lawyer/mark-as-read";
+              "https://paralex-be.onrender.com/api/notifications/inbox/lawyer/mark-as-read";
         } else if (userController.selectedUserType.value ==
             UserType.SERVICE_PROVIDER_RIDER) {
           endpoint =
-              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/inbox/rider/mark-as-read";
+              "https://paralex-be.onrender.com/api/notifications/inbox/rider/mark-as-read";
         }
         userId = userController.userIdToken.value;
       } else {
         if (userController.selectedUserType.value == UserType.USER) {
           endpoint =
-              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/mark-as-read";
+              "https://paralex-be.onrender.com/api/notifications/mark-as-read";
         } else if (userController.selectedUserType.value ==
             UserType.SERVICE_PROVIDER_LAWYER) {
           endpoint =
-              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/lawyer/mark-as-read";
+              "https://paralex-be.onrender.com/api/notifications/lawyer/mark-as-read";
         } else if (userController.selectedUserType.value ==
             UserType.SERVICE_PROVIDER_RIDER) {
           endpoint =
-              "https://paralex-app-fddb148a81ad.herokuapp.com/api/notifications/rider/mark-as-read";
+              "https://paralex-be.onrender.com/api/notifications/rider/mark-as-read";
         }
         userId = "null";
       }
@@ -116,6 +117,8 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isNewDeliveryRequest = widget.message.toLowerCase().contains("new delivery request");
+
     return Scaffold(
       appBar: CustomAppBar(
         appBarTitle: widget.appBarTitle,
@@ -143,12 +146,142 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
                 height: 1.5,
               ),
             ),
+            const SizedBox(height: 30),
+
+            if (isNewDeliveryRequest) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: PaintColors.paralexGreen,
+                    ),
+                    onPressed: _buttonsActive
+                        ? () async {
+                      await _respondToRequest("accept");
+                    }
+                        : null, // Set to null to disable
+                    child: const Text("Accept"),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: PaintColors.paralexpurple,
+                    ),
+                    onPressed: _buttonsActive
+                        ? () async {
+                      await _respondToRequest("decline");
+                    }
+                        : null, // Set to null to disable
+                    child: const Text("Decline"),
+                  ),
+                ],
+              )
+            ],
           ],
         ),
       ),
     );
   }
+
+
+// @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: CustomAppBar(
+  //       appBarTitle: widget.appBarTitle,
+  //     ),
+  //     body: Padding(
+  //       padding: const EdgeInsets.all(25.0),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(
+  //             widget.title,
+  //             style: FontStyles.smallCapsIntro.copyWith(
+  //               fontSize: 18,
+  //               fontWeight: FontWeight.bold,
+  //               color: Color(0xFF21252C),
+  //               letterSpacing: 0.5,
+  //             ),
+  //           ),
+  //           const SizedBox(height: 20),
+  //           Text(
+  //             widget.message,
+  //             style: TextStyle(
+  //               fontSize: 16,
+  //               color: Color(0xFF76889A),
+  //               height: 1.5,
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+
+  Future<void> _respondToRequest(String action) async {
+
+    setState(() {
+      _buttonsActive = false; // Disable buttons immediately on press
+    });
+    // 1. Extract the delivery ID from the message
+    String? deliveryId;
+    // UPDATED REGEX: Added a space after 'id'
+    final RegExp regExp = RegExp(r"with id (\S+) is available"); // Matches "with id " (with a space) followed by non-space characters until " is available"
+    final match = regExp.firstMatch(widget.message);
+
+    if (match != null && match.groupCount > 0) {
+      deliveryId = match.group(1); // The first captured group is the ID
+      debugPrint('Extracted Delivery ID: $deliveryId');
+    } else {
+      Get.snackbar("Error", "Could not find delivery ID in message.");
+      setState(() {
+        _buttonsActive = true; // Re-enable if ID extraction fails
+      });
+      return; // Stop execution if ID is not found
+    }
+    // Get.back();
+    try {
+      final ApiService apiService = ApiService();
+
+      final response = await apiService.putRequest(
+        'delivery/request/assignment/$action',
+        {"id": deliveryId}, // Use the extracted deliveryId here
+        requireAuth: true,
+      );
+
+      Get.snackbar("Success", "You have ${action}ed the request!");
+       // Optionally go back after action
+      Get.back();
+    } catch (e) {
+      // Get.snackbar("Error", "Failed to $action request: $e");
+      setState(() {
+        _buttonsActive = true;
+      });
+    }
+  }
 }
+
+  // Future<void> _respondToRequest(String action) async {
+  //   try {
+  //     final ApiService apiService = ApiService();
+  //
+  //     final response = await apiService.putRequest(
+  //       'delivery/request/assignment/$action',
+  //       {"id": widget.notificationId},
+  //       requireAuth: false,
+  //     );
+  //
+  //     Get.snackbar("Success", "You have ${action}ed the request!");
+  //     Get.back(); // Optionally go back after action
+  //   } catch (e) {
+  //     Get.snackbar("Error", "Failed to $action request: $e");
+  //   }
+  // }
+
+
+
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String appBarTitle;
@@ -179,3 +312,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(70);
 }
+
+

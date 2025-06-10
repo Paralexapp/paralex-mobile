@@ -47,7 +47,7 @@ class LogisticsDeliveryInfoController extends GetxController {
 
   Future<List<DriverModel>?> requestDelivery() async {
     var data = {
-      "driverProfileId": userController.email.value,
+      // "driverProfileId": userController.email.value,
       "pickup": {
         "customerName":
             "${userController.lastName.value} ${userController.firstName.value}",
@@ -183,7 +183,7 @@ class LogisticsDeliveryInfoController extends GetxController {
 
   Future<Map<String, dynamic>?> getDeliveryAmount() async {
     var data = {
-      "driverProfileId": userController.email.value,
+      // "driverProfileId": userController.email.value,
       "pickup": {
         "customerName":
         "${userController.lastName.value} ${userController.firstName.value}",
@@ -305,7 +305,14 @@ class LogisticsDeliveryInfoController extends GetxController {
     final url = Uri.parse(
       'https://nominatim.openstreetmap.org/search?q=$query&format=json&addressdetails=1',
     );
-    final response = await http.get(url);
+
+    final response = await http.get(
+      url,
+      headers: {
+        'User-Agent': 'ParalexMap/1.0 (paralexappapp@gmail.com)', // Replace with yours
+      },
+    );
+    // final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final List results = json.decode(response.body);
@@ -324,7 +331,7 @@ class LogisticsDeliveryInfoController extends GetxController {
         "longitude": place.longitude
       }
     ];
-    final url = Uri.parse('https://paralex-app-fddb148a81ad.herokuapp.com/locations/');
+    final url = Uri.parse('https://paralex-be.onrender.com/locations/');
     debugPrint('url==$url');
     try {
       final response = await http.post(

@@ -270,7 +270,7 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                           PlacesTextField(
                             controller: fromLocationController,
                             showPrefixIcon: true,
-                            hintText: 'From',
+                            hintText: 'From - Enter a Popular area(e.g Ikeja)',
                             icon: Iconsax.location,
                             onSelected: (place) {
                               setState(() {
@@ -292,7 +292,7 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
                           PlacesTextField(
                             controller: toDestinationController,
                             showPrefixIcon: true,
-                            hintText: 'To',
+                            hintText: 'To - Enter a Popular area(e.g Iyana-ipaja)',
                             icon: Iconsax.gps,
                             onSelected: (place) async {
                               _handleLocationSelection(place, isFrom: false);
@@ -359,18 +359,22 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
   }
 
   Widget _buildGoogleMap() {
-    _mapController?.animateCamera(
-      CameraUpdate.newLatLngZoom(_initialLocation, 16),
-    );
     return GoogleMap(
       onMapCreated: (map) async {
-        _setInitialLocation();
         _mapController = map;
+        await _setInitialLocation();
+
+        _mapController?.animateCamera(
+          CameraUpdate.newLatLngZoom(_initialLocation, 16),
+        );
+
         try {
           String mapStyle = await DefaultAssetBundle.of(context)
               .loadString('assets/json/map_style.json');
           _mapController?.setMapStyle(mapStyle);
-        } catch (_) {}
+        } catch (e) {
+          debugPrint("Error setting map style: $e");
+        }
       },
       initialCameraPosition: CameraPosition(
         target: _initialLocation,
@@ -378,15 +382,49 @@ class _LogisticsDeliveryInfoState extends State<LogisticsDeliveryInfo> {
       ),
       markers: {
         if (_fromMarker != null) _fromMarker!,
-        (_toMarker != null)
-            ? _toMarker!
-            : Marker(
-                markerId: MarkerId("to"),
-                position: _initialLocation,
-                infoWindow: InfoWindow(title: "Current position"),
-              )
+        if (_toMarker != null)
+          _toMarker!
+        else
+          Marker(
+            markerId: MarkerId("to"),
+            position: _initialLocation,
+            infoWindow: InfoWindow(title: "Current position"),
+          )
       },
       polylines: _polylines,
     );
   }
+
+
+// Widget _buildGoogleMap() {
+  //   _mapController?.animateCamera(
+  //     CameraUpdate.newLatLngZoom(_initialLocation, 16),
+  //   );
+  //   return GoogleMap(
+  //     onMapCreated: (map) async {
+  //       _setInitialLocation();
+  //       _mapController = map;
+  //       try {
+  //         String mapStyle = await DefaultAssetBundle.of(context)
+  //             .loadString('assets/json/map_style.json');
+  //         _mapController?.setMapStyle(mapStyle);
+  //       } catch (_) {}
+  //     },
+  //     initialCameraPosition: CameraPosition(
+  //       target: _initialLocation,
+  //       zoom: 11.0,
+  //     ),
+  //     markers: {
+  //       if (_fromMarker != null) _fromMarker!,
+  //       (_toMarker != null)
+  //           ? _toMarker!
+  //           : Marker(
+  //               markerId: MarkerId("to"),
+  //               position: _initialLocation,
+  //               infoWindow: InfoWindow(title: "Current position"),
+  //             )
+  //     },
+  //     polylines: _polylines,
+  //   );
+  // }
 }

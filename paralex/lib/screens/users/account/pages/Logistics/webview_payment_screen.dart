@@ -38,7 +38,7 @@ class _WebViewPaymentScreenState extends State<WebViewPaymentScreen> {
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) async {
             if (request.url.contains(
-                'https://paralex-app-fddb148a81ad.herokuapp.com/verify-transaction')) {
+                'https://paralex-be.onrender.com/verify-transaction')) {
               // Trigger modal only on the verify-transaction page
               var nearbyDriver = await _controller.requestDelivery();
               showNearbyDrivers(context, nearbyDriver);
@@ -176,7 +176,7 @@ class _WebViewPaymentScreenState extends State<WebViewPaymentScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Phone: ${rider.phoneNumber}'),
-                                      Text('Distance: ${rider.distance}'),
+                                      Text('Distance: ${rider.distance.toStringAsFixed(2)} km'),
                                     ],
                                   ),
                                 ),

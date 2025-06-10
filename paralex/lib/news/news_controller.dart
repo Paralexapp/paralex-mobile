@@ -24,7 +24,7 @@ class NewsController extends GetxController with GetSingleTickerProviderStateMix
   Future<void> fetchLatestNews() async {
     isLoading.value = true;
     try {
-      final response = await http.get(Uri.parse('https://paralex-app-fddb148a81ad.herokuapp.com/api/news/get-all'));
+      final response = await http.get(Uri.parse('https://paralex-be.onrender.com/api/news/get-all'));
       print("Response Body: ${response.body}");
       print("Response Type: ${response.body.runtimeType}");
 
@@ -47,7 +47,7 @@ class NewsController extends GetxController with GetSingleTickerProviderStateMix
     try {
       for (var category in tabs) {
         final url =
-            'https://paralex-app-fddb148a81ad.herokuapp.com/api/news/get-by-section?section=$category';
+            'https://paralex-be.onrender.com/api/news/get-by-section?section=$category';
         print("Fetching news for category: $category at $url");
         final response = await http.get(Uri.parse(url));
         print("Response for category $category: ${response.body}");

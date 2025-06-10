@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paralex/reusables/fonts.dart';
 import 'package:paralex/reusables/paints.dart';
 import 'package:get/get.dart';
+import '../../../../../paralegal/lawyer_controller.dart';
 import '../../../../../paralegal/lawyer_list.dart';
 import '../../../../../paralegal/lawyer_model.dart';
 import '../../../../../service_provider/view/widgets/custom_text_field.dart';
@@ -14,6 +15,7 @@ class LawyerHome extends StatefulWidget {
 }
 
 class _LawyerHomeState extends State<LawyerHome> with SingleTickerProviderStateMixin {
+  late final LawyerController _controller;
   late TabController _tabController;
   final List<String> tabs = [
     // 'CORPORATE LAW',
@@ -70,6 +72,7 @@ class _LawyerHomeState extends State<LawyerHome> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
+    _controller = Get.put(LawyerController());
     _tabController = TabController(length: tabs.length, vsync: this);
     _tabController.addListener(() {
       setState(() {}); // Trigger a rebuild on tab change
@@ -81,6 +84,7 @@ class _LawyerHomeState extends State<LawyerHome> with SingleTickerProviderStateM
     _tabController.removeListener(() {});
     _tabController.dispose();
     _searchController.dispose();
+    Get.delete<LawyerController>();
     super.dispose();
   }
 

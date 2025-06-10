@@ -28,7 +28,7 @@ class DriverModel {
   final String name;
   final String phoneNumber;
   final String riderPhotoUrl;
-  final String distance;
+  final double distance;
 
   DriverModel({
     required this.id,
@@ -45,7 +45,8 @@ class DriverModel {
       name: json['name'] as String,
       phoneNumber: json['phoneNumber'] as String,
       riderPhotoUrl: json['riderPhotoUrl'] as String,
-      distance: json['distance'] as String,
+      distance: double.tryParse(json['distance'].toString()) ?? 0.0,
+      // distance: (json['distance'] as num).toDouble(), // ✅ Convert to double safely
     );
   }
 }

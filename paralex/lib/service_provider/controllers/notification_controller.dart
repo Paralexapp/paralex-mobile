@@ -95,11 +95,11 @@ class NotificationsController extends GetxController {
       }
     } catch (e) {
       print('Error fetching notifications: $e');
-      Get.snackbar(
-        'Error',
-        'Failed to fetch notifications: $e',
-        snackPosition: SnackPosition.TOP,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Failed to fetch notifications: $e',
+      //   snackPosition: SnackPosition.TOP,
+      // );
     }
   }
 

@@ -115,7 +115,7 @@ class UserChoiceController extends GetxController {
     }
 
     final url =
-        'https://paralex-app-fddb148a81ad.herokuapp.com/api/v1/auth/get-user';
+        'https://paralex-be.onrender.com/api/v1/auth/get-user';
     try {
       final response = await Dio().get(
         url,

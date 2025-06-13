@@ -10,6 +10,8 @@ import 'package:paralex/screens/users/account/pages/Logistics/logistics_parcel_t
 import 'package:paralex/routes/navs.dart';
 import 'package:paralex/screens/splash/splash.dart';
 import 'package:paralex/screens/users/account/home.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/rider_accept_success.dart';
+import 'package:paralex/screens/users/account/pages/Logistics/user_request_delivery_success.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/Legal/cac.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/Legal/immigration.dart';
 import 'package:paralex/screens/users/account/pages/Paralegal/Legal/legal_assistance.dart';
@@ -119,6 +121,8 @@ Future<void> main() async {
       GetPage(name: Nav.bondStepE, page: () => BondStepFive()),
       GetPage(name: Nav.bondSubmitted, page: () => const BondSuccess()),
       GetPage(name: Nav.getLawyerSubmitted, page: () => const GetLawyerSuccess()),
+      GetPage(name: Nav.deliveryAccepted, page: () => const RiderAcceptSuccess()),
+      GetPage(name: Nav.deliveryRequestSuccess, page: () => const UserRequestDeliverySuccess()),
       GetPage(name: Nav.legalServiceHome, page: () => const LegalAssistance()),
       GetPage(name: Nav.nafdacReg, page: () => const NafdacRegistration()),
       GetPage(name: Nav.cacReg, page: () => const CacRegistration()),

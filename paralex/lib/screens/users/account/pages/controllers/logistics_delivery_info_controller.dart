@@ -127,7 +127,7 @@ class LogisticsDeliveryInfoController extends GetxController {
       "Assign Driver Successful",
       snackPosition: SnackPosition.TOP,
     );
-    Get.offAllNamed(Nav.home);
+    Get.offAllNamed(Nav.deliveryRequestSuccess);
   }
 
   // Future<Map<String, dynamic>?> getDeliveryAmount() async {

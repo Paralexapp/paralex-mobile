@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../../reusables/fonts.dart';
 import '../../reusables/paints.dart';
+import '../../routes/navs.dart';
 import '../controllers/user_choice_controller.dart';
 import '../services/api_service.dart';
 import 'package:get/get.dart';
@@ -253,7 +254,14 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
 
       Get.snackbar("Success", "You have ${action}ed the request!");
        // Optionally go back after action
-      Get.back();
+
+      if (action == "accept") {
+        // Navigate to success screen for rider
+        Get.toNamed(Nav.deliveryAccepted, arguments: {'deliveryId': deliveryId});
+      } else {
+        Get.back(); // Navigate back on decline or others
+      }
+      // Get.back();
     } catch (e) {
       // Get.snackbar("Error", "Failed to $action request: $e");
       setState(() {

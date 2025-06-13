@@ -259,7 +259,7 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
         // Navigate to success screen for rider
         Get.toNamed(Nav.deliveryAccepted, arguments: {'deliveryId': deliveryId});
       } else {
-        Get.back(); // Navigate back on decline or others
+        Get.toNamed(Nav.deliveryInfo1, arguments: {'deliveryId': deliveryId});// Navigate back on decline or others
       }
       // Get.back();
     } catch (e) {
